@@ -31,7 +31,10 @@ import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
+/**
+ * @author https://github.com/Funwayguy/InfiniteInvo
+ * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
+ */
 public class EventHandler
 {
 	public static File worldDir;
@@ -67,10 +70,10 @@ public class EventHandler
 			if(event.world.isRemote)
 			{
 				NBTTagCompound requestTags = new NBTTagCompound();
-				requestTags.setInteger(ModMutatedInventory.NBT_ID, 1);
-				requestTags.setInteger(ModMutatedInventory.NBT_WORLD, event.world.provider.getDimensionId());
-				requestTags.setString(ModMutatedInventory.NBT_PLAYER, player.getName());
-				ModMutatedInventory.instance.network.sendToServer(new InvoPacket(requestTags));
+				requestTags.setInteger(ModInv.NBT_ID, 1);
+				requestTags.setInteger(ModInv.NBT_WORLD, event.world.provider.getDimensionId());
+				requestTags.setString(ModInv.NBT_PLAYER, player.getName());
+				ModInv.instance.network.sendToServer(new InvoPacket(requestTags));
 			} else
 			{
 				ModSettings.LoadFromCache();
@@ -132,7 +135,7 @@ public class EventHandler
 		{
 			MinecraftServer server = MinecraftServer.getServer();
 			
-			if(ModMutatedInventory.proxy.isClient())
+			if(ModInv.proxy.isClient())
 			{
 				worldDir = server.getFile("saves/" + server.getFolderName());
 			} else
@@ -187,7 +190,7 @@ public class EventHandler
 			fos.close();
 		} catch(Exception e)
 		{
-			ModMutatedInventory.logger.log(Level.ERROR, "Failed to save slot unlock cache", e);
+			ModInv.logger.log(Level.ERROR, "Failed to save slot unlock cache", e);
 		}
 	}
 	
@@ -217,16 +220,16 @@ public class EventHandler
 			fis.close();
 		} catch(Exception e)
 		{
-			ModMutatedInventory.logger.log(Level.ERROR, "Failed to load slot unlock cache", e);
+			ModInv.logger.log(Level.ERROR, "Failed to load slot unlock cache", e);
 		}
 	}
 	
 	@SubscribeEvent
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
 	{
-		if(event.modID.equals(ModMutatedInventory.MODID))
+		if(event.modID.equals(ModInv.MODID))
 		{
-			ModMutatedInventory.config.save();
+			ModInv.config.save();
 			//ConfigHandler.initConfigs();
 		}
 	}

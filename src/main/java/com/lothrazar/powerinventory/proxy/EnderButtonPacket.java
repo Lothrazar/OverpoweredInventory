@@ -7,7 +7,9 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-
+/** 
+ * @author Lothrazar at https://github.com/PrinceOfAmber
+ */
 public class EnderButtonPacket implements IMessage , IMessageHandler<EnderButtonPacket, IMessage>
 {
 	public EnderButtonPacket() {}

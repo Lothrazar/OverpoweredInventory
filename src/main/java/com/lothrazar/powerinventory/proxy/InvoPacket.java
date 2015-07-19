@@ -18,7 +18,10 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-
+/**
+ * @author https://github.com/Funwayguy/InfiniteInvo
+ * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
+ */
 public class InvoPacket implements IMessage
 {
 	public static final int ID = 0;
@@ -95,7 +98,7 @@ public class InvoPacket implements IMessage
 					
 					if(world == null)
 					{
-						ModMutatedInventory.logger.log(Level.WARN, "Unlock Sync Failed! Unabled to locate dimension " + message.tags.getInteger("World"));
+						ModInv.logger.log(Level.WARN, "Unlock Sync Failed! Unabled to locate dimension " + message.tags.getInteger("World"));
 						return null;
 					}
 					
@@ -103,7 +106,7 @@ public class InvoPacket implements IMessage
 					
 					if(player == null || player.getEntityData() == null)
 					{
-						ModMutatedInventory.logger.log(Level.WARN, "Unlock Sync Failed! Unabled to get data for player '" + message.tags.getString("Player") + "'");
+						ModInv.logger.log(Level.WARN, "Unlock Sync Failed! Unabled to get data for player '" + message.tags.getString("Player") + "'");
 						return null;
 					}
 					
@@ -140,7 +143,7 @@ public class InvoPacket implements IMessage
 					
 					if(world == null)
 					{
-						ModMutatedInventory.logger.log(Level.ERROR, "Inventory Sync Failed! Unabled to locate dimension " + message.tags.getInteger("World"));
+						ModInv.logger.log(Level.ERROR, "Inventory Sync Failed! Unabled to locate dimension " + message.tags.getInteger("World"));
 						return null;
 					}
 					
@@ -152,7 +155,7 @@ public class InvoPacket implements IMessage
 					
 					if(player == null || player.getEntityData() == null)
 					{
-						ModMutatedInventory.logger.log(Level.ERROR, "Inventory Sync Failed! Unabled to get data for player '" + message.tags.getString("Player") + "'");
+						ModInv.logger.log(Level.ERROR, "Inventory Sync Failed! Unabled to get data for player '" + message.tags.getString("Player") + "'");
 						return null;
 					}
 					
@@ -160,17 +163,17 @@ public class InvoPacket implements IMessage
 					
 					if(container == null)
 					{
-						ModMutatedInventory.logger.log(Level.ERROR, "Inventory Sync Failed! No container open on server!");
+						ModInv.logger.log(Level.ERROR, "Inventory Sync Failed! No container open on server!");
 						return null;
 					} else if(container.windowId != conID)
 					{
-						ModMutatedInventory.logger.log(Level.ERROR, "Inventory Sync Failed! Container ID mismatch (Client: " + conID + ", Server: " + container.windowId + ")");
+						ModInv.logger.log(Level.ERROR, "Inventory Sync Failed! Container ID mismatch (Client: " + conID + ", Server: " + container.windowId + ")");
 						return null;
 					}
 					
 					if(container.inventorySlots.size() < numbers.length)
 					{
-						ModMutatedInventory.logger.log(Level.ERROR, "Inventory Sync Failed! Only found " + container.inventorySlots.size() + " / " + numbers.length + " requested slots");
+						ModInv.logger.log(Level.ERROR, "Inventory Sync Failed! Only found " + container.inventorySlots.size() + " / " + numbers.length + " requested slots");
 						return null;
 					}
 					
@@ -213,7 +216,7 @@ public class InvoPacket implements IMessage
 							if(flag && container.getSlotFromInventory(player.inventory, player.inventory.currentItem) == null)
 							{
 								flag = false;
-								ModMutatedInventory.logger.log(Level.WARN, "Slot broke at index " + s.getSlotIndex() + "(Scroll: " + scrollPos + ", Pass: " + i + "/" + numbers.length + ")");
+								ModInv.logger.log(Level.WARN, "Slot broke at index " + s.getSlotIndex() + "(Scroll: " + scrollPos + ", Pass: " + i + "/" + numbers.length + ")");
 							}
 						}
 					}
@@ -231,28 +234,28 @@ public class InvoPacket implements IMessage
 		@Override
 		public IMessage onMessage(InvoPacket message, MessageContext ctx)
 		{
-			if(message.tags.hasKey(ModMutatedInventory.NBT_ID))
+			if(message.tags.hasKey(ModInv.NBT_ID))
 			{
-				if(message.tags.getInteger(ModMutatedInventory.NBT_ID) == 0)
+				if(message.tags.getInteger(ModInv.NBT_ID) == 0)
 				{
 					EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 					
-					if(!message.tags.hasKey(ModMutatedInventory.NBT_PLAYER) || !message.tags.getString(ModMutatedInventory.NBT_PLAYER).equals(player.getName()))
+					if(!message.tags.hasKey(ModInv.NBT_PLAYER) || !message.tags.getString(ModInv.NBT_PLAYER).equals(player.getName()))
 					{
-						ModMutatedInventory.logger.log(Level.ERROR, "Server sent packet to the wrong player! Intended target: " + message.tags.getString(ModMutatedInventory.NBT_PLAYER) + ", Recipient: " + player.getName());
+						ModInv.logger.log(Level.ERROR, "Server sent packet to the wrong player! Intended target: " + message.tags.getString(ModInv.NBT_PLAYER) + ", Recipient: " + player.getName());
 						return null;
 					}
 					
-					if(message.tags.hasKey(ModMutatedInventory.NBT_Unlocked))
+					if(message.tags.hasKey(ModInv.NBT_Unlocked))
 					{
-						ModMutatedInventory.logger.log(Level.INFO, "Loading serverside unlocks...");
-						player.getEntityData().setInteger("INFINITE_INVO_UNLOCKED", message.tags.getInteger(ModMutatedInventory.NBT_Unlocked));
+						ModInv.logger.log(Level.INFO, "Loading serverside unlocks...");
+						player.getEntityData().setInteger("INFINITE_INVO_UNLOCKED", message.tags.getInteger(ModInv.NBT_Unlocked));
 					}
 					
-					if(message.tags.hasKey(ModMutatedInventory.NBT_Settings))
+					if(message.tags.hasKey(ModInv.NBT_Settings))
 					{
-						ModMutatedInventory.logger.log(Level.INFO, "Loading serverside settings...");
-						ModSettings.LoadFromTags(message.tags.getCompoundTag(ModMutatedInventory.NBT_Settings));
+						ModInv.logger.log(Level.INFO, "Loading serverside settings...");
+						ModSettings.LoadFromTags(message.tags.getCompoundTag(ModInv.NBT_Settings));
 					}
 				}
 			}

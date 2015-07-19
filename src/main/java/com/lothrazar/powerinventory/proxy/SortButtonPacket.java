@@ -12,7 +12,9 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-
+/** 
+ * @author Lothrazar at https://github.com/PrinceOfAmber
+ */
 public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPacket, IMessage>
 {
 	public SortButtonPacket() {}
@@ -49,16 +51,16 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 		
 		switch(sortType)
 		{
-		case ModMutatedInventory.SORT_LEFT:
+		case ModInv.SORT_LEFT:
 			shiftLeftOne(invo);
 			break;
-		case ModMutatedInventory.SORT_RIGHT:
+		case ModInv.SORT_RIGHT:
 			shiftRightOne(invo);
 			break;
-		case ModMutatedInventory.SORT_LEFTALL:
+		case ModInv.SORT_LEFTALL:
 			shiftLeftAll(invo);
 			break;
-		case ModMutatedInventory.SORT_RIGHTALL:
+		case ModInv.SORT_RIGHTALL:
 			shiftRightAll(invo);
 			break;
 		}

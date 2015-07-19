@@ -1,17 +1,16 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.proxy.EnderButtonPacket;
 import com.lothrazar.powerinventory.proxy.SortButtonPacket;
 
-import com.lothrazar.powerinventory.ModMutatedInventory;
+import com.lothrazar.powerinventory.ModInv;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
+/** 
+ * @author Lothrazar at https://github.com/PrinceOfAmber
+ */
 public class GuiButtonSort extends GuiButton 
 {
 	//imported from https://github.com/PrinceOfAmber/SamsPowerups , author Lothrazar aka Sam Bassett
@@ -38,7 +37,7 @@ public class GuiButtonSort extends GuiButton
     		NBTTagCompound tags = new NBTTagCompound();
   
     		tags.setInteger(SortButtonPacket.NBT_SORT, sortType);
-    		ModMutatedInventory.instance.network.sendToServer(new SortButtonPacket(tags));
+    		ModInv.instance.network.sendToServer(new SortButtonPacket(tags));
     	}
     	
     	return pressed;

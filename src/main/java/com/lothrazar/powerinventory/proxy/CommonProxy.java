@@ -16,8 +16,7 @@ public class CommonProxy
 	{
 		EventHandler handler = new EventHandler();
 		MinecraftForge.EVENT_BUS.register(handler);
-		FMLCommonHandler.instance().bus().register(handler);
-	//	FMLCommonHandler.instance().bus().register(new II_UpdateNotification());
-    	ModMutatedInventory.instance.network.registerMessage(InvoPacket.HandleServer.class, InvoPacket.class, InvoPacket.ID, Side.SERVER);
+		FMLCommonHandler.instance().bus().register(handler); 
+    	ModInv.instance.network.registerMessage(InvoPacket.HandleServer.class, InvoPacket.class, InvoPacket.ID, Side.SERVER);
 	}
 }

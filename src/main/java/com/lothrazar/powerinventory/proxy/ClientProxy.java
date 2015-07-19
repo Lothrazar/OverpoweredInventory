@@ -1,6 +1,6 @@
 package com.lothrazar.powerinventory.proxy;
 
-import com.lothrazar.powerinventory.ModMutatedInventory;
+import com.lothrazar.powerinventory.ModInv;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class ClientProxy extends CommonProxy
@@ -16,6 +16,6 @@ public class ClientProxy extends CommonProxy
 	{
 		super.registerHandlers();
     	
-    	ModMutatedInventory.instance.network.registerMessage(InvoPacket.HandleClient.class, InvoPacket.class, InvoPacket.ID, Side.CLIENT);
+    	ModInv.instance.network.registerMessage(InvoPacket.HandleClient.class, InvoPacket.class, InvoPacket.ID, Side.CLIENT);
 	}
 }

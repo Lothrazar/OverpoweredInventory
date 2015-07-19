@@ -2,7 +2,7 @@ package com.lothrazar.powerinventory.inventory.client;
 
 import com.lothrazar.powerinventory.proxy.EnderButtonPacket;
 
-import com.lothrazar.powerinventory.ModMutatedInventory;
+import com.lothrazar.powerinventory.ModInv;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,7 +34,7 @@ public class GuiButtonEnderChest extends GuiButton
     		//send packet to server from client (this) makes sense
     		NBTTagCompound tags = new NBTTagCompound();
 
-    		ModMutatedInventory.instance.network.sendToServer(new EnderButtonPacket(tags));
+    		ModInv.instance.network.sendToServer(new EnderButtonPacket(tags));
     	}
     	
     	return pressed;

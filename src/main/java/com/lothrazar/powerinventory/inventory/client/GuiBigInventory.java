@@ -1,6 +1,6 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.ModMutatedInventory;
+import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.ModSettings;
 import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 
@@ -13,7 +13,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
-
+/**
+ * @author https://github.com/Funwayguy/InfiniteInvo
+ * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
+ */
 public class GuiBigInventory extends GuiInventory
 {
 	private BigContainerPlayer container;
@@ -63,23 +66,23 @@ public class GuiBigInventory extends GuiInventory
 				y += height+1;
 				GuiButton sortButton;
 
-				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, ModMutatedInventory.SORT_LEFT,"<");
+				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, ModInv.SORT_LEFT,"<");
 				this.buttonList.add(sortButton);
 
 				x += x_spacing;
 
-				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, ModMutatedInventory.SORT_RIGHT,">");
+				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, ModInv.SORT_RIGHT,">");
 				this.buttonList.add(sortButton);
 				
 				x = STARTX;
 				y += height+1;
 
-				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, ModMutatedInventory.SORT_LEFTALL,"<<");
+				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, ModInv.SORT_LEFTALL,"<<");
 				this.buttonList.add(sortButton);
 
 				x += x_spacing;
 				
-				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, ModMutatedInventory.SORT_RIGHTALL,">>");
+				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, ModInv.SORT_RIGHTALL,">>");
 				this.buttonList.add(sortButton);
 				
 			}
@@ -99,7 +102,7 @@ public class GuiBigInventory extends GuiInventory
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(new ResourceLocation("infiniteinvo", "textures/gui/inventory_gui_3.png"));
+        this.mc.getTextureManager().bindTexture(new ResourceLocation(ModInv.MODID, ModInv.INVENTORY_TEXTURE));
         int gLeft = this.guiLeft;
         int gTop = this.guiTop;
         this.drawTexturedModalRect(gLeft, gTop, 0, 0, xStart, yStart);
@@ -159,22 +162,25 @@ public class GuiBigInventory extends GuiInventory
 		if(container != null)
 		{
 	        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			this.mc.getTextureManager().bindTexture(new ResourceLocation("infiniteinvo", "textures/gui/inventory_gui_3.png"));
+			this.mc.getTextureManager().bindTexture(new ResourceLocation(ModInv.MODID, ModInv.INVENTORY_TEXTURE));
 			
 	        int maxPos = MathHelper.ceiling_float_int((float)ModSettings.invoSize/(float)(9 + ModSettings.MORE_COLS)) - (3 + ModSettings.MORE_ROWS);
-			int barPos = maxPos > 0 ? MathHelper.floor_float((float)container.scrollPos / (float)maxPos * (18F * (3F + (float)ModSettings.MORE_ROWS) - 8F)) : 0;
+			//int barPos = maxPos > 0 ? MathHelper.floor_float((float)container.scrollPos / (float)maxPos * (18F * (3F + (float)ModSettings.MORE_ROWS) - 8F)) : 0;
 			
-			if((ModSettings.MORE_COLS + 9) * (ModSettings.MORE_ROWS + 3) < ModSettings.invoSize)
+			//(ModSettings.MORE_COLS + 9)* (ModSettings.MORE_ROWS + 3)
+			//ModSettings.invoSize  = ModSettings.ALL_COLS * ModSettings.ALL_ROWS;is always true so
+			/*
+			if(ModSettings.ALL_COLS * ModSettings.ALL_ROWS < ModSettings.invoSize)
 			{
 				this.drawTexturedModalRect(this.xSize - 13, 83 + barPos, 60, 166, 8, 8);
-			}
+			}*/
 	        
 	        // Draw the empty/locked slot icons
-	        for(int j = 0; j < 3 + ModSettings.MORE_ROWS; j++)
+	        for(int j = 0; j < ModSettings.ALL_ROWS; j++)
 	        {
-	        	for(int i = 0; i < 9 + ModSettings.MORE_COLS; i++)
+	        	for(int i = 0; i < ModSettings.ALL_COLS; i++)
 	        	{
-	        		if(i + (j + container.scrollPos) * (9 + ModSettings.MORE_COLS) >= ModSettings.invoSize)
+	        		if(i + (j + container.scrollPos) * ModSettings.ALL_COLS >= ModSettings.invoSize)
 	        		{
 	        			this.drawTexturedModalRect(7 + i * square, 83 + j * square, 0, 166, square, square);
 	        		} else if(i + (j + container.scrollPos) * (9 + ModSettings.MORE_COLS) >= container.invo.getUnlockedSlots() - 9)

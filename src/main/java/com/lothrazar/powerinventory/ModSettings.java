@@ -3,7 +3,8 @@ package com.lothrazar.powerinventory;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**
- * A container for all the configurable settings in the mod
+ * @author https://github.com/Funwayguy/InfiniteInvo
+ * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
  */
 public class ModSettings
 {
@@ -16,8 +17,8 @@ public class ModSettings
 	public static int invoSize;
 	public static int MORE_ROWS;
 	public static int MORE_COLS;
-    public static int fullCols;// = 9 + ModSettings.MORE_COLS;
-    public static int fullRows;	//3 + ModSettings.MORE_ROWS;
+    public static int ALL_COLS;// = 9 + ModSettings.MORE_COLS;
+    public static int ALL_ROWS;	//3 + ModSettings.MORE_ROWS;
     public static boolean showEnderButton;
 	public static boolean showText;
 	public static boolean showCharacter;

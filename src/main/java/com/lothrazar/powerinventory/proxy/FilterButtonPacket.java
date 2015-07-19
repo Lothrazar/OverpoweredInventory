@@ -13,7 +13,9 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-
+/** 
+ * @author Lothrazar at https://github.com/PrinceOfAmber
+ */
 public class FilterButtonPacket implements IMessage , IMessageHandler<FilterButtonPacket, IMessage>
 {
 	public FilterButtonPacket() {}
@@ -44,12 +46,12 @@ public class FilterButtonPacket implements IMessage , IMessageHandler<FilterButt
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		ArrayList<BlockPos> b = ModMutatedInventory.findBlocks(p, Blocks.chest, ModSettings.filterRange);
+		ArrayList<BlockPos> b = UtilChestInventory.findBlocks(p, Blocks.chest, ModSettings.filterRange);
 		
 		for(BlockPos pos : b)
 		{
 			if(p.worldObj.getTileEntity(pos) instanceof TileEntityChest)
-				ModMutatedInventory.sortFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos), p);
+				UtilChestInventory.sortFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos), p);
 			
 		}
 		

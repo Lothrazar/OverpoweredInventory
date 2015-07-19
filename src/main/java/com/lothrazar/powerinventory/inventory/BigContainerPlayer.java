@@ -15,10 +15,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
 
 import com.google.common.collect.Lists;
-import com.lothrazar.powerinventory.ModMutatedInventory;
+import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.ModSettings;
 import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
-
+/**
+ * @author https://github.com/Funwayguy/InfiniteInvo
+ * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
+ */
 public class BigContainerPlayer extends ContainerPlayer
 {
 	private int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
@@ -244,7 +247,7 @@ public class BigContainerPlayer extends ContainerPlayer
 		{
 			Exception e = new NullPointerException();
 			 
-			ModMutatedInventory.logger.log(Level.FATAL, e.getStackTrace()[1].getClassName() + "." + e.getStackTrace()[1].getMethodName() + ":" + e.getStackTrace()[1].getLineNumber() + " is requesting slot " + id + " from inventory " + invo.getName() + " (" + invo.getClass().getName() + ") and got NULL!", e);
+			ModInv.logger.log(Level.FATAL, e.getStackTrace()[1].getClassName() + "." + e.getStackTrace()[1].getMethodName() + ":" + e.getStackTrace()[1].getLineNumber() + " is requesting slot " + id + " from inventory " + invo.getName() + " (" + invo.getClass().getName() + ") and got NULL!", e);
 		}
 		return slot;
 	}

@@ -10,7 +10,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
 /**
- * Class to assist with extended inventory persistence
+ * @author https://github.com/Funwayguy/InfiniteInvo
+ * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
  */
 public class InventoryPersistProperty implements IExtendedEntityProperties
 {
