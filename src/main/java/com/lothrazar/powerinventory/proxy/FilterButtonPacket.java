@@ -31,7 +31,6 @@ public class FilterButtonPacket implements IMessage , IMessageHandler<FilterButt
 	public void fromBytes(ByteBuf buf) 
 	{
 		tags = ByteBufUtils.readTag(buf);
-
 	}
 
 	@Override
@@ -39,7 +38,6 @@ public class FilterButtonPacket implements IMessage , IMessageHandler<FilterButt
 	{
 		ByteBufUtils.writeTag(buf, this.tags);
 	}
-
 
 	@Override
 	public IMessage onMessage(FilterButtonPacket message, MessageContext ctx)
@@ -55,13 +53,7 @@ public class FilterButtonPacket implements IMessage , IMessageHandler<FilterButt
 			
 		}
 		
-		
 		return null;
 	
 	}
-	
-	
-	
-  	
-	
 }

@@ -52,8 +52,8 @@ public class BigContainerPlayer extends ContainerPlayer
         int h = 0;
 
 
-		int shiftxOut = 9;
-        int shiftyOut = 6;
+		int shiftxOut = 8;//was 9
+        int shiftyOut = 6; 
         int shiftx = -7;
         int shifty = 0;
         //turn off all the shifts, if we are staying wtih a 2x2 version
@@ -68,6 +68,12 @@ public class BigContainerPlayer extends ContainerPlayer
 
         int slotNumber = 0;//the ID for the inventory slot
         this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, slotNumber, 144+shiftxOut, 36+shiftyOut));
+       
+        result = (Slot)this.inventorySlots.get(0);
+		//result.xDisplayPosition = 144 +shiftxOut-1;
+		//result.yDisplayPosition = 36 +shiftyOut; //TODO: fix these numbers
+        
+        
         int i,j,cx,cy;
 
         for (i = 0; i < craftSize; ++i)
@@ -95,7 +101,7 @@ public class BigContainerPlayer extends ContainerPlayer
             	}
             	else
             		this.addSlotToContainer(new Slot(this.craftMatrix, slotNumber, cx , cy));
-                //j + i * 2, 88 + j * 18, 26 + i * 18));
+ 
             }
         }
 
@@ -109,7 +115,7 @@ public class BigContainerPlayer extends ContainerPlayer
            // System.out.println("armor = "+slotNumber);
             this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy)
             {
-                private static final String __OBFID = "CL_00001755";
+             //   private static final String __OBFID = "CL_00001755";
                 /**
                  * Returns the maximum stack size for a given slot (usually the same as getInventoryStackLimit(), but 1
                  * in the case of armor slots)
@@ -150,10 +156,23 @@ public class BigContainerPlayer extends ContainerPlayer
         {
         	slotNumber = i;
         	cx = 8 + i * GuiBigInventory.square;
-        	cy = 142;
+        	cy = 142 + (GuiBigInventory.square * ModSettings.MORE_ROWS);
            // System.out.println("hotbar = "+slotNumber);
             this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy));
         }
+        
+        for( i = 1; i < 5; i++)
+		{
+			crafting[i - 1] = (Slot)this.inventorySlots.get(i);
+		}
+		int samup = 23;
+		int samleft = 7;
+		for( i = 0; i < 4; i++)
+		{
+			Slot hs = crafting[i];
+			hs.xDisplayPosition = 88 + ((i%2) * 18)-samleft;
+			hs.yDisplayPosition = 43 + ((i/2) * 18)-samup;
+		}
 
         this.onCraftMatrixChanged(this.craftMatrix);
 		this.invo = (BigInventoryPlayer)playerInventory;
@@ -176,29 +195,14 @@ public class BigContainerPlayer extends ContainerPlayer
 			hotbar[i - 36] = (Slot)this.inventorySlots.get(i);
 		}
 		
-		for( i = 1; i < 5; i++)
-		{
-			crafting[i - 1] = (Slot)this.inventorySlots.get(i);
-		}
 		
-		result = (Slot)this.inventorySlots.get(0);
-		result.xDisplayPosition = 144 +shiftxOut-1;
-		result.yDisplayPosition = 53 +shiftyOut-17; //TODO: fix these numbers
-		int samup = 23;
-		int samleft = 7;
-		for( i = 0; i < 4; i++)
-		{
-			Slot hs = crafting[i];
-			hs.xDisplayPosition = 88 + ((i%2) * 18)-samleft;
-			hs.yDisplayPosition = 43 + ((i/2) * 18)-samup;
-		}
-		
+		/*
 		for( i = 0; i < 9; i++)
 		{
 			Slot hs = hotbar[i];
 			hs.xDisplayPosition = 8 + (i * 18);
 			hs.yDisplayPosition = 142 + (18 * ModSettings.MORE_ROWS);
-		}
+		}*/
 
         for ( i = 3; i < MathHelper.ceiling_float_int((float)ModSettings.invoSize/9F); ++i)
         {
@@ -234,8 +238,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	        	crafting[3+h] = ns;
 	        }
         }
-      	//System.out.println(" FINALSIZE  "+this.invo.getSizeInventory());
-        
+     
         this.updateScroll();
 	}
 	

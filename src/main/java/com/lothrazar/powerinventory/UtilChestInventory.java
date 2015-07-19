@@ -57,7 +57,7 @@ public class UtilChestInventory
 	public static void sortFromPlayerToChestEntity(World world, TileEntityChest chest, EntityPlayer player)
   	{ 
   	//	int totalItemsMoved = 0; 
-  		int totalSlotsFreed = 0;
+  	//	int totalSlotsFreed = 0;
   		 
 		ItemStack chestItem;
 		ItemStack invItem;
@@ -119,7 +119,7 @@ public class UtilChestInventory
   						//item stacks with zero count do not destroy themselves, they show up and have unexpected behavior in game so set to empty
   						player.inventory.setInventorySlotContents(islotInv,null); 
   						
-  						totalSlotsFreed++;
+  					//	totalSlotsFreed++;
   					}
   					else
   					{

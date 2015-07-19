@@ -87,7 +87,6 @@ public class GuiBigInventory extends GuiInventory
 				
 			}
 			
-			
 			if(ModSettings.showFilterButton)
 			{
 				x = STARTX + enderWidth + 5;
@@ -125,7 +124,7 @@ public class GuiBigInventory extends GuiInventory
         	}
         }
         
-        int barW = (ModSettings.MORE_COLS + 9) * (ModSettings.MORE_ROWS + 3) < ModSettings.invoSize? 0 : 8;
+        int barW = ModSettings.ALL_COLS * ModSettings.ALL_ROWS < ModSettings.invoSize? 0 : 8;
 
         this.drawTexturedModalRect(gLeft + xStart + (ModSettings.MORE_COLS * square), gTop, 187, 0, 2, 119); // Scroll top
         this.drawTexturedModalRect(gLeft + xStart + (ModSettings.MORE_COLS * square) + 2, gTop, 189 + barW, 0, 13 - barW, 119); // Scroll top
@@ -163,18 +162,7 @@ public class GuiBigInventory extends GuiInventory
 		{
 	        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			this.mc.getTextureManager().bindTexture(new ResourceLocation(ModInv.MODID, ModInv.INVENTORY_TEXTURE));
-			
-	        int maxPos = MathHelper.ceiling_float_int((float)ModSettings.invoSize/(float)(9 + ModSettings.MORE_COLS)) - (3 + ModSettings.MORE_ROWS);
-			//int barPos = maxPos > 0 ? MathHelper.floor_float((float)container.scrollPos / (float)maxPos * (18F * (3F + (float)ModSettings.MORE_ROWS) - 8F)) : 0;
-			
-			//(ModSettings.MORE_COLS + 9)* (ModSettings.MORE_ROWS + 3)
-			//ModSettings.invoSize  = ModSettings.ALL_COLS * ModSettings.ALL_ROWS;is always true so
-			/*
-			if(ModSettings.ALL_COLS * ModSettings.ALL_ROWS < ModSettings.invoSize)
-			{
-				this.drawTexturedModalRect(this.xSize - 13, 83 + barPos, 60, 166, 8, 8);
-			}*/
-	        
+	
 	        // Draw the empty/locked slot icons
 	        for(int j = 0; j < ModSettings.ALL_ROWS; j++)
 	        {
@@ -183,10 +171,7 @@ public class GuiBigInventory extends GuiInventory
 	        		if(i + (j + container.scrollPos) * ModSettings.ALL_COLS >= ModSettings.invoSize)
 	        		{
 	        			this.drawTexturedModalRect(7 + i * square, 83 + j * square, 0, 166, square, square);
-	        		} else if(i + (j + container.scrollPos) * (9 + ModSettings.MORE_COLS) >= container.invo.getUnlockedSlots() - 9)
-	        		{
-	        			this.drawTexturedModalRect(7 + i * square, 83 + j * square, square, 166, square, square);
-	        		}
+	        		} 
 	        	}
 	        }
 		}

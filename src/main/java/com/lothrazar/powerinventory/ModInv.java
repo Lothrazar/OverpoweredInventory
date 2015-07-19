@@ -1,17 +1,7 @@
 package com.lothrazar.powerinventory;
 
-import java.util.ArrayList;
-
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.config.Configuration;
-
 import org.apache.logging.log4j.Logger;
-
 import com.lothrazar.powerinventory.proxy.CommonProxy;
 import com.lothrazar.powerinventory.proxy.EnderButtonPacket;
 import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
