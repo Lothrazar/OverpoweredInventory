@@ -40,11 +40,11 @@ public class BigContainerPlayer extends ContainerPlayer
 		craftMatrix = new InventoryCrafting(this, craftSize, craftSize);
 
         boolean onHold = false;
-        int[] holdSlot = new int[5];
+        int[] holdSlot = new int[5];//because 3x3 - 2x2 = 5
         int[] holdX = new int[holdSlot.length];
         int[] holdY = new int[holdSlot.length];
 
-        int i,j,cx,cy,craft=0,h = 0,slotNumber = 0;
+        int i,j,cx,cy,craft=0,h = 0,slotNumber = 0, rows=3, cols=9;//rows and cols of vanilla, not extra
 
         this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, slotNumber, 152, 42));
     
@@ -61,7 +61,7 @@ public class BigContainerPlayer extends ContainerPlayer
             
             	cx = 81 + j * GuiBigInventory.square;
             	cy = 26 + i * GuiBigInventory.square;
-            	if(this.craftSize == 3 && onHold)
+            	if(onHold)
             	{
             		//save these to add at the end
             		holdSlot[h] = slotNumber;
@@ -80,7 +80,7 @@ public class BigContainerPlayer extends ContainerPlayer
             }
         }
 
-        for (i = 0; i < 4; ++i)
+        for (i = 0; i < ModSettings.armorSize; ++i)
         {
         	cx = 8;
         	cy = 8 + i * GuiBigInventory.square;
@@ -110,11 +110,11 @@ public class BigContainerPlayer extends ContainerPlayer
             });
         }
 
-        for (i = 0; i < 3; ++i)      //inventory is 3 rows by 9 columns
+        for (i = 0; i < rows; ++i)      //inventory is 3 rows by 9 columns
         {
-            for (j = 0; j < 9; ++j)
+            for (j = 0; j < cols; ++j)
             {
-            	slotNumber = j + (i + 1) * 9;
+            	slotNumber = j + (i + 1) * cols;
                // System.out.println("plain invo = "+slotNumber);
             	cx = 8 + j * GuiBigInventory.square;
             	cy = 84 + i * GuiBigInventory.square;
@@ -122,7 +122,7 @@ public class BigContainerPlayer extends ContainerPlayer
             }
         }
 
-        for (i = 0; i < 9; ++i)//hotbar
+        for (i = 0; i < cols; ++i)//hotbar
         {
         	slotNumber = i;
         	cx = 8 + i * GuiBigInventory.square;
@@ -135,7 +135,7 @@ public class BigContainerPlayer extends ContainerPlayer
         this.onCraftMatrixChanged(this.craftMatrix);
 		this.invo = (BigInventoryPlayer)playerInventory;
 		
-		for(i = 9; i < 36; i++)
+		for(i = cols; i < 4*cols; i++)
 		{
 			// Add all the previous inventory slots to the organised array
 			 Slot os = (Slot)this.inventorySlots.get(i);
@@ -144,26 +144,26 @@ public class BigContainerPlayer extends ContainerPlayer
 			 ns.slotNumber = os.slotNumber;
 			 this.inventorySlots.set(i, ns);
 			 ns.onSlotChanged();
-			 slots[i - 9] = ns;
+			 slots[i - cols] = ns;
 		}
 
-        for ( i = 3; i < MathHelper.ceiling_float_int((float)ModSettings.invoSize/9F); ++i)
+        for ( i = rows; i < MathHelper.ceiling_float_int((float)(ModSettings.invoSize/cols)); ++i)
         {
-            for ( j = 0; j < 9; ++j)
+            for ( j = 0; j < cols; ++j)
             {
-            	if(j + (i * 9) >= ModSettings.invoSize && ModSettings.invoSize > 3*9)
+            	if(j + (i * cols) >= ModSettings.invoSize && ModSettings.invoSize > rows*cols)
             	{
             		break;
             	} 
             	else
             	{
             		// Moved off screen to avoid interaction until screen scrolls over the row
-            		slotNumber =  j + (i + 1) * 9;
+            		slotNumber =  j + (i + 1) * cols;
             		cx = -999;
             		cy = -999;
                   //  System.out.println("new slots = "+slotNumber);
             		Slot ns = new Slot(playerInventory,slotNumber, cx,cy);
-            		slots[slotNumber - 9] = ns;
+            		slots[slotNumber - cols] = ns;
             		this.addSlotToContainer(ns);
             	}
             }
