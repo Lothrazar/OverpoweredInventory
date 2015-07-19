@@ -23,7 +23,9 @@ import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
  */
 public class BigContainerPlayer extends ContainerPlayer
-{
+{	
+	//public final static int hotbarSize = 9;
+	public final static int armorSize = 4;//TODO: more stuff like this?
 	private final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
 	public int scrollPos = 0;
 	private BigInventoryPlayer invo;
@@ -80,7 +82,7 @@ public class BigContainerPlayer extends ContainerPlayer
             }
         }
 
-        for (i = 0; i < ModSettings.armorSize; ++i)
+        for (i = 0; i < armorSize; ++i)
         {
         	cx = 8;
         	cy = 8 + i * GuiBigInventory.square;
@@ -147,7 +149,7 @@ public class BigContainerPlayer extends ContainerPlayer
 			 slots[i - cols] = ns;
 		}
 
-        for ( i = rows; i < MathHelper.ceiling_float_int((float)(ModSettings.invoSize/cols)); ++i)
+        for ( i = rows; i < MathHelper.ceiling_float_int((float)(ModSettings.invoSize/9F)); ++i)
         {
             for ( j = 0; j < cols; ++j)
             {
