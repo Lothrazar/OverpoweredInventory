@@ -8,7 +8,6 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -27,6 +26,7 @@ import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
 import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonDepositAll;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonInventory;
 
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -112,7 +112,6 @@ public class EventHandler
 	{
 		if(event.gui == null){return;}//probably doesnt ever happen
 
-		
 		if(event.gui instanceof net.minecraft.client.gui.inventory.GuiChest || 
 		   event.gui instanceof net.minecraft.client.gui.inventory.GuiDispenser || 
 		   event.gui instanceof net.minecraft.client.gui.inventory.GuiBrewingStand || 
@@ -130,12 +129,15 @@ public class EventHandler
 			
 			x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
 			
-			//TODO: inv X from lang
+			//drop them in right to left
+			
 			event.buttonList.add(new GuiButtonClose(256, x,y,w,h));
 			
 			x = x - padding - w;
 			event.buttonList.add(new GuiButtonInventory(256, x,y,w,h,"I",ModInv.INV_PLAYER));
-			
+
+			x = x - padding - w;
+			event.buttonList.add(new GuiButtonDepositAll(256, x,y,w,h));
 			//could use reflection to get hidden dimensions
 			//protected int guiLeft; 
 		 //   protected int guiTop;
