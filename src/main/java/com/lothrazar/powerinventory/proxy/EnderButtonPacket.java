@@ -1,6 +1,10 @@
 package com.lothrazar.powerinventory.proxy;
 
+import com.lothrazar.powerinventory.ModInv;
+import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
+
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -37,9 +41,20 @@ public class EnderButtonPacket implements IMessage , IMessageHandler<EnderButton
 	public IMessage onMessage(EnderButtonPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
-
-		p.displayGUIChest(p.getInventoryEnderChest());
 		
+		int invType = message.tags.getInteger("i");
+
+		switch(invType)
+		{
+		case ModInv.INV_ENDER:
+			p.displayGUIChest(p.getInventoryEnderChest());
+		break;
+		case ModInv.INV_PLAYER:
+
+			//this packet should not have been sent. but keep empty branch so i remember it
+			break;
+		}
+
 		return null;
 	}
 }

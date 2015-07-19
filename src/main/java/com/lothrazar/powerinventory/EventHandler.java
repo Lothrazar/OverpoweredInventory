@@ -8,12 +8,14 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -24,6 +26,8 @@ import org.apache.logging.log4j.Level;
 import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
 import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonClose;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonInventory;
 
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -92,32 +96,51 @@ public class EventHandler
 		if(event.gui != null && event.gui.getClass() == GuiInventory.class && !(event.gui instanceof GuiBigInventory))
 		{
 			event.gui = new GuiBigInventory(Minecraft.getMinecraft().thePlayer);
-		} else if(event.gui == null && Minecraft.getMinecraft().thePlayer.inventoryContainer instanceof BigContainerPlayer)
+		} 
+		else if(event.gui == null && Minecraft.getMinecraft().thePlayer.inventoryContainer instanceof BigContainerPlayer)
 		{
 			// Reset scroll and inventory slot positioning to make sure it doesn't screw up later
 			((BigContainerPlayer)Minecraft.getMinecraft().thePlayer.inventoryContainer).scrollPos = 0;
 			((BigContainerPlayer)Minecraft.getMinecraft().thePlayer.inventoryContainer).updateScroll();
 		}
 	}
-	/*
+	
 	@SuppressWarnings("unchecked")
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onGuiPostInit(InitGuiEvent.Post event)
 	{
-		if(event.gui instanceof GuiBigInventory)
-		{
-			((GuiBigInventory)event.gui).redoButtons = true;
-		} else if(event.gui instanceof GuiContainer)
-		{
-			GuiContainer gui = (GuiContainer)event.gui;
-			Container container = gui.inventorySlots;
-			
-			//TODO: add buttons here when ready
-			//event.buttonList.add(new xxxxxxxxxxx(256, 0, 0, 1, 1, "", container, gui));
+		if(event.gui == null){return;}//probably doesnt ever happen
+
 		
+		if(event.gui instanceof net.minecraft.client.gui.inventory.GuiChest || 
+		   event.gui instanceof net.minecraft.client.gui.inventory.GuiDispenser || 
+		   event.gui instanceof net.minecraft.client.gui.inventory.GuiBrewingStand || 
+		   event.gui instanceof net.minecraft.client.gui.inventory.GuiBeacon || 
+		   event.gui instanceof net.minecraft.client.gui.inventory.GuiCrafting || 
+		   event.gui instanceof net.minecraft.client.gui.inventory.GuiFurnace)
+		{
+			//trapped, regular chests, minecart chests, and enderchest all use this class
+			//which extends  GuiContainer
+			//GuiContainer gui = (GuiContainer)event.gui;
+			//Container container = gui.inventorySlots;
+			int padding = 10;
+			
+			int x,y = padding,w = 20,h = w;
+			
+			x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
+			
+			//TODO: inv X from lang
+			event.buttonList.add(new GuiButtonClose(256, x,y,w,h));
+			
+			x = x - padding - w;
+			event.buttonList.add(new GuiButtonInventory(256, x,y,w,h,"I",ModInv.INV_PLAYER));
+			
+			//could use reflection to get hidden dimensions
+			//protected int guiLeft; 
+		 //   protected int guiTop;
 		}
-	}*/
+	}
 	
 	@SubscribeEvent
 	public void onWorldLoad(WorldEvent.Load event)

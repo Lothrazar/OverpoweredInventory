@@ -11,6 +11,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 /**
@@ -59,7 +60,7 @@ public class GuiBigInventory extends GuiInventory
 			int x_spacing = enderWidth/2 + 5;
 			if(ModSettings.showEnderButton)
 			{
-				this.buttonList.add(new GuiButtonEnderChest(buttonID(), x, y ,enderWidth,height));
+				this.buttonList.add(new GuiButtonInventory(buttonID(), x, y ,enderWidth,height,StatCollector.translateToLocal("tile.enderChest.name"),ModInv.INV_ENDER));
 			}
 			if(ModSettings.showSortButtons)
 			{

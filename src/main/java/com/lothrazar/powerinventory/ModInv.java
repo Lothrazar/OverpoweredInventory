@@ -33,7 +33,9 @@ public class ModInv
 	public static final String NBT_INVENTORY = "Inventory";
 	public static final String NBT_INVOSIZE = "invoSize";
 
-
+	public final static int INV_ENDER = 1;
+	public final static int INV_PLAYER = 2;
+	
 	public final static int SORT_LEFT = 1;
 	public final static int SORT_RIGHT = 2;
 	public final static int SORT_LEFTALL = -1;

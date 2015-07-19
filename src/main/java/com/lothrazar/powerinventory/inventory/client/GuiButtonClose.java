@@ -13,14 +13,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class GuiButtonEnderChest extends GuiButton 
+public class GuiButtonClose extends GuiButton 
 {
-	//imported from https://github.com/PrinceOfAmber/SamsPowerups , author Lothrazar aka Sam Bassett
-	//private EntityPlayer player;
-    public GuiButtonEnderChest(int buttonId, int x, int y, int w,int h)
+    public GuiButtonClose(int buttonId, int x, int y, int w,int h)
     {
-    	super(buttonId, x, y, w,h, StatCollector.translateToLocal("tile.enderChest.name"));
-    	//this.player = player;
+    	super(buttonId, x, y, w,h, "X");
     }
 
     @SideOnly(Side.CLIENT)
@@ -31,12 +28,7 @@ public class GuiButtonEnderChest extends GuiButton
     	
     	if(pressed)
     	{
-    		//do what the button is meant to do
-    	
-    		//send packet to server from client (this) makes sense
-    		NBTTagCompound tags = new NBTTagCompound();
-
-    		ModInv.instance.network.sendToServer(new EnderButtonPacket(tags));
+    		mc.thePlayer.closeScreen();
     	}
     	
     	return pressed;
