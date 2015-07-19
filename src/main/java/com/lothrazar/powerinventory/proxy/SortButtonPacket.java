@@ -19,7 +19,7 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 {
 	public SortButtonPacket() {}
 	NBTTagCompound tags = new NBTTagCompound();
-	public static final int ID = 2;
+	public static final int ID = 3;
 	
 	public SortButtonPacket(NBTTagCompound ptags)
 	{

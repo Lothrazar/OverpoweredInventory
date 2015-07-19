@@ -20,7 +20,7 @@ public class FilterButtonPacket implements IMessage , IMessageHandler<FilterButt
 {
 	public FilterButtonPacket() {}
 	NBTTagCompound tags = new NBTTagCompound();
-	public static final int ID = 3;
+	public static final int ID = 2;
 	
 	public FilterButtonPacket(NBTTagCompound ptags)
 	{

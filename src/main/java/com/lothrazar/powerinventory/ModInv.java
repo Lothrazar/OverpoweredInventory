@@ -1,8 +1,11 @@
 package com.lothrazar.powerinventory;
 
 import net.minecraftforge.common.config.Configuration;
+
 import org.apache.logging.log4j.Logger;
+
 import com.lothrazar.powerinventory.proxy.CommonProxy;
+import com.lothrazar.powerinventory.proxy.DepositButtonPacket;
 import com.lothrazar.powerinventory.proxy.EnderButtonPacket;
 import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
 import com.lothrazar.powerinventory.proxy.SortButtonPacket;
@@ -59,6 +62,7 @@ public class ModInv
     	network.registerMessage(EnderButtonPacket.class, EnderButtonPacket.class, EnderButtonPacket.ID, Side.SERVER);
     	network.registerMessage(SortButtonPacket.class, SortButtonPacket.class, SortButtonPacket.ID, Side.SERVER);
     	network.registerMessage(FilterButtonPacket.class, FilterButtonPacket.class, FilterButtonPacket.ID, Side.SERVER);
+    	network.registerMessage(DepositButtonPacket.class, DepositButtonPacket.class, DepositButtonPacket.ID, Side.SERVER);
     	
     	config = new Configuration(event.getSuggestedConfigurationFile(), true);
     	config.load();

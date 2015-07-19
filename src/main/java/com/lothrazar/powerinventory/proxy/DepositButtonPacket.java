@@ -20,7 +20,7 @@ public class DepositButtonPacket implements IMessage , IMessageHandler<DepositBu
 {
 	public DepositButtonPacket() {}
 	NBTTagCompound tags = new NBTTagCompound();
-	public static final int ID = 3;
+	public static final int ID = 0;
 	
 	public DepositButtonPacket(NBTTagCompound ptags)
 	{
