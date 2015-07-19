@@ -24,19 +24,13 @@ import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
  */
 public class BigContainerPlayer extends ContainerPlayer
 {
-	private int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
+	private final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
 	public int scrollPos = 0;
-	public BigInventoryPlayer invo;
+	private BigInventoryPlayer invo;
     public boolean isLocalWorld;
     private final EntityPlayer thePlayer;
-	/**
-	 * A more organised version of 'inventorySlots' that doesn't include the hotbar
-	 */
-	Slot[] slots = new Slot[ModSettings.invoSize];
-	Slot[] hotbar = new Slot[9];
-	Slot[] crafting = new Slot[craftSize*craftSize];
-	Slot result;
-	
+    private Slot[] slots = new Slot[ModSettings.invoSize];
+
 	@SuppressWarnings("unchecked")
 	public BigContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
 	{
@@ -47,35 +41,13 @@ public class BigContainerPlayer extends ContainerPlayer
 
         boolean onHold = false;
         int[] holdSlot = new int[5];
-        int[] holdX = new int[5];
-        int[] holdY = new int[5];
-        int h = 0;
+        int[] holdX = new int[holdSlot.length];
+        int[] holdY = new int[holdSlot.length];
 
+        int i,j,cx,cy,craft=0,h = 0,slotNumber = 0;
 
-		int shiftxOut = 8;//was 9
-        int shiftyOut = 6; 
-        int shiftx = -7;
-        int shifty = 0;
-        //turn off all the shifts, if we are staying wtih a 2x2 version
-        if(this.craftSize == 2)
-        {
-        	shiftxOut = 0;
-        	shiftyOut = 0;
-        	shiftx = 0;
-        	shifty = 0;
-        }
-        
-
-        int slotNumber = 0;//the ID for the inventory slot
-        this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, slotNumber, 144+shiftxOut, 36+shiftyOut));
-       
-        result = (Slot)this.inventorySlots.get(0);
-		//result.xDisplayPosition = 144 +shiftxOut-1;
-		//result.yDisplayPosition = 36 +shiftyOut; //TODO: fix these numbers
-        
-        
-        int i,j,cx,cy;
-
+        this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, slotNumber, 152, 42));
+    
         for (i = 0; i < craftSize; ++i)
         {
         	onHold = false;
@@ -86,22 +58,25 @@ public class BigContainerPlayer extends ContainerPlayer
             	if(j == this.craftSize-1)onHold = true; //hold right and bottom column
             	
             	slotNumber = j + i * this.craftSize;
-                //System.out.println("crafting = "+slotNumber);
             
-            	cx = 88 + j * GuiBigInventory.square + shiftx;
-            	cy = 26 + i * GuiBigInventory.square + shifty;
+            	cx = 81 + j * GuiBigInventory.square;
+            	cy = 26 + i * GuiBigInventory.square;
             	if(this.craftSize == 3 && onHold)
             	{
             		//save these to add at the end
-            		//System.out.println("on hold "+slotNumber);
             		holdSlot[h] = slotNumber;
             		holdX[h] = cx;
             		holdY[h] = cy;
             		h++;
             	}
             	else
+            	{
+        			cx = 81 + ((craft%2) * GuiBigInventory.square );
+        			cy = 20 + ((craft/2) * GuiBigInventory.square );
+      
             		this.addSlotToContainer(new Slot(this.craftMatrix, slotNumber, cx , cy));
- 
+            		craft++;
+            	}
             }
         }
 
@@ -116,17 +91,12 @@ public class BigContainerPlayer extends ContainerPlayer
             this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy)
             {
              //   private static final String __OBFID = "CL_00001755";
-                /**
-                 * Returns the maximum stack size for a given slot (usually the same as getInventoryStackLimit(), but 1
-                 * in the case of armor slots)
-                 */
+ 
                 public int getSlotStackLimit()
                 {
                     return 1;
                 }
-                /**
-                 * Check if the stack is a valid item for this slot. Always true beside for the armor slots.
-                 */
+            
                 public boolean isItemValid(ItemStack stack)
                 {
                     if (stack == null) return false;
@@ -152,27 +122,15 @@ public class BigContainerPlayer extends ContainerPlayer
             }
         }
 
-        for (i = 0; i < 9; ++i)
+        for (i = 0; i < 9; ++i)//hotbar
         {
         	slotNumber = i;
         	cx = 8 + i * GuiBigInventory.square;
         	cy = 142 + (GuiBigInventory.square * ModSettings.MORE_ROWS);
            // System.out.println("hotbar = "+slotNumber);
+        	//hotbar[i] = ;
             this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy));
         }
-        
-        for( i = 1; i < 5; i++)
-		{
-			crafting[i - 1] = (Slot)this.inventorySlots.get(i);
-		}
-		int samup = 23;
-		int samleft = 7;
-		for( i = 0; i < 4; i++)
-		{
-			Slot hs = crafting[i];
-			hs.xDisplayPosition = 88 + ((i%2) * 18)-samleft;
-			hs.yDisplayPosition = 43 + ((i/2) * 18)-samup;
-		}
 
         this.onCraftMatrixChanged(this.craftMatrix);
 		this.invo = (BigInventoryPlayer)playerInventory;
@@ -188,30 +146,16 @@ public class BigContainerPlayer extends ContainerPlayer
 			 ns.onSlotChanged();
 			 slots[i - 9] = ns;
 		}
-		
-		for( i = 36; i < 45; i++)
-		{
-			// Get the hotbar for repositioning
-			hotbar[i - 36] = (Slot)this.inventorySlots.get(i);
-		}
-		
-		
-		/*
-		for( i = 0; i < 9; i++)
-		{
-			Slot hs = hotbar[i];
-			hs.xDisplayPosition = 8 + (i * 18);
-			hs.yDisplayPosition = 142 + (18 * ModSettings.MORE_ROWS);
-		}*/
 
         for ( i = 3; i < MathHelper.ceiling_float_int((float)ModSettings.invoSize/9F); ++i)
         {
             for ( j = 0; j < 9; ++j)
             {
-            	if(j + (i * 9) >= ModSettings.invoSize && ModSettings.invoSize > 27)
+            	if(j + (i * 9) >= ModSettings.invoSize && ModSettings.invoSize > 3*9)
             	{
             		break;
-            	} else
+            	} 
+            	else
             	{
             		// Moved off screen to avoid interaction until screen scrolls over the row
             		slotNumber =  j + (i + 1) * 9;
@@ -224,19 +168,15 @@ public class BigContainerPlayer extends ContainerPlayer
             	}
             }
         }
-        if(craftSize == 3)// Finally, add the five new slots to the 3x3 crafting grid (they end up being 45-49 inclusive)
+        
+ 
+        for(h = 0; h < holdSlot.length; ++h)
         {
-	        for(h = 0; h < 5; ++h)
-	        {
-	        	samup=6;
-	        	slotNumber = holdSlot[h];
-	    		cx = holdX[h];
-	    		cy = holdY[h]-samup;
-	    		Slot ns = new Slot(this.craftMatrix, slotNumber, cx , cy );
-	        	this.addSlotToContainer(ns);
-	          //	System.out.println(" -from hold"+slotNumber+","+cx+","+cy+";");
-	        	crafting[3+h] = ns;
-	        }
+        	slotNumber = holdSlot[h];
+    		cx = holdX[h];
+    		cy = holdY[h] - 6;
+    		Slot ns = new Slot(this.craftMatrix, slotNumber, cx , cy );
+        	this.addSlotToContainer(ns);
         }
      
         this.updateScroll();
