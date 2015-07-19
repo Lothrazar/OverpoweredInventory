@@ -47,6 +47,8 @@ public class DepositButtonPacket implements IMessage , IMessageHandler<DepositBu
 		 System.out.println("Put into open container");
 		 
 		 if(p.openContainer != null)	 System.out.println(p.openContainer.getClass().getName());
+		 
+		// p.openContainer.canMergeSlot(p_94530_1_, p_94530_2_)
 		
 		return null;
 	
