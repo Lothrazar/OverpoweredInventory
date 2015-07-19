@@ -1,0 +1,16 @@
+[
+{
+  "modid": "powerinventory",
+  "name": "Power Inventory",
+  "description": "Originally a fork of InfiniteInvo https://github.com/Funwayguy/InfiniteInvo.  Since then most original features were removed and my own were added, to create this unique mod",
+  "version": "1.0.0",
+  "mcversion": "1.8",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Funwayguy","Bacon_Donut","Lothrazar"],
+  "credits": "Thank's Siyliss siyLove",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
