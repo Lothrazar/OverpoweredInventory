@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -25,7 +24,6 @@ import org.apache.logging.log4j.Level;
 import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
 import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
-import com.lothrazar.powerinventory.proxy.InvoPacket;
 
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -67,14 +65,7 @@ public class EventHandler
 				InventoryPersistProperty.get(player).onJoinWorld();
 			}
 			
-			if(event.world.isRemote)
-			{
-				NBTTagCompound requestTags = new NBTTagCompound();
-				requestTags.setInteger(ModInv.NBT_ID, 1);
-				requestTags.setInteger(ModInv.NBT_WORLD, event.world.provider.getDimensionId());
-				requestTags.setString(ModInv.NBT_PLAYER, player.getName());
-				ModInv.instance.network.sendToServer(new InvoPacket(requestTags));
-			} else
+			if(event.world.isRemote == false)
 			{
 				ModSettings.LoadFromCache();
 			}
