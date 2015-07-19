@@ -50,13 +50,13 @@ public class InvoPacket implements IMessage
 	
 	public static class HandleServer implements IMessageHandler<InvoPacket,IMessage>
 	{
-		@SuppressWarnings("unchecked")
+		//@SuppressWarnings("unchecked")
 		@Override
 		public IMessage onMessage(InvoPacket message, MessageContext ctx)
 		{
-			if(message.tags.hasKey("ID"))
+			if(message.tags.hasKey(ModInv.NBT_ID))
 			{
-				if(message.tags.getInteger("ID") == 0)
+				if(message.tags.getInteger(ModInv.NBT_ID) == 0)
 				{
 					WorldServer world = MinecraftServer.getServer().worldServerForDimension(message.tags.getInteger("World"));
 					
@@ -74,25 +74,20 @@ public class InvoPacket implements IMessage
 
 					int unlocked = player.getEntityData().getInteger("INFINITE_INVO_UNLOCKED");
 		
-					int totalXP= 0 ;
-					if(totalXP >= -99)
-					{
-				
-						
-						unlocked++;
-						player.getEntityData().setInteger("INFINITE_INVO_UNLOCKED", unlocked);
-						
-						EventHandler.unlockCache.put(player.getName(), unlocked);//player.getCommandSenderName()
-				
-						
-						NBTTagCompound replyTags = new NBTTagCompound();
-						replyTags.setInteger("ID", 0);
-						replyTags.setString("Player", player.getName());//player.getCommandSenderName()
-						replyTags.setInteger("Unlocked", unlocked);
-						return new InvoPacket(replyTags);
-						
-					}
-				} else if(message.tags.getInteger("ID") == 1) // Requesting what slots have been unlocked and the server side settings
+		 
+					unlocked++;
+					player.getEntityData().setInteger("INFINITE_INVO_UNLOCKED", unlocked);
+					
+					EventHandler.unlockCache.put(player.getName(), unlocked);//player.getCommandSenderName()
+			
+					NBTTagCompound replyTags = new NBTTagCompound();
+					replyTags.setInteger(ModInv.NBT_ID, 0);
+					replyTags.setString("Player", player.getName());//player.getCommandSenderName()
+					replyTags.setInteger("Unlocked", unlocked);
+					return new InvoPacket(replyTags);
+				 
+				} 
+				else if(message.tags.getInteger(ModInv.NBT_ID) == 1) // Requesting what slots have been unlocked and the server side settings
 				{
 					WorldServer world = MinecraftServer.getServer().worldServerForDimension(message.tags.getInteger("World"));
 					
@@ -131,13 +126,13 @@ public class InvoPacket implements IMessage
 					NBTTagCompound cachedSettings = new NBTTagCompound();
 					cachedSettings.setInteger("invoSize", ModSettings.invoSize);
 					NBTTagCompound reply = new NBTTagCompound();
-					reply.setInteger("ID", 0);
+					reply.setInteger(ModInv.NBT_ID, 0);
 					reply.setString("Player", player.getName());
 					reply.setInteger("Unlocked", unlocked);
 					reply.setTag("Settings", cachedSettings);
 					
-					return new InvoPacket(reply);
-				} else if(message.tags.getInteger("ID") == 2) // Experimental
+					return new InvoPacket(reply); 
+				} else if(message.tags.getInteger(ModInv.NBT_ID) == 2) // Experimental
 				{
 					WorldServer world = MinecraftServer.getServer().worldServerForDimension(message.tags.getInteger("World"));
 					

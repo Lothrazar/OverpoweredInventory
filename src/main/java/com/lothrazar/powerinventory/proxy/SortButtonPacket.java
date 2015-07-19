@@ -30,7 +30,6 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 	public void fromBytes(ByteBuf buf) 
 	{
 		tags = ByteBufUtils.readTag(buf);
-
 	}
 
 	@Override
@@ -66,8 +65,8 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 		}
 	  
 		return null;
-	
 	}
+	
 	private void shiftRightAll(InventoryPlayer invo)
 	{
 		Queue<Integer> empty = new LinkedList<Integer>();
@@ -94,6 +93,7 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 			}
 		}
 	}
+	
 	private void shiftLeftAll(InventoryPlayer invo)
 	{
 		Queue<Integer> empty = new LinkedList<Integer>();
@@ -108,9 +108,8 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 			{
 				empty.add(i);
 			}
-			else
+			else  //find an empty spot for it
 			{
-				//find an empty spot for it
 				if(empty.size() > 0 && empty.peek() < i)
 				{
 					//poll remove it since its not empty anymore
@@ -131,6 +130,7 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 		invo.setInventorySlotContents(to, invo.getStackInSlot(from));
 		invo.setInventorySlotContents(from, null);
 	}
+	
 	private void shiftRightOne(InventoryPlayer invo) 
 	{
 		int iEmpty = -1;
@@ -140,25 +140,21 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 		for(int i = invo.getSizeInventory() - (ModSettings.armorSize + 1); i >= ModSettings.hotbarSize;i--)//388-4 384
 		{
 			item = invo.getStackInSlot(i);
+			
 			if(item == null)
 			{
 				iEmpty = i;
 			}
-			else
+			else if(iEmpty > 0) //move i into iEmpty
 			{
-				if(iEmpty > 0)
-				{
-					//move i into iEmpty
-					//invo.setInventorySlotContents(iEmpty, invo.getStackInSlot(i));
-					//invo.setInventorySlotContents(i, null);
-					
-					moveFromTo(invo,i,iEmpty);
-					
-					iEmpty = i;					
-				}
-			}
+				moveFromTo(invo,i,iEmpty);
+				
+				iEmpty = i;					
+			 
+			}//else keep looking
 		}
 	}
+	
 	private void shiftLeftOne(InventoryPlayer invo) 
 	{
 		int iEmpty = -1;
@@ -166,28 +162,18 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 		//0 to 8 is crafting
 		//armor is 384-387
 		for(int i = ModSettings.hotbarSize; i < invo.getSizeInventory() - ModSettings.armorSize;i++)
-		{
-		
+		{ 
 			item = invo.getStackInSlot(i);
+			
 			if(item == null)
 			{
 				iEmpty = i;
 			}
-			else
-			{
-				//i is not empty
+			else if(iEmpty > 0)
+			{ 
+				moveFromTo(invo,i,iEmpty);
 				
-				if(iEmpty > 0)
-				{
-					//move i into iEmpty
-					//invo.setInventorySlotContents(iEmpty, invo.getStackInSlot(i));
-					//invo.setInventorySlotContents(i, null);
-
-					moveFromTo(invo,i,iEmpty);
-					
-					
-					iEmpty = i;					
-				}
+				iEmpty = i;		
 			}
 		}
 	}

@@ -25,7 +25,6 @@ public class EnderButtonPacket implements IMessage , IMessageHandler<EnderButton
 	public void fromBytes(ByteBuf buf) 
 	{
 		tags = ByteBufUtils.readTag(buf);
-
 	}
 
 	@Override
@@ -34,16 +33,13 @@ public class EnderButtonPacket implements IMessage , IMessageHandler<EnderButton
 		ByteBufUtils.writeTag(buf, this.tags);
 	}
 
-
 	@Override
 	public IMessage onMessage(EnderButtonPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		
 		p.displayGUIChest(p.getInventoryEnderChest());
 		
 		return null;
-	
 	}
 }

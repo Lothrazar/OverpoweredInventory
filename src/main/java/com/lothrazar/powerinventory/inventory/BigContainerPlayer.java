@@ -24,8 +24,8 @@ import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
  */
 public class BigContainerPlayer extends ContainerPlayer
 {	
-	//public final static int hotbarSize = 9;
-	public final static int armorSize = 4;//TODO: more stuff like this?
+	public final static int OFFSCREEN = -999;
+	public final static int armorSize = 4; 
 	private final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
 	public int scrollPos = 0;
 	private BigInventoryPlayer invo;
@@ -88,8 +88,7 @@ public class BigContainerPlayer extends ContainerPlayer
         	cy = 8 + i * GuiBigInventory.square;
             final int k = i;
             slotNumber =  playerInventory.getSizeInventory() - 1 - i;
-            //used to be its own class SlotArmor
-           // System.out.println("armor = "+slotNumber);
+
             this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy)
             {
              //   private static final String __OBFID = "CL_00001755";
@@ -161,8 +160,8 @@ public class BigContainerPlayer extends ContainerPlayer
             	{
             		// Moved off screen to avoid interaction until screen scrolls over the row
             		slotNumber =  j + (i + 1) * cols;
-            		cx = -999;
-            		cy = -999;
+            		cx = OFFSCREEN;
+            		cy = OFFSCREEN;
                   //  System.out.println("new slots = "+slotNumber);
             		Slot ns = new Slot(playerInventory,slotNumber, cx,cy);
             		slots[slotNumber - cols] = ns;
@@ -171,7 +170,6 @@ public class BigContainerPlayer extends ContainerPlayer
             }
         }
         
- 
         for(h = 0; h < holdSlot.length; ++h)
         {
         	slotNumber = holdSlot[h];
@@ -196,7 +194,6 @@ public class BigContainerPlayer extends ContainerPlayer
 		}
 		return slot;
 	}
-	
 	
 	@Override
     public void onContainerClosed(EntityPlayer playerIn)
@@ -247,8 +244,8 @@ public class BigContainerPlayer extends ContainerPlayer
             		} else
             		{
             			Slot s = slots[index];
-            			s.xDisplayPosition = -999;
-            			s.yDisplayPosition = -999;
+            			s.xDisplayPosition = OFFSCREEN;
+            			s.yDisplayPosition = OFFSCREEN;
             		}
             	}
             }
@@ -259,18 +256,18 @@ public class BigContainerPlayer extends ContainerPlayer
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
 	@Override
-    public ItemStack transferStackInSlot(EntityPlayer p_82846_1_, int p_82846_2_)
+    public ItemStack transferStackInSlot(EntityPlayer p, int craft)
     {
 		int vLocked = invo.getUnlockedSlots() < 36? 36 - invo.getUnlockedSlots() : 0;
         ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(p_82846_2_);
+        Slot slot = (Slot)this.inventorySlots.get(craft);
 
         if (slot != null && slot.getHasStack())
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            if (p_82846_2_ == 0) // Crafting result
+            if (craft == 0) // Crafting result
             {
                 if (!this.mergeItemStack(itemstack1, 9, 45, true))
                 {
@@ -279,14 +276,14 @@ public class BigContainerPlayer extends ContainerPlayer
 
                 slot.onSlotChange(itemstack1, itemstack);
             }
-            else if (p_82846_2_ >= 1 && p_82846_2_ < 5) // Crafting grid
+            else if (craft >= 1 && craft < 5) // Crafting grid
             {
                 if (!this.mergeItemStack(itemstack1, 9, 45, false))
                 {
                     return null;
                 }
             }
-            else if (p_82846_2_ >= 5 && p_82846_2_ < 9) // Armor
+            else if (craft >= 5 && craft < 9) // Armor
             {
                 if (!this.mergeItemStack(itemstack1, 9, 45, false))
                 {
@@ -302,14 +299,14 @@ public class BigContainerPlayer extends ContainerPlayer
                     return null;
                 }
             }
-            else if ((p_82846_2_ >= 9 && p_82846_2_ < 36) || (p_82846_2_ >= 45 && p_82846_2_ < invo.getUnlockedSlots() + 9))
+            else if ((craft >= 9 && craft < 36) || (craft >= 45 && craft < invo.getUnlockedSlots() + 9))
             {
                 if (!this.mergeItemStack(itemstack1, 36, 45, false))
                 {
                     return null;
                 }
             }
-            else if (p_82846_2_ >= 36 && p_82846_2_ < 45) // Hotbar
+            else if (craft >= 36 && craft < 45) // Hotbar
             {
                 if (!this.mergeItemStack(itemstack1, 9, 36 - vLocked, false) && (invo.getUnlockedSlots() - 36 <= 0 || !this.mergeItemStack(itemstack1, 45, 45 + (invo.getUnlockedSlots() - 36), false)))
                 {
@@ -335,7 +332,7 @@ public class BigContainerPlayer extends ContainerPlayer
                 return null;
             }
 
-            slot.onPickupFromSlot(p_82846_1_, itemstack1);
+            slot.onPickupFromSlot(p, itemstack1);
         }
 
         return itemstack;
