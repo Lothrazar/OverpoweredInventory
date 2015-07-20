@@ -1,6 +1,5 @@
 package com.lothrazar.powerinventory.proxy;
 
-import com.lothrazar.powerinventory.ModInv;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,13 +10,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class EnderButtonPacket implements IMessage , IMessageHandler<EnderButtonPacket, IMessage>
+public class WithdrawButtonPacket implements IMessage , IMessageHandler<WithdrawButtonPacket, IMessage>
 {
-	public EnderButtonPacket() {}
+	public WithdrawButtonPacket() {}
 	NBTTagCompound tags = new NBTTagCompound();
-	public static final int ID = 1;
+	public static final int ID = 4;
 	
-	public EnderButtonPacket(NBTTagCompound ptags)
+	public WithdrawButtonPacket(NBTTagCompound ptags)
 	{
 		tags = ptags;
 	}
@@ -35,23 +34,20 @@ public class EnderButtonPacket implements IMessage , IMessageHandler<EnderButton
 	}
 
 	@Override
-	public IMessage onMessage(EnderButtonPacket message, MessageContext ctx)
+	public IMessage onMessage(WithdrawButtonPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
-		
-		int invType = message.tags.getInteger("i");
 
-		switch(invType)
-		{
-		case ModInv.INV_ENDER:
-			p.displayGUIChest(p.getInventoryEnderChest());
-		break;
-		case ModInv.INV_PLAYER:
-
-			//this packet should not have been sent. but keep empty branch so i remember it
-			break;
-		}
-
+		 if(p.openContainer != null)
+		 {
+			 System.out.println("TODO: WITHDRAW FROM "+p.openContainer.getClass().getName());//net.minecraft.inventory.ContainerDispenser or whatever
+		 
+			// UtilChestInventory.depositPlayerToContainer(p, p.openContainer);
+			// p.inventoryContainer.detectAndSendChanges();
+			// p.openContainer.detectAndSendChanges();
+			 
+		 }
+		 
 		return null;
 	}
 }

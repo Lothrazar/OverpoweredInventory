@@ -28,6 +28,7 @@ import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonDepositAll;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonInventory;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonWithdrawAll;
 
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -138,6 +139,15 @@ public class EventHandler
 
 			x = x - padding - w;
 			event.buttonList.add(new GuiButtonDepositAll(256, x,y,w,h));
+
+			x = x - padding - w;
+			event.buttonList.add(new GuiButtonWithdrawAll(256, x,y,w,h));
+			
+			
+			
+			
+			
+			
 			//could use reflection to get hidden dimensions
 			//protected int guiLeft; 
 		 //   protected int guiTop;

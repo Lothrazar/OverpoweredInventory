@@ -1,16 +1,10 @@
 package com.lothrazar.powerinventory.proxy;
 
-import java.util.ArrayList;
-
 import com.lothrazar.powerinventory.*;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -46,8 +40,6 @@ public class DepositButtonPacket implements IMessage , IMessageHandler<DepositBu
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		 System.out.println("Put into open container");
-		 
 		 if(p.openContainer != null)
 		 {
 			 System.out.println(p.openContainer.getClass().getName());//net.minecraft.inventory.ContainerDispenser or whatever
@@ -58,8 +50,6 @@ public class DepositButtonPacket implements IMessage , IMessageHandler<DepositBu
 			 
 		 }
 		 
-		// p.openContainer.canMergeSlot(p_94530_1_, p_94530_2_)
-		
 		return null;
 	}
 }

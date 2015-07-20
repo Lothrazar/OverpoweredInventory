@@ -9,6 +9,7 @@ import com.lothrazar.powerinventory.proxy.DepositButtonPacket;
 import com.lothrazar.powerinventory.proxy.EnderButtonPacket;
 import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
 import com.lothrazar.powerinventory.proxy.SortButtonPacket;
+import com.lothrazar.powerinventory.proxy.WithdrawButtonPacket;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -63,6 +64,7 @@ public class ModInv
     	network.registerMessage(SortButtonPacket.class, SortButtonPacket.class, SortButtonPacket.ID, Side.SERVER);
     	network.registerMessage(FilterButtonPacket.class, FilterButtonPacket.class, FilterButtonPacket.ID, Side.SERVER);
     	network.registerMessage(DepositButtonPacket.class, DepositButtonPacket.class, DepositButtonPacket.ID, Side.SERVER);
+    	network.registerMessage(WithdrawButtonPacket.class, WithdrawButtonPacket.class, WithdrawButtonPacket.ID, Side.SERVER);
     	
     	config = new Configuration(event.getSuggestedConfigurationFile(), true);
     	config.load();

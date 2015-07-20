@@ -5,7 +5,6 @@ import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
 import com.lothrazar.powerinventory.ModInv;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;

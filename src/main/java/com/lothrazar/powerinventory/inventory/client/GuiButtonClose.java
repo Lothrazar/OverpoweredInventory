@@ -1,13 +1,7 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.proxy.EnderButtonPacket;
-
-import com.lothrazar.powerinventory.ModInv;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /** 

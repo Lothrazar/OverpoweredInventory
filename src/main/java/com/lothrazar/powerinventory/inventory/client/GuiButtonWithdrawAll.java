@@ -1,6 +1,6 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.proxy.DepositButtonPacket;
+import com.lothrazar.powerinventory.proxy.WithdrawButtonPacket;
 import com.lothrazar.powerinventory.ModInv;
 
 import net.minecraft.client.Minecraft;
@@ -11,11 +11,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class GuiButtonDepositAll extends GuiButton 
+public class GuiButtonWithdrawAll extends GuiButton 
 {
-    public GuiButtonDepositAll(int buttonId, int x, int y, int w,int h)
+    public GuiButtonWithdrawAll(int buttonId, int x, int y, int w,int h)
     {
-    	super(buttonId, x, y, w,h, "D");
+    	super(buttonId, x, y, w,h, "W");
     }
 
     @SideOnly(Side.CLIENT)
@@ -25,8 +25,8 @@ public class GuiButtonDepositAll extends GuiButton
     	boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     	
     	if(pressed)
-    	{
-    		ModInv.instance.network.sendToServer(new DepositButtonPacket(new NBTTagCompound()));
+    	{ 
+    		ModInv.instance.network.sendToServer(new WithdrawButtonPacket(new NBTTagCompound())); 
     	}
     	
     	return pressed;
