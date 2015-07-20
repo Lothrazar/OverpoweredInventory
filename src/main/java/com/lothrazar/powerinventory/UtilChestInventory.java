@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
@@ -53,9 +54,57 @@ public class UtilChestInventory
 		return found; 
 	}
 
-	//source: https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
+	public static void depositPlayerToContainer(EntityPlayer player, Container container)
+	{
+		ItemStack stackFrom;
+		for(int ip = ModSettings.hotbarSize; ip < player.inventory.getSizeInventory() - ModSettings.armorSize; ip++)
+		{
+			stackFrom = player.inventory.getStackInSlot(ip);
+			if(stackFrom == null){continue;}
+			
+			for(int i = 0; i < container.getInventory().size(); i++)
+			{
+				if(container.getSlot(i).getHasStack() == false)
+				{
+					 //its empty, dump away
+					container.getSlot(i).putStack(stackFrom);
+				}
+				else
+				{
+					ItemStack stackTo = container.getSlot(i).getStack();
+					 
+					if(stackFrom.isItemEqual(stackTo))//here.getItem() == splayer.getItem() && here.getMetadata() == splayer.getMetadata())
+					{
+						int room = stackTo.getMaxStackSize() - stackTo.stackSize;
+						if(room > 0)
+						{
+							int toDeposit = Math.min(room, stackFrom.stackSize);
+					 //System.out.println("dep "+toDeposit+" at "+i+ " from "+ip);
+					 
+					 //so if they have room for 12, and we have 55, toDeposit is only 12
+					 
+					 		stackTo.stackSize += toDeposit;
+							container.getSlot(i).putStack(stackTo);
+					 		//
+	
+							if(stackFrom.stackSize - toDeposit == 0)
+								player.inventory.setInventorySlotContents(ip, null);
+							else
+							{
+								stackFrom.stackSize -= toDeposit;
+								player.inventory.setInventorySlotContents(ip, stackFrom);
+							}
+						}
+					} 
+				}
+			}
+		}	
+	}
+	
 	public static void sortFromPlayerToChestEntity(World world, TileEntityChest chest, EntityPlayer player)
   	{ 
+		//source: https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
+		
   	//	int totalItemsMoved = 0; 
   	//	int totalSlotsFreed = 0;
   		 
@@ -75,12 +124,9 @@ public class UtilChestInventory
 		{ 
 			chestItem = chest.getStackInSlot(islotChest);
 		
-			if(chestItem == null)
-			{  
-				continue;
-			}//not an error; empty chest slot
+			if(chestItem == null) {   continue; }//  empty chest slot
 			 
-		//ItemStack item;
+			//ItemStack item;
 			
 			for(int islotInv = ModSettings.hotbarSize; islotInv < player.inventory.getSizeInventory() - ModSettings.armorSize; islotInv++)
 			{
