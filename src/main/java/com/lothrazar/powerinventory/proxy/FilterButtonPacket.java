@@ -45,15 +45,16 @@ public class FilterButtonPacket implements IMessage , IMessageHandler<FilterButt
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
 		ArrayList<BlockPos> b = UtilInventory.findBlocks(p, Blocks.chest, ModSettings.filterRange);
+		b.addAll(UtilInventory.findBlocks(p, Blocks.trapped_chest, ModSettings.filterRange));
 		
 		for(BlockPos pos : b)
 		{
 			if(p.worldObj.getTileEntity(pos) instanceof TileEntityChest)
+			{
 				UtilInventory.sortFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos), p);
-			
+			}
 		}
 		
-		return null;
-	
+		return null; 
 	}
 }

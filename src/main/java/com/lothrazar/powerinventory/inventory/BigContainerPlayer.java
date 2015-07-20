@@ -77,7 +77,7 @@ public class BigContainerPlayer extends ContainerPlayer
         			cy = 20 + ((craft/2) * GuiBigInventory.square );
       
             		this.addSlotToContainer(new Slot(this.craftMatrix, slotNumber, cx , cy));
-            		System.out.println("crafting "+slotNumber);
+            		//System.out.println("crafting "+slotNumber);
             		craft++;
             	}
             }
@@ -176,7 +176,7 @@ public class BigContainerPlayer extends ContainerPlayer
         	slotNumber = holdSlot[h];
     		cx = holdX[h];
     		cy = holdY[h] - 6;
-    		System.out.println("crafting "+slotNumber);
+    		//System.out.println("crafting "+slotNumber);
     		Slot ns = new Slot(this.craftMatrix, slotNumber, cx , cy );
         	this.addSlotToContainer(ns);
         }
@@ -201,9 +201,8 @@ public class BigContainerPlayer extends ContainerPlayer
     public void onContainerClosed(EntityPlayer playerIn)
     {
         super.onContainerClosed(playerIn);
-//from  https://github.com/PrinceOfAmber/SamsPowerups
-        System.out.println("closing and stuff");
-        if(playerIn.capabilities.isCreativeMode == false);
+
+        if(playerIn.capabilities.isCreativeMode == false) //i think we were dropping stuff from hotbar?
 	        for (int i = 0; i < craftSize*craftSize; ++i) // was 4
 	        {
 	            ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
