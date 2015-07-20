@@ -25,7 +25,8 @@ public class BigInventoryPlayer extends InventoryPlayer
 {
     @SideOnly(Side.CLIENT)
     private ItemStack currentItemStack;
-    private ItemStack enderStack;
+    private ItemStack enderPearlStack;
+    private ItemStack enderChestStack;
    //ender slot is   enderslot = ModSettings.invoSize+hotbarSize -1;/
 
     final int bonusSlots = 1;//for ender
@@ -53,10 +54,11 @@ public class BigInventoryPlayer extends InventoryPlayer
 	public ItemStack getStackInSlot(int index)
     {
         ItemStack[] aitemstack = this.mainInventory;
-        if(index == Const.enderSlot){return enderStack;}
-        if (index >= aitemstack.length)//ender slot is 388, armor length is i think 383
+        //check these first, otherwise it crashes thinking they are armor
+        if(index == Const.enderPearlSlot){return enderPearlStack;}
+        if(index == Const.enderChestSlot){return enderChestStack;} 
+        if (index >= aitemstack.length)
         {
-        	//System.out.println("TRYING TO FIND "+index);//crashes at 388
             index -= aitemstack.length;
             aitemstack = this.armorInventory;
         }
@@ -77,17 +79,27 @@ public class BigInventoryPlayer extends InventoryPlayer
 		{
             Minecraft.getMinecraft().playerController.sendSlotPacket(stack, slot);
 		}
-		if(slot == Const.enderSlot){enderStack = stack; return;}//bad code formatting, just a test
-		//copy of super
-		ItemStack[] aitemstack = this.mainInventory;
-
-        if (slot >= aitemstack.length)
-        {
-        	slot -= aitemstack.length;
-            aitemstack = this.armorInventory;
-        }
-
-        aitemstack[slot] = stack;
+		if(slot == Const.enderPearlSlot)
+		{
+			enderPearlStack = stack;  
+		}
+		else if(slot == Const.enderChestSlot)
+		{
+			enderChestStack = stack;  
+		}
+		else
+		{
+			super.setInventorySlotContents(slot, stack);/*
+			ItemStack[] aitemstack = this.mainInventory;
+	
+	        if (slot >= aitemstack.length)
+	        {
+	        	slot -= aitemstack.length;
+	            aitemstack = this.armorInventory;
+	        }
+	
+	        aitemstack[slot] = stack;*/
+		}
     }
 	
 	public int getUnlockedSlots()
@@ -388,12 +400,19 @@ public class BigInventoryPlayer extends InventoryPlayer
                 tags.appendTag(nbttagcompound);
             }
         }
-        
-        if(this.enderStack != null)
+
+        if(this.enderChestStack != null)
         {
         	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.enderSlot); // Give armor slots the last 100 integer spaces
-            this.enderStack.writeToNBT(nbttagcompound);
+            nbttagcompound.setInteger(Const.NBT_SLOT, Const.enderChestSlot);  
+            this.enderChestStack.writeToNBT(nbttagcompound);
+            tags.appendTag(nbttagcompound);
+        }
+        if(this.enderPearlStack != null)
+        {
+        	nbttagcompound = new NBTTagCompound();
+            nbttagcompound.setInteger(Const.NBT_SLOT, Const.enderPearlSlot);  
+            this.enderPearlStack.writeToNBT(nbttagcompound);
             tags.appendTag(nbttagcompound);
         }
 
@@ -417,27 +436,34 @@ public class BigInventoryPlayer extends InventoryPlayer
     {
     	//without this, ender pearls cannot be taken out
         ItemStack itemstack;
-    	if(index == Const.enderSlot)
+
+    	if(index == Const.enderChestSlot)
+    	{ 
+            itemstack = this.enderChestStack;
+            this.enderChestStack = null;
+            return itemstack;
+    	}    	
+    	else if(index == Const.enderPearlSlot)
     	{
-    		 if (this.enderStack.stackSize <= count)
+    		 if (this.enderPearlStack.stackSize <= count)
              {
-                 itemstack = this.enderStack;
-                 this.enderStack = null;
+                 itemstack = this.enderPearlStack;
+                 this.enderPearlStack = null;
                  return itemstack;
              }
     		 else
              {
-                 itemstack = this.enderStack.splitStack(count);
+                 itemstack = this.enderPearlStack.splitStack(count);
 
-                 if (this.enderStack.stackSize == 0)
+                 if (this.enderPearlStack.stackSize == 0)
                  {
-                	 this.enderStack = null;
+                	 this.enderPearlStack = null;
                  }
 
                  return itemstack;
              }
     	}
-    	else
+    	else 
     		return super.decrStackSize(index, count);
     }
 
@@ -458,15 +484,18 @@ public class BigInventoryPlayer extends InventoryPlayer
 
             if (itemstack != null)
             {
-            	if(j == Const.enderSlot)
+            	if(j == Const.enderPearlSlot)
             	{
-            		enderStack = itemstack;
+            		enderPearlStack = itemstack;
             	}
+            	if(j == Const.enderChestSlot)
+                {
+                	enderChestStack = itemstack;
+                }
                 if (j >= 0 && j < this.mainInventory.length)
                 {
             		this.mainInventory[j] = itemstack;
                 }
-
                 if (j >= (Integer.MAX_VALUE - 100) && j <= Integer.MAX_VALUE && j - (Integer.MAX_VALUE - 100) < this.armorInventory.length)
                 {
             		this.armorInventory[j - (Integer.MAX_VALUE - 100)] = itemstack;

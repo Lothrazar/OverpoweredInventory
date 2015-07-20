@@ -182,12 +182,15 @@ public class BigContainerPlayer extends ContainerPlayer
         	this.addSlotToContainer(ns);
         }
    
-        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderSlot, pearlX, pearlY));
- 
+        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, pearlX, pearlY));
+        this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, echestX, echestY));
+        
         this.updateScroll();
 	}
-	public final int pearlX = 182;//these get used here for actual slot, and in GUI for texture
+	public final int pearlX = 190;//these get used here for actual slot, and in GUI for texture
 	public final int pearlY = 42;
+	public final int echestX = 190;//these get used here for actual slot, and in GUI for texture
+	public final int echestY = 62;
 	@Override
 	public Slot getSlotFromInventory(IInventory invo, int id)
 	{

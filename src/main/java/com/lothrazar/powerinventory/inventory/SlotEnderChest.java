@@ -1,13 +1,14 @@
 package com.lothrazar.powerinventory.inventory;
 
-import net.minecraft.init.Items;
+import net.minecraft.init.Blocks; 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class SlotEnderPearl extends Slot
+public class SlotEnderChest extends Slot
 {
-	public SlotEnderPearl(IInventory inventoryIn, int index, int xPosition,int yPosition) 
+	public SlotEnderChest(IInventory inventoryIn, int index, int xPosition,int yPosition) 
 	{
 		super(inventoryIn, index, xPosition, yPosition);
 
@@ -22,12 +23,12 @@ public class SlotEnderPearl extends Slot
 	@Override
 	public boolean isItemValid(ItemStack stack)
     {
-		return (stack != null && stack.getItem() == Items.ender_pearl);
+		return (stack != null && stack.getItem() == Item.getItemFromBlock(Blocks.ender_chest));
     }
 	
 	@Override
 	public int getSlotStackLimit()
     {
-        return 64;
+        return 1;
     }
 }

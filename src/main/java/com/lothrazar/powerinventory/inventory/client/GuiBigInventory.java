@@ -36,6 +36,7 @@ public class GuiBigInventory extends GuiInventory
 	}
 
 	private int button_id = 99;
+	public GuiButton btnEnder;
 	private int buttonID()
 	{
 		button_id++;
@@ -59,7 +60,10 @@ public class GuiBigInventory extends GuiInventory
 			int x_spacing = enderWidth/2 + 5;
 			if(ModConfig.showEnderButton)
 			{
-				this.buttonList.add(new GuiButtonInventory(buttonID(), x, y ,enderWidth,height,StatCollector.translateToLocal("tile.enderChest.name"),Const.INV_ENDER));
+				btnEnder = new GuiButtonInventory(buttonID(), x, y ,enderWidth,height,StatCollector.translateToLocal("tile.enderChest.name"),Const.INV_ENDER);
+				this.buttonList.add(btnEnder);
+				
+				btnEnder.enabled = false;//TODO: turn it on based on ender chest present or not
 			}
 			if(ModConfig.showSortButtons)
 			{
@@ -128,6 +132,7 @@ public class GuiBigInventory extends GuiInventory
         
         //the ender slot 
         this.drawTexturedModalRect(gLeft-1 + container.pearlX, gTop-1 + container.pearlY, 7, 83, square, square);
+        this.drawTexturedModalRect(gLeft-1 + container.echestX, gTop-1 + container.echestY, 7, 83, square, square);
         
         
         int barW = 8;

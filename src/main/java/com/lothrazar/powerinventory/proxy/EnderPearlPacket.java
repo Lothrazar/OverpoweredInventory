@@ -41,13 +41,13 @@ public class EnderPearlPacket implements IMessage , IMessageHandler<EnderPearlPa
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
  
- 		ItemStack pearls = p.inventory.getStackInSlot(Const.enderSlot);
+ 		ItemStack pearls = p.inventory.getStackInSlot(Const.enderPearlSlot);
  
  		if(pearls != null)
  		{
  	 		p.worldObj.spawnEntityInWorld(new EntityEnderPearl(p.worldObj, p));
  	 		
- 			p.inventory.decrStackSize(Const.enderSlot, 1);
+ 			p.inventory.decrStackSize(Const.enderPearlSlot, 1);
  		}
  	
 		return null;

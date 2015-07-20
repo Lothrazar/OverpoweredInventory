@@ -8,4 +8,6 @@ public class ModConfig
 	public static boolean showSortButtons;
 	public static boolean showFilterButton;
 	public static int filterRange; 
+	
+	public static boolean enderPearl64 = false;//TODO!!!!!!!!!!!!!!!
 }

@@ -17,7 +17,8 @@ public class Const
 	public final static int ALL_ROWS = 3 + MORE_ROWS;
 	public final static int invoSize  = ALL_COLS * ALL_ROWS;
 
-    public static final int enderSlot = 388;//388 = ModSettings.invoSize+hotbarSize+armorSize
+    public static final int enderPearlSlot = 388;//388 = ModSettings.invoSize+hotbarSize+armorSize
+    public static final int enderChestSlot = enderPearlSlot+1;
      
 	public final static int INV_ENDER = 1;
 	public final static int INV_PLAYER = 2;
