@@ -58,7 +58,7 @@ public class UtilInventory
 		ItemStack source,destination;
 		//player.inventoryContainer.getInventory().size()
 		int cont = 0;
-		for(int ip = ModSettings.hotbarSize; ip < player.inventory.getSizeInventory() - ModSettings.armorSize; ip++)
+		for(int ip = Const.hotbarSize; ip < player.inventory.getSizeInventory() - Const.armorSize; ip++)
 		{
 			for(int i = cont; i < container.getInventory().size(); i++)
 			{
@@ -134,7 +134,7 @@ public class UtilInventory
 		//container.getSlot(1).isItemValid(stack)
 		for(int i = 0; i < container.getInventory().size(); i++)
 		{
-			for(int ip = ModSettings.hotbarSize; ip < player.inventory.getSizeInventory() - ModSettings.armorSize; ip++)
+			for(int ip = Const.hotbarSize; ip < player.inventory.getSizeInventory() - Const.armorSize; ip++)
 			{
 				source = player.inventory.getStackInSlot(ip);
 				if(source == null){continue;}
@@ -213,7 +213,7 @@ System.out.println("set null "+ip);
 			 
 			//ItemStack item;
 			
-			for(int islotInv = ModSettings.hotbarSize; islotInv < player.inventory.getSizeInventory() - ModSettings.armorSize; islotInv++)
+			for(int islotInv = Const.hotbarSize; islotInv < player.inventory.getSizeInventory() - Const.armorSize; islotInv++)
 			{
 				//item = invo.getStackInSlot(i);
 				 

@@ -1,7 +1,8 @@
 package com.lothrazar.powerinventory.inventory.client;
 
+import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
-import com.lothrazar.powerinventory.ModSettings;
+import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 
 import net.minecraft.client.gui.GuiButton;
@@ -24,14 +25,13 @@ public class GuiBigInventory extends GuiInventory
 	public boolean redoButtons = false;
 	int xStart = 169;
 	int yStart = 137;
-	public static final int square = 18;
  
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
 		container = player.inventoryContainer instanceof BigContainerPlayer? (BigContainerPlayer)player.inventoryContainer : null;
-		this.xSize = xStart + (square * ModSettings.MORE_COLS) + 15;
-		this.ySize = yStart + (square * ModSettings.MORE_ROWS) + 29;
+		this.xSize = xStart + (Const.square * Const.MORE_COLS) + 15;
+		this.ySize = yStart + (Const.square * Const.MORE_ROWS) + 29;
 
 	}
 
@@ -57,37 +57,37 @@ public class GuiBigInventory extends GuiInventory
 			int x = STARTX;
 			int y = STARTY;
 			int x_spacing = enderWidth/2 + 5;
-			if(ModSettings.showEnderButton)
+			if(ModConfig.showEnderButton)
 			{
-				this.buttonList.add(new GuiButtonInventory(buttonID(), x, y ,enderWidth,height,StatCollector.translateToLocal("tile.enderChest.name"),ModInv.INV_ENDER));
+				this.buttonList.add(new GuiButtonInventory(buttonID(), x, y ,enderWidth,height,StatCollector.translateToLocal("tile.enderChest.name"),Const.INV_ENDER));
 			}
-			if(ModSettings.showSortButtons)
+			if(ModConfig.showSortButtons)
 			{
 				y += height+1;
 				GuiButton sortButton;
 
-				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, ModInv.SORT_LEFT,"<");
+				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, Const.SORT_LEFT,"<");
 				this.buttonList.add(sortButton);
 
 				x += x_spacing;
 
-				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, ModInv.SORT_RIGHT,">");
+				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, Const.SORT_RIGHT,">");
 				this.buttonList.add(sortButton);
 				
 				x = STARTX;
 				y += height+1;
 
-				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, ModInv.SORT_LEFTALL,"<<");
+				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, Const.SORT_LEFTALL,"<<");
 				this.buttonList.add(sortButton);
 
 				x += x_spacing;
 				
-				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, ModInv.SORT_RIGHTALL,">>");
+				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, Const.SORT_RIGHTALL,">>");
 				this.buttonList.add(sortButton);
 				
 			}
 			
-			if(ModSettings.showFilterButton)
+			if(ModConfig.showFilterButton)
 			{
 				x = STARTX + enderWidth + 5;
 				y = STARTY;
@@ -104,50 +104,52 @@ public class GuiBigInventory extends GuiInventory
         this.mc.getTextureManager().bindTexture(new ResourceLocation(ModInv.MODID, ModInv.INVENTORY_TEXTURE));
         int gLeft = this.guiLeft;
         int gTop = this.guiTop;
+        final int square = Const.square;
         this.drawTexturedModalRect(gLeft, gTop, 0, 0, xStart, yStart);
         
-        for(int i = 0; i < ModSettings.MORE_COLS; i++)
+        for(int i = 0; i < Const.MORE_COLS; i++)
         {
             this.drawTexturedModalRect(gLeft + xStart + (i * square), gTop, xStart, 0, square, yStart);
         }
         
-        for(int i = 0; i < ModSettings.MORE_ROWS; i++)
+        for(int i = 0; i < Const.MORE_ROWS; i++)
         {
             this.drawTexturedModalRect(gLeft, gTop + yStart + (i * square), 0, 119, xStart, square);
         }
         
-        for(int i = 0; i < ModSettings.MORE_COLS; i++)
+        for(int i = 0; i < Const.MORE_COLS; i++)
         {
-        	for(int j = 0; j < ModSettings.MORE_ROWS; j++)
+        	for(int j = 0; j < Const.MORE_ROWS; j++)
         	{
                 this.drawTexturedModalRect(gLeft + xStart + (i * square), gTop + yStart + (j * square), 7, 83, square, square);
         	}
         }
         
-        int barW = ModSettings.ALL_COLS * ModSettings.ALL_ROWS < ModSettings.invoSize? 0 : 8;
+        int barW = 8;
+        //int barW = Const.ALL_COLS * Const.ALL_ROWS < Const.invoSize? 0 : 8;
 
-        this.drawTexturedModalRect(gLeft + xStart + (ModSettings.MORE_COLS * square), gTop, 187, 0, 2, 119); // Scroll top
-        this.drawTexturedModalRect(gLeft + xStart + (ModSettings.MORE_COLS * square) + 2, gTop, 189 + barW, 0, 13 - barW, 119); // Scroll top
+        this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square), gTop, 187, 0, 2, 119); // Scroll top
+        this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square) + 2, gTop, 189 + barW, 0, 13 - barW, 119); // Scroll top
         
-        for(int i = 0; i < ModSettings.MORE_ROWS; i++)
+        for(int i = 0; i < Const.MORE_ROWS; i++)
         {
-            this.drawTexturedModalRect(gLeft + xStart + (ModSettings.MORE_COLS * square), gTop + 119 + (i * square), 187, 101, 2, square); // Scroll middle
-            this.drawTexturedModalRect(gLeft + xStart + (ModSettings.MORE_COLS * square) + 2, gTop + 119 + (i * square), 189 + barW, 101, 13 - barW, square); // Scroll middle
+            this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square), gTop + 119 + (i * square), 187, 101, 2, square); // Scroll middle
+            this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square) + 2, gTop + 119 + (i * square), 189 + barW, 101, 13 - barW, square); // Scroll middle
         }
         
-        this.drawTexturedModalRect(gLeft + xStart + (ModSettings.MORE_COLS * square), gTop + 119 + (ModSettings.MORE_ROWS * square), 187, 119, 2, square); // Scroll bottom
-        this.drawTexturedModalRect(gLeft + xStart + (ModSettings.MORE_COLS * square) + 2, gTop + 119 + (ModSettings.MORE_ROWS * square), 189 + barW, 119, 13 - barW, square); // Scroll bottom
+        this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square), gTop + 119 + (Const.MORE_ROWS * square), 187, 119, 2, square); // Scroll bottom
+        this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square) + 2, gTop + 119 + (Const.MORE_ROWS * square), 189 + barW, 119, 13 - barW, square); // Scroll bottom
         
-        this.drawTexturedModalRect(gLeft, gTop + yStart + (ModSettings.MORE_ROWS * square), 0, yStart, xStart, 29);
+        this.drawTexturedModalRect(gLeft, gTop + yStart + (Const.MORE_ROWS * square), 0, yStart, xStart, 29);
         
-        for(int i = 0; i < ModSettings.MORE_COLS; i++)
+        for(int i = 0; i < Const.MORE_COLS; i++)
         {
-            this.drawTexturedModalRect(gLeft + xStart + (i * square), gTop + yStart + (ModSettings.MORE_ROWS * square), xStart, yStart, square, 29);
+            this.drawTexturedModalRect(gLeft + xStart + (i * square), gTop + yStart + (Const.MORE_ROWS * square), xStart, yStart, square, 29);
         }
         
-        this.drawTexturedModalRect(gLeft + xStart + (ModSettings.MORE_COLS * square), gTop + yStart + (ModSettings.MORE_ROWS * square), 187 + barW, yStart, 16 - barW, 29);
+        this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square), gTop + yStart + (Const.MORE_ROWS * square), 187 + barW, yStart, 16 - barW, 29);
 
-        if(ModSettings.showCharacter)
+        if(ModConfig.showCharacter)
         	drawEntityOnScreen(gLeft + 51, gTop + 75, 30, (float)(gLeft + 51) - (float)mouseX, (float)(gTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
      
 	}
@@ -155,7 +157,7 @@ public class GuiBigInventory extends GuiInventory
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{
-		if(ModSettings.showText)
+		if(ModConfig.showText)
 			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
 		
 		if(container != null)
@@ -164,13 +166,13 @@ public class GuiBigInventory extends GuiInventory
 			this.mc.getTextureManager().bindTexture(new ResourceLocation(ModInv.MODID, ModInv.INVENTORY_TEXTURE));
 	
 	        // Draw the empty/locked slot icons
-	        for(int j = 0; j < ModSettings.ALL_ROWS; j++)
+	        for(int j = 0; j < Const.ALL_ROWS; j++)
 	        {
-	        	for(int i = 0; i < ModSettings.ALL_COLS; i++)
+	        	for(int i = 0; i < Const.ALL_COLS; i++)
 	        	{
-	        		if(i + (j + container.scrollPos) * ModSettings.ALL_COLS >= ModSettings.invoSize)
+	        		if(i + (j + container.scrollPos) * Const.ALL_COLS >= Const.invoSize)
 	        		{
-	        			this.drawTexturedModalRect(7 + i * square, 83 + j * square, 0, 166, square, square);
+	        			this.drawTexturedModalRect(7 + i * Const.square, 83 + j * Const.square, 0, 166, Const.square, Const.square);
 	        		} 
 	        	}
 	        }

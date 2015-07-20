@@ -50,16 +50,16 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 		
 		switch(sortType)
 		{
-		case ModInv.SORT_LEFT:
+		case Const.SORT_LEFT:
 			shiftLeftOne(invo);
 			break;
-		case ModInv.SORT_RIGHT:
+		case Const.SORT_RIGHT:
 			shiftRightOne(invo);
 			break;
-		case ModInv.SORT_LEFTALL:
+		case Const.SORT_LEFTALL:
 			shiftLeftAll(invo);
 			break;
-		case ModInv.SORT_RIGHTALL:
+		case Const.SORT_RIGHTALL:
 			shiftRightAll(invo);
 			break;
 		}
@@ -73,7 +73,7 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 
 		ItemStack item;
 		
-		for(int i = invo.getSizeInventory() - (ModSettings.armorSize + 1); i >= ModSettings.hotbarSize;i--)
+		for(int i = invo.getSizeInventory() - (Const.armorSize + 1); i >= Const.hotbarSize;i--)
 		{
 			item = invo.getStackInSlot(i);
 			
@@ -100,7 +100,7 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 
 		ItemStack item;
 		
-		for(int i = ModSettings.hotbarSize; i < invo.getSizeInventory() - ModSettings.armorSize;i++)
+		for(int i = Const.hotbarSize; i < invo.getSizeInventory() - Const.armorSize;i++)
 		{
 			item = invo.getStackInSlot(i);
 			
@@ -137,7 +137,7 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 		ItemStack item = null;
 		//0 to 8 is crafting
 		//armor is 384-387
-		for(int i = invo.getSizeInventory() - (ModSettings.armorSize + 1); i >= ModSettings.hotbarSize;i--)//388-4 384
+		for(int i = invo.getSizeInventory() - (Const.armorSize + 1); i >= Const.hotbarSize;i--)//388-4 384
 		{
 			item = invo.getStackInSlot(i);
 			
@@ -161,7 +161,7 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 		ItemStack item = null;
 		//0 to 8 is crafting
 		//armor is 384-387
-		for(int i = ModSettings.hotbarSize; i < invo.getSizeInventory() - ModSettings.armorSize;i++)
+		for(int i = Const.hotbarSize; i < invo.getSizeInventory() - Const.armorSize;i++)
 		{ 
 			item = invo.getStackInSlot(i);
 			

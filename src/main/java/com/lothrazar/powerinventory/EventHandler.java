@@ -72,7 +72,7 @@ public class EventHandler
 			
 			if(event.world.isRemote == false)
 			{
-				ModSettings.LoadFromCache();
+				ModConfig.LoadFromCache();
 			}
 		}
 	}
@@ -135,7 +135,7 @@ public class EventHandler
 			event.buttonList.add(new GuiButtonClose(256, x,y,w,h));
 			
 			x = x - padding - w;
-			event.buttonList.add(new GuiButtonInventory(256, x,y,w,h,"I",ModInv.INV_PLAYER));
+			event.buttonList.add(new GuiButtonInventory(256, x,y,w,h,"I",Const.INV_PLAYER));
 
 			//x = x - padding - w;
 			////event.buttonList.add(new GuiButtonDepositAll(256, x,y,w,h));

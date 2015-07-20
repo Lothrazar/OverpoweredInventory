@@ -1,7 +1,6 @@
 package com.lothrazar.powerinventory.inventory;
 
-import com.lothrazar.powerinventory.ModInv;
-import com.lothrazar.powerinventory.ModSettings;
+import com.lothrazar.powerinventory.Const; 
 
 import java.util.concurrent.Callable;
 
@@ -28,15 +27,13 @@ public class BigInventoryPlayer extends InventoryPlayer
     private ItemStack currentItemStack;
     private ItemStack enderStack;
    //ender slot is   enderslot = ModSettings.invoSize+hotbarSize -1;/
-    public static final int enderSlot = 388;//388 = ModSettings.invoSize+hotbarSize+armorSize
-    final int hotbarSize = 9;
-    final int armorSize = 4;
+
     final int bonusSlots = 1;//for ender
     // so 389 = 385 - 4, why would we ever try to get 389???
 	public BigInventoryPlayer(EntityPlayer player)
 	{
 		super(player);
-		this.mainInventory = new ItemStack[ModSettings.invoSize + hotbarSize+bonusSlots];
+		this.mainInventory = new ItemStack[Const.invoSize + Const.hotbarSize+bonusSlots];
 		System.out.println("this.mainInventory "+this.mainInventory.length);
 		if(player.inventory != null)
 		{
@@ -56,7 +53,7 @@ public class BigInventoryPlayer extends InventoryPlayer
 	public ItemStack getStackInSlot(int index)
     {
         ItemStack[] aitemstack = this.mainInventory;
-        if(index == enderSlot){return enderStack;}
+        if(index == Const.enderSlot){return enderStack;}
         if (index >= aitemstack.length)//ender slot is 388, armor length is i think 383
         {
         	//System.out.println("TRYING TO FIND "+index);//crashes at 388
@@ -80,7 +77,7 @@ public class BigInventoryPlayer extends InventoryPlayer
 		{
             Minecraft.getMinecraft().playerController.sendSlotPacket(stack, slot);
 		}
-		if(slot == enderSlot){enderStack = stack; return;}//bad code formatting, just a test
+		if(slot == Const.enderSlot){enderStack = stack; return;}//bad code formatting, just a test
 		//copy of super
 		ItemStack[] aitemstack = this.mainInventory;
 
@@ -95,7 +92,7 @@ public class BigInventoryPlayer extends InventoryPlayer
 	
 	public int getUnlockedSlots()
 	{  
-		return this.getSizeInventory() - armorSize; 
+		return this.getSizeInventory() - Const.armorSize; 
 	}
 	
     private int func_146029_c(Item stack)
@@ -386,7 +383,7 @@ public class BigInventoryPlayer extends InventoryPlayer
             if (this.mainInventory[i] != null)
             {
                 nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setInteger(ModSettings.NBT_SLOT, i);
+                nbttagcompound.setInteger(Const.NBT_SLOT, i);
                 this.mainInventory[i].writeToNBT(nbttagcompound);
                 tags.appendTag(nbttagcompound);
             }
@@ -395,7 +392,7 @@ public class BigInventoryPlayer extends InventoryPlayer
         if(this.enderStack != null)
         {
         	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(ModSettings.NBT_SLOT, this.enderSlot); // Give armor slots the last 100 integer spaces
+            nbttagcompound.setInteger(Const.NBT_SLOT, Const.enderSlot); // Give armor slots the last 100 integer spaces
             this.enderStack.writeToNBT(nbttagcompound);
             tags.appendTag(nbttagcompound);
         }
@@ -405,7 +402,7 @@ public class BigInventoryPlayer extends InventoryPlayer
             if (this.armorInventory[i] != null)
             {
                 nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setInteger(ModSettings.NBT_SLOT, i + (Integer.MAX_VALUE - 100)); // Give armor slots the last 100 integer spaces
+                nbttagcompound.setInteger(Const.NBT_SLOT, i + (Integer.MAX_VALUE - 100)); // Give armor slots the last 100 integer spaces
                 this.armorInventory[i].writeToNBT(nbttagcompound);
                 tags.appendTag(nbttagcompound);
                 
@@ -420,7 +417,7 @@ public class BigInventoryPlayer extends InventoryPlayer
     {
     	//without this, ender pearls cannot be taken out
         ItemStack itemstack;
-    	if(index == this.enderSlot)
+    	if(index == Const.enderSlot)
     	{
     		 if (this.enderStack.stackSize <= count)
              {
@@ -450,18 +447,18 @@ public class BigInventoryPlayer extends InventoryPlayer
 	@Override
     public void readFromNBT(NBTTagList tags)
     {
-        this.mainInventory = new ItemStack[MathHelper.clamp_int(ModSettings.invoSize, 27, Integer.MAX_VALUE - 100) + 9];
+        this.mainInventory = new ItemStack[MathHelper.clamp_int(Const.invoSize, 27, Integer.MAX_VALUE - 100) + 9];
         this.armorInventory = new ItemStack[armorInventory == null? 4 : armorInventory.length]; // Just in case it isn't standard size
         
         for (int i = 0; i < tags.tagCount(); ++i)
         {
             NBTTagCompound nbttagcompound = tags.getCompoundTagAt(i);
-            int j = nbttagcompound.getInteger(ModSettings.NBT_SLOT);
+            int j = nbttagcompound.getInteger(Const.NBT_SLOT);
             ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound);
 
             if (itemstack != null)
             {
-            	if(j == enderSlot)
+            	if(j == Const.enderSlot)
             	{
             		enderStack = itemstack;
             	}

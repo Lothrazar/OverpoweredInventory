@@ -36,13 +36,6 @@ public class ModInv
 	public static final String NBT_INVENTORY = "Inventory";
 	public static final String NBT_INVOSIZE = "invoSize";
 
-	public final static int INV_ENDER = 1;
-	public final static int INV_PLAYER = 2;
-	
-	public final static int SORT_LEFT = 1;
-	public final static int SORT_RIGHT = 2;
-	public final static int SORT_LEFTALL = -1;
-	public final static int SORT_RIGHTALL = -2;
     //My fork of this mod was created on July 17, 2015 at https://github.com/PrinceOfAmber/InfiniteInvo
     //original mod source was https://github.com/Funwayguy/InfiniteInvo
 	
@@ -71,22 +64,19 @@ public class ModInv
     	String category = Configuration.CATEGORY_GENERAL;
 		//ModSettings.MORE_ROWS = config.getInt("extra_rows", category, 12, 0, 20, "How many extra rows are displayed in the inventory screen");
 		//ModSettings.MORE_COLS = config.getInt("extra_columns", category, 16, 0, 20, "How many extra columns are displayed in the inventory screen");
-		ModSettings.filterRange = config.getInt("button_filter_range", category, 12, 1, 32, "Range of the filter button to reach nearby chests");
+		ModConfig.filterRange = config.getInt("button_filter_range", category, 12, 1, 32, "Range of the filter button to reach nearby chests");
 		
-		ModSettings.ALL_COLS = 9 + ModSettings.MORE_COLS;
-		ModSettings.ALL_ROWS = 3 + ModSettings.MORE_ROWS;
-		ModSettings.invoSize  = ModSettings.ALL_COLS * ModSettings.ALL_ROWS;
-		
+	 
 		//(String name, String category, String defaultValue, String comment)
-		ModSettings.showText = config.getBoolean("show_text",category,false,"Show or hide the 'Crafting' text in the inventory");
-		ModSettings.showCharacter = config.getBoolean("show_character",category,true,"Show or hide the animated character text in the inventory");
-		ModSettings.showEnderButton = config.getBoolean("button_ender_chest",category,true,"Show or hide the ender chest button");
-		ModSettings.showSortButtons = config.getBoolean("button_sort",category,true,"Show or hide the ender chest button");
-		ModSettings.showFilterButton = config.getBoolean("button_filter",category,true,"Show or hide the filter button");
+		ModConfig.showText = config.getBoolean("show_text",category,false,"Show or hide the 'Crafting' text in the inventory");
+		ModConfig.showCharacter = config.getBoolean("show_character",category,true,"Show or hide the animated character text in the inventory");
+		ModConfig.showEnderButton = config.getBoolean("button_ender_chest",category,true,"Show or hide the ender chest button");
+		ModConfig.showSortButtons = config.getBoolean("button_sort",category,true,"Show or hide the ender chest button");
+		ModConfig.showFilterButton = config.getBoolean("button_filter",category,true,"Show or hide the filter button");
 		
 		config.save();
 		
-		ModSettings.SaveToCache();
+		ModConfig.SaveToCache();
 		
     	
     	proxy.registerHandlers();

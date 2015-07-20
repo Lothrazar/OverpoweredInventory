@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.proxy;
 
-import com.lothrazar.powerinventory.ModInv;
+import com.lothrazar.powerinventory.Const;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -43,10 +44,10 @@ public class EnderButtonPacket implements IMessage , IMessageHandler<EnderButton
 
 		switch(invType)
 		{
-		case ModInv.INV_ENDER:
+		case Const.INV_ENDER:
 			p.displayGUIChest(p.getInventoryEnderChest());
 		break;
-		case ModInv.INV_PLAYER:
+		case Const.INV_PLAYER:
 
 			//this packet should not have been sent. but keep empty branch so i remember it
 			break;

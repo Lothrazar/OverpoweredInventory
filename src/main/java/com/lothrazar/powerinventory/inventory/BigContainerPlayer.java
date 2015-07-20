@@ -15,9 +15,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
 
 import com.google.common.collect.Lists;
+import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
-import com.lothrazar.powerinventory.ModSettings;
-import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
 /**
  * @author https://github.com/Funwayguy/InfiniteInvo
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
@@ -32,7 +31,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	private BigInventoryPlayer invo;
     public boolean isLocalWorld;
     private final EntityPlayer thePlayer;
-    private Slot[] slots = new Slot[ModSettings.invoSize];
+    private Slot[] slots = new Slot[Const.invoSize];
 
 	@SuppressWarnings("unchecked")
 	public BigContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
@@ -63,8 +62,8 @@ public class BigContainerPlayer extends ContainerPlayer
             	
             	slotNumber = j + i * this.craftSize;
             
-            	cx = 81 + j * GuiBigInventory.square;
-            	cy = 26 + i * GuiBigInventory.square;
+            	cx = 81 + j * Const.square;
+            	cy = 26 + i * Const.square;
             	if(onHold)
             	{
             		//save these to add at the end
@@ -75,8 +74,8 @@ public class BigContainerPlayer extends ContainerPlayer
             	}
             	else
             	{
-        			cx = 81 + ((craft%2) * GuiBigInventory.square );
-        			cy = 20 + ((craft/2) * GuiBigInventory.square );
+        			cx = 81 + ((craft%2) * Const.square );
+        			cy = 20 + ((craft/2) * Const.square );
       
             		this.addSlotToContainer(new Slot(this.craftMatrix, slotNumber, cx , cy));
             		//System.out.println("crafting "+slotNumber);
@@ -88,7 +87,7 @@ public class BigContainerPlayer extends ContainerPlayer
         for (i = 0; i < armorSize; ++i)
         {
         	cx = 8;
-        	cy = 8 + i * GuiBigInventory.square;
+        	cy = 8 + i * Const.square;
             final int k = i;
             slotNumber =  playerInventory.getSizeInventory() - 1 - i           -1;
 System.out.println("ARMOR = "+slotNumber);//384-387
@@ -120,8 +119,8 @@ System.out.println("ARMOR = "+slotNumber);//384-387
             {
             	slotNumber = j + (i + 1) * cols;
                // System.out.println("plain invo = "+slotNumber);
-            	cx = 8 + j * GuiBigInventory.square;
-            	cy = 84 + i * GuiBigInventory.square;
+            	cx = 8 + j * Const.square;
+            	cy = 84 + i * Const.square;
                 this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy));
             }
         }
@@ -129,8 +128,8 @@ System.out.println("ARMOR = "+slotNumber);//384-387
         for (i = 0; i < cols; ++i)//hotbar
         {
         	slotNumber = i;
-        	cx = 8 + i * GuiBigInventory.square;
-        	cy = 142 + (GuiBigInventory.square * ModSettings.MORE_ROWS);
+        	cx = 8 + i * Const.square;
+        	cy = 142 + (Const.square * Const.MORE_ROWS);
            // System.out.println("hotbar = "+slotNumber);
         	//hotbar[i] = ;
             this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy));
@@ -153,11 +152,11 @@ System.out.println("ARMOR = "+slotNumber);//384-387
 		
        // int enderslot=-1;
 //int enderslot = ModSettings.invoSize+hotbarSize+armorSize-1;
-        for ( i = rows; i < MathHelper.ceiling_float_int((float)(ModSettings.invoSize/9F)); ++i)
+        for ( i = rows; i < MathHelper.ceiling_float_int((float)(Const.invoSize/9F)); ++i)
         {
             for ( j = 0; j < cols; ++j)
             {
-            	if(j + (i * cols) >= ModSettings.invoSize && ModSettings.invoSize > rows*cols)
+            	if(j + (i * cols) >= Const.invoSize && Const.invoSize > rows*cols)
             	{
             		break;
             	} 
@@ -191,7 +190,7 @@ System.out.println("ARMOR = "+slotNumber);//384-387
        // enderslot = 388;//ModSettings.invoSize+hotbarSize -1;//SB 383 ,exactly right under armor
        // System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot); 
  
-        this.addSlotToContainer(new SlotEnderPearl(playerInventory, BigInventoryPlayer.enderSlot, 182, 42));
+        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderSlot, 182, 42));
 
        // this.inventorySlots.add(new SlotEnderPearl(playerInventory, ModSettings.invoSize+hotbarSize+armorSize, 182, 42));
        // this.inventoryItemStacks.add((Object)null);
@@ -233,9 +232,9 @@ System.out.println("ARMOR = "+slotNumber);//384-387
 
 	public void updateScroll()
 	{
-		if(scrollPos > MathHelper.ceiling_float_int((float)ModSettings.invoSize/(float)(ModSettings.ALL_COLS)) - (3 + ModSettings.MORE_ROWS))
+		if(scrollPos > MathHelper.ceiling_float_int((float)Const.invoSize/(float)(Const.ALL_COLS)) - Const.ALL_ROWS)
 		{
-			scrollPos = MathHelper.ceiling_float_int((float)ModSettings.invoSize/(float)(ModSettings.ALL_COLS)) - (3 + ModSettings.MORE_ROWS);
+			scrollPos = MathHelper.ceiling_float_int((float)Const.invoSize/(float)(Const.ALL_COLS)) - Const.ALL_ROWS;
 		}
 		
 		if(scrollPos < 0)
@@ -243,23 +242,23 @@ System.out.println("ARMOR = "+slotNumber);//384-387
 			scrollPos = 0;
 		}
 		
-		for(int i = 0; i < MathHelper.ceiling_float_int((float)ModSettings.invoSize/(float)(ModSettings.ALL_COLS)); i++)
+		for(int i = 0; i < MathHelper.ceiling_float_int((float)Const.invoSize/(float)(Const.ALL_COLS)); i++)
 		{
 			
-            for (int j = 0; j < ModSettings.ALL_COLS; ++j)
+            for (int j = 0; j < Const.ALL_COLS; ++j)
             {
-            	int index = j + (i * ModSettings.ALL_COLS);
+            	int index = j + (i * Const.ALL_COLS);
             	//System.out.println("updateScroll from "+scrollPos+"::"+index);
-            	if(index >= ModSettings.invoSize && index >= 3*hotbarSize)
+            	if(index >= Const.invoSize && index >= 3*hotbarSize)
             	{
             		break;
             	} else
             	{
-            		if(i >= scrollPos && i < scrollPos + 3 + ModSettings.MORE_ROWS && index < invo.getUnlockedSlots() - hotbarSize && index < ModSettings.invoSize)
+            		if(i >= scrollPos && i < scrollPos + 3 + Const.MORE_ROWS && index < invo.getUnlockedSlots() - hotbarSize && index < Const.invoSize)
             		{
             			Slot s = slots[index];
-            			s.xDisplayPosition = 8 + j * GuiBigInventory.square;
-            			s.yDisplayPosition = 84 + (i - scrollPos) * GuiBigInventory.square;
+            			s.xDisplayPosition = 8 + j * Const.square;
+            			s.yDisplayPosition = 84 + (i - scrollPos) * Const.square;
             		} else
             		{
             			Slot s = slots[index];

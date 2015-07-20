@@ -1,8 +1,9 @@
 package com.lothrazar.powerinventory.inventory.client;
 
 import com.lothrazar.powerinventory.proxy.EnderButtonPacket;
-
+import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
@@ -30,12 +31,12 @@ public class GuiButtonInventory extends GuiButton
     	{
     		switch(invType)
     		{
-    		case ModInv.INV_PLAYER:
+    		case Const.INV_PLAYER:
 
         		//some GUI's open on client side to initiate, and propogate to server internally
     			Minecraft.getMinecraft().displayGuiScreen(new GuiBigInventory(mc.thePlayer));
     			break;
-    		case ModInv.INV_ENDER:
+    		case Const.INV_ENDER:
     			//other GUI's have to be hit from server side first to open
         		//send packet to server from client (this) makes sense
         		NBTTagCompound tags = new NBTTagCompound();

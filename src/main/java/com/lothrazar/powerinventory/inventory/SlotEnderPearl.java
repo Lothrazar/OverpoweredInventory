@@ -1,6 +1,5 @@
 package com.lothrazar.powerinventory.inventory;
 
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
