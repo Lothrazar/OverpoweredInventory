@@ -26,6 +26,7 @@ public class BigContainerPlayer extends ContainerPlayer
 {	
 	public final static int OFFSCREEN = -999;
 	public final static int armorSize = 4; 
+	public final static int hotbarSize = 9; 
 	private final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
 	public int scrollPos = 0;
 	private BigInventoryPlayer invo;
@@ -50,6 +51,7 @@ public class BigContainerPlayer extends ContainerPlayer
 
         this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, slotNumber, 152, 42));
     
+        
         for (i = 0; i < craftSize; ++i)
         {
         	onHold = false;
@@ -88,8 +90,8 @@ public class BigContainerPlayer extends ContainerPlayer
         	cx = 8;
         	cy = 8 + i * GuiBigInventory.square;
             final int k = i;
-            slotNumber =  playerInventory.getSizeInventory() - 1 - i;
-
+            slotNumber =  playerInventory.getSizeInventory() - 1 - i           -1;
+System.out.println("ARMOR = "+slotNumber);//384-387
             this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy)
             {
              //   private static final String __OBFID = "CL_00001755";
@@ -148,7 +150,9 @@ public class BigContainerPlayer extends ContainerPlayer
 			 ns.onSlotChanged();
 			 slots[i - cols] = ns;
 		}
-
+		
+        int enderslot=-1;
+//int enderslot = ModSettings.invoSize+hotbarSize+armorSize-1;
         for ( i = rows; i < MathHelper.ceiling_float_int((float)(ModSettings.invoSize/9F)); ++i)
         {
             for ( j = 0; j < cols; ++j)
@@ -161,12 +165,15 @@ public class BigContainerPlayer extends ContainerPlayer
             	{
             		// Moved off screen to avoid interaction until screen scrolls over the row
             		slotNumber =  j + (i + 1) * cols;
+
+
             		cx = OFFSCREEN;
             		cy = OFFSCREEN;
                   //  System.out.println("new slots = "+slotNumber);
             		Slot ns = new Slot(playerInventory,slotNumber, cx,cy);
             		slots[slotNumber - cols] = ns;
             		this.addSlotToContainer(ns);
+                	//enderslot=slotNumber+1;
             	}
             }
         }
@@ -180,7 +187,15 @@ public class BigContainerPlayer extends ContainerPlayer
     		Slot ns = new Slot(this.craftMatrix, slotNumber, cx , cy );
         	this.addSlotToContainer(ns);
         }
-     
+      //  System.out.println("invoSize "+ModSettings.invoSize);//375
+        enderslot = 388;//ModSettings.invoSize+hotbarSize -1;//SB 383 ,exactly right under armor
+        System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot); 
+ 
+        this.addSlotToContainer(new SlotEnderPearl(playerInventory, ModSettings.invoSize+hotbarSize+armorSize, 182, 42));
+
+       // this.inventorySlots.add(new SlotEnderPearl(playerInventory, ModSettings.invoSize+hotbarSize+armorSize, 182, 42));
+       // this.inventoryItemStacks.add((Object)null);
+        
         this.updateScroll();
 	}
 	
@@ -218,9 +233,9 @@ public class BigContainerPlayer extends ContainerPlayer
 
 	public void updateScroll()
 	{
-		if(scrollPos > MathHelper.ceiling_float_int((float)ModSettings.invoSize/(float)(9 + ModSettings.MORE_COLS)) - (3 + ModSettings.MORE_ROWS))
+		if(scrollPos > MathHelper.ceiling_float_int((float)ModSettings.invoSize/(float)(ModSettings.ALL_COLS)) - (3 + ModSettings.MORE_ROWS))
 		{
-			scrollPos = MathHelper.ceiling_float_int((float)ModSettings.invoSize/(float)(9 + ModSettings.MORE_COLS)) - (3 + ModSettings.MORE_ROWS);
+			scrollPos = MathHelper.ceiling_float_int((float)ModSettings.invoSize/(float)(ModSettings.ALL_COLS)) - (3 + ModSettings.MORE_ROWS);
 		}
 		
 		if(scrollPos < 0)
@@ -228,22 +243,23 @@ public class BigContainerPlayer extends ContainerPlayer
 			scrollPos = 0;
 		}
 		
-		for(int i = 0; i < MathHelper.ceiling_float_int((float)ModSettings.invoSize/(float)(9 + ModSettings.MORE_COLS)); i++)
+		for(int i = 0; i < MathHelper.ceiling_float_int((float)ModSettings.invoSize/(float)(ModSettings.ALL_COLS)); i++)
 		{
-            for (int j = 0; j < 9 + ModSettings.MORE_COLS; ++j)
+			
+            for (int j = 0; j < ModSettings.ALL_COLS; ++j)
             {
-            	int index = j + (i * (9 + ModSettings.MORE_COLS));
+            	int index = j + (i * ModSettings.ALL_COLS);
             	//System.out.println("updateScroll from "+scrollPos+"::"+index);
-            	if(index >= ModSettings.invoSize && index >= 27)
+            	if(index >= ModSettings.invoSize && index >= 3*hotbarSize)
             	{
             		break;
             	} else
             	{
-            		if(i >= scrollPos && i < scrollPos + 3 + ModSettings.MORE_ROWS && index < invo.getUnlockedSlots() - 9 && index < ModSettings.invoSize)
+            		if(i >= scrollPos && i < scrollPos + 3 + ModSettings.MORE_ROWS && index < invo.getUnlockedSlots() - hotbarSize && index < ModSettings.invoSize)
             		{
             			Slot s = slots[index];
-            			s.xDisplayPosition = 8 + j * 18;
-            			s.yDisplayPosition = 84 + (i - scrollPos) * 18;
+            			s.xDisplayPosition = 8 + j * GuiBigInventory.square;
+            			s.yDisplayPosition = 84 + (i - scrollPos) * GuiBigInventory.square;
             		} else
             		{
             			Slot s = slots[index];

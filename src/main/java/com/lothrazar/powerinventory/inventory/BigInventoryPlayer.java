@@ -25,13 +25,18 @@ public class BigInventoryPlayer extends InventoryPlayer
 {
     @SideOnly(Side.CLIENT)
     private ItemStack currentItemStack;
+    private ItemStack enderStack;
+   //ender slot is   enderslot = ModSettings.invoSize+hotbarSize -1;/
+    final int enderSlot = 388;
     final int hotbarSize = 9;
     final int armorSize = 4;
+    final int bonusSlots = 1;//for ender
+    // so 389 = 385 - 4, why would we ever try to get 389???
 	public BigInventoryPlayer(EntityPlayer player)
 	{
 		super(player);
-		this.mainInventory = new ItemStack[ModSettings.invoSize + hotbarSize];
-		
+		this.mainInventory = new ItemStack[ModSettings.invoSize + hotbarSize+bonusSlots];
+		System.out.println("this.mainInventory "+this.mainInventory.length);
 		if(player.inventory != null)
 		{
 			ItemStack[] oldMain = player.inventory.mainInventory;
@@ -47,20 +52,44 @@ public class BigInventoryPlayer extends InventoryPlayer
 	}
 	
 	@Override
+	public ItemStack getStackInSlot(int index)
+    {
+        ItemStack[] aitemstack = this.mainInventory;
+        if(index == enderSlot){return enderStack;}
+        if (index >= aitemstack.length)//ender slot is 388, armor length is i think 383
+        {
+        	//System.out.println("TRYING TO FIND "+index);//crashes at 388
+            index -= aitemstack.length;
+            aitemstack = this.armorInventory;
+        }
+
+        return aitemstack[index];
+    }
+	
+	@Override
 	public void dropAllItems()
 	{
 		super.dropAllItems();
 	}
 	
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack stack) // TODO: Creative inventory middle click fix
+	public void setInventorySlotContents(int slot, ItemStack stack)
     {
 		if(this.player.capabilities.isCreativeMode && this.player.worldObj.isRemote)
 		{
             Minecraft.getMinecraft().playerController.sendSlotPacket(stack, slot);
 		}
-		
-		super.setInventorySlotContents(slot, stack);
+		if(slot == enderSlot){enderStack = stack; return;}//bad code formatting, just a test
+		//copy of super
+		ItemStack[] aitemstack = this.mainInventory;
+
+        if (slot >= aitemstack.length)
+        {
+        	slot -= aitemstack.length;
+            aitemstack = this.armorInventory;
+        }
+
+        aitemstack[slot] = stack;
     }
 	
 	public int getUnlockedSlots()
