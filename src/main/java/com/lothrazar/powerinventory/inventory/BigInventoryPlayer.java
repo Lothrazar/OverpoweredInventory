@@ -28,7 +28,7 @@ public class BigInventoryPlayer extends InventoryPlayer
     private ItemStack currentItemStack;
     private ItemStack enderStack;
    //ender slot is   enderslot = ModSettings.invoSize+hotbarSize -1;/
-    final int enderSlot = 388;
+    public static final int enderSlot = 388;//388 = ModSettings.invoSize+hotbarSize+armorSize
     final int hotbarSize = 9;
     final int armorSize = 4;
     final int bonusSlots = 1;//for ender

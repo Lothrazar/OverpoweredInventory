@@ -69,8 +69,8 @@ public class ModInv
     	config.load();
     	 
     	String category = Configuration.CATEGORY_GENERAL;
-		ModSettings.MORE_ROWS = config.getInt("extra_rows", category, 12, 0, 20, "How many extra rows are displayed in the inventory screen");
-		ModSettings.MORE_COLS = config.getInt("extra_columns", category, 16, 0, 20, "How many extra columns are displayed in the inventory screen");
+		//ModSettings.MORE_ROWS = config.getInt("extra_rows", category, 12, 0, 20, "How many extra rows are displayed in the inventory screen");
+		//ModSettings.MORE_COLS = config.getInt("extra_columns", category, 16, 0, 20, "How many extra columns are displayed in the inventory screen");
 		ModSettings.filterRange = config.getInt("button_filter_range", category, 12, 1, 32, "Range of the filter button to reach nearby chests");
 		
 		ModSettings.ALL_COLS = 9 + ModSettings.MORE_COLS;

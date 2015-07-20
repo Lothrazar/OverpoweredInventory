@@ -151,7 +151,7 @@ System.out.println("ARMOR = "+slotNumber);//384-387
 			 slots[i - cols] = ns;
 		}
 		
-        int enderslot=-1;
+       // int enderslot=-1;
 //int enderslot = ModSettings.invoSize+hotbarSize+armorSize-1;
         for ( i = rows; i < MathHelper.ceiling_float_int((float)(ModSettings.invoSize/9F)); ++i)
         {
@@ -188,10 +188,10 @@ System.out.println("ARMOR = "+slotNumber);//384-387
         	this.addSlotToContainer(ns);
         }
       //  System.out.println("invoSize "+ModSettings.invoSize);//375
-        enderslot = 388;//ModSettings.invoSize+hotbarSize -1;//SB 383 ,exactly right under armor
-        System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot); 
+       // enderslot = 388;//ModSettings.invoSize+hotbarSize -1;//SB 383 ,exactly right under armor
+       // System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot); 
  
-        this.addSlotToContainer(new SlotEnderPearl(playerInventory, ModSettings.invoSize+hotbarSize+armorSize, 182, 42));
+        this.addSlotToContainer(new SlotEnderPearl(playerInventory, BigInventoryPlayer.enderSlot, 182, 42));
 
        // this.inventorySlots.add(new SlotEnderPearl(playerInventory, ModSettings.invoSize+hotbarSize+armorSize, 182, 42));
        // this.inventoryItemStacks.add((Object)null);
