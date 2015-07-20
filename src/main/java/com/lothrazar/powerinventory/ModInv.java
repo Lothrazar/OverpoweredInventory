@@ -63,8 +63,8 @@ public class ModInv
     	network.registerMessage(EnderButtonPacket.class, EnderButtonPacket.class, EnderButtonPacket.ID, Side.SERVER);
     	network.registerMessage(SortButtonPacket.class, SortButtonPacket.class, SortButtonPacket.ID, Side.SERVER);
     	network.registerMessage(FilterButtonPacket.class, FilterButtonPacket.class, FilterButtonPacket.ID, Side.SERVER);
-    	network.registerMessage(DepositButtonPacket.class, DepositButtonPacket.class, DepositButtonPacket.ID, Side.SERVER);
-    	network.registerMessage(WithdrawButtonPacket.class, WithdrawButtonPacket.class, WithdrawButtonPacket.ID, Side.SERVER);
+    	//network.registerMessage(DepositButtonPacket.class, DepositButtonPacket.class, DepositButtonPacket.ID, Side.SERVER);
+    	//network.registerMessage(WithdrawButtonPacket.class, WithdrawButtonPacket.class, WithdrawButtonPacket.ID, Side.SERVER);
     	
     	config = new Configuration(event.getSuggestedConfigurationFile(), true);
     	config.load();

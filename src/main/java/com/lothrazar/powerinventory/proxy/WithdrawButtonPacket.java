@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.proxy;
 
 import com.lothrazar.powerinventory.UtilInventory;
+import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,6 +46,12 @@ public class WithdrawButtonPacket implements IMessage , IMessageHandler<Withdraw
 			 UtilInventory.moveallContainerToPlayer(p, p.openContainer);
 			 p.inventoryContainer.detectAndSendChanges();
 			 p.openContainer.detectAndSendChanges(); 
+
+			 p.inventory.markDirty();
+			 if( p.inventoryContainer instanceof BigContainerPlayer)
+			 {
+				 ((BigContainerPlayer)p.inventoryContainer ).updateScroll();
+			 }
 		 }
 		 
 		return null;

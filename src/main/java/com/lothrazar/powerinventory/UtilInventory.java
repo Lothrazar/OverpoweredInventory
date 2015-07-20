@@ -56,10 +56,11 @@ public class UtilInventory
 	public static void moveallContainerToPlayer(EntityPlayer player,Container container) //W
 	{
 		ItemStack source,destination;
-		
+		//player.inventoryContainer.getInventory().size()
+		int cont = 0;
 		for(int ip = ModSettings.hotbarSize; ip < player.inventory.getSizeInventory() - ModSettings.armorSize; ip++)
 		{
-			for(int i = 0; i < container.getInventory().size(); i++)
+			for(int i = cont; i < container.getInventory().size(); i++)
 			{
 				if(container.getSlot(i).getHasStack() == false || container.getSlot(i).getStack() == null){continue;}
 			
@@ -68,10 +69,17 @@ public class UtilInventory
 				
 				if(destination == null)
 				{
-					System.out.println("player at "+ip+" NEW STACK  "+source.getDisplayName()+" "+source.stackSize);
+					//System.out.println("player at "+ip+" NEW STACK  "+source.getDisplayName()+" "+source.stackSize +" FROM CONT "+i);
 					//System.out.println(player.inventory.mainInventory.length);//384
 					player.inventory.setInventorySlotContents(ip, source);
+				 
+					player.inventoryContainer.getSlot(ip).putStack(source);
+					player.inventoryContainer.detectAndSendChanges();
 					container.getSlot(i).putStack(null);
+					// okay, now we are done with source
+					//start at the next one later 
+					
+					 
 				}
 				else
 				{
@@ -92,9 +100,10 @@ public class UtilInventory
 							//so toDeposit is only 12 and we take that off the 55 in player invo
 					 
 							destination.stackSize += toDeposit;
-							System.out.println("player at "+ip+" add of "+toDeposit );
-							System.out.println("room="+room);
-							player.inventory.setInventorySlotContents(ip, destination);
+						//	System.out.println("player at "+ip+" add of "+toDeposit );
+						//	System.out.println("room="+room);
+							//player.inventory.setInventorySlotContents(ip, destination);
+							player.inventoryContainer.getSlot(ip).putStack(destination);
 							
 							//now decrement source
 	
