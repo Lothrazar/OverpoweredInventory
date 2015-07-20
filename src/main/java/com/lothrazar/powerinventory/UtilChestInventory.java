@@ -55,33 +55,39 @@ public class UtilChestInventory
 	}
 
 	public static void depositPlayerToContainer(EntityPlayer player, Container container)
-	{
+	{ 
 		ItemStack stackFrom;
-		for(int ip = ModSettings.hotbarSize; ip < player.inventory.getSizeInventory() - ModSettings.armorSize; ip++)
+		
+		for(int i = 0; i < container.getInventory().size(); i++)
 		{
-			stackFrom = player.inventory.getStackInSlot(ip);
-			if(stackFrom == null){continue;}
-			
-			for(int i = 0; i < container.getInventory().size(); i++)
+			for(int ip = ModSettings.hotbarSize; ip < player.inventory.getSizeInventory() - ModSettings.armorSize; ip++)
 			{
-				if(container.getSlot(i).getHasStack() == false)
-				{
-					 //its empty, dump away
+				stackFrom = player.inventory.getStackInSlot(ip);
+				if(stackFrom == null){continue;}
+			
+				if(container.getSlot(i).getHasStack() == false) //its empty, dump away
+				{ 
 					container.getSlot(i).putStack(stackFrom);
+					
+					player.inventory.setInventorySlotContents(ip, null);//and remove it from player inventory
 				}
 				else
-				{
+				{ 
+					if(stackFrom.stackSize == stackFrom.getMaxStackSize()) {continue;}
+					
 					ItemStack stackTo = container.getSlot(i).getStack();
 					 
 					if(stackFrom.isItemEqual(stackTo))//here.getItem() == splayer.getItem() && here.getMetadata() == splayer.getMetadata())
 					{
+						//so i have a non-empty, non-full stack, and a matching stack in player inventory
+						
 						int room = stackTo.getMaxStackSize() - stackTo.stackSize;
 						if(room > 0)
 						{
 							int toDeposit = Math.min(room, stackFrom.stackSize);
-					 //System.out.println("dep "+toDeposit+" at "+i+ " from "+ip);
-					 
-					 //so if they have room for 12, and we have 55, toDeposit is only 12
+				
+							//so if they have room for 52, then room for 12, and we have 55, 
+							//so toDeposit is only 12 and we take that off the 55 in player invo
 					 
 					 		stackTo.stackSize += toDeposit;
 							container.getSlot(i).putStack(stackTo);
