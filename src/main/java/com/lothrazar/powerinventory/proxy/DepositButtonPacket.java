@@ -44,7 +44,7 @@ public class DepositButtonPacket implements IMessage , IMessageHandler<DepositBu
 		 {
 			 System.out.println(p.openContainer.getClass().getName());//net.minecraft.inventory.ContainerDispenser or whatever
 		 
-			 UtilChestInventory.depositPlayerToContainer(p, p.openContainer);
+			 UtilInventory.moveallPlayerToContainer(p, p.openContainer);
 			 p.inventoryContainer.detectAndSendChanges();
 			 p.openContainer.detectAndSendChanges();
 			 

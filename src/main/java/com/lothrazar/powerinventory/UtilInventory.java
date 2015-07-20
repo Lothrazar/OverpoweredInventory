@@ -12,9 +12,8 @@ import net.minecraft.world.World;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class UtilChestInventory 
+public class UtilInventory 
 {
-	
 	public static ArrayList<BlockPos> findBlocks(EntityPlayer player, Block blockHunt, int RADIUS ) 
 	{        
 		//function imported https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Commands/src/main/java/com/lothrazar/samscommands/ModCommands.java#L193
@@ -54,9 +53,61 @@ public class UtilChestInventory
 		return found; 
 	}
 
-	public static void depositPlayerToContainer(EntityPlayer player, Container container)
+	public static void moveallContainerToPlayer(EntityPlayer player,			Container container) 
+	{
+		ItemStack stackCont,stackPlayer;
+		for(int ip = ModSettings.hotbarSize; ip < player.inventory.getSizeInventory() - ModSettings.armorSize; ip++)
+		{
+			stackPlayer = player.inventory.getStackInSlot(ip);
+			for(int i = 0; i < container.getInventory().size(); i++)
+			{
+				if(container.getSlot(i).getHasStack() == false){continue;}
+				stackCont = container.getSlot(i).getStack();
+				
+				if(stackPlayer == null)
+				{
+					player.inventory.setInventorySlotContents(ip, stackCont);
+				}
+				else
+				{
+					if(stackPlayer.stackSize == stackPlayer.getMaxStackSize()) {continue;}
+					//do we match?
+					if(stackCont.isItemEqual(stackPlayer)) 
+					{
+			//tried to find a way to share code here between this and the opposite method
+						//but not there yet.. copy paste works though
+						
+						int room = stackPlayer.getMaxStackSize() - stackPlayer.stackSize;
+						
+						if(room > 0)
+						{
+							int toDeposit = Math.min(room, stackCont.stackSize);
+				
+							//so if they have room for 52, then room for 12, and we have 55, 
+							//so toDeposit is only 12 and we take that off the 55 in player invo
+					 
+							stackPlayer.stackSize += toDeposit;
+							container.getSlot(i).putStack(stackPlayer);
+					 		//
+	
+							if(stackCont.stackSize - toDeposit == 0)
+								player.inventory.setInventorySlotContents(ip, null);
+							else
+							{
+								stackCont.stackSize -= toDeposit;
+								player.inventory.setInventorySlotContents(ip, stackCont);
+							}
+						} 
+					}
+				}
+			}
+		}
+	}
+	//TODO: refactor above and below to share code, code reuse, find some generic bits ?
+	//they are /almost/ copy-pastes in reverse of each other
+	public static void moveallPlayerToContainer(EntityPlayer player, Container container)
 	{ 
-		ItemStack stackFrom;
+		ItemStack stackFrom,stackTo;
 		//AFTER coding this i found 
 		//container.canAddItemToSlot(slotIn, stack, stackSizeMatters)
 		//which may or may not help? but this works anyway
@@ -77,9 +128,8 @@ public class UtilChestInventory
 				}
 				else
 				{ 
-					if(stackFrom.stackSize == stackFrom.getMaxStackSize()) {continue;}
-					
-					ItemStack stackTo = container.getSlot(i).getStack();
+					stackTo = container.getSlot(i).getStack();
+					if(stackTo.stackSize == stackTo.getMaxStackSize()) {continue;}
 					 
 					if(stackFrom.isItemEqual(stackTo))//here.getItem() == splayer.getItem() && here.getMetadata() == splayer.getMetadata())
 					{
@@ -189,4 +239,5 @@ public class UtilChestInventory
 		//System.out.println("yes"+totalSlotsFreed);
 	 
   	}
+
 }

@@ -1,5 +1,7 @@
 package com.lothrazar.powerinventory.proxy;
 
+import com.lothrazar.powerinventory.UtilInventory;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -42,9 +44,9 @@ public class WithdrawButtonPacket implements IMessage , IMessageHandler<Withdraw
 		 {
 			 System.out.println("TODO: WITHDRAW FROM "+p.openContainer.getClass().getName());//net.minecraft.inventory.ContainerDispenser or whatever
 		 
-			// UtilChestInventory.depositPlayerToContainer(p, p.openContainer);
-			// p.inventoryContainer.detectAndSendChanges();
-			// p.openContainer.detectAndSendChanges();
+			 UtilInventory.moveallContainerToPlayer(p, p.openContainer);
+			 p.inventoryContainer.detectAndSendChanges();
+			 p.openContainer.detectAndSendChanges();
 			 
 		 }
 		 
