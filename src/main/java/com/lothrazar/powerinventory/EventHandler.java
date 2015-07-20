@@ -140,8 +140,8 @@ public class EventHandler
 			x = x - padding - w;
 			event.buttonList.add(new GuiButtonDepositAll(256, x,y,w,h));
 
-			x = x - padding - w;
-			event.buttonList.add(new GuiButtonWithdrawAll(256, x,y,w,h));
+			//x = x - padding - w;
+			//event.buttonList.add(new GuiButtonWithdrawAll(256, x,y,w,h));
 		 
 			
 			//could use reflection to get hidden dimensions

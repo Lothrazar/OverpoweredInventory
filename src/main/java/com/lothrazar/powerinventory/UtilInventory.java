@@ -53,29 +53,30 @@ public class UtilInventory
 		return found; 
 	}
 
-	public static void moveallContainerToPlayer(EntityPlayer player,Container container) 
+	public static void moveallContainerToPlayer(EntityPlayer player,Container container) //W
 	{
 		ItemStack source,destination;
+		
 		for(int ip = ModSettings.hotbarSize; ip < player.inventory.getSizeInventory() - ModSettings.armorSize; ip++)
 		{
-			destination = player.inventory.getStackInSlot(ip);
-			
 			for(int i = 0; i < container.getInventory().size(); i++)
 			{
-				if(container.getSlot(i).getHasStack() == false){continue;}
+				if(container.getSlot(i).getHasStack() == false || container.getSlot(i).getStack() == null){continue;}
+			
+				destination = player.inventory.getStackInSlot(ip);
 				source = container.getSlot(i).getStack();
 				
 				if(destination == null)
 				{
-					System.out.println("player at "+ip+" NEW STACK  "+source.getDisplayName());
-					System.out.println(player.inventory.mainInventory.length);
+					System.out.println("player at "+ip+" NEW STACK  "+source.getDisplayName()+" "+source.stackSize);
+					//System.out.println(player.inventory.mainInventory.length);//384
 					player.inventory.setInventorySlotContents(ip, source);
 					container.getSlot(i).putStack(null);
 				}
 				else
 				{
-					if(destination.stackSize == destination.getMaxStackSize()){continue;}//full already
-					
+					if(destination.stackSize == destination.getMaxStackSize()){break;}//if its full, we are done already, break inner loop only
+	 
 					if(source.isItemEqual(destination)) //do we match?
 					{
 			//tried to find a way to share code here between this and the opposite method
@@ -91,13 +92,16 @@ public class UtilInventory
 							//so toDeposit is only 12 and we take that off the 55 in player invo
 					 
 							destination.stackSize += toDeposit;
-							System.out.println("player at "+ip+"getting a stack of "+destination.stackSize );
+							System.out.println("player at "+ip+" add of "+toDeposit );
+							System.out.println("room="+room);
 							player.inventory.setInventorySlotContents(ip, destination);
 							
 							//now decrement source
 	
 							if(source.stackSize - toDeposit == 0)
+							{
 								container.getSlot(i).putStack(null);
+							}
 							else
 							{
 								source.stackSize -= toDeposit;
@@ -109,11 +113,12 @@ public class UtilInventory
 			}
 		}
 	}
+	
 	//TODO: refactor above and below to share code, code reuse, find some generic bits ?
 	//they are /almost/ copy-pastes in reverse of each other
-	public static void moveallPlayerToContainer(EntityPlayer player, Container container)
+	public static void moveallPlayerToContainer(EntityPlayer player, Container container)//D
 	{ 
-		ItemStack stackFrom,stackTo;
+		ItemStack source,destination;
 		//AFTER coding this i found 
 		//container.canAddItemToSlot(slotIn, stack, stackSizeMatters)
 		//which may or may not help? but this works anyway
@@ -122,43 +127,48 @@ public class UtilInventory
 		{
 			for(int ip = ModSettings.hotbarSize; ip < player.inventory.getSizeInventory() - ModSettings.armorSize; ip++)
 			{
-				stackFrom = player.inventory.getStackInSlot(ip);
-				if(stackFrom == null){continue;}
+				source = player.inventory.getStackInSlot(ip);
+				if(source == null){continue;}
 			
 				if(container.getSlot(i).getHasStack() == false && //its empty, dump away
-						container.getSlot(i).isItemValid(stackFrom)) //intended to validate furnace/brewing slot rules
+						container.getSlot(i).isItemValid(source)) //intended to validate furnace/brewing slot rules
 				{ 
-					container.getSlot(i).putStack(stackFrom);
-					
+					container.getSlot(i).putStack(source);
+
+//System.out.println("set null "+ip);
 					player.inventory.setInventorySlotContents(ip, null);//and remove it from player inventory
 				}
 				else
 				{ 
-					stackTo = container.getSlot(i).getStack();
-					if(stackTo.stackSize == stackTo.getMaxStackSize()) {continue;}
+					destination = container.getSlot(i).getStack();
+					if(destination.stackSize == destination.getMaxStackSize()) {continue;}
 					 
-					if(stackFrom.isItemEqual(stackTo))//here.getItem() == splayer.getItem() && here.getMetadata() == splayer.getMetadata())
+					if(source.isItemEqual(destination))//here.getItem() == splayer.getItem() && here.getMetadata() == splayer.getMetadata())
 					{
 						//so i have a non-empty, non-full stack, and a matching stack in player inventory
 						
-						int room = stackTo.getMaxStackSize() - stackTo.stackSize;
+						int room = destination.getMaxStackSize() - destination.stackSize;
+						
 						if(room > 0)
 						{
-							int toDeposit = Math.min(room, stackFrom.stackSize);
+							int toDeposit = Math.min(room, source.stackSize);
 				
 							//so if they have room for 52, then room for 12, and we have 55, 
 							//so toDeposit is only 12 and we take that off the 55 in player invo
 					 
-					 		stackTo.stackSize += toDeposit;
-							container.getSlot(i).putStack(stackTo);
+					 		destination.stackSize += toDeposit;
+							container.getSlot(i).putStack(destination);
 					 		//
 	
-							if(stackFrom.stackSize - toDeposit == 0)
+							if(source.stackSize - toDeposit == 0)
+							{
+System.out.println("set null "+ip);
 								player.inventory.setInventorySlotContents(ip, null);
+							}
 							else
 							{
-								stackFrom.stackSize -= toDeposit;
-								player.inventory.setInventorySlotContents(ip, stackFrom);
+								source.stackSize -= toDeposit;
+								player.inventory.setInventorySlotContents(ip, source);
 							}
 						}
 					} 
