@@ -55,6 +55,8 @@ public class ModInv
     	network.registerMessage(EnderButtonPacket.class, EnderButtonPacket.class, EnderButtonPacket.ID, Side.SERVER);
     	network.registerMessage(SortButtonPacket.class, SortButtonPacket.class, SortButtonPacket.ID, Side.SERVER);
     	network.registerMessage(FilterButtonPacket.class, FilterButtonPacket.class, FilterButtonPacket.ID, Side.SERVER);
+    	
+    	//TODO: fix these one day...
     	//network.registerMessage(DepositButtonPacket.class, DepositButtonPacket.class, DepositButtonPacket.ID, Side.SERVER);
     	//network.registerMessage(WithdrawButtonPacket.class, WithdrawButtonPacket.class, WithdrawButtonPacket.ID, Side.SERVER);
     	
@@ -62,12 +64,8 @@ public class ModInv
     	config.load();
     	 
     	String category = Configuration.CATEGORY_GENERAL;
-		//ModSettings.MORE_ROWS = config.getInt("extra_rows", category, 12, 0, 20, "How many extra rows are displayed in the inventory screen");
-		//ModSettings.MORE_COLS = config.getInt("extra_columns", category, 16, 0, 20, "How many extra columns are displayed in the inventory screen");
-		ModConfig.filterRange = config.getInt("button_filter_range", category, 12, 1, 32, "Range of the filter button to reach nearby chests");
 		
-	 
-		//(String name, String category, String defaultValue, String comment)
+    	ModConfig.filterRange = config.getInt("button_filter_range", category, 12, 1, 32, "Range of the filter button to reach nearby chests");
 		ModConfig.showText = config.getBoolean("show_text",category,false,"Show or hide the 'Crafting' text in the inventory");
 		ModConfig.showCharacter = config.getBoolean("show_character",category,true,"Show or hide the animated character text in the inventory");
 		ModConfig.showEnderButton = config.getBoolean("button_ender_chest",category,true,"Show or hide the ender chest button");
@@ -76,14 +74,6 @@ public class ModInv
 		
 		config.save();
 		
-		ModConfig.SaveToCache();
-		
-    	
     	proxy.registerHandlers();
     }
-    
-    
-
-	
-    
 }

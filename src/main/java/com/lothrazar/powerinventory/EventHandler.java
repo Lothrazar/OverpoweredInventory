@@ -70,10 +70,10 @@ public class EventHandler
 				InventoryPersistProperty.get(player).onJoinWorld();
 			}
 			
-			if(event.world.isRemote == false)
+			/*if(event.world.isRemote == false)
 			{
 				ModConfig.LoadFromCache();
-			}
+			}*/
 		}
 	}
  
