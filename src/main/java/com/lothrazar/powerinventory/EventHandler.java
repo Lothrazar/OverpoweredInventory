@@ -29,9 +29,12 @@ import com.lothrazar.powerinventory.inventory.client.GuiButtonClose;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonDepositAll;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonWithdrawAll;
+import com.lothrazar.powerinventory.proxy.ClientProxy;
+import com.lothrazar.powerinventory.proxy.EnderPearlPacket;
 
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /**
@@ -43,6 +46,15 @@ public class EventHandler
 	public static File worldDir;
 	public static HashMap<String, Integer> unlockCache = new HashMap<String, Integer>();
 	public static HashMap<String, Container> lastOpened = new HashMap<String, Container>();
+	
+	@SubscribeEvent
+    public void onKeyInput(InputEvent.KeyInputEvent event) 
+    {   
+        if(ClientProxy.keyEnder.isPressed() )
+        { 	     
+        	 ModInv.instance.network.sendToServer( new EnderPearlPacket());  //ClientProxy.keyShiftUp.getKeyCode()
+        }  
+    }
 	
 	@SubscribeEvent
 	public void onEntityConstruct(EntityConstructing event) // More reliable than on entity join

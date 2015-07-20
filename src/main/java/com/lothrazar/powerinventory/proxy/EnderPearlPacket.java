@@ -1,10 +1,11 @@
 package com.lothrazar.powerinventory.proxy;
 
 import com.lothrazar.powerinventory.*;
-import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -13,12 +14,12 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class DepositButtonPacket implements IMessage , IMessageHandler<DepositButtonPacket, IMessage>
+public class EnderPearlPacket implements IMessage , IMessageHandler<EnderPearlPacket, IMessage>
 {
-	public DepositButtonPacket() {}
+	public EnderPearlPacket() {}
 	NBTTagCompound tags = new NBTTagCompound(); 
 	
-	public DepositButtonPacket(NBTTagCompound ptags)
+	public EnderPearlPacket(NBTTagCompound ptags)
 	{
 		tags = ptags;
 	}
@@ -34,26 +35,21 @@ public class DepositButtonPacket implements IMessage , IMessageHandler<DepositBu
 	{
 		ByteBufUtils.writeTag(buf, this.tags);
 	}
-
+ 
 	@Override
-	public IMessage onMessage(DepositButtonPacket message, MessageContext ctx)
+	public IMessage onMessage(EnderPearlPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
-
-		 if(p.openContainer != null)
-		 { 
-			 UtilInventory.moveallPlayerToContainer(p, p.openContainer);
-			 p.inventoryContainer.detectAndSendChanges();
-			 p.openContainer.detectAndSendChanges(); 
-			 
-			 p.inventory.markDirty();
-			 
-			 if( p.inventoryContainer instanceof BigContainerPlayer)
-			 {
-				 ((BigContainerPlayer)p.inventoryContainer ).updateScroll();
-			 }
-		 }
-		 
+ 
+ 		ItemStack pearls = p.inventory.getStackInSlot(Const.enderSlot);
+ 
+ 		if(pearls != null)
+ 		{
+ 	 		p.worldObj.spawnEntityInWorld(new EntityEnderPearl(p.worldObj, p));
+ 	 		
+ 			p.inventory.decrStackSize(Const.enderSlot, 1);
+ 		}
+ 	
 		return null;
 	}
 }

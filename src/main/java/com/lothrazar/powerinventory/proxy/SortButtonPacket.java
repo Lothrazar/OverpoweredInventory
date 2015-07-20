@@ -18,8 +18,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPacket, IMessage>
 {
 	public SortButtonPacket() {}
-	NBTTagCompound tags = new NBTTagCompound();
-	public static final int ID = 3;
+	NBTTagCompound tags = new NBTTagCompound(); 
 	
 	public SortButtonPacket(NBTTagCompound ptags)
 	{

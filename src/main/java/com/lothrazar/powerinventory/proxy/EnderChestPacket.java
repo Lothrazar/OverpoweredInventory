@@ -12,13 +12,12 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class EnderButtonPacket implements IMessage , IMessageHandler<EnderButtonPacket, IMessage>
+public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPacket, IMessage>
 {
-	public EnderButtonPacket() {}
-	NBTTagCompound tags = new NBTTagCompound();
-	public static final int ID = 1;
+	public EnderChestPacket() {}
+	NBTTagCompound tags = new NBTTagCompound(); 
 	
-	public EnderButtonPacket(NBTTagCompound ptags)
+	public EnderChestPacket(NBTTagCompound ptags)
 	{
 		tags = ptags;
 	}
@@ -36,7 +35,7 @@ public class EnderButtonPacket implements IMessage , IMessageHandler<EnderButton
 	}
 
 	@Override
-	public IMessage onMessage(EnderButtonPacket message, MessageContext ctx)
+	public IMessage onMessage(EnderChestPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 		

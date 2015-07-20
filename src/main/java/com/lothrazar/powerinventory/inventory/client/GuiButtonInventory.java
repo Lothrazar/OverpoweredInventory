@@ -1,6 +1,6 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.proxy.EnderButtonPacket;
+import com.lothrazar.powerinventory.proxy.EnderChestPacket;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
 
@@ -41,7 +41,7 @@ public class GuiButtonInventory extends GuiButton
         		//send packet to server from client (this) makes sense
         		NBTTagCompound tags = new NBTTagCompound();
         		tags.setInteger("i", invType);
-    			ModInv.instance.network.sendToServer(new EnderButtonPacket(tags));
+    			ModInv.instance.network.sendToServer(new EnderChestPacket(tags));
     		break;
     		} 
     	}

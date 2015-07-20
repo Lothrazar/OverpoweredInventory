@@ -19,8 +19,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class FilterButtonPacket implements IMessage , IMessageHandler<FilterButtonPacket, IMessage>
 {
 	public FilterButtonPacket() {}
-	NBTTagCompound tags = new NBTTagCompound();
-	public static final int ID = 2;
+	NBTTagCompound tags = new NBTTagCompound(); 
 	
 	public FilterButtonPacket(NBTTagCompound ptags)
 	{

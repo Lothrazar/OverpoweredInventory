@@ -6,8 +6,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.lothrazar.powerinventory.proxy.CommonProxy;
 import com.lothrazar.powerinventory.proxy.DepositButtonPacket;
-import com.lothrazar.powerinventory.proxy.EnderButtonPacket;
+import com.lothrazar.powerinventory.proxy.EnderChestPacket;
 import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
+import com.lothrazar.powerinventory.proxy.EnderPearlPacket;
 import com.lothrazar.powerinventory.proxy.SortButtonPacket;
 import com.lothrazar.powerinventory.proxy.WithdrawButtonPacket;
 
@@ -52,15 +53,25 @@ public class ModInv
     {
     	logger = event.getModLog();
     	network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
-    	network.registerMessage(EnderButtonPacket.class, EnderButtonPacket.class, EnderButtonPacket.ID, Side.SERVER);
-    	network.registerMessage(SortButtonPacket.class, SortButtonPacket.class, SortButtonPacket.ID, Side.SERVER);
-    	network.registerMessage(FilterButtonPacket.class, FilterButtonPacket.class, FilterButtonPacket.ID, Side.SERVER);
+    	
+    	int packetID = 0;
+    	network.registerMessage(EnderChestPacket.class, EnderChestPacket.class, packetID++, Side.SERVER);
+    	network.registerMessage(SortButtonPacket.class, SortButtonPacket.class, packetID++, Side.SERVER);
+    	network.registerMessage(FilterButtonPacket.class, FilterButtonPacket.class, packetID++, Side.SERVER);
+    	network.registerMessage(EnderPearlPacket.class, EnderPearlPacket.class, packetID++, Side.SERVER);
     	
     	//TODO: fix these one day...
     	//network.registerMessage(DepositButtonPacket.class, DepositButtonPacket.class, DepositButtonPacket.ID, Side.SERVER);
     	//network.registerMessage(WithdrawButtonPacket.class, WithdrawButtonPacket.class, WithdrawButtonPacket.ID, Side.SERVER);
-    	
-    	config = new Configuration(event.getSuggestedConfigurationFile(), true);
+
+		config = new Configuration(event.getSuggestedConfigurationFile(), true);
+    	loadConfig(event);
+		
+    	proxy.registerHandlers();
+    }
+    
+	private void loadConfig(FMLPreInitializationEvent event) 
+	{
     	config.load();
     	 
     	String category = Configuration.CATEGORY_GENERAL;
@@ -73,7 +84,5 @@ public class ModInv
 		ModConfig.showFilterButton = config.getBoolean("button_filter",category,true,"Show or hide the filter button");
 		
 		config.save();
-		
-    	proxy.registerHandlers();
-    }
+	}
 }
