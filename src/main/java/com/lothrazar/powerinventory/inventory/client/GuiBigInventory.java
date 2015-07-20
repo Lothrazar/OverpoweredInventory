@@ -107,6 +107,7 @@ public class GuiBigInventory extends GuiInventory
         final int square = Const.square;
         this.drawTexturedModalRect(gLeft, gTop, 0, 0, xStart, yStart);
         
+        
         for(int i = 0; i < Const.MORE_COLS; i++)
         {
             this.drawTexturedModalRect(gLeft + xStart + (i * square), gTop, xStart, 0, square, yStart);
@@ -124,6 +125,10 @@ public class GuiBigInventory extends GuiInventory
                 this.drawTexturedModalRect(gLeft + xStart + (i * square), gTop + yStart + (j * square), 7, 83, square, square);
         	}
         }
+        
+        //the ender slot 
+        this.drawTexturedModalRect(gLeft-1 + container.pearlX, gTop-1 + container.pearlY, 7, 83, square, square);
+        
         
         int barW = 8;
         //int barW = Const.ALL_COLS * Const.ALL_ROWS < Const.invoSize? 0 : 8;
@@ -146,6 +151,9 @@ public class GuiBigInventory extends GuiInventory
         {
             this.drawTexturedModalRect(gLeft + xStart + (i * square), gTop + yStart + (Const.MORE_ROWS * square), xStart, yStart, square, 29);
         }
+        
+
+        
         
         this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square), gTop + yStart + (Const.MORE_ROWS * square), 187 + barW, yStart, 16 - barW, 29);
 

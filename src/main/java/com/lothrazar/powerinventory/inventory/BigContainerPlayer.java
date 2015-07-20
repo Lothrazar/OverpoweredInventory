@@ -90,7 +90,7 @@ public class BigContainerPlayer extends ContainerPlayer
         	cy = 8 + i * Const.square;
             final int k = i;
             slotNumber =  playerInventory.getSizeInventory() - 1 - i           -1;
-System.out.println("ARMOR = "+slotNumber);//384-387
+ 
             this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy)
             {
              //   private static final String __OBFID = "CL_00001755";
@@ -118,7 +118,7 @@ System.out.println("ARMOR = "+slotNumber);//384-387
             for (j = 0; j < cols; ++j)
             {
             	slotNumber = j + (i + 1) * cols;
-               // System.out.println("plain invo = "+slotNumber);
+ 
             	cx = 8 + j * Const.square;
             	cy = 84 + i * Const.square;
                 this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy));
@@ -130,8 +130,7 @@ System.out.println("ARMOR = "+slotNumber);//384-387
         	slotNumber = i;
         	cx = 8 + i * Const.square;
         	cy = 142 + (Const.square * Const.MORE_ROWS);
-           // System.out.println("hotbar = "+slotNumber);
-        	//hotbar[i] = ;
+ 
             this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy));
         }
 
@@ -149,9 +148,7 @@ System.out.println("ARMOR = "+slotNumber);//384-387
 			 ns.onSlotChanged();
 			 slots[i - cols] = ns;
 		}
-		
-       // int enderslot=-1;
-//int enderslot = ModSettings.invoSize+hotbarSize+armorSize-1;
+		 
         for ( i = rows; i < MathHelper.ceiling_float_int((float)(Const.invoSize/9F)); ++i)
         {
             for ( j = 0; j < cols; ++j)
@@ -164,15 +161,13 @@ System.out.println("ARMOR = "+slotNumber);//384-387
             	{
             		// Moved off screen to avoid interaction until screen scrolls over the row
             		slotNumber =  j + (i + 1) * cols;
-
-
+ 
             		cx = OFFSCREEN;
             		cy = OFFSCREEN;
-                  //  System.out.println("new slots = "+slotNumber);
+         
             		Slot ns = new Slot(playerInventory,slotNumber, cx,cy);
             		slots[slotNumber - cols] = ns;
-            		this.addSlotToContainer(ns);
-                	//enderslot=slotNumber+1;
+            		this.addSlotToContainer(ns); 
             	}
             }
         }
@@ -182,22 +177,17 @@ System.out.println("ARMOR = "+slotNumber);//384-387
         	slotNumber = holdSlot[h];
     		cx = holdX[h];
     		cy = holdY[h] - 6;
-    		//System.out.println("crafting "+slotNumber);
+ 
     		Slot ns = new Slot(this.craftMatrix, slotNumber, cx , cy );
         	this.addSlotToContainer(ns);
         }
-      //  System.out.println("invoSize "+ModSettings.invoSize);//375
-       // enderslot = 388;//ModSettings.invoSize+hotbarSize -1;//SB 383 ,exactly right under armor
-       // System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot);  System.out.println("enderslot "+enderslot); 
+   
+        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderSlot, pearlX, pearlY));
  
-        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderSlot, 182, 42));
-
-       // this.inventorySlots.add(new SlotEnderPearl(playerInventory, ModSettings.invoSize+hotbarSize+armorSize, 182, 42));
-       // this.inventoryItemStacks.add((Object)null);
-        
         this.updateScroll();
 	}
-	
+	public final int pearlX = 182;//these get used here for actual slot, and in GUI for texture
+	public final int pearlY = 42;
 	@Override
 	public Slot getSlotFromInventory(IInventory invo, int id)
 	{
