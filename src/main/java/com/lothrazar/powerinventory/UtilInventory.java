@@ -53,49 +53,55 @@ public class UtilInventory
 		return found; 
 	}
 
-	public static void moveallContainerToPlayer(EntityPlayer player,			Container container) 
+	public static void moveallContainerToPlayer(EntityPlayer player,Container container) 
 	{
-		ItemStack stackCont,stackPlayer;
+		ItemStack source,destination;
 		for(int ip = ModSettings.hotbarSize; ip < player.inventory.getSizeInventory() - ModSettings.armorSize; ip++)
 		{
-			stackPlayer = player.inventory.getStackInSlot(ip);
+			destination = player.inventory.getStackInSlot(ip);
+			
 			for(int i = 0; i < container.getInventory().size(); i++)
 			{
 				if(container.getSlot(i).getHasStack() == false){continue;}
-				stackCont = container.getSlot(i).getStack();
+				source = container.getSlot(i).getStack();
 				
-				if(stackPlayer == null)
+				if(destination == null)
 				{
-					player.inventory.setInventorySlotContents(ip, stackCont);
+					System.out.println("player at "+ip+" NEW STACK  "+source.getDisplayName());
+					System.out.println(player.inventory.mainInventory.length);
+					player.inventory.setInventorySlotContents(ip, source);
+					container.getSlot(i).putStack(null);
 				}
 				else
 				{
-					if(stackPlayer.stackSize == stackPlayer.getMaxStackSize()) {continue;}
-					//do we match?
-					if(stackCont.isItemEqual(stackPlayer)) 
+					if(destination.stackSize == destination.getMaxStackSize()){continue;}//full already
+					
+					if(source.isItemEqual(destination)) //do we match?
 					{
 			//tried to find a way to share code here between this and the opposite method
 						//but not there yet.. copy paste works though
 						
-						int room = stackPlayer.getMaxStackSize() - stackPlayer.stackSize;
+						int room = destination.getMaxStackSize() - destination.stackSize;
 						
 						if(room > 0)
 						{
-							int toDeposit = Math.min(room, stackCont.stackSize);
+							int toDeposit = Math.min(room, source.stackSize);
 				
 							//so if they have room for 52, then room for 12, and we have 55, 
 							//so toDeposit is only 12 and we take that off the 55 in player invo
 					 
-							stackPlayer.stackSize += toDeposit;
-							container.getSlot(i).putStack(stackPlayer);
-					 		//
+							destination.stackSize += toDeposit;
+							System.out.println("player at "+ip+"getting a stack of "+destination.stackSize );
+							player.inventory.setInventorySlotContents(ip, destination);
+							
+							//now decrement source
 	
-							if(stackCont.stackSize - toDeposit == 0)
-								player.inventory.setInventorySlotContents(ip, null);
+							if(source.stackSize - toDeposit == 0)
+								container.getSlot(i).putStack(null);
 							else
 							{
-								stackCont.stackSize -= toDeposit;
-								player.inventory.setInventorySlotContents(ip, stackCont);
+								source.stackSize -= toDeposit;
+								container.getSlot(i).putStack(source); 
 							}
 						} 
 					}

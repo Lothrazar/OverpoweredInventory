@@ -42,7 +42,7 @@ public class WithdrawButtonPacket implements IMessage , IMessageHandler<Withdraw
 
 		 if(p.openContainer != null)
 		 {
-			 System.out.println("TODO: WITHDRAW FROM "+p.openContainer.getClass().getName());//net.minecraft.inventory.ContainerDispenser or whatever
+			 //System.out.println("TODO: WITHDRAW FROM "+p.openContainer.getClass().getName());//net.minecraft.inventory.ContainerDispenser or whatever
 		 
 			 UtilInventory.moveallContainerToPlayer(p, p.openContainer);
 			 p.inventoryContainer.detectAndSendChanges();

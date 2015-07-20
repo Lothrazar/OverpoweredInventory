@@ -41,13 +41,10 @@ public class DepositButtonPacket implements IMessage , IMessageHandler<DepositBu
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
 		 if(p.openContainer != null)
-		 {
-			 System.out.println(p.openContainer.getClass().getName());//net.minecraft.inventory.ContainerDispenser or whatever
-		 
+		 { 
 			 UtilInventory.moveallPlayerToContainer(p, p.openContainer);
 			 p.inventoryContainer.detectAndSendChanges();
-			 p.openContainer.detectAndSendChanges();
-			 
+			 p.openContainer.detectAndSendChanges(); 
 		 }
 		 
 		return null;

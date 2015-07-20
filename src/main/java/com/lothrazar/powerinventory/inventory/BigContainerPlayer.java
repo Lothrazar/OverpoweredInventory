@@ -77,6 +77,7 @@ public class BigContainerPlayer extends ContainerPlayer
         			cy = 20 + ((craft/2) * GuiBigInventory.square );
       
             		this.addSlotToContainer(new Slot(this.craftMatrix, slotNumber, cx , cy));
+            		System.out.println("crafting "+slotNumber);
             		craft++;
             	}
             }
@@ -175,6 +176,7 @@ public class BigContainerPlayer extends ContainerPlayer
         	slotNumber = holdSlot[h];
     		cx = holdX[h];
     		cy = holdY[h] - 6;
+    		System.out.println("crafting "+slotNumber);
     		Slot ns = new Slot(this.craftMatrix, slotNumber, cx , cy );
         	this.addSlotToContainer(ns);
         }
@@ -200,15 +202,17 @@ public class BigContainerPlayer extends ContainerPlayer
     {
         super.onContainerClosed(playerIn);
 //from  https://github.com/PrinceOfAmber/SamsPowerups
-        for (int i = 0; i < craftSize*craftSize; ++i) // was 4
-        {
-            ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
-
-            if (itemstack != null)
-            {
-                playerIn.dropPlayerItemWithRandomChoice(itemstack, false);
-            }
-        }
+        System.out.println("closing and stuff");
+        if(playerIn.capabilities.isCreativeMode == false);
+	        for (int i = 0; i < craftSize*craftSize; ++i) // was 4
+	        {
+	            ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
+	
+	            if (itemstack != null)
+	            {
+	                playerIn.dropPlayerItemWithRandomChoice(itemstack, false);
+	            }
+	        }
 
         this.craftResult.setInventorySlotContents(0, (ItemStack)null);
     }
