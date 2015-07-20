@@ -33,7 +33,6 @@ public class ModInv
 	public static final String NBT_ID = "ID";
 	public static final String NBT_Settings = "Settings";
 	public static final String NBT_Unlocked = "Unlocked";
-	public static final String NBT_SLOT = "Slot";
 	public static final String NBT_INVENTORY = "Inventory";
 	public static final String NBT_INVOSIZE = "invoSize";
 

@@ -9,7 +9,8 @@ import net.minecraft.nbt.NBTTagCompound;
 public class ModSettings
 {
 	public static NBTTagCompound cachedSettings = new NBTTagCompound();
-	
+
+	public static final String NBT_SLOT = "Slot";
 
 	public final static int hotbarSize = 9;
 	public final static int armorSize = 4;

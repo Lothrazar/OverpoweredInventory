@@ -1,5 +1,6 @@
 package com.lothrazar.powerinventory.inventory;
 
+import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.ModSettings;
 
 import java.util.concurrent.Callable;
@@ -385,10 +386,18 @@ public class BigInventoryPlayer extends InventoryPlayer
             if (this.mainInventory[i] != null)
             {
                 nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setInteger("Slot", i);
+                nbttagcompound.setInteger(ModSettings.NBT_SLOT, i);
                 this.mainInventory[i].writeToNBT(nbttagcompound);
                 tags.appendTag(nbttagcompound);
             }
+        }
+        
+        if(this.enderStack != null)
+        {
+        	nbttagcompound = new NBTTagCompound();
+            nbttagcompound.setInteger(ModSettings.NBT_SLOT, this.enderSlot); // Give armor slots the last 100 integer spaces
+            this.enderStack.writeToNBT(nbttagcompound);
+            tags.appendTag(nbttagcompound);
         }
 
         for (i = 0; i < this.armorInventory.length; ++i)
@@ -396,13 +405,43 @@ public class BigInventoryPlayer extends InventoryPlayer
             if (this.armorInventory[i] != null)
             {
                 nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setInteger("Slot", i + (Integer.MAX_VALUE - 100)); // Give armor slots the last 100 integer spaces
+                nbttagcompound.setInteger(ModSettings.NBT_SLOT, i + (Integer.MAX_VALUE - 100)); // Give armor slots the last 100 integer spaces
                 this.armorInventory[i].writeToNBT(nbttagcompound);
                 tags.appendTag(nbttagcompound);
+                
             }
         }
         
         return tags;
+    }
+    
+    @Override
+    public ItemStack decrStackSize(int index, int count)
+    {
+    	//without this, ender pearls cannot be taken out
+        ItemStack itemstack;
+    	if(index == this.enderSlot)
+    	{
+    		 if (this.enderStack.stackSize <= count)
+             {
+                 itemstack = this.enderStack;
+                 this.enderStack = null;
+                 return itemstack;
+             }
+    		 else
+             {
+                 itemstack = this.enderStack.splitStack(count);
+
+                 if (this.enderStack.stackSize == 0)
+                 {
+                	 this.enderStack = null;
+                 }
+
+                 return itemstack;
+             }
+    	}
+    	else
+    		return super.decrStackSize(index, count);
     }
 
     /**
@@ -417,11 +456,15 @@ public class BigInventoryPlayer extends InventoryPlayer
         for (int i = 0; i < tags.tagCount(); ++i)
         {
             NBTTagCompound nbttagcompound = tags.getCompoundTagAt(i);
-            int j = nbttagcompound.getInteger("Slot");
+            int j = nbttagcompound.getInteger(ModSettings.NBT_SLOT);
             ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound);
 
             if (itemstack != null)
             {
+            	if(j == enderSlot)
+            	{
+            		enderStack = itemstack;
+            	}
                 if (j >= 0 && j < this.mainInventory.length)
                 {
             		this.mainInventory[j] = itemstack;
