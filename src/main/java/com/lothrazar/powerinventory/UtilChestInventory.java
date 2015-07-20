@@ -57,7 +57,10 @@ public class UtilChestInventory
 	public static void depositPlayerToContainer(EntityPlayer player, Container container)
 	{ 
 		ItemStack stackFrom;
-		
+		//AFTER coding this i found 
+		//container.canAddItemToSlot(slotIn, stack, stackSizeMatters)
+		//which may or may not help? but this works anyway
+		//container.getSlot(1).isItemValid(stack)
 		for(int i = 0; i < container.getInventory().size(); i++)
 		{
 			for(int ip = ModSettings.hotbarSize; ip < player.inventory.getSizeInventory() - ModSettings.armorSize; ip++)
@@ -65,7 +68,8 @@ public class UtilChestInventory
 				stackFrom = player.inventory.getStackInSlot(ip);
 				if(stackFrom == null){continue;}
 			
-				if(container.getSlot(i).getHasStack() == false) //its empty, dump away
+				if(container.getSlot(i).getHasStack() == false && //its empty, dump away
+						container.getSlot(i).isItemValid(stackFrom)) //intended to validate furnace/brewing slot rules
 				{ 
 					container.getSlot(i).putStack(stackFrom);
 					
