@@ -25,7 +25,7 @@ public class GuiBigInventory extends GuiInventory
 	public boolean redoButtons = false;
 	int xStart = 169;
 	int yStart = 137;
- 
+	GuiButton btnEnder;
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
@@ -35,17 +35,11 @@ public class GuiBigInventory extends GuiInventory
 
 	}
 
-	private int button_id = 99;
-	public GuiButton btnEnder;
-	private int buttonID()
-	{
-		button_id++;
-		return button_id;
-	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui()
     {
+		System.out.println("initGui");
 		super.initGui();
 		
 		if(this.container != null && this.mc.playerController.isInCreativeMode() == false)
@@ -58,9 +52,11 @@ public class GuiBigInventory extends GuiInventory
 			int x = STARTX;
 			int y = STARTY;
 			int x_spacing = enderWidth/2 + 5;
+			int button_id = 99;
+			
 			if(ModConfig.showEnderButton)
 			{
-				btnEnder = new GuiButtonInventory(buttonID(), x, y ,enderWidth,height,StatCollector.translateToLocal("tile.enderChest.name"),Const.INV_ENDER);
+				btnEnder = new GuiButtonInventory(button_id++, x, y ,enderWidth,height,StatCollector.translateToLocal("tile.enderChest.name"),Const.INV_ENDER);
 				this.buttonList.add(btnEnder);
 				
 				btnEnder.enabled = false;//TODO: turn it on based on ender chest present or not
@@ -70,23 +66,23 @@ public class GuiBigInventory extends GuiInventory
 				y += height+1;
 				GuiButton sortButton;
 
-				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, Const.SORT_LEFT,"<");
+				sortButton = new GuiButtonSort(button_id++, x, y ,sortWidth,height, Const.SORT_LEFT,"<");
 				this.buttonList.add(sortButton);
 
 				x += x_spacing;
 
-				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, Const.SORT_RIGHT,">");
+				sortButton = new GuiButtonSort(button_id++, x, y ,sortWidth,height, Const.SORT_RIGHT,">");
 				this.buttonList.add(sortButton);
 				
 				x = STARTX;
 				y += height+1;
 
-				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, Const.SORT_LEFTALL,"<<");
+				sortButton = new GuiButtonSort(button_id++, x, y ,sortWidth,height, Const.SORT_LEFTALL,"<<");
 				this.buttonList.add(sortButton);
 
 				x += x_spacing;
 				
-				sortButton = new GuiButtonSort(buttonID(), x, y ,sortWidth,height, Const.SORT_RIGHTALL,">>");
+				sortButton = new GuiButtonSort(button_id++, x, y ,sortWidth,height, Const.SORT_RIGHTALL,">>");
 				this.buttonList.add(sortButton);
 				
 			}
@@ -96,7 +92,7 @@ public class GuiBigInventory extends GuiInventory
 				x = STARTX + enderWidth + 5;
 				y = STARTY;
 
-				this.buttonList.add(new GuiButtonFilter(buttonID(), x, y ,enderWidth,height));
+				this.buttonList.add(new GuiButtonFilter(button_id++, x, y ,enderWidth,height));
 			}
 		}
     }
@@ -104,6 +100,7 @@ public class GuiBigInventory extends GuiInventory
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
+		System.out.println("BACK");
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(new ResourceLocation(ModInv.MODID, ModInv.INVENTORY_TEXTURE));
         int gLeft = this.guiLeft;
@@ -170,6 +167,7 @@ public class GuiBigInventory extends GuiInventory
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{
+		System.out.println("FORE");
 		if(ModConfig.showText)
 			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
 		
