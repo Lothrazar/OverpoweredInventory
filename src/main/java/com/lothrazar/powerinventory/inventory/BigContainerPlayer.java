@@ -28,7 +28,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	public final static int hotbarSize = 9; 
 	private final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
 	public int scrollPos = 0;
-	private BigInventoryPlayer invo;
+	public BigInventoryPlayer invo;
     public boolean isLocalWorld;
     private final EntityPlayer thePlayer;
     private Slot[] slots = new Slot[Const.invoSize];
@@ -78,7 +78,7 @@ public class BigContainerPlayer extends ContainerPlayer
         			cy = 20 + ((craft/2) * Const.square );
       
             		this.addSlotToContainer(new Slot(this.craftMatrix, slotNumber, cx , cy));
-            		//System.out.println("crafting "+slotNumber);
+             
             		craft++;
             	}
             }
@@ -241,7 +241,7 @@ public class BigContainerPlayer extends ContainerPlayer
             for (int j = 0; j < Const.ALL_COLS; ++j)
             {
             	int index = j + (i * Const.ALL_COLS);
-            	//System.out.println("updateScroll from "+scrollPos+"::"+index);
+    
             	if(index >= Const.invoSize && index >= 3*hotbarSize)
             	{
             		break;

@@ -80,12 +80,7 @@ public class EventHandler
 			if(InventoryPersistProperty.get(player) != null)
 			{
 				InventoryPersistProperty.get(player).onJoinWorld();
-			}
-			
-			/*if(event.world.isRemote == false)
-			{
-				ModConfig.LoadFromCache();
-			}*/
+			} 
 		}
 	}
  
@@ -172,7 +167,8 @@ public class EventHandler
 			if(ModInv.proxy.isClient())
 			{
 				worldDir = server.getFile("saves/" + server.getFolderName());
-			} else
+			} 
+			else
 			{
 				worldDir = server.getFile(server.getFolderName());
 			}
@@ -222,7 +218,8 @@ public class EventHandler
 			
 			oos.close();
 			fos.close();
-		} catch(Exception e)
+		} 
+		catch(Exception e)
 		{
 			ModInv.logger.log(Level.ERROR, "Failed to save slot unlock cache", e);
 		}
@@ -263,8 +260,7 @@ public class EventHandler
 	{
 		if(event.modID.equals(ModInv.MODID))
 		{
-			ModInv.config.save();
-			//ConfigHandler.initConfigs();
+			ModInv.config.save(); 
 		}
 	}
 }

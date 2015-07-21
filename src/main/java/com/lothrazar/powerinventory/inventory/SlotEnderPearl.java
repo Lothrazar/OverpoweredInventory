@@ -25,9 +25,10 @@ public class SlotEnderPearl extends Slot
 		return (stack != null && stack.getItem() == Items.ender_pearl);
     }
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public int getSlotStackLimit()
     {
-        return 64;
+        return Items.ender_pearl.getItemStackLimit();
     }
 }

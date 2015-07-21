@@ -38,8 +38,7 @@ public class GuiBigInventory extends GuiInventory
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui()
-    {
-		System.out.println("initGui");
+    { 
 		super.initGui();
 		
 		if(this.container != null && this.mc.playerController.isInCreativeMode() == false)
@@ -96,11 +95,15 @@ public class GuiBigInventory extends GuiInventory
 			}
 		}
     }
-	
+	private void checkButtons()
+	{
+		btnEnder.enabled = (container.invo.getStackInSlot(Const.enderChestSlot) != null);
+	}
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
-	{
-		System.out.println("BACK");
+	{ 
+		this.checkButtons();
+		
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(new ResourceLocation(ModInv.MODID, ModInv.INVENTORY_TEXTURE));
         int gLeft = this.guiLeft;
@@ -166,8 +169,7 @@ public class GuiBigInventory extends GuiInventory
 	
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
-	{
-		System.out.println("FORE");
+	{ 
 		if(ModConfig.showText)
 			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
 		
