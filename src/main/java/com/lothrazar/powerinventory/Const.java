@@ -5,6 +5,7 @@ package com.lothrazar.powerinventory;
  */
 public class Const
 { 
+    public static final String MODID = "powerinventory";
 	public static final int square = 18;
 	public static final String NBT_SLOT = "Slot";
 

@@ -24,10 +24,9 @@ import net.minecraftforge.fml.relauncher.Side;
  * @author https://github.com/Funwayguy/InfiniteInvo
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
  */
-@Mod(modid = ModInv.MODID, useMetadata=true)
+@Mod(modid = Const.MODID, useMetadata=true)
 public class ModInv
 {
-    public static final String MODID = "powerinventory";
     public static final String INVENTORY_TEXTURE = "textures/gui/inventory_gui_3.png";
 	public static final String NBT_PLAYER = "Player";
 	public static final String NBT_WORLD = "World";
@@ -40,7 +39,7 @@ public class ModInv
     //My fork of this mod was created on July 17, 2015 at https://github.com/PrinceOfAmber/InfiniteInvo
     //original mod source was https://github.com/Funwayguy/InfiniteInvo
 	
-	@Instance(MODID)
+	@Instance(Const.MODID)
 	public static ModInv instance;
 	
 	@SidedProxy(clientSide = "com.lothrazar.powerinventory.proxy.ClientProxy", serverSide = "com.lothrazar.powerinventory.proxy.CommonProxy")
@@ -52,7 +51,7 @@ public class ModInv
     public void preInit(FMLPreInitializationEvent event)
     {
     	logger = event.getModLog();
-    	network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
+    	network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     	
     	int packetID = 0;
     	network.registerMessage(EnderChestPacket.class, EnderChestPacket.class, packetID++, Side.SERVER);

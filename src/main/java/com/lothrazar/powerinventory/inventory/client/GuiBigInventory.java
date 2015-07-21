@@ -11,7 +11,6 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 /**
@@ -100,7 +99,7 @@ public class GuiBigInventory extends GuiInventory
 		this.checkButtons();
 		
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.getTextureManager().bindTexture(new ResourceLocation(ModInv.MODID, ModInv.INVENTORY_TEXTURE));
+        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, ModInv.INVENTORY_TEXTURE));
         int gLeft = this.guiLeft;
         int gTop = this.guiTop;
         final int square = Const.square;
@@ -171,7 +170,7 @@ public class GuiBigInventory extends GuiInventory
 		if(container != null)
 		{
 	        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			this.mc.getTextureManager().bindTexture(new ResourceLocation(ModInv.MODID, ModInv.INVENTORY_TEXTURE));
+			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, ModInv.INVENTORY_TEXTURE));
 	
 	        // Draw the empty/locked slot icons
 	        for(int j = 0; j < Const.ALL_ROWS; j++)

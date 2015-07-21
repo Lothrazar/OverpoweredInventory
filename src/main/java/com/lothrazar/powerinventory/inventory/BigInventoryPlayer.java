@@ -27,15 +27,14 @@ public class BigInventoryPlayer extends InventoryPlayer
     private ItemStack currentItemStack;
     private ItemStack enderPearlStack;
     private ItemStack enderChestStack;
-   //ender slot is   enderslot = ModSettings.invoSize+hotbarSize -1;/
-
-    final int bonusSlots = 1;//for ender
-    // so 389 = 385 - 4, why would we ever try to get 389???
+   
+    //final int bonusSlots = 1;//for ender
+ 
 	public BigInventoryPlayer(EntityPlayer player)
 	{
 		super(player);
-		this.mainInventory = new ItemStack[Const.invoSize + Const.hotbarSize+bonusSlots];
-		System.out.println("this.mainInventory "+this.mainInventory.length);
+		this.mainInventory = new ItemStack[Const.invoSize + Const.hotbarSize];
+ 
 		if(player.inventory != null)
 		{
 			ItemStack[] oldMain = player.inventory.mainInventory;
@@ -89,16 +88,7 @@ public class BigInventoryPlayer extends InventoryPlayer
 		}
 		else
 		{
-			super.setInventorySlotContents(slot, stack);/*
-			ItemStack[] aitemstack = this.mainInventory;
-	
-	        if (slot >= aitemstack.length)
-	        {
-	        	slot -= aitemstack.length;
-	            aitemstack = this.armorInventory;
-	        }
-	
-	        aitemstack[slot] = stack;*/
+			super.setInventorySlotContents(slot, stack);
 		}
     }
 	

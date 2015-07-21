@@ -258,7 +258,7 @@ public class EventHandler
 	@SubscribeEvent
 	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
 	{
-		if(event.modID.equals(ModInv.MODID))
+		if(event.modID.equals(Const.MODID))
 		{
 			ModInv.config.save(); 
 		}

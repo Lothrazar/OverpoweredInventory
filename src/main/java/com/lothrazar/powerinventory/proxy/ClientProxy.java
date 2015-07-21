@@ -2,7 +2,11 @@ package com.lothrazar.powerinventory.proxy;
 
 import org.lwjgl.input.Keyboard;
 
+import com.lothrazar.powerinventory.Const;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
  
 public class ClientProxy extends CommonProxy
@@ -10,7 +14,7 @@ public class ClientProxy extends CommonProxy
 	public static KeyBinding keyEnder;  
 	public static final String keyEnderName = "key.ender";
 	public static final String keyCategory = "key.categories.inventory";
-	
+
 	@Override
 	public boolean isClient()
 	{
@@ -24,6 +28,8 @@ public class ClientProxy extends CommonProxy
 		
 		keyEnder = new KeyBinding(keyEnderName, Keyboard.KEY_G, keyCategory); 
         ClientRegistry.registerKeyBinding(ClientProxy.keyEnder);
+        
+      
 		
 	}
 }
