@@ -17,8 +17,7 @@ public class SlotEnderPearl extends Slot
 	public SlotEnderPearl(IInventory inventoryIn, int index, int xPosition,int yPosition) 
 	{
 		super(inventoryIn, index, xPosition, yPosition);
-
-		
+ 
 		slotIndex = index;
 	}
 	public int slotIndex;//overrides the private internal one
@@ -38,29 +37,12 @@ public class SlotEnderPearl extends Slot
 	public int getSlotStackLimit()
     {
         return Items.ender_pearl.getItemStackLimit();
-    }/*
-	@Override
-	@SideOnly(Side.CLIENT)
-    public net.minecraft.client.renderer.texture.TextureAtlasSprite getBackgroundSprite()
-    { 
-        String name = getSlotTexture();
-		System.out.println("getBackgroundSprite    "+name);//works but does naaaadda
-        return name == null ? null : getBackgroundMap().getAtlasSprite(name);
     }
-	*/
 	
 	@Override
 	@SideOnly(Side.CLIENT)
     public String getSlotTexture()
-    {/*
-		String loc = "items/empty_enderpearl";//textures/
-		  ResourceLocation back = new ResourceLocation(Const.MODID,loc);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(back);
-
-			this.setBackgroundLocation(back);
-			*/
-
-        return "minecraft:items/ender_pearl";//????
-      //  return Const.MODID+":"+loc; 
+    {  
+        return "minecraft:items/ender_pearl"; 
     }
 }
