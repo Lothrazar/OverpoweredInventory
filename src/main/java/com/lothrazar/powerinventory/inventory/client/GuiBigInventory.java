@@ -31,13 +31,8 @@ public class GuiBigInventory extends GuiInventory
 	{
 		super(player);
 		container = player.inventoryContainer instanceof BigContainerPlayer? (BigContainerPlayer)player.inventoryContainer : null;
-		this.xSize = xStart + (Const.square * Const.MORE_COLS) + 15;
-		this.ySize = yStart + (Const.square * Const.MORE_ROWS) + 29;
-System.out.println(xSize+"   "+ySize);
-System.out.println(xSize+"   "+ySize);
-System.out.println(xSize+"   "+ySize);
-System.out.println(xSize+"   "+ySize);
-System.out.println(xSize+"   "+ySize);//472    382
+		this.xSize = 472;//xStart + (Const.square * Const.MORE_COLS) + 15;
+		this.ySize = 382;//yStart + (Const.square * Const.MORE_ROWS) + 29;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -103,8 +98,22 @@ System.out.println(xSize+"   "+ySize);//472    382
 		if(btnEnder.enabled == false)
 		{
 			final int s = Const.square;
+			
+			
+			
+			
+
+			String st = "textures/items/empty_enderpearl.png";
+			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st));
+		
+			drawTexturedQuadFit(container.pearlX, container.pearlY,s,s,0);
+			
+			
+			
+			
+			
 	       // GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			String st = "textures/items/empty_enderchest";
+			st = "textures/items/empty_enderchest.png";
 			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st));
 		
 			drawTexturedQuadFit(container.echestX, container.echestY,s,s,0);
