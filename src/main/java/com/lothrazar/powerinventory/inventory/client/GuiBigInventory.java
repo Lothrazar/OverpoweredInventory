@@ -43,25 +43,23 @@ public class GuiBigInventory extends GuiInventory
 		
 		if(this.container != null && this.mc.playerController.isInCreativeMode() == false)
 		{
-			int height = 20;
-			int width = 37;
-			int STARTX = this.guiLeft + 280;
-			int STARTY = this.guiTop + 5;
+			final int height = 20;
+			final int width = 32;
+			final int ypadding = 6;
 			int button_id = 99;
-			//int enderWidth = 90;
 			 
-			btnEnder = new GuiButtonInventory(button_id++, this.guiLeft + 210, STARTY ,width,height, "EC",Const.INV_ENDER);
-			this.buttonList.add(btnEnder);
-			
+			btnEnder = new GuiButtonInventory(button_id++, this.guiLeft + 210, this.guiTop + ypadding ,width,height, "EC",Const.INV_ENDER);
+			this.buttonList.add(btnEnder); 
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
-		 
-
-			int x = STARTX;
-			int y = STARTY;
-			int x_spacing = 50;
-			
+		  
 			if(ModConfig.showSortButtons)
 			{
+				final int STARTX = this.guiLeft + 280;
+				final int STARTY = this.guiTop + ypadding;
+				int x = STARTX;
+				int y = STARTY;
+				int x_spacing = 50;
+				
 				y += height + 1;
 				GuiButton btn;
 
@@ -87,11 +85,8 @@ public class GuiBigInventory extends GuiInventory
 			}
 			
 			if(ModConfig.showFilterButton)
-			{
-				x = STARTX + 100;
-				y = STARTY;
-				width = 60;
-				this.buttonList.add(new GuiButtonFilter(button_id++, x, y ,width,height));
+			{  
+				this.buttonList.add(new GuiButtonFilter(button_id++, this.guiLeft + 395, this.guiTop + ypadding,60,height));
 			}
 		}
     }

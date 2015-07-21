@@ -190,9 +190,9 @@ public class BigContainerPlayer extends ContainerPlayer
 	
 	//these get used here for actual slot, and in GUI for texture
 	public final int pearlX = 172; 
-	public final int pearlY = 12;//was 42
+	public final int pearlY = 7; 
 	public final int echestX = 192;
-	public final int echestY = 12;
+	public final int echestY = 7;
 	
 	@Override
 	public Slot getSlotFromInventory(IInventory invo, int id)
