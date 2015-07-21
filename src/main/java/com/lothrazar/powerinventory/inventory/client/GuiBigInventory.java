@@ -44,54 +44,54 @@ public class GuiBigInventory extends GuiInventory
 		if(this.container != null && this.mc.playerController.isInCreativeMode() == false)
 		{
 			int height = 20;
-			int STARTX = this.guiLeft + 240;
-			int STARTY = this.guiTop + height/2;
-			int enderWidth = 90;
-			int sortWidth = enderWidth/2 - 5;
+			int width = 37;
+			int STARTX = this.guiLeft + 280;
+			int STARTY = this.guiTop + 5;
+			int button_id = 99;
+			//int enderWidth = 90;
+			 
+			btnEnder = new GuiButtonInventory(button_id++, this.guiLeft + 210, STARTY ,width,height, "EC",Const.INV_ENDER);
+			this.buttonList.add(btnEnder);
+			
+			btnEnder.enabled = false;// turn it on based on ender chest present or not
+		 
+
 			int x = STARTX;
 			int y = STARTY;
-			int x_spacing = enderWidth/2 + 5;
-			int button_id = 99;
+			int x_spacing = 50;
 			
-			if(ModConfig.showEnderButton)
-			{
-				btnEnder = new GuiButtonInventory(button_id++, x, y ,enderWidth,height,StatCollector.translateToLocal("tile.enderChest.name"),Const.INV_ENDER);
-				this.buttonList.add(btnEnder);
-				
-				btnEnder.enabled = false;//TODO: turn it on based on ender chest present or not
-			}
 			if(ModConfig.showSortButtons)
 			{
-				y += height+1;
-				GuiButton sortButton;
+				y += height + 1;
+				GuiButton btn;
 
-				sortButton = new GuiButtonSort(button_id++, x, y ,sortWidth,height, Const.SORT_LEFT,"<");
-				this.buttonList.add(sortButton);
+				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_LEFT,"<");
+				this.buttonList.add(btn);
 
 				x += x_spacing;
 
-				sortButton = new GuiButtonSort(button_id++, x, y ,sortWidth,height, Const.SORT_RIGHT,">");
-				this.buttonList.add(sortButton);
+				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_RIGHT,">");
+				this.buttonList.add(btn);
 				
 				x = STARTX;
 				y += height+1;
 
-				sortButton = new GuiButtonSort(button_id++, x, y ,sortWidth,height, Const.SORT_LEFTALL,"<<");
-				this.buttonList.add(sortButton);
+				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_LEFTALL,"<<");
+				this.buttonList.add(btn);
 
 				x += x_spacing;
 				
-				sortButton = new GuiButtonSort(button_id++, x, y ,sortWidth,height, Const.SORT_RIGHTALL,">>");
-				this.buttonList.add(sortButton);
+				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_RIGHTALL,">>");
+				this.buttonList.add(btn);
 				
 			}
 			
 			if(ModConfig.showFilterButton)
 			{
-				x = STARTX + enderWidth + 5;
+				x = STARTX + 100;
 				y = STARTY;
-
-				this.buttonList.add(new GuiButtonFilter(button_id++, x, y ,enderWidth,height));
+				width = 60;
+				this.buttonList.add(new GuiButtonFilter(button_id++, x, y ,width,height));
 			}
 		}
     }

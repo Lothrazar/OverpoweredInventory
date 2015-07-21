@@ -79,7 +79,7 @@ public class ModInv
     	ModConfig.filterRange = config.getInt("button_filter_range", category, 12, 1, 32, "Range of the filter button to reach nearby chests");
 		ModConfig.showText = config.getBoolean("show_text",category,false,"Show or hide the 'Crafting' text in the inventory");
 		ModConfig.showCharacter = config.getBoolean("show_character",category,true,"Show or hide the animated character text in the inventory");
-		ModConfig.showEnderButton = config.getBoolean("button_ender_chest",category,true,"Show or hide the ender chest button");
+		//ModConfig.showEnderButton = config.getBoolean("button_ender_chest",category,true,"Show or hide the ender chest button");
 		ModConfig.showSortButtons = config.getBoolean("button_sort",category,true,"Show or hide the ender chest button");
 		ModConfig.showFilterButton = config.getBoolean("button_filter",category,true,"Show or hide the filter button");
 		

@@ -187,10 +187,13 @@ public class BigContainerPlayer extends ContainerPlayer
         
         this.updateScroll();
 	}
-	public final int pearlX = 190;//these get used here for actual slot, and in GUI for texture
-	public final int pearlY = 42;
-	public final int echestX = 190;//these get used here for actual slot, and in GUI for texture
-	public final int echestY = 62;
+	
+	//these get used here for actual slot, and in GUI for texture
+	public final int pearlX = 172; 
+	public final int pearlY = 12;//was 42
+	public final int echestX = 192;
+	public final int echestY = 12;
+	
 	@Override
 	public Slot getSlotFromInventory(IInventory invo, int id)
 	{
