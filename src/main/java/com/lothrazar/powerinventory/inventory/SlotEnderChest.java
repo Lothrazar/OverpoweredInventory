@@ -20,16 +20,7 @@ public class SlotEnderChest extends Slot
 	{
 		super(inventoryIn, index, xPosition, yPosition);
  
-		//this.setBackgroundName(Const.MODID+":items/empty_enderchest");
 		slotIndex = index;
-		
-String loc = "textures/items/empty_enderchest.png";//textures/
-		
-		//if(res==null)
-		  res = new ResourceLocation(Const.MODID,loc);
-			Minecraft.getMinecraft().getTextureManager().bindTexture(res);
-
-			this.setBackgroundLocation(res);
 	}
 	
 	@Override
@@ -49,27 +40,4 @@ String loc = "textures/items/empty_enderchest.png";//textures/
     {
         return 1;
     }
-	ResourceLocation res;
-
-	@Override
-	@SideOnly(Side.CLIENT)
-    public net.minecraft.util.ResourceLocation getBackgroundLocation()
-    {
-		System.out.println("bbb "+backgroundLocation.getResourcePath());
-        return (backgroundLocation == null ? net.minecraft.client.renderer.texture.TextureMap.locationBlocksTexture : backgroundLocation);
-    }
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-    public String getSlotTexture()
-    {
-		
-	
-		 return Const.MODID+":items/empty_enderchest"; 
- 
-        //like  public static final String[] EMPTY_SLOT_NAMES = new String[] {"minecraft:items/empty_armor_slot_helmet", "minecraft:items/empty_armor_slot_chestplate", "minecraft:items/empty_armor_slot_leggings", "minecraft:items/empty_armor_slot_boots"};
-    }
-
- 
-
 }

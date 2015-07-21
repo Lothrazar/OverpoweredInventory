@@ -91,13 +91,38 @@ public class GuiBigInventory extends GuiInventory
     }
 	private void checkButtons()
 	{
+		
 		btnEnder.enabled = (container.invo.getStackInSlot(Const.enderChestSlot) != null);
+		
+		if(btnEnder.enabled == false)
+		{
+			
+			String st = "textures/items/empty_enderchest.png";
+			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st));
+		
+			
+			this.drawTexturedModalRect(container.echestX-1, container.echestY-1
+					, 0, 0, Const.square, Const.square);
+
+			
+			int color = 0xFFFFFF;
+ 
+			int pad = -1;
+			int x = pad+container.echestX;
+			int y = pad+container.echestY;
+	 
+			this.fontRendererObj.drawString( "0", x,y, color);
+
+		
+			
+			
+			//this one below does work, but it goes on outside screen, behind gui
+			//this.mc.fontRendererObj.drawStringWithShadow("123123112312312qwadadasdasdfasdf2", 0,this.guiTop, color);
+		}
 	}
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{ 
-		this.checkButtons();
-		
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, ModInv.INVENTORY_TEXTURE));
         int gLeft = this.guiLeft;
@@ -164,6 +189,8 @@ public class GuiBigInventory extends GuiInventory
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{ 
+		this.checkButtons();
+		
 		if(ModConfig.showText)
 			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
 		
