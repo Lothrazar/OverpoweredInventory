@@ -8,6 +8,8 @@ import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
  
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -31,7 +33,11 @@ public class GuiBigInventory extends GuiInventory
 		container = player.inventoryContainer instanceof BigContainerPlayer? (BigContainerPlayer)player.inventoryContainer : null;
 		this.xSize = xStart + (Const.square * Const.MORE_COLS) + 15;
 		this.ySize = yStart + (Const.square * Const.MORE_ROWS) + 29;
-
+System.out.println(xSize+"   "+ySize);
+System.out.println(xSize+"   "+ySize);
+System.out.println(xSize+"   "+ySize);
+System.out.println(xSize+"   "+ySize);
+System.out.println(xSize+"   "+ySize);//472    382
 	}
 
 	@SuppressWarnings("unchecked")
@@ -96,22 +102,25 @@ public class GuiBigInventory extends GuiInventory
 		
 		if(btnEnder.enabled == false)
 		{
-			
-			String st = "textures/items/empty_enderchest.png";
+			final int s = Const.square;
+	       // GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+			String st = "textures/items/empty_enderchest";
 			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st));
 		
+			drawTexturedQuadFit(container.echestX, container.echestY,s,s,0);
 			
-			this.drawTexturedModalRect(container.echestX-1, container.echestY-1
-					, 0, 0, Const.square, Const.square);
+		 	//this.drawTexturedModalRect(container.echestX-1+5, container.echestY-1	, 0, 0, Const.square, Const.square);
 
-			
-			int color = 0xFFFFFF;
+			//to use standard cols: http://minecraft.gamepedia.com/Formatting_codes
+			//int white = 0xFFFFFF;
+			int red = 0x2A0000;
+	 
  
-			int pad = -1;
+			int pad = +1;
 			int x = pad+container.echestX;
 			int y = pad+container.echestY;
 	 
-			this.fontRendererObj.drawString( "0", x,y, color);
+			this.fontRendererObj.drawString( "0", x,y, red);
 
 		
 			
@@ -120,69 +129,37 @@ public class GuiBigInventory extends GuiInventory
 			//this.mc.fontRendererObj.drawStringWithShadow("123123112312312qwadadasdasdfasdf2", 0,this.guiTop, color);
 		}
 	}
+	
+	public static void drawTexturedQuadFit(double x, double y, double width, double height, double zLevel)
+	{
+		//because the vanilla code REQUIRES textures to be powers of two AND are force dto be max of 256??? WHAT?
+		//so this one actually works
+		//THANKS hydroflame  ON FORUMS 
+		//http://www.minecraftforge.net/forum/index.php/topic,11229.msg57594.html#msg57594
+		
+		Tessellator tessellator = Tessellator.getInstance();
+  
+		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        worldrenderer.startDrawingQuads();
+        
+        worldrenderer.addVertexWithUV(x + 0, y + height, zLevel, 0,1);
+        worldrenderer.addVertexWithUV(x + width, y + height, zLevel, 1, 1);
+        worldrenderer.addVertexWithUV(x + width, y + 0, zLevel, 1,0);
+        worldrenderer.addVertexWithUV(x + 0, y + 0, zLevel, 0, 0);
+        tessellator.draw();
+	}
+	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{ 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, ModInv.INVENTORY_TEXTURE));
-        int gLeft = this.guiLeft;
-        int gTop = this.guiTop;
-        final int square = Const.square;
-        this.drawTexturedModalRect(gLeft, gTop, 0, 0, xStart, yStart);
-        
-        
-        for(int i = 0; i < Const.MORE_COLS; i++)
-        {
-            this.drawTexturedModalRect(gLeft + xStart + (i * square), gTop, xStart, 0, square, yStart);
-        }
-        
-        for(int i = 0; i < Const.MORE_ROWS; i++)
-        {
-            this.drawTexturedModalRect(gLeft, gTop + yStart + (i * square), 0, 119, xStart, square);
-        }
-        
-        for(int i = 0; i < Const.MORE_COLS; i++)
-        {
-        	for(int j = 0; j < Const.MORE_ROWS; j++)
-        	{
-                this.drawTexturedModalRect(gLeft + xStart + (i * square), gTop + yStart + (j * square), 7, 83, square, square);
-        	}
-        }
-        
-        //the ender slot 
-        this.drawTexturedModalRect(gLeft-1 + container.pearlX, gTop-1 + container.pearlY, 7, 83, square, square);
-        this.drawTexturedModalRect(gLeft-1 + container.echestX, gTop-1 + container.echestY, 7, 83, square, square);
-        
-        
-        int barW = 8;
-        //int barW = Const.ALL_COLS * Const.ALL_ROWS < Const.invoSize? 0 : 8;
 
-        this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square), gTop, 187, 0, 2, 119); // Scroll top
-        this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square) + 2, gTop, 189 + barW, 0, 13 - barW, 119); // Scroll top
-        
-        for(int i = 0; i < Const.MORE_ROWS; i++)
-        {
-            this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square), gTop + 119 + (i * square), 187, 101, 2, square); // Scroll middle
-            this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square) + 2, gTop + 119 + (i * square), 189 + barW, 101, 13 - barW, square); // Scroll middle
-        }
-        
-        this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square), gTop + 119 + (Const.MORE_ROWS * square), 187, 119, 2, square); // Scroll bottom
-        this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square) + 2, gTop + 119 + (Const.MORE_ROWS * square), 189 + barW, 119, 13 - barW, square); // Scroll bottom
-        
-        this.drawTexturedModalRect(gLeft, gTop + yStart + (Const.MORE_ROWS * square), 0, yStart, xStart, 29);
-        
-        for(int i = 0; i < Const.MORE_COLS; i++)
-        {
-            this.drawTexturedModalRect(gLeft + xStart + (i * square), gTop + yStart + (Const.MORE_ROWS * square), xStart, yStart, square, 29);
-        }
-        
-
-        
-        
-        this.drawTexturedModalRect(gLeft + xStart + (Const.MORE_COLS * square), gTop + yStart + (Const.MORE_ROWS * square), 187 + barW, yStart, 16 - barW, 29);
-
+        drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
+      
         if(ModConfig.showCharacter)
-        	drawEntityOnScreen(gLeft + 51, gTop + 75, 30, (float)(gLeft + 51) - (float)mouseX, (float)(gTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
+        	drawEntityOnScreen(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
      
 	}
 	
