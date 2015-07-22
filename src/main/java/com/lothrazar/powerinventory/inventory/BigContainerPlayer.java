@@ -31,11 +31,21 @@ public class BigContainerPlayer extends ContainerPlayer
     public boolean isLocalWorld;
 
 	//these get used here for actual slot, and in GUI for texture
-	public final int pearlX = GuiBigInventory.texture_width - Const.square-6; 
+	public final int pearlX = GuiBigInventory.texture_width - Const.square-6; //we used padding six on gui
 	public final int pearlY = GuiBigInventory.texture_height - Const.square-6; 
 	public final int echestX = pearlX - 2*Const.square;
 	public final int echestY = pearlY;
-
+//store slot numbers as we go. so that transferStack.. is actually readable
+	
+	static int S_RESULT;
+	static int S_CRAFT_START;
+	static int S_CRAFT_END;
+	static int S_ARMOR_START;
+	static int S_ARMOR_END;
+	static int S_BAR_START;
+	static int S_BAR_END;
+	static int S_MAIN_START;
+	static int S_MAIN_END;
 	public BigContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
 	{
 		super(playerInventory, isLocal, player);
@@ -44,33 +54,35 @@ public class BigContainerPlayer extends ContainerPlayer
 		inventorySlots = Lists.newArrayList();//undo everything done by super()
 		craftMatrix = new InventoryCrafting(this, craftSize, craftSize);
  
-        int i,j,cx,cy,slotIndex = 0;//rows and cols of vanilla, not extra
-
-        this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, slotIndex, 
+        int i,j,cx,cy;//rows and cols of vanilla, not extra
+   
+        
+        S_RESULT = this.inventorySlots.size();
+        this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 
         		174, 
         		40));
-    
+
+        S_CRAFT_START = this.inventorySlots.size();
         for (i = 0; i < craftSize; ++i)
         { 
             for (j = 0; j < craftSize; ++j)
-            { 
-            	slotIndex = j + i * this.craftSize;
-       
+            {  
     			cx = 88 + j * Const.square ;
     			cy = 20 + i * Const.square ;
 
-        		this.addSlotToContainer(new Slot(this.craftMatrix, slotIndex, cx , cy)); 
+        		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * this.craftSize, cx , cy)); 
             }
         }
-
+        S_CRAFT_END = this.inventorySlots.size() - 1;
+        S_ARMOR_START = this.inventorySlots.size();
         for (i = 0; i < Const.armorSize; ++i)
         {
         	cx = 8;
         	cy = 8 + i * Const.square;
             final int k = i;
-            slotIndex =  playerInventory.getSizeInventory() - 1 - i;
- 
-            this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, cy)
+         
+            this.addSlotToContainer(new Slot(playerInventory,  playerInventory.getSizeInventory() - 1 - i, 
+            		cx, cy)
             { 
             	public int getSlotStackLimit()
 	            {
@@ -89,28 +101,29 @@ public class BigContainerPlayer extends ContainerPlayer
 	            }
             }); 
         }
-
+        S_ARMOR_END = this.inventorySlots.size() - 1;
+        S_BAR_START = this.inventorySlots.size();
         for (i = 0; i < Const.hotbarSize; ++i)
-        {
-        	slotIndex = i;
+        { 
         	cx = 8 + i * Const.square;
         	cy = 142 + (Const.square * Const.MORE_ROWS);
  
-            this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, cy));
+            this.addSlotToContainer(new Slot(playerInventory, i, cx, cy));
         }
+        S_BAR_END = this.inventorySlots.size() - 1;
+        S_MAIN_START = this.inventorySlots.size();
         int sn = Const.hotbarSize;
         for( i = 0; i < MathHelper.ceiling_float_int((float)Const.invoSize/(float)(Const.ALL_COLS)); i++)
 		{
             for ( j = 0; j < Const.ALL_COLS; ++j)
-            {
-            	slotIndex = sn;//j + (i + 1) * cols;
+            { 
             	sn++;
             	cx = 8 + j * Const.square;
             	cy = 84 + i * Const.square;
-                this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, cy));
+                this.addSlotToContainer(new Slot(playerInventory, sn, cx, cy));
             }
         }
-
+        S_MAIN_END = this.inventorySlots.size() - 1;
         this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, pearlX, pearlY));
         this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, echestX, echestY)); 
         
@@ -156,6 +169,10 @@ public class BigContainerPlayer extends ContainerPlayer
 	@Override
     public ItemStack transferStackInSlot(EntityPlayer p, int craft)
     {  
+		//bugs found:
+		//-from hotbar/inventory sends to 22, not top left (9)
+		//- shift clicking out of armor sends it to crafting lwer right
+		//out of crafting result (0) goes to slot 30 instead of top left (9)
         ItemStack stackCopy = null;
         Slot slot = (Slot)this.inventorySlots.get(craft);
 int realSlot = craft - 14;//the magic number;9+4+1
@@ -189,7 +206,7 @@ if(p.worldObj.isRemote ){return null;}//ignore clientside..stops double span on 
             else if (craft >= 10 && craft <= 13) // Armor
             {
             	System.out.println("?fromarmor");
-                if (!this.mergeItemStack(stackOrig, 9, 45, false))
+                if (!this.mergeItemStack(stackOrig, 10, 45, false))//if 9, it goes to craft grid
                 {
                     return null;
                 }

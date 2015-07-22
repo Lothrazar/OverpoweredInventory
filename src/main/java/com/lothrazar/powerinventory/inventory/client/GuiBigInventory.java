@@ -161,12 +161,16 @@ public class GuiBigInventory extends GuiInventory
 			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
 
 		Slot s;
+		int show;
 		for(Object o : this.container.inventorySlots)
 		{
 			//vanilla code does not declare ArrayList<Slot>, even though every object in there really is one
 			s = (Slot)o;
-			// + this.guiLeft              //this.guiTop +
-			this.drawString(this.fontRendererObj, "" + s.getSlotIndex(), s.xDisplayPosition, s.yDisplayPosition +  4, 16777120);
+	 
+			//each slot has two different numbers. the slotNumber is UNIQUE, the index is not
+			//show = s.getSlotIndex();
+			show = s.slotNumber;
+			this.drawString(this.fontRendererObj, "" + show, s.xDisplayPosition, s.yDisplayPosition +  4, 16777120);
 		}
 
 	}
