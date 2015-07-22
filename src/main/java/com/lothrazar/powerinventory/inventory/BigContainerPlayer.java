@@ -1,12 +1,14 @@
 package com.lothrazar.powerinventory.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
@@ -48,7 +50,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	static int S_BAR_END;
 	static int S_MAIN_START;
 	static int S_MAIN_END;
-	static int S_ECHEST;
+	static int S_ECHEST;//these two are 388 399, which are different than the Slot Indices in Const.
 	static int S_PEARL;
 	public BigContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
 	{
@@ -137,8 +139,7 @@ public class BigContainerPlayer extends ContainerPlayer
         this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, echestX, echestY)); 
         
         this.onCraftMatrixChanged(this.craftMatrix);
-		this.invo = (BigInventoryPlayer)playerInventory;
-		System.out.println("!!!"+S_PEARL+ " "+S_ECHEST);
+		this.invo = (BigInventoryPlayer)playerInventory; 
 	}
   
 	@Override
@@ -232,20 +233,28 @@ public class BigContainerPlayer extends ContainerPlayer
         			p.inventory.getStackInSlot(Const.enderPearlSlot).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))
         			)
         		{
-            		System.out.println("pearl detected");
-            		//simpleMerge(p, slotNumber, Const.enderPearlSlot,stackCopy,Items.ender_pearl.getItemStackLimit());
-            	//WHY does this leave a dead red zero stack, when others dont?
-            		if (!this.mergeItemStack(stackOrig, S_PEARL, S_PEARL+1, true))
-                	{
+            		 
+            		if (!this.mergeItemStack(stackOrig, S_PEARL, S_PEARL+1, false))
+                	{ 
                         return null;
-                    } 
+                    }  
         		}
-            	
-            	
-            	if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END, false)//try the hotbar, and if that doesnt work
+            	else if(stackCopy.getItem() == Item.getItemFromBlock(Blocks.ender_chest) && 
+            		(
+        			p.inventory.getStackInSlot(Const.enderChestSlot) == null || 
+        			p.inventory.getStackInSlot(Const.enderChestSlot).stackSize < 1)
+        			)
+        		{ 
+            		if (!this.mergeItemStack(stackOrig, S_ECHEST, S_ECHEST+1, false))
+                	{ 
+                        return null;
+                    }  
+        		}
+            	else if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END, false)
             		//	|| !this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false)
             			)
             	{
+            		//try sending it to the hotbar
                     return null;
                 }
             }
@@ -263,7 +272,7 @@ public class BigContainerPlayer extends ContainerPlayer
             }
 
             if (stackOrig.stackSize == 0)
-            {
+            { 
                 slot.putStack((ItemStack)null);
             }
             else

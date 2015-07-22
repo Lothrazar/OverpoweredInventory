@@ -19,8 +19,7 @@ public class Const
 
 	public static final int square = 18;
 	public final static int hotbarSize = 9;
-	public final static int armorSize = 4;
-	//public final static int OFFSCREEN = -999;
+	public final static int armorSize = 4; 
  
 	public final static int MORE_ROWS = 12;
 	public final static int MORE_COLS = 16;
@@ -28,6 +27,7 @@ public class Const
 	public final static int ALL_ROWS = 3 + MORE_ROWS;
 	public final static int invoSize  = ALL_COLS * ALL_ROWS;
 
+	//these are slot indices. different than slot numbers (important)
     public static final int enderPearlSlot = 777; 
     public static final int enderChestSlot = enderPearlSlot+1;
      
