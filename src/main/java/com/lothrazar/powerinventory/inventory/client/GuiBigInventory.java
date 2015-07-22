@@ -1,7 +1,6 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.ModInv;
+import com.lothrazar.powerinventory.Const; 
 import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 
@@ -23,16 +22,18 @@ public class GuiBigInventory extends GuiInventory
 {
 	private BigContainerPlayer container;
 
-	public boolean redoButtons = false;
-	int xStart = 169;
-	int yStart = 137;
+	public static final int texture_width = 464;
+	public static final int texture_height = 382;
+
+//	int xStart = 169;
+	//int yStart = 137;
 	GuiButton btnEnder;
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
 		container = player.inventoryContainer instanceof BigContainerPlayer? (BigContainerPlayer)player.inventoryContainer : null;
-		this.xSize = 472;//xStart + (Const.square * Const.MORE_COLS) + 15;
-		this.ySize = 382;//yStart + (Const.square * Const.MORE_ROWS) + 29;
+		this.xSize = texture_width;//xStart + (Const.square * Const.MORE_COLS) + 15;
+		this.ySize = texture_height;//yStart + (Const.square * Const.MORE_ROWS) + 29;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -44,49 +45,51 @@ public class GuiBigInventory extends GuiInventory
 		if(this.container != null && this.mc.playerController.isInCreativeMode() == false)
 		{
 			final int height = 20;
-			final int width = 32;
+			final int width = 30;
 			final int ypadding = 6;
 			int button_id = 99;
 			 
-			btnEnder = new GuiButtonInventory(button_id++, this.guiLeft + 210, this.guiTop + ypadding ,width,height, "EC",Const.INV_ENDER);
+			btnEnder = new GuiButtonOpenInventory(button_id++, 
+					this.guiLeft + texture_width-60, 
+					this.guiTop + ypadding,
+					width,height, "EC",Const.INV_ENDER);
 			this.buttonList.add(btnEnder); 
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
-		  
+
+			if(ModConfig.showFilterButton)
+			{   
+				this.buttonList.add(new GuiButtonFilter(button_id++, 
+						this.guiLeft + texture_width-60, 
+						this.guiTop + 2*ypadding+height,
+						2*width,height));
+			}
+			
 			if(ModConfig.showSortButtons)
-			{
-				final int STARTX = this.guiLeft + 280;
-				final int STARTY = this.guiTop + ypadding;
-				int x = STARTX;
-				int y = STARTY;
-				int x_spacing = 50;
-				
-				y += height + 1;
+			{  
+				int x = guiLeft + 180;
+				int y = guiTop + texture_height - width+4;
+				int x_spacing = 32;
+				 
 				GuiButton btn;
-
-				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_LEFT,"<");
-				this.buttonList.add(btn);
-
-				x += x_spacing;
-
-				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_RIGHT,">");
-				this.buttonList.add(btn);
-				
-				x = STARTX;
-				y += height+1;
 
 				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_LEFTALL,"<<");
 				this.buttonList.add(btn);
 
 				x += x_spacing;
+			 
+				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_LEFT,"<");
+				this.buttonList.add(btn);
+
+				x += x_spacing+2;
+
+				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_RIGHT,">");
+				this.buttonList.add(btn);
+				  
+				x += x_spacing;
 				
 				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_RIGHTALL,">>");
 				this.buttonList.add(btn);
 				
-			}
-			
-			if(ModConfig.showFilterButton)
-			{  
-				this.buttonList.add(new GuiButtonFilter(button_id++, this.guiLeft + 395, this.guiTop + ypadding,60,height));
 			}
 		}
     }
@@ -99,43 +102,29 @@ public class GuiBigInventory extends GuiInventory
 		{
 			final int s = Const.square;
 			
-			
-			
-			
-
 			String st = "textures/items/empty_enderpearl.png";
 			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st));
 		
 			drawTexturedQuadFit(container.pearlX, container.pearlY,s,s,0);
-			
-			
-			
-			
-			
-	       // GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+	
 			st = "textures/items/empty_enderchest.png";
 			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st));
 		
 			drawTexturedQuadFit(container.echestX, container.echestY,s,s,0);
-			
-		 	//this.drawTexturedModalRect(container.echestX-1+5, container.echestY-1	, 0, 0, Const.square, Const.square);
-
+		 
 			//to use standard cols: http://minecraft.gamepedia.com/Formatting_codes
-			//int white = 0xFFFFFF;
-			int red = 0x2A0000;
+			/*
+			int white = 0xFFFFFF;
+			//int red = 0x2A0000;
 	 
  
 			int pad = +1;
 			int x = pad+container.echestX;
 			int y = pad+container.echestY;
 	 
-			this.fontRendererObj.drawString( "0", x,y, red);
+			this.fontRendererObj.drawString( "0", x,y, white);
 
-		
-			
-			
-			//this one below does work, but it goes on outside screen, behind gui
-			//this.mc.fontRendererObj.drawStringWithShadow("123123112312312qwadadasdasdfasdf2", 0,this.guiTop, color);
+		*/ 
 		}
 	}
 	
@@ -163,13 +152,12 @@ public class GuiBigInventory extends GuiInventory
 	{ 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
-        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, ModInv.INVENTORY_TEXTURE));
+        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
 
         drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
       
         if(ModConfig.showCharacter)
         	drawEntityOnScreen(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
-     
 	}
 	
 	@Override
@@ -183,7 +171,7 @@ public class GuiBigInventory extends GuiInventory
 		if(container != null)
 		{
 	        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, ModInv.INVENTORY_TEXTURE));
+			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
 	
 	        // Draw the empty/locked slot icons
 	        for(int j = 0; j < Const.ALL_ROWS; j++)

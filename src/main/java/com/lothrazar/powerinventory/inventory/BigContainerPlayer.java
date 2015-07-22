@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Level;
 import com.google.common.collect.Lists;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
+import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
 /**
  * @author https://github.com/Funwayguy/InfiniteInvo
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
@@ -32,6 +33,12 @@ public class BigContainerPlayer extends ContainerPlayer
     public boolean isLocalWorld;
     private final EntityPlayer thePlayer;
     private Slot[] slots = new Slot[Const.invoSize];
+
+	//these get used here for actual slot, and in GUI for texture
+	public final int pearlX = GuiBigInventory.texture_width - Const.square-8; 
+	public final int pearlY = GuiBigInventory.texture_height - Const.square-6; 
+	public final int echestX = 192;
+	public final int echestY = 7;
 
 	@SuppressWarnings("unchecked")
 	public BigContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
@@ -187,12 +194,6 @@ public class BigContainerPlayer extends ContainerPlayer
         
         this.updateScroll();
 	}
-	
-	//these get used here for actual slot, and in GUI for texture
-	public final int pearlX = 472-18-18; 
-	public final int pearlY = 382-18-18; 
-	public final int echestX = 192;
-	public final int echestY = 7;
   
 	@Override
 	public Slot getSlotFromInventory(IInventory invo, int id)

@@ -1,14 +1,9 @@
 package com.lothrazar.powerinventory.inventory;
 
-import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.proxy.ClientProxy;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

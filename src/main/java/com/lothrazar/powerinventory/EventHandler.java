@@ -27,7 +27,7 @@ import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
 import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonDepositAll;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonInventory;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonWithdrawAll;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket;
@@ -142,7 +142,7 @@ public class EventHandler
 			event.buttonList.add(new GuiButtonClose(256, x,y,w,h));
 			
 			x = x - padding - w;
-			event.buttonList.add(new GuiButtonInventory(256, x,y,w,h,"I",Const.INV_PLAYER));
+			event.buttonList.add(new GuiButtonOpenInventory(256, x,y,w,h,"I",Const.INV_PLAYER));
 
 			//x = x - padding - w;
 			////event.buttonList.add(new GuiButtonDepositAll(256, x,y,w,h));

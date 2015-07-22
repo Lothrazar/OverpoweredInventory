@@ -12,10 +12,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class GuiButtonInventory extends GuiButton 
+public class GuiButtonOpenInventory extends GuiButton 
 {
 	private int invType;
-    public GuiButtonInventory(int buttonId, int x, int y, int w,int h, String text,int type)
+    public GuiButtonOpenInventory(int buttonId, int x, int y, int w,int h, String text,int type)
     {
     	super(buttonId, x, y, w,h, text);
     	invType = type;

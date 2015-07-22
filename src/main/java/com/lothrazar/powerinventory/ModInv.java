@@ -27,14 +27,6 @@ import net.minecraftforge.fml.relauncher.Side;
 @Mod(modid = Const.MODID, useMetadata=true)
 public class ModInv
 {
-    public static final String INVENTORY_TEXTURE = "textures/gui/inventory_gui_3.png";
-	public static final String NBT_PLAYER = "Player";
-	public static final String NBT_WORLD = "World";
-	public static final String NBT_ID = "ID";
-	public static final String NBT_Settings = "Settings";
-	public static final String NBT_Unlocked = "Unlocked";
-	public static final String NBT_INVENTORY = "Inventory";
-	public static final String NBT_INVOSIZE = "invoSize";
 
     //My fork of this mod was created on July 17, 2015 at https://github.com/PrinceOfAmber/InfiniteInvo
     //original mod source was https://github.com/Funwayguy/InfiniteInvo
