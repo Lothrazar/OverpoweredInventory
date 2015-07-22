@@ -167,23 +167,23 @@ public class BigContainerPlayer extends ContainerPlayer
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
 	@Override
-    public ItemStack transferStackInSlot(EntityPlayer p, int craft)
+    public ItemStack transferStackInSlot(EntityPlayer p, int slotNumber)
     {  
 		//bugs found:
+		System.out.println(slotNumber);
 		//-from hotbar/inventory sends to 22, not top left (9)
 		//- shift clicking out of armor sends it to crafting lwer right
 		//out of crafting result (0) goes to slot 30 instead of top left (9)
         ItemStack stackCopy = null;
-        Slot slot = (Slot)this.inventorySlots.get(craft);
-int realSlot = craft - 14;//the magic number;9+4+1
-System.out.println(realSlot);
+        Slot slot = (Slot)this.inventorySlots.get(slotNumber);
+//int realSlot = craft - 14;//the magic number;9+4+1
+//System.out.println(realSlot);
 if(p.worldObj.isRemote ){return null;}//ignore clientside..stops double span on System, but probably remove for production
         if (slot != null && slot.getHasStack())
         {
             ItemStack stackOrig = slot.getStack();
             stackCopy = stackOrig.copy();
-
-            if (craft == 0) // Crafting result
+            if (slotNumber == this.S_RESULT) // Crafting result
             {
             	System.out.println("result ");
             	//does not dup, but does not start in top left, goes to top mid
@@ -194,7 +194,7 @@ if(p.worldObj.isRemote ){return null;}//ignore clientside..stops double span on 
 
                 slot.onSlotChange(stackOrig, stackCopy);
             }
-            else if (craft >= 1 && craft <= 9) // Crafting grid
+            else if (slotNumber >= S_CRAFT_START && slotNumber <= S_CRAFT_END) // Crafting grid
             {
             	System.out.println("?crafting");///goes to right plac,e but it DUPS
             	//WELL IT only DUPLICATES from lower right - the 9
@@ -203,7 +203,7 @@ if(p.worldObj.isRemote ){return null;}//ignore clientside..stops double span on 
                     return null;
                 }
             }
-            else if (craft >= 10 && craft <= 13) // Armor
+            else if (slotNumber >= S_ARMOR_START && slotNumber <= S_ARMOR_END) // Armor
             {
             	System.out.println("?fromarmor");
                 if (!this.mergeItemStack(stackOrig, 10, 45, false))//if 9, it goes to craft grid
@@ -213,9 +213,14 @@ if(p.worldObj.isRemote ){return null;}//ignore clientside..stops double span on 
             }
             else if (stackCopy.getItem() instanceof ItemArmor && !((Slot)this.inventorySlots.get(5 + ((ItemArmor)stackCopy.getItem()).armorType)).getHasStack()) // Inventory to armor
             {
-            	System.out.println("?toarmor");//goes to craft grid- so it is a bug
+            	System.out.println("?toarmor "+S_ARMOR_START+" "+S_ARMOR_END);//goes to craft grid- so it is a bug
             	
-            	if (!this.mergeItemStack(stackOrig, 10, Const.invoSize-10, false))
+            	int OLDLOGIC = 5 + ((ItemArmor)stackCopy.getItem()).armorType;
+            	System.out.println("OLDLOGIC  "+OLDLOGIC); 
+            	int TEST = S_CRAFT_END + ((ItemArmor)stackCopy.getItem()).armorType;
+            	System.out.println("TEST  "+TEST); 
+            	
+            	if (!this.mergeItemStack(stackOrig, S_ARMOR_START, S_ARMOR_END, false))
                 {
                     return null;
                 } 
@@ -227,6 +232,19 @@ if(p.worldObj.isRemote ){return null;}//ignore clientside..stops double span on 
                     return null;
                 }*/
             }
+            else if (slotNumber >= S_MAIN_START && slotNumber < S_MAIN_END) // Hotbar
+            {
+            	System.out.println("MAIN");//does not duplciate, but doesnt work right, sends to craft grid
+               // if (!this.mergeItemStack(stackOrig, 9, 36, false) && (invo.getSlotsNotArmor() - 36 <= 0 || !this.mergeItemStack(stackOrig, 45, 45 + (invo.getSlotsNotArmor() - 36), false)))
+
+            	if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END, false)//try the hotbar, and if that doesnt work
+            		//	|| !this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false)
+            			)
+            	{
+                    return null;
+                }
+            }
+            /*
             else if ((craft >= 9 && craft < 36) || (craft >= 45 && craft < invo.getSlotsNotArmor() + 9))
             {
             	System.out.println("?9 36 45+ weird");//does not duplicate,b but always goes to 22 or something in
@@ -236,18 +254,20 @@ if(p.worldObj.isRemote ){return null;}//ignore clientside..stops double span on 
                 {
                     return null;
                 }
-            }
-            else if (craft >= 36 && craft < 45) // Hotbar
+            }*/
+            else if (slotNumber >= S_BAR_START && slotNumber <= S_BAR_END) // Hotbar
             {
             	System.out.println("?hotbar");//does not duplciate, but doesnt work right, sends to craft grid
-                if (!this.mergeItemStack(stackOrig, 9, 36, false) && (invo.getSlotsNotArmor() - 36 <= 0 || !this.mergeItemStack(stackOrig, 45, 45 + (invo.getSlotsNotArmor() - 36), false)))
-                {
+               // if (!this.mergeItemStack(stackOrig, 9, 36, false) && (invo.getSlotsNotArmor() - 36 <= 0 || !this.mergeItemStack(stackOrig, 45, 45 + (invo.getSlotsNotArmor() - 36), false)))
+
+            	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
+            	{
                     return null;
                 }
             }
             else if (!this.mergeItemStack(stackOrig, 9, invo.getSlotsNotArmor() + 9, false)) // Full range
             {
-            	System.out.println("?Full range");
+            	System.out.println("?Full range//DEFAULT");
                 return null;
             }
 
