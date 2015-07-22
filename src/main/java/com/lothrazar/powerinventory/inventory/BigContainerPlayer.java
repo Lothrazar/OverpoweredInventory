@@ -169,17 +169,15 @@ public class BigContainerPlayer extends ContainerPlayer
 	@Override
     public ItemStack transferStackInSlot(EntityPlayer p, int slotNumber)
     {  
-		//bugs found:
-		System.out.println(slotNumber);
-		//-from hotbar/inventory sends to 22, not top left (9)
-		//- shift clicking out of armor sends it to crafting lwer right
-		//out of crafting result (0) goes to slot 30 instead of top left (9)
+ 
         ItemStack stackCopy = null;
         Slot slot = (Slot)this.inventorySlots.get(slotNumber);
 //int realSlot = craft - 14;//the magic number;9+4+1
 //System.out.println(realSlot);
 if(p.worldObj.isRemote ){return null;}//ignore clientside..stops double span on System, but probably remove for production
-        if (slot != null && slot.getHasStack())
+
+System.out.println("FROM  "+slotNumber);
+		if (slot != null && slot.getHasStack())
         {
             ItemStack stackOrig = slot.getStack();
             stackCopy = stackOrig.copy();
@@ -198,7 +196,7 @@ if(p.worldObj.isRemote ){return null;}//ignore clientside..stops double span on 
             {
             	System.out.println("?crafting");///goes to right plac,e but it DUPS
             	//WELL IT only DUPLICATES from lower right - the 9
-                if (!this.mergeItemStack(stackOrig, 10, 45, false))//was 9,45
+                if (!this.mergeItemStack(stackOrig,  S_MAIN_START, S_MAIN_END, false))//was 9,45
                 {
                     return null;
                 }
@@ -211,16 +209,17 @@ if(p.worldObj.isRemote ){return null;}//ignore clientside..stops double span on 
                     return null;
                 }
             }
-            else if (stackCopy.getItem() instanceof ItemArmor && !((Slot)this.inventorySlots.get(5 + ((ItemArmor)stackCopy.getItem()).armorType)).getHasStack()) // Inventory to armor
+            else if (stackCopy.getItem() instanceof ItemArmor 
+            		&& !((Slot)this.inventorySlots.get(S_ARMOR_START + ((ItemArmor)stackCopy.getItem()).armorType)).getHasStack()) // Inventory to armor
             {
-            	System.out.println("?toarmor "+S_ARMOR_START+" "+S_ARMOR_END);//goes to craft grid- so it is a bug
+            	System.out.println("?toarmor ");//goes to craft grid- so it is a bug
             	
-            	int OLDLOGIC = 5 + ((ItemArmor)stackCopy.getItem()).armorType;
-            	System.out.println("OLDLOGIC  "+OLDLOGIC); 
-            	int TEST = S_CRAFT_END + ((ItemArmor)stackCopy.getItem()).armorType;
-            	System.out.println("TEST  "+TEST); 
+            	//int OLDLOGIC = 5 + ((ItemArmor)stackCopy.getItem()).armorType;
+            	//System.out.println("OLDLOGIC  "+OLDLOGIC); //8 == boots
+            	int j = S_ARMOR_START + ((ItemArmor)stackCopy.getItem()).armorType;
+            	System.out.println("TEST  "+j); //12 == boots-no should be 13
             	
-            	if (!this.mergeItemStack(stackOrig, S_ARMOR_START, S_ARMOR_END, false))
+            	if (!this.mergeItemStack(stackOrig, j, j+1, false))
                 {
                     return null;
                 } 
