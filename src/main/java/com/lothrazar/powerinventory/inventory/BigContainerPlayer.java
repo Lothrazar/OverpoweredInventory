@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
@@ -37,6 +38,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	public final int echestY = pearlY;
 //store slot numbers as we go. so that transferStack.. is actually readable
 	
+	//these are slot Numbers, (not indexes)
 	static int S_RESULT;
 	static int S_CRAFT_START;
 	static int S_CRAFT_END;
@@ -46,6 +48,8 @@ public class BigContainerPlayer extends ContainerPlayer
 	static int S_BAR_END;
 	static int S_MAIN_START;
 	static int S_MAIN_END;
+	static int S_ECHEST;
+	static int S_PEARL;
 	public BigContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
 	{
 		super(playerInventory, isLocal, player);
@@ -124,11 +128,17 @@ public class BigContainerPlayer extends ContainerPlayer
             }
         }
         S_MAIN_END = this.inventorySlots.size() - 1;
+        
+        
+        S_PEARL =  this.inventorySlots.size() ;
         this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, pearlX, pearlY));
+
+        S_ECHEST =  this.inventorySlots.size() ;
         this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, echestX, echestY)); 
         
         this.onCraftMatrixChanged(this.craftMatrix);
 		this.invo = (BigInventoryPlayer)playerInventory;
+		System.out.println("!!!"+S_PEARL+ " "+S_ECHEST);
 	}
   
 	@Override
@@ -189,6 +199,7 @@ public class BigContainerPlayer extends ContainerPlayer
             }
             else if (slotNumber >= S_CRAFT_START && slotNumber <= S_CRAFT_END) 
             { 
+            	//does this always start at bottom right?
                 if (!this.mergeItemStack(stackOrig,  S_BAR_START, S_MAIN_END, false))//was 9,45
                 {
                     return null;
@@ -213,6 +224,24 @@ public class BigContainerPlayer extends ContainerPlayer
             }
             else if (slotNumber >= S_MAIN_START && slotNumber < S_MAIN_END) // Hotbar
             { 
+            	//only from here are we doing the special items
+            	
+            	if(stackCopy.getItem() == Items.ender_pearl && 
+            		(
+        			p.inventory.getStackInSlot(Const.enderPearlSlot) == null || 
+        			p.inventory.getStackInSlot(Const.enderPearlSlot).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))
+        			)
+        		{
+            		System.out.println("pearl detected");
+            		//simpleMerge(p, slotNumber, Const.enderPearlSlot,stackCopy,Items.ender_pearl.getItemStackLimit());
+            	//WHY does this leave a dead red zero stack, when others dont?
+            		if (!this.mergeItemStack(stackOrig, S_PEARL, S_PEARL+1, true))
+                	{
+                        return null;
+                    } 
+        		}
+            	
+            	
             	if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END, false)//try the hotbar, and if that doesnt work
             		//	|| !this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false)
             			)
@@ -252,4 +281,45 @@ public class BigContainerPlayer extends ContainerPlayer
 
         return stackCopy;
     }
+	/*
+	//copied/inspired from UtilInventory. TODO: try and share code with that?
+	private boolean simpleMerge(EntityPlayer p, int slotFrom, int slotTo, ItemStack stackOrig, int max) 
+	{
+	 
+		ItemStack dest = p.inventory.getStackInSlot(slotTo);
+		
+		if(dest == null)
+		{ 
+			p.inventory.setInventorySlotContents(slotTo, stackOrig);
+			p.inventory.setInventorySlotContents(slotFrom, null);
+			return true;
+		}
+		else
+		{
+			int room = max - dest.stackSize;//max was Items.ender_pearl.getItemStackLimit()
+	 
+			if(room > 0)
+			{ 
+				int toDeposit = Math.min(dest.stackSize,room);
+			
+				dest.stackSize += toDeposit;
+				p.inventory.setInventorySlotContents(slotTo, dest);
+
+				stackOrig.stackSize -= toDeposit;
+ 
+				if(stackOrig.stackSize <= 0)//because of calculations above, should not be below zero
+				{
+					//item stacks with zero count do not destroy themselves, they show up and have unexpected behavior in game so set to empty
+					p.inventory.setInventorySlotContents(slotFrom,null);  
+				}
+				else
+				{ 
+					p.inventory.setInventorySlotContents(slotFrom, stackOrig); 
+				} 
+				return true;
+			}
+			else return false;
+		}
+	}*/
+	
 }
