@@ -93,7 +93,7 @@ public class BigContainerPlayer extends ContainerPlayer
         	cx = 8;
         	cy = 8 + i * Const.square;
             final int k = i;
-            slotNumber =  playerInventory.getSizeInventory() - 1 - i           -1;
+            slotNumber =  playerInventory.getSizeInventory() - 1 - i;
  
             this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy)
             {

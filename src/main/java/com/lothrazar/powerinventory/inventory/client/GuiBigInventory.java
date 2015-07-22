@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -150,14 +151,23 @@ public class GuiBigInventory extends GuiInventory
         if(ModConfig.showCharacter)
         	drawEntityOnScreen(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
 	}
-	
+	boolean DEBUGMODE = true;
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{ 
 		this.checkButtons();
 		
 		if(ModConfig.showText)
-			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
-
+			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210756);
+if(DEBUGMODE){
+		Slot s;
+		for(Object o : this.container.inventorySlots)
+		{
+			//vanilla code does not declare ArrayList<Slot>, even though every object in there really is one
+			s = (Slot)o;
+			// + this.guiLeft              //this.guiTop +
+			this.drawString(this.fontRendererObj, "" + s.getSlotIndex(), s.xDisplayPosition, s.yDisplayPosition +  4, 16777120);
+		}
+}
 	}
 }
