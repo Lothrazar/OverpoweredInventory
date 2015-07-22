@@ -265,12 +265,27 @@ public class BigContainerPlayer extends ContainerPlayer
                     return null;
                 }
             }
+            else if(slotNumber == S_PEARL)
+            { 
+            	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
+            	{
+                    return null;
+                }
+            }
+            else if(slotNumber == S_ECHEST)
+            { 
+            	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
+            	{
+                    return null;
+                }
+            	
+            }
             else if (!this.mergeItemStack(stackOrig, 9, invo.getSlotsNotArmor() + 9, false)) // Full range
             {
+            	//TODO: its possible this never gets hit.. AND/OR is redundant...??
             //	System.out.println("?Full range//DEFAULT");
                 return null;
             }
-
             if (stackOrig.stackSize == 0)
             { 
                 slot.putStack((ItemStack)null);
