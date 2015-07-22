@@ -100,7 +100,7 @@ public class GuiBigInventory extends GuiInventory
 		String st;
 		if(container.invo.getStackInSlot(Const.enderChestSlot) == null)
 		{
-			btnEnder.enabled = true;
+			btnEnder.enabled = false;
 
 			st = "textures/items/empty_enderchest.png";
 			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
@@ -109,7 +109,7 @@ public class GuiBigInventory extends GuiInventory
 		}
 		else 
 		{ 
-			btnEnder.enabled = false; 
+			btnEnder.enabled = true; 
 		}
 
 		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
