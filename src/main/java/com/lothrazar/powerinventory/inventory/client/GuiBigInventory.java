@@ -46,12 +46,13 @@ public class GuiBigInventory extends GuiInventory
 		{
 			final int height = 20;
 			final int width = 30;
-			final int ypadding = 6;
+			final int widthlrg = 58;
+			final int padding = 6;
 			int button_id = 99;
 			 
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
-					this.guiLeft + texture_width-60, 
-					this.guiTop + ypadding,
+					this.guiLeft + texture_width - width - 64, 
+					this.guiTop + texture_height - height - padding,
 					width,height, "EC",Const.INV_ENDER);
 			this.buttonList.add(btnEnder); 
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
@@ -59,9 +60,9 @@ public class GuiBigInventory extends GuiInventory
 			if(ModConfig.showFilterButton)
 			{   
 				this.buttonList.add(new GuiButtonFilter(button_id++, 
-						this.guiLeft + texture_width-60, 
-						this.guiTop + 2*ypadding+height,
-						2*width,height));
+						this.guiLeft + texture_width-widthlrg - padding, 
+						this.guiTop + padding,
+						widthlrg,height));
 			}
 			
 			if(ModConfig.showSortButtons)
@@ -80,7 +81,7 @@ public class GuiBigInventory extends GuiInventory
 				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_LEFT,"<");
 				this.buttonList.add(btn);
 
-				x += x_spacing+2;
+				x += x_spacing+4;
 
 				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_RIGHT,">");
 				this.buttonList.add(btn);

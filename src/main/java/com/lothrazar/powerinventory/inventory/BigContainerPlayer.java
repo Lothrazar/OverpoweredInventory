@@ -24,9 +24,6 @@ import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
  */
 public class BigContainerPlayer extends ContainerPlayer
 {	
-	public final static int OFFSCREEN = -999;
-	public final static int armorSize = 4; 
-	public final static int hotbarSize = 9; 
 	private final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
 	public int scrollPos = 0;
 	public BigInventoryPlayer invo;
@@ -35,10 +32,10 @@ public class BigContainerPlayer extends ContainerPlayer
     private Slot[] slots = new Slot[Const.invoSize];
 
 	//these get used here for actual slot, and in GUI for texture
-	public final int pearlX = GuiBigInventory.texture_width - Const.square-8; 
+	public final int pearlX = GuiBigInventory.texture_width - Const.square-6; 
 	public final int pearlY = GuiBigInventory.texture_height - Const.square-6; 
-	public final int echestX = 192;
-	public final int echestY = 7;
+	public final int echestX = pearlX - 2*Const.square;
+	public final int echestY = pearlY;
 
 	@SuppressWarnings("unchecked")
 	public BigContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
@@ -91,7 +88,7 @@ public class BigContainerPlayer extends ContainerPlayer
             }
         }
 
-        for (i = 0; i < armorSize; ++i)
+        for (i = 0; i < Const.armorSize; ++i)
         {
         	cx = 8;
         	cy = 8 + i * Const.square;
@@ -169,8 +166,8 @@ public class BigContainerPlayer extends ContainerPlayer
             		// Moved off screen to avoid interaction until screen scrolls over the row
             		slotNumber =  j + (i + 1) * cols;
  
-            		cx = OFFSCREEN;
-            		cy = OFFSCREEN;
+            		cx = Const.OFFSCREEN;
+            		cy = Const.OFFSCREEN;
          
             		Slot ns = new Slot(playerInventory,slotNumber, cx,cy);
             		slots[slotNumber - cols] = ns;
@@ -246,12 +243,12 @@ public class BigContainerPlayer extends ContainerPlayer
             {
             	int index = j + (i * Const.ALL_COLS);
     
-            	if(index >= Const.invoSize && index >= 3*hotbarSize)
+            	if(index >= Const.invoSize && index >= 3*Const.hotbarSize)
             	{
             		break;
             	} else
             	{
-            		if(i >= scrollPos && i < scrollPos + 3 + Const.MORE_ROWS && index < invo.getUnlockedSlots() - hotbarSize && index < Const.invoSize)
+            		if(i >= scrollPos && i < scrollPos + 3 + Const.MORE_ROWS && index < invo.getUnlockedSlots() - Const.hotbarSize && index < Const.invoSize)
             		{
             			Slot s = slots[index];
             			s.xDisplayPosition = 8 + j * Const.square;
@@ -259,8 +256,8 @@ public class BigContainerPlayer extends ContainerPlayer
             		} else
             		{
             			Slot s = slots[index];
-            			s.xDisplayPosition = OFFSCREEN;
-            			s.yDisplayPosition = OFFSCREEN;
+            			s.xDisplayPosition = Const.OFFSCREEN;
+            			s.yDisplayPosition = Const.OFFSCREEN;
             		}
             	}
             }
