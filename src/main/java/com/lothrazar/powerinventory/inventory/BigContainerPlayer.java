@@ -158,7 +158,9 @@ public class BigContainerPlayer extends ContainerPlayer
     {  
         ItemStack stackCopy = null;
         Slot slot = (Slot)this.inventorySlots.get(craft);
-
+int realSlot = craft - 14;//the magic number;9+4+1
+System.out.println(realSlot);
+if(p.worldObj.isRemote ){return null;}//ignore clientside..stops double span on System, but probably remove for production
         if (slot != null && slot.getHasStack())
         {
             ItemStack stackOrig = slot.getStack();
@@ -166,6 +168,8 @@ public class BigContainerPlayer extends ContainerPlayer
 
             if (craft == 0) // Crafting result
             {
+            	System.out.println("result ");
+            	//does not dup, but does not start in top left, goes to top mid
                 if (!this.mergeItemStack(stackOrig, 9, 45, true))
                 {
                     return null;
@@ -175,13 +179,16 @@ public class BigContainerPlayer extends ContainerPlayer
             }
             else if (craft >= 1 && craft <= 9) // Crafting grid
             {
-                if (!this.mergeItemStack(stackOrig, 9, 45, false))
+            	System.out.println("?crafting");///goes to right plac,e but it DUPS
+            	//WELL IT only DUPLICATES from lower right - the 9
+                if (!this.mergeItemStack(stackOrig, 10, 45, false))//was 9,45
                 {
                     return null;
                 }
             }
             else if (craft >= 10 && craft <= 13) // Armor
             {
+            	System.out.println("?fromarmor");
                 if (!this.mergeItemStack(stackOrig, 9, 45, false))
                 {
                     return null;
@@ -189,15 +196,25 @@ public class BigContainerPlayer extends ContainerPlayer
             }
             else if (stackCopy.getItem() instanceof ItemArmor && !((Slot)this.inventorySlots.get(5 + ((ItemArmor)stackCopy.getItem()).armorType)).getHasStack()) // Inventory to armor
             {
+            	System.out.println("?toarmor");//goes to craft grid- so it is a bug
+            	
+            	if (!this.mergeItemStack(stackOrig, 10, Const.invoSize-10, false))
+                {
+                    return null;
+                } 
+            	/*
                 int j = 5 + ((ItemArmor)stackCopy.getItem()).armorType;
 
                 if (!this.mergeItemStack(stackOrig, j, j + 1, false))
                 {
                     return null;
-                }
+                }*/
             }
             else if ((craft >= 9 && craft < 36) || (craft >= 45 && craft < invo.getSlotsNotArmor() + 9))
             {
+            	System.out.println("?9 36 45+ weird");//does not duplicate,b but always goes to 22 or something in
+            	//top mid
+            	//also, the hotbar slots hit this code
                 if (!this.mergeItemStack(stackOrig, 36, 45, false))
                 {
                     return null;
@@ -205,6 +222,7 @@ public class BigContainerPlayer extends ContainerPlayer
             }
             else if (craft >= 36 && craft < 45) // Hotbar
             {
+            	System.out.println("?hotbar");//does not duplciate, but doesnt work right, sends to craft grid
                 if (!this.mergeItemStack(stackOrig, 9, 36, false) && (invo.getSlotsNotArmor() - 36 <= 0 || !this.mergeItemStack(stackOrig, 45, 45 + (invo.getSlotsNotArmor() - 36), false)))
                 {
                     return null;
@@ -212,6 +230,7 @@ public class BigContainerPlayer extends ContainerPlayer
             }
             else if (!this.mergeItemStack(stackOrig, 9, invo.getSlotsNotArmor() + 9, false)) // Full range
             {
+            	System.out.println("?Full range");
                 return null;
             }
 

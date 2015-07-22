@@ -159,7 +159,7 @@ public class GuiBigInventory extends GuiInventory
 		
 		if(ModConfig.showText)
 			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
-/*
+
 		Slot s;
 		for(Object o : this.container.inventorySlots)
 		{
@@ -168,6 +168,6 @@ public class GuiBigInventory extends GuiInventory
 			// + this.guiLeft              //this.guiTop +
 			this.drawString(this.fontRendererObj, "" + s.getSlotIndex(), s.xDisplayPosition, s.yDisplayPosition +  4, 16777120);
 		}
-*/
+
 	}
 }
