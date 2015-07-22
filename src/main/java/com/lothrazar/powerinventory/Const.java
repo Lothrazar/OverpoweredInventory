@@ -6,9 +6,9 @@ package com.lothrazar.powerinventory;
 public class Const
 { 
     public static final String MODID = "powerinventory";
-	public static final int square = 18;
-	public static final String NBT_SLOT = "Slot";
     public static final String INVENTORY_TEXTURE = "textures/gui/inventory_gui.png";
+    
+	public static final String NBT_SLOT = "Slot";
 	public static final String NBT_PLAYER = "Player";
 	public static final String NBT_WORLD = "World";
 	public static final String NBT_ID = "ID";
@@ -17,6 +17,7 @@ public class Const
 	public static final String NBT_INVENTORY = "Inventory";
 	public static final String NBT_INVOSIZE = "invoSize";
 
+	public static final int square = 18;
 	public final static int hotbarSize = 9;
 	public final static int armorSize = 4;
 	public final static int OFFSCREEN = -999;

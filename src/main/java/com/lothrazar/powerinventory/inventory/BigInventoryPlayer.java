@@ -28,8 +28,6 @@ public class BigInventoryPlayer extends InventoryPlayer
     private ItemStack enderPearlStack;
     private ItemStack enderChestStack;
    
-    //final int bonusSlots = 1;//for ender
- 
 	public BigInventoryPlayer(EntityPlayer player)
 	{
 		super(player);
@@ -155,9 +153,6 @@ public class BigInventoryPlayer extends InventoryPlayer
     @Override
     public void setCurrentItem(Item item, int meta, boolean var3flag, boolean var4flag)
     {
-    	//func_146030_a
-    	
-    	 
         this.currentItemStack = this.getCurrentItem();
         int k;
 

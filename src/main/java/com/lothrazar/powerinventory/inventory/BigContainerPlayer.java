@@ -41,6 +41,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	public BigContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
 	{
 		super(playerInventory, isLocal, player);
+		
         this.thePlayer = player;
 		inventorySlots = Lists.newArrayList();//undo everything done by super()
 		craftMatrix = new InventoryCrafting(this, craftSize, craftSize);
@@ -54,20 +55,19 @@ public class BigContainerPlayer extends ContainerPlayer
 
         this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, slotNumber, 152, 42));
     
-        
         for (i = 0; i < craftSize; ++i)
         {
         	onHold = false;
-        	if( i == this.craftSize-1) onHold = true; //hold right and bottom column
-        	
+        
             for (j = 0; j < craftSize; ++j)
             {
-            	if(j == this.craftSize-1)onHold = true; //hold right and bottom column
+            	if(i == this.craftSize - 1 || j == this.craftSize - 1) {onHold = true;} //hold right and bottom column
             	
             	slotNumber = j + i * this.craftSize;
             
             	cx = 81 + j * Const.square;
             	cy = 26 + i * Const.square;
+            	
             	if(onHold)
             	{
             		//save these to add at the end

@@ -25,15 +25,13 @@ public class GuiBigInventory extends GuiInventory
 	public static final int texture_width = 464;
 	public static final int texture_height = 382;
 
-//	int xStart = 169;
-	//int yStart = 137;
 	GuiButton btnEnder;
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
 		container = player.inventoryContainer instanceof BigContainerPlayer? (BigContainerPlayer)player.inventoryContainer : null;
-		this.xSize = texture_width;//xStart + (Const.square * Const.MORE_COLS) + 15;
-		this.ySize = texture_height;//yStart + (Const.square * Const.MORE_ROWS) + 29;
+		this.xSize = texture_width;
+		this.ySize = texture_height;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -94,6 +92,7 @@ public class GuiBigInventory extends GuiInventory
 			}
 		}
     }
+	
 	private void checkButtons()
 	{
 		final int s = 16;

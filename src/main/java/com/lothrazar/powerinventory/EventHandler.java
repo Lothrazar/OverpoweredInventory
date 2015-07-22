@@ -52,7 +52,7 @@ public class EventHandler
     {   
         if(ClientProxy.keyEnder.isPressed() )
         { 	     
-        	 ModInv.instance.network.sendToServer( new EnderPearlPacket());  //ClientProxy.keyShiftUp.getKeyCode()
+        	 ModInv.instance.network.sendToServer( new EnderPearlPacket());   
         }  
     }
 	
@@ -89,7 +89,6 @@ public class EventHandler
 	{
 		if(event.entityLiving instanceof EntityPlayer)
 		{
-	
 			if(!event.entityLiving.worldObj.isRemote && event.entityLiving.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory"))
 			{
 				InventoryPersistProperty.keepInvoCache.put(event.entityLiving.getUniqueID(), ((EntityPlayer)event.entityLiving).inventory.writeToNBT(new NBTTagList()));
@@ -129,31 +128,17 @@ public class EventHandler
 		{
 			//trapped, regular chests, minecart chests, and enderchest all use this class
 			//which extends  GuiContainer
-			//GuiContainer gui = (GuiContainer)event.gui;
-			//Container container = gui.inventorySlots;
+
 			int padding = 10;
 			
 			int x,y = padding,w = 20,h = w;
 			
 			x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
 			
-			//drop them in right to left
-			
 			event.buttonList.add(new GuiButtonClose(256, x,y,w,h));
 			
 			x = x - padding - w;
 			event.buttonList.add(new GuiButtonOpenInventory(256, x,y,w,h,"I",Const.INV_PLAYER));
-
-			//x = x - padding - w;
-			////event.buttonList.add(new GuiButtonDepositAll(256, x,y,w,h));
-
-			//x = x - padding - w;
-			//event.buttonList.add(new GuiButtonWithdrawAll(256, x,y,w,h));
-		 
-			
-			//could use reflection to get hidden dimensions
-			//protected int guiLeft; 
-		 //   protected int guiTop;
 		}
 	}
 	
