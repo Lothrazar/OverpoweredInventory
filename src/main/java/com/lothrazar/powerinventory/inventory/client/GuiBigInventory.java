@@ -96,36 +96,27 @@ public class GuiBigInventory extends GuiInventory
     }
 	private void checkButtons()
 	{
-		
-		btnEnder.enabled = (container.invo.getStackInSlot(Const.enderChestSlot) != null);
-		
-		if(btnEnder.enabled == false)
+		final int s = 16;
+		String st;
+		if(container.invo.getStackInSlot(Const.enderChestSlot) == null)
 		{
-			final int s = Const.square;
-			
-			String st = "textures/items/empty_enderpearl.png";
-			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st));
-		
-			drawTexturedQuadFit(container.pearlX, container.pearlY,s,s,0);
-	
-			st = "textures/items/empty_enderchest.png";
-			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st));
-		
-			drawTexturedQuadFit(container.echestX, container.echestY,s,s,0);
-		 
-			//to use standard cols: http://minecraft.gamepedia.com/Formatting_codes
-			/*
-			int white = 0xFFFFFF;
-			//int red = 0x2A0000;
-	 
- 
-			int pad = +1;
-			int x = pad+container.echestX;
-			int y = pad+container.echestY;
-	 
-			this.fontRendererObj.drawString( "0", x,y, white);
+			btnEnder.enabled = true;
 
-		*/ 
+			st = "textures/items/empty_enderchest.png";
+			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
+			drawTexturedQuadFit(container.echestX, container.echestY,s,s,0);
+			
+		}
+		else 
+		{ 
+			btnEnder.enabled = false; 
+		}
+
+		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
+		{ 
+			st = "textures/items/empty_enderpearl.png";
+			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
+			drawTexturedQuadFit(container.pearlX, container.pearlY,s,s,0);
 		}
 	}
 	

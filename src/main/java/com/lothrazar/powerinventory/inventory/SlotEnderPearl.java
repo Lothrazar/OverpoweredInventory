@@ -4,8 +4,6 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class SlotEnderPearl extends Slot
 {
@@ -32,12 +30,5 @@ public class SlotEnderPearl extends Slot
 	public int getSlotStackLimit()
     {
         return Items.ender_pearl.getItemStackLimit();
-    }
-	
-	@Override
-	@SideOnly(Side.CLIENT)
-    public String getSlotTexture()
-    {  
-        return "minecraft:items/ender_pearl"; 
     }
 }
