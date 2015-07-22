@@ -48,10 +48,10 @@ public class WithdrawButtonPacket implements IMessage , IMessageHandler<Withdraw
 			 p.openContainer.detectAndSendChanges(); 
 
 			 p.inventory.markDirty();
-			 if( p.inventoryContainer instanceof BigContainerPlayer)
+			/* if( p.inventoryContainer instanceof BigContainerPlayer)
 			 {
 				 ((BigContainerPlayer)p.inventoryContainer ).updateScroll();
-			 }
+			 }*/
 		 }
 		 
 		return null;

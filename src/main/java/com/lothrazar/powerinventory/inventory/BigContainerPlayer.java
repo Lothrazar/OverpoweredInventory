@@ -29,7 +29,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	public BigInventoryPlayer invo;
     public boolean isLocalWorld;
     private final EntityPlayer thePlayer;
-    private Slot[] slots = new Slot[Const.invoSize];
+   // private Slot[] slots = new Slot[Const.invoSize];
 
 	//these get used here for actual slot, and in GUI for texture
 	public final int pearlX = GuiBigInventory.texture_width - Const.square-6; 
@@ -45,46 +45,34 @@ public class BigContainerPlayer extends ContainerPlayer
         this.thePlayer = player;
 		inventorySlots = Lists.newArrayList();//undo everything done by super()
 		craftMatrix = new InventoryCrafting(this, craftSize, craftSize);
+		Slot newslot;
 
-        boolean onHold = false;
-        int[] holdSlot = new int[5];//because 3x3 - 2x2 = 5
-        int[] holdX = new int[holdSlot.length];
-        int[] holdY = new int[holdSlot.length];
+       // boolean onHold = false;
+       // int[] holdSlot = new int[5];//because 3x3 - 2x2 = 5
+       // int[] holdX = new int[holdSlot.length];
+      //  int[] holdY = new int[holdSlot.length];
 
-        int i,j,cx,cy,craft=0,h = 0,slotNumber = 0, rows=3, cols=9;//rows and cols of vanilla, not extra
+        int i,j,cx,cy,h = 0,slotIndex = 0, rows=3, cols=Const.hotbarSize;//rows and cols of vanilla, not extra
 
-        this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, slotNumber, 152, 42));
+        this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, slotIndex, 152, 42));
     
         for (i = 0; i < craftSize; ++i)
         {
-        	onHold = false;
+        	//onHold = false;
         
             for (j = 0; j < craftSize; ++j)
             {
-            	if(i == this.craftSize - 1 || j == this.craftSize - 1) {onHold = true;} //hold right and bottom column
+            	//if(i == this.craftSize - 1 || j == this.craftSize - 1) {onHold = true;} //hold right and bottom column
             	
-            	slotNumber = j + i * this.craftSize;
-            
-            	cx = 81 + j * Const.square;
-            	cy = 26 + i * Const.square;
-            	
-            	if(onHold)
-            	{
-            		//save these to add at the end
-            		holdSlot[h] = slotNumber;
-            		holdX[h] = cx;
-            		holdY[h] = cy;
-            		h++;
-            	}
-            	else
-            	{
-        			cx = 81 + ((craft%2) * Const.square );
-        			cy = 20 + ((craft/2) * Const.square );
-      
-            		this.addSlotToContainer(new Slot(this.craftMatrix, slotNumber, cx , cy));
-             
-            		craft++;
-            	}
+            	slotIndex = j + i * this.craftSize;
+       
+        			cx = 89 + j * Const.square ;
+        			cy = 26 + i * Const.square ;
+        			newslot=new Slot(this.craftMatrix, slotIndex, cx , cy);
+            		this.addSlotToContainer(newslot);
+             System.out.println("craftin: "+newslot.slotNumber+" at "+cx+","+cy);
+  
+            //	}
             }
         }
 
@@ -93,66 +81,49 @@ public class BigContainerPlayer extends ContainerPlayer
         	cx = 8;
         	cy = 8 + i * Const.square;
             final int k = i;
-            slotNumber =  playerInventory.getSizeInventory() - 1 - i;
- 
-            this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy)
+            slotIndex =  playerInventory.getSizeInventory() - 1 - i;
+
+            System.out.println("armor at "+cx+","+cy);
+            this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, cy)
             {
-             //   private static final String __OBFID = "CL_00001755";
- 
-                public int getSlotStackLimit()
-                {
-                    return 1;
-                }
-            
-                public boolean isItemValid(ItemStack stack)
-                {
-                    if (stack == null) return false;
-                    return stack.getItem().isValidArmor(stack, k, thePlayer);
-                }
-                @SideOnly(Side.CLIENT)
-                public String getSlotTexture()
-                {
-                    return ItemArmor.EMPTY_SLOT_NAMES[k];
-                }
-            });
+                //   private static final String __OBFID = "CL_00001755";
+    
+                   public int getSlotStackLimit()
+                   {
+                       return 1;
+                   }
+               
+                   public boolean isItemValid(ItemStack stack)
+                   {
+                       if (stack == null) return false;
+                       return stack.getItem().isValidArmor(stack, k, thePlayer);
+                   }
+                   @SideOnly(Side.CLIENT)
+                   public String getSlotTexture()
+                   {
+                       return ItemArmor.EMPTY_SLOT_NAMES[k];
+                   }
+            }); 
         }
 
-        for (i = 0; i < rows; ++i)      //inventory is 3 rows by 9 columns
-        {
-            for (j = 0; j < cols; ++j)
+       // for (i = 0; i < rows; ++i)      //inventory is 3 rows by 9 columns
+        //{
+           // for (j = 0; j < cols; ++j)
+           // {
+        int sn = 9;
+        for( i = 0; i < MathHelper.ceiling_float_int((float)Const.invoSize/(float)(Const.ALL_COLS)); i++)
+		{
+            for ( j = 0; j < Const.ALL_COLS; ++j)
             {
-            	slotNumber = j + (i + 1) * cols;
- 
+            	slotIndex = sn;//j + (i + 1) * cols;
+sn++;
             	cx = 8 + j * Const.square;
             	cy = 84 + i * Const.square;
-                this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy));
+                this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, cy));
             }
         }
-
-        for (i = 0; i < cols; ++i)//hotbar
-        {
-        	slotNumber = i;
-        	cx = 8 + i * Const.square;
-        	cy = 142 + (Const.square * Const.MORE_ROWS);
- 
-            this.addSlotToContainer(new Slot(playerInventory, slotNumber, cx, cy));
-        }
-
-        this.onCraftMatrixChanged(this.craftMatrix);
-		this.invo = (BigInventoryPlayer)playerInventory;
-		
-		for(i = cols; i < 4*cols; i++)
-		{
-			// Add all the previous inventory slots to the organised array
-			 Slot os = (Slot)this.inventorySlots.get(i);
-			 
-			 Slot ns = new Slot(os.inventory, os.getSlotIndex(), os.xDisplayPosition, os.yDisplayPosition);
-			 ns.slotNumber = os.slotNumber;
-			 this.inventorySlots.set(i, ns);
-			 ns.onSlotChanged();
-			 slots[i - cols] = ns;
-		}
-		 
+		/*
+		//the main area
         for ( i = rows; i < MathHelper.ceiling_float_int((float)(Const.invoSize/9F)); ++i)
         {
             for ( j = 0; j < cols; ++j)
@@ -164,32 +135,48 @@ public class BigContainerPlayer extends ContainerPlayer
             	else
             	{
             		// Moved off screen to avoid interaction until screen scrolls over the row
-            		slotNumber =  j + (i + 1) * cols;
+            		slotIndex =  j + (i + 1) * cols;
  
-            		cx = Const.OFFSCREEN;
-            		cy = Const.OFFSCREEN;
-         
-            		Slot ns = new Slot(playerInventory,slotNumber, cx,cy);
-            		slots[slotNumber - cols] = ns;
+            		//cx = Const.OFFSCREEN;
+            		//cy = Const.OFFSCREEN;
+            		cx = 8 + j * Const.square;
+            		cy = 84 + (i) * Const.square;
+            		Slot ns = new Slot(playerInventory,slotIndex, cx,cy);
+            		slots[slotIndex - cols] = ns;
             		this.addSlotToContainer(ns); 
             	}
             }
-        }
-        
-        for(h = 0; h < holdSlot.length; ++h)
+        }*/
+        for (i = 0; i < cols; ++i)//hotbar?
         {
-        	slotNumber = holdSlot[h];
-    		cx = holdX[h];
-    		cy = holdY[h] - 6;
+        	slotIndex = i;
+        	cx = 8 + i * Const.square;
+        	cy = 142 + (Const.square * Const.MORE_ROWS);
  
-    		Slot ns = new Slot(this.craftMatrix, slotNumber, cx , cy );
-        	this.addSlotToContainer(ns);
+            this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, cy));
         }
-   
+
+        this.onCraftMatrixChanged(this.craftMatrix);
+		this.invo = (BigInventoryPlayer)playerInventory;
+		 
+		/*for(i = cols; i < 4*cols; i++)
+		{
+			// Add all the previous inventory slots to the organised array
+			 Slot os = (Slot)this.inventorySlots.get(i);
+			 
+			 Slot ns = new Slot(os.inventory, os.getSlotIndex(), os.xDisplayPosition, os.yDisplayPosition);
+			 ns.slotNumber = os.slotNumber;
+			 this.inventorySlots.set(i, ns);
+			 ns.onSlotChanged();
+			 slots[i - cols] = ns;
+		}*/
+		
+
+         
         this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, pearlX, pearlY));
         this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, echestX, echestY));
         
-        this.updateScroll();
+        //this.updateScroll();
 	}
   
 	@Override
@@ -223,7 +210,7 @@ public class BigContainerPlayer extends ContainerPlayer
 
         this.craftResult.setInventorySlotContents(0, (ItemStack)null);
     }
-
+/*
 	public void updateScroll()
 	{
 		if(scrollPos > MathHelper.ceiling_float_int((float)Const.invoSize/(float)(Const.ALL_COLS)) - Const.ALL_ROWS)
@@ -235,6 +222,7 @@ public class BigContainerPlayer extends ContainerPlayer
 		{
 			scrollPos = 0;
 		}
+		System.out.println("update scroll "+0);
 		
 		for(int i = 0; i < MathHelper.ceiling_float_int((float)Const.invoSize/(float)(Const.ALL_COLS)); i++)
 		{
@@ -262,14 +250,14 @@ public class BigContainerPlayer extends ContainerPlayer
             	}
             }
 		}
-	}
+	}*/
 
     /**
      * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
      */
 	@Override
     public ItemStack transferStackInSlot(EntityPlayer p, int craft)
-    {
+    { 
 		//int vLocked =  0;//invo.getSlotsNotArmor() < 36? 36 - invo.getSlotsNotArmor() :
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(craft);
@@ -288,14 +276,14 @@ public class BigContainerPlayer extends ContainerPlayer
 
                 slot.onSlotChange(itemstack1, itemstack);
             }
-            else if (craft >= 1 && craft < 5) // Crafting grid
+            else if (craft >= 1 && craft <= 9) // Crafting grid
             {
                 if (!this.mergeItemStack(itemstack1, 9, 45, false))
                 {
                     return null;
                 }
             }
-            else if (craft >= 5 && craft < 9) // Armor
+            else if (craft >= 10 && craft <= 13) // Armor
             {
                 if (!this.mergeItemStack(itemstack1, 9, 45, false))
                 {

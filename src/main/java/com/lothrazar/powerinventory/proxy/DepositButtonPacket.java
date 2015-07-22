@@ -47,11 +47,11 @@ public class DepositButtonPacket implements IMessage , IMessageHandler<DepositBu
 			 p.openContainer.detectAndSendChanges(); 
 			 
 			 p.inventory.markDirty();
-			 
+			 /*
 			 if( p.inventoryContainer instanceof BigContainerPlayer)
 			 {
 				 ((BigContainerPlayer)p.inventoryContainer ).updateScroll();
-			 }
+			 }*/
 		 }
 		 
 		return null;

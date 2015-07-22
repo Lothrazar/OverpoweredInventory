@@ -20,7 +20,7 @@ public class Const
 	public static final int square = 18;
 	public final static int hotbarSize = 9;
 	public final static int armorSize = 4;
-	public final static int OFFSCREEN = -999;
+	//public final static int OFFSCREEN = -999;
  
 	public final static int MORE_ROWS = 12;
 	public final static int MORE_COLS = 16;

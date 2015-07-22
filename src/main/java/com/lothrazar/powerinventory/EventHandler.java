@@ -107,8 +107,8 @@ public class EventHandler
 		else if(event.gui == null && Minecraft.getMinecraft().thePlayer.inventoryContainer instanceof BigContainerPlayer)
 		{
 			// Reset scroll and inventory slot positioning to make sure it doesn't screw up later
-			((BigContainerPlayer)Minecraft.getMinecraft().thePlayer.inventoryContainer).scrollPos = 0;
-			((BigContainerPlayer)Minecraft.getMinecraft().thePlayer.inventoryContainer).updateScroll();
+			//((BigContainerPlayer)Minecraft.getMinecraft().thePlayer.inventoryContainer).scrollPos = 0;
+		//	((BigContainerPlayer)Minecraft.getMinecraft().thePlayer.inventoryContainer).updateScroll();
 		}
 	}
 	
