@@ -90,14 +90,14 @@ public class BigInventoryPlayer extends InventoryPlayer
 		}
     }
 	
-	public int getUnlockedSlots()
+	public int getSlotsNotArmor()
 	{  
 		return this.getSizeInventory() - Const.armorSize; 
 	}
 	
     private int func_146029_c(Item stack)
     {
-        for (int i = 0; i < this.getUnlockedSlots(); ++i)
+        for (int i = 0; i < this.getSlotsNotArmor(); ++i)
         {
             if (this.mainInventory[i] != null && this.mainInventory[i].getItem() == stack)
             {
@@ -110,7 +110,7 @@ public class BigInventoryPlayer extends InventoryPlayer
 
     private int storeItemStack(ItemStack stack)
     {
-        for (int i = 0; i < this.getUnlockedSlots(); ++i)
+        for (int i = 0; i < this.getSlotsNotArmor(); ++i)
         {
             if (this.mainInventory[i] != null && this.mainInventory[i].getItem() == stack.getItem() && this.mainInventory[i].isStackable() && this.mainInventory[i].stackSize < this.mainInventory[i].getMaxStackSize() && this.mainInventory[i].stackSize < this.getInventoryStackLimit() && (!this.mainInventory[i].getHasSubtypes() || this.mainInventory[i].getItemDamage() == stack.getItemDamage()) && ItemStack.areItemStackTagsEqual(this.mainInventory[i], stack))
             {
@@ -124,7 +124,7 @@ public class BigInventoryPlayer extends InventoryPlayer
     @Override
     public int getFirstEmptyStack()
     {
-        for (int i = 0; i < this.getUnlockedSlots(); ++i)
+        for (int i = 0; i < this.getSlotsNotArmor(); ++i)
         {
             if (this.mainInventory[i] == null)
             {
@@ -138,7 +138,7 @@ public class BigInventoryPlayer extends InventoryPlayer
     @SideOnly(Side.CLIENT)
     private int func_146024_c(Item item, int meta)//getSlotNumberForItem
     {
-        for (int j = 0; j < this.getUnlockedSlots(); ++j)
+        for (int j = 0; j < this.getSlotsNotArmor(); ++j)
         {
             if (this.mainInventory[j] != null && this.mainInventory[j].getItem() == item && this.mainInventory[j].getItemDamage() == meta)
             {

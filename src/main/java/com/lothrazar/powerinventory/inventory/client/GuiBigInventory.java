@@ -158,7 +158,7 @@ public class GuiBigInventory extends GuiInventory
 		this.checkButtons();
 		
 		if(ModConfig.showText)
-			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210756);
+			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
 if(DEBUGMODE){
 		Slot s;
 		for(Object o : this.container.inventorySlots)

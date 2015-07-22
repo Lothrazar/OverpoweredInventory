@@ -248,7 +248,7 @@ public class BigContainerPlayer extends ContainerPlayer
             		break;
             	} else
             	{
-            		if(i >= scrollPos && i < scrollPos + 3 + Const.MORE_ROWS && index < invo.getUnlockedSlots() - Const.hotbarSize && index < Const.invoSize)
+            		if(i >= scrollPos && i < scrollPos + 3 + Const.MORE_ROWS && index < invo.getSlotsNotArmor() - Const.hotbarSize && index < Const.invoSize)
             		{
             			Slot s = slots[index];
             			s.xDisplayPosition = 8 + j * Const.square;
@@ -270,7 +270,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	@Override
     public ItemStack transferStackInSlot(EntityPlayer p, int craft)
     {
-		int vLocked = invo.getUnlockedSlots() < 36? 36 - invo.getUnlockedSlots() : 0;
+		//int vLocked =  0;//invo.getSlotsNotArmor() < 36? 36 - invo.getSlotsNotArmor() :
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(craft);
 
@@ -311,7 +311,7 @@ public class BigContainerPlayer extends ContainerPlayer
                     return null;
                 }
             }
-            else if ((craft >= 9 && craft < 36) || (craft >= 45 && craft < invo.getUnlockedSlots() + 9))
+            else if ((craft >= 9 && craft < 36) || (craft >= 45 && craft < invo.getSlotsNotArmor() + 9))
             {
                 if (!this.mergeItemStack(itemstack1, 36, 45, false))
                 {
@@ -320,12 +320,12 @@ public class BigContainerPlayer extends ContainerPlayer
             }
             else if (craft >= 36 && craft < 45) // Hotbar
             {
-                if (!this.mergeItemStack(itemstack1, 9, 36 - vLocked, false) && (invo.getUnlockedSlots() - 36 <= 0 || !this.mergeItemStack(itemstack1, 45, 45 + (invo.getUnlockedSlots() - 36), false)))
+                if (!this.mergeItemStack(itemstack1, 9, 36, false) && (invo.getSlotsNotArmor() - 36 <= 0 || !this.mergeItemStack(itemstack1, 45, 45 + (invo.getSlotsNotArmor() - 36), false)))
                 {
                     return null;
                 }
             }
-            else if (!this.mergeItemStack(itemstack1, 9, invo.getUnlockedSlots() + 9, false)) // Full range
+            else if (!this.mergeItemStack(itemstack1, 9, invo.getSlotsNotArmor() + 9, false)) // Full range
             {
                 return null;
             }
