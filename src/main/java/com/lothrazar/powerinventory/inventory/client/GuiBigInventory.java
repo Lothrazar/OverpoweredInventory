@@ -151,7 +151,7 @@ public class GuiBigInventory extends GuiInventory
         if(ModConfig.showCharacter)
         	drawEntityOnScreen(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
 	}
-	boolean DEBUGMODE = true;
+
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{ 
@@ -159,7 +159,7 @@ public class GuiBigInventory extends GuiInventory
 		
 		if(ModConfig.showText)
 			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
-if(DEBUGMODE){
+/*
 		Slot s;
 		for(Object o : this.container.inventorySlots)
 		{
@@ -168,6 +168,6 @@ if(DEBUGMODE){
 			// + this.guiLeft              //this.guiTop +
 			this.drawString(this.fontRendererObj, "" + s.getSlotIndex(), s.xDisplayPosition, s.yDisplayPosition +  4, 16777120);
 		}
-}
+*/
 	}
 }
