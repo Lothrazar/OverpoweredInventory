@@ -159,23 +159,6 @@ public class GuiBigInventory extends GuiInventory
 		
 		if(ModConfig.showText)
 			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
-		
-		if(container != null)
-		{
-	        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
-	
-	        // Draw the empty/locked slot icons
-	        for(int j = 0; j < Const.ALL_ROWS; j++)
-	        {
-	        	for(int i = 0; i < Const.ALL_COLS; i++)
-	        	{
-	        		if(i + (j + container.scrollPos) * Const.ALL_COLS >= Const.invoSize)
-	        		{
-	        			this.drawTexturedModalRect(7 + i * Const.square, 83 + j * Const.square, 0, 166, Const.square, Const.square);
-	        		} 
-	        	}
-	        }
-		}
+
 	}
 }
