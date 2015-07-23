@@ -29,6 +29,7 @@ public class BigInventoryPlayer extends InventoryPlayer
     private ItemStack enderChestStack;
     private ItemStack clockStack;
     private ItemStack compassStack;
+    private ItemStack bottleStack;
    
 	public BigInventoryPlayer(EntityPlayer player)
 	{
@@ -58,6 +59,7 @@ public class BigInventoryPlayer extends InventoryPlayer
         if(index == Const.enderChestSlot){return enderChestStack;} 
         if(index == Const.clockSlot){return clockStack;}
         if(index == Const.compassSlot){return compassStack;} 
+        if(index == Const.bottleSlot){return bottleStack;} 
         
         if (index >= aitemstack.length)
         {
@@ -96,6 +98,10 @@ public class BigInventoryPlayer extends InventoryPlayer
 		else if(slot == Const.compassSlot)
 		{
 			compassStack = stack;  
+		}
+		else if(slot == Const.bottleSlot)
+		{
+			bottleStack = stack;  
 		}
 		else
 		{
@@ -427,6 +433,13 @@ public class BigInventoryPlayer extends InventoryPlayer
             this.compassStack.writeToNBT(nbttagcompound);
             tags.appendTag(nbttagcompound);
         }
+        if(this.bottleStack != null)
+        {
+        	nbttagcompound = new NBTTagCompound();
+            nbttagcompound.setInteger(Const.NBT_SLOT, Const.bottleSlot);  
+            this.bottleStack.writeToNBT(nbttagcompound);
+            tags.appendTag(nbttagcompound);
+        }
 
         for (i = 0; i < this.armorInventory.length; ++i)
         {
@@ -448,7 +461,7 @@ public class BigInventoryPlayer extends InventoryPlayer
     {
     	//without this, ender pearls cannot be taken out
         ItemStack itemstack;
-
+//TODO: these ifelse brnaches are almost all identical. find a way to share code? make function?
     	if(index == Const.enderChestSlot)
     	{ 
             itemstack = this.enderChestStack;
@@ -515,6 +528,26 @@ public class BigInventoryPlayer extends InventoryPlayer
                  return itemstack;
              }
     	}
+    	else if(index == Const.bottleSlot)
+    	{
+    		 if (this.bottleStack.stackSize <= count)
+             {
+                 itemstack = this.bottleStack;
+                 this.bottleStack = null;
+                 return itemstack;
+             }
+    		 else
+             {
+                 itemstack = this.bottleStack.splitStack(count);
+
+                 if (this.bottleStack.stackSize == 0)
+                 {
+                	 this.bottleStack = null;
+                 }
+
+                 return itemstack;
+             }
+    	}
     	else 
     		return super.decrStackSize(index, count);
     }
@@ -551,6 +584,10 @@ public class BigInventoryPlayer extends InventoryPlayer
             	if(j == Const.compassSlot)
                 {
             		compassStack = itemstack;
+                }
+            	if(j == Const.bottleSlot)
+                {
+            		bottleStack = itemstack;
                 }
                 if (j >= 0 && j < this.mainInventory.length)
                 {

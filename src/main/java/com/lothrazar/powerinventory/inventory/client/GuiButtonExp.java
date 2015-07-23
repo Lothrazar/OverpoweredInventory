@@ -1,8 +1,9 @@
 package com.lothrazar.powerinventory.inventory.client;
 
+import com.lothrazar.powerinventory.proxy.ExpButtonPacket;
 import com.lothrazar.powerinventory.proxy.SortButtonPacket;
-
 import com.lothrazar.powerinventory.ModInv;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,13 +12,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class GuiButtonSort extends GuiButton 
-{ 
-	private int sortType;
-    public GuiButtonSort(int buttonId, int x, int y, int w,int h,  int sort, String text)
+public class GuiButtonExp extends GuiButton 
+{  
+    public GuiButtonExp(int buttonId, int x, int y, int w,int h,  String text)
     {
-    	super(buttonId, x, y, w,h, text ); 
-    	sortType = sort;
+    	super(buttonId, x, y, w,h, text );  
     }
 
     @SideOnly(Side.CLIENT)
@@ -29,9 +28,9 @@ public class GuiButtonSort extends GuiButton
     	if(pressed)
     	{ 
     		NBTTagCompound tags = new NBTTagCompound();
-  
-    		tags.setInteger(SortButtonPacket.NBT_SORT, sortType);
-    		ModInv.instance.network.sendToServer(new SortButtonPacket(tags));
+  System.out.println("exp btn");
+    		//tags.setInteger(SortButtonPacket.NBT_SORT, sortType);
+    		ModInv.instance.network.sendToServer(new ExpButtonPacket(tags));
     	}
     	
     	return pressed;

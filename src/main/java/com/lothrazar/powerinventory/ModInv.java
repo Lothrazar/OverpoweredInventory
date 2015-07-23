@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.lothrazar.powerinventory.proxy.CommonProxy; 
 import com.lothrazar.powerinventory.proxy.EnderChestPacket;
+import com.lothrazar.powerinventory.proxy.ExpButtonPacket;
 import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket;
 import com.lothrazar.powerinventory.proxy.SortButtonPacket; 
@@ -31,7 +32,7 @@ public class ModInv
 	//TODO 1: lang file support for key.ender, and for ALL button text -- on hold till features all in and finalized
 
 
-	//TODO 6: on item pickup (pearl/chest) put it in the special slot by default-if possible
+	//??maybe? 6: on item pickup (pearl/chest) put it in the special slot by default-if possible
  
 	//TODO 8: implement the enderpearls stacking to 64, toggled from config file
  
@@ -66,6 +67,7 @@ public class ModInv
     	network.registerMessage(SortButtonPacket.class, SortButtonPacket.class, packetID++, Side.SERVER);
     	network.registerMessage(FilterButtonPacket.class, FilterButtonPacket.class, packetID++, Side.SERVER);
     	network.registerMessage(EnderPearlPacket.class, EnderPearlPacket.class, packetID++, Side.SERVER);
+    	network.registerMessage(ExpButtonPacket.class, ExpButtonPacket.class, packetID++, Side.SERVER);
     	
     	//TODO: fix these one day...
     	//network.registerMessage(DepositButtonPacket.class, DepositButtonPacket.class, DepositButtonPacket.ID, Side.SERVER);

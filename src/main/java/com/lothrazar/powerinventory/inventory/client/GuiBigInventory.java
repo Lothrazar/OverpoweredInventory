@@ -27,6 +27,7 @@ public class GuiBigInventory extends GuiInventory
 	public static final int texture_height = 382;
 
 	GuiButton btnEnder;
+	GuiButton btnExp;
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
@@ -56,6 +57,11 @@ public class GuiBigInventory extends GuiInventory
 			this.buttonList.add(btnEnder); 
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
 
+			this.buttonList.add(new GuiButtonExp(button_id++, 
+					this.guiLeft + texture_width - 3*widthlrg - padding, 
+					this.guiTop + height + padding,
+					widthlrg,height,"Fill"));
+			
 			if(ModConfig.showFilterButton)
 			{   
 				this.buttonList.add(new GuiButtonFilter(button_id++, 
