@@ -22,7 +22,7 @@ public class ClientProxy extends CommonProxy
 	{
 		super.registerHandlers();
 		
-		keyEnder = new KeyBinding(keyEnderName, Keyboard.KEY_G, keyCategory); 
+		keyEnder = new KeyBinding(keyEnderName, Keyboard.KEY_Z, keyCategory); 
         ClientRegistry.registerKeyBinding(ClientProxy.keyEnder);
         
       
