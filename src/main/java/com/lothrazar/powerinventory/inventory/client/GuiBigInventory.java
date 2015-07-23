@@ -121,14 +121,14 @@ public class GuiBigInventory extends GuiInventory
 
 		if(container.invo.getStackInSlot(Const.compassSlot) == null)
 		{ 
-			st = "textures/items/empty_enderpearl.png";
+			st = "textures/items/empty_compass.png";
 			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
 			drawTexturedQuadFit(container.compassX, container.compassY,s,s,0);
 		}
 
 		if(container.invo.getStackInSlot(Const.clockSlot) == null)
 		{ 
-			st = "textures/items/empty_enderpearl.png";
+			st = "textures/items/empty_clock.png";
 			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
 			drawTexturedQuadFit(container.clockX, container.clockY,s,s,0);
 		}
