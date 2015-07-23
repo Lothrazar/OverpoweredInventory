@@ -123,10 +123,10 @@ public class BigContainerPlayer extends ContainerPlayer
 		{
             for ( j = 0; j < Const.ALL_COLS; ++j)
             { 
-            	slotIndex++;
             	cx = 8 + j * Const.square;
             	cy = 84 + i * Const.square;
                 this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, cy));
+            	slotIndex++;
             }
         }
         

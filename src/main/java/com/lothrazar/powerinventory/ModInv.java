@@ -28,13 +28,13 @@ public class ModInv
 {
 //TASKS BEFORE RELEASE:
 	
-	//TODO 1: lang file support for key.ender, and for ALL button text
+	//TODO 1: lang file support for key.ender, and for ALL button text -- on hold till features all in and finalized
 	//TODO 2: 'g' key overlaps with my 'push' key from the other mod, use Z default
 	//TODO 3: bug where left/right inv buttons are ignoring the final bottom-right slot
 	//TODO 4: test keepInventory gamerule ----Passed!!
 	//TODO 5: pearl keybind: play the throw sound effect
 	//TODO 6: on item pickup (pearl/chest) put it in the special slot by default-if possible
-	//TODO 7: lower right slots and boots overlap - I thought i fixed this already?
+	//fixed_ TODO 7: lower right slots and boots overlap - I thought i fixed this already?
 	//TODO 8: implement the enderpearls stacking to 64
 	//TODO 9: implement the enderchest  stacking to only 1 
 	
