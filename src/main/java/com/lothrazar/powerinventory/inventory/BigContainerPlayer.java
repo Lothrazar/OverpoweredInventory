@@ -300,20 +300,12 @@ public class BigContainerPlayer extends ContainerPlayer
                     return null;
                 }
             }
-            else if(slotNumber == S_PEARL)
+            else if(slotNumber == S_PEARL || slotNumber == S_ECHEST  || slotNumber == S_COMPASS  || slotNumber == S_CLOCK)
             { 
             	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
             	{
                     return null;
                 }
-            }
-            else if(slotNumber == S_ECHEST)
-            { 
-            	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
-            	{
-                    return null;
-                }
-            	
             }
             else if (!this.mergeItemStack(stackOrig, 9, invo.getSlotsNotArmor() + 9, false)) // Full range
             {
