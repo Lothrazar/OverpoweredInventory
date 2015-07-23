@@ -22,10 +22,10 @@ public class Const
 	public final static int armorSize = 4; 
  
 	public final static int MORE_ROWS = 12;
+	public final static int ALL_ROWS = 3 + MORE_ROWS;//3+12=15
 	public final static int MORE_COLS = 16;
-	public final static int ALL_COLS = 9 + MORE_COLS;
-	public final static int ALL_ROWS = 3 + MORE_ROWS;
-	public final static int invoSize  = ALL_COLS * ALL_ROWS;
+	public final static int ALL_COLS = 9 + MORE_COLS;//9+16=25
+	public final static int invoSize  = ALL_COLS * ALL_ROWS;//15*25=375 
 
 	//these are slot indices. different than slot numbers (important)
     public static final int enderPearlSlot = 777; 

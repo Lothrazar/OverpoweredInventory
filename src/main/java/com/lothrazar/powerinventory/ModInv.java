@@ -20,12 +20,36 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 /**
  * @author https://github.com/Funwayguy/InfiniteInvo
- * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
+ * @author Initially Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
+ * before later being merged into my main project
  */
 @Mod(modid = Const.MODID, useMetadata=true)
 public class ModInv
 {
-
+//TASKS BEFORE RELEASE:
+	
+	//TODO 1: lang file support for key.ender, and for ALL button text
+	//TODO 2: 'g' key overlaps with my 'push' key from the other mod, use Z default
+	//TODO 3: bug where left/right inv buttons are ignoring the final bottom-right slot
+	//TODO 4: test keepInventory gamerule ----Passed!!
+	//TODO 5: pearl keybind: play the throw sound effect
+	//TODO 6: on item pickup (pearl/chest) put it in the special slot by default-if possible
+	//TODO 7: lower right slots and boots overlap - I thought i fixed this already?
+	//TODO 8: implement the enderpearls stacking to 64
+	//TODO 9: implement the enderchest  stacking to only 1 
+	
+	
+	//... find something useful to put in the top area up there
+	//idea: compass/clock slots.
+	
+	//idea: liquid storage? bucket slot, fillButton, drainButton, and a # showing whats stored (leaves empty behind)
+	//but only one type of lq at a time, and have a max /64
+	
+	//idea: exp numbers? such as  450/5200 = for next level (90453= total)  
+	
+	//
+	
+	
     //My fork of this mod was created on July 17, 2015 at https://github.com/PrinceOfAmber/InfiniteInvo
     //original mod source was https://github.com/Funwayguy/InfiniteInvo
 	

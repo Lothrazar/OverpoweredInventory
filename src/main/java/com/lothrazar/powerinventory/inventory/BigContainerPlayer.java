@@ -81,20 +81,19 @@ public class BigContainerPlayer extends ContainerPlayer
         }
         S_CRAFT_END = this.inventorySlots.size() - 1;
         S_ARMOR_START = this.inventorySlots.size();
+ 
         for (i = 0; i < Const.armorSize; ++i)
         {
         	cx = 8;
         	cy = 8 + i * Const.square;
             final int k = i;
-         
-            this.addSlotToContainer(new Slot(playerInventory,  playerInventory.getSizeInventory() - 1 - i, 
-            		cx, cy)
+ 
+            this.addSlotToContainer(new Slot(playerInventory,  playerInventory.getSizeInventory() - 1 - i, cx, cy)
             { 
             	public int getSlotStackLimit()
 	            {
 	                return 1;
 	            }
-	           
 	            public boolean isItemValid(ItemStack stack)
 	            {
 	                if (stack == null) return false;
@@ -118,19 +117,20 @@ public class BigContainerPlayer extends ContainerPlayer
         }
         S_BAR_END = this.inventorySlots.size() - 1;
         S_MAIN_START = this.inventorySlots.size();
-        int sn = Const.hotbarSize;
-        for( i = 0; i < MathHelper.ceiling_float_int((float)Const.invoSize/(float)(Const.ALL_COLS)); i++)
+        int slotIndex = Const.hotbarSize;
+        
+        for( i = 0; i < Const.ALL_ROWS; i++)
 		{
             for ( j = 0; j < Const.ALL_COLS; ++j)
             { 
-            	sn++;
+            	slotIndex++;
             	cx = 8 + j * Const.square;
             	cy = 84 + i * Const.square;
-                this.addSlotToContainer(new Slot(playerInventory, sn, cx, cy));
+                this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, cy));
             }
         }
-        S_MAIN_END = this.inventorySlots.size() - 1;
         
+        S_MAIN_END = this.inventorySlots.size() - 1;
         
         S_PEARL =  this.inventorySlots.size() ;
         this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, pearlX, pearlY));
@@ -285,8 +285,6 @@ public class BigContainerPlayer extends ContainerPlayer
             }
             else if (!this.mergeItemStack(stackOrig, 9, invo.getSlotsNotArmor() + 9, false)) // Full range
             {
-            	//TODO: its possible this never gets hit.. AND/OR is redundant...??
-            //	System.out.println("?Full range//DEFAULT");
                 return null;
             }
             if (stackOrig.stackSize == 0)

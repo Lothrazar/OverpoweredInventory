@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -167,10 +168,10 @@ public class GuiBigInventory extends GuiInventory
 			s = (Slot)o;
 	 
 			//each slot has two different numbers. the slotNumber is UNIQUE, the index is not
-			//show = s.getSlotIndex();
-			show = s.slotNumber;
+			show = s.getSlotIndex();
+			//show = s.slotNumber;
 			this.drawString(this.fontRendererObj, "" + show, s.xDisplayPosition, s.yDisplayPosition +  4, 16777120);
-		}
-*/
+		}*/
+
 	}
 }
