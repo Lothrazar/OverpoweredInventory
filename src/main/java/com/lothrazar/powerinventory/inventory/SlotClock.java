@@ -32,6 +32,6 @@ public class SlotClock extends Slot
 	@Override
 	public int getSlotStackLimit()
     {
-        return Items.clock.getItemStackLimit();
+        return 1;
     }
 }

@@ -32,6 +32,6 @@ public class SlotCompass extends Slot
 	@Override
 	public int getSlotStackLimit()
     {
-        return Items.compass.getItemStackLimit();
+        return 1;
     }
 }

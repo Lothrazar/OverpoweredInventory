@@ -28,10 +28,10 @@ public class SlotEnderChest extends Slot
     {
 		return (stack != null && stack.getItem() == Item.getItemFromBlock(Blocks.ender_chest));
     }
-	/*
+	
 	@Override
 	public int getSlotStackLimit()
     {
         return 1;
-    }*/
+    }
 }
