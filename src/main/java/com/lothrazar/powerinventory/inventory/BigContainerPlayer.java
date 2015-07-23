@@ -34,9 +34,14 @@ public class BigContainerPlayer extends ContainerPlayer
     public boolean isLocalWorld;
 
 	//these get used here for actual slot, and in GUI for texture
+    //ender pearl is in the far bottom right corner, and the others move left relative to this
 	public final int pearlX = GuiBigInventory.texture_width - Const.square-6; //we used padding six on gui
 	public final int pearlY = GuiBigInventory.texture_height - Const.square-6; 
-	public final int echestX = pearlX - 2*Const.square;
+	public final int compassX = pearlX - Const.square;
+	public final int compassY = pearlY;
+	public final int clockX = pearlX - 2*Const.square;
+	public final int clockY = pearlY;
+	public final int echestX = pearlX - 3*Const.square;
 	public final int echestY = pearlY;
 //store slot numbers as we go. so that transferStack.. is actually readable
 	
@@ -52,6 +57,8 @@ public class BigContainerPlayer extends ContainerPlayer
 	static int S_MAIN_END;
 	static int S_ECHEST;//these two are 388 399, which are different than the Slot Indices in Const.
 	static int S_PEARL;
+	static int S_CLOCK;
+	static int S_COMPASS;
 	public BigContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
 	{
 		super(playerInventory, isLocal, player);
@@ -137,9 +144,15 @@ public class BigContainerPlayer extends ContainerPlayer
 
         S_ECHEST =  this.inventorySlots.size() ;
         this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, echestX, echestY)); 
+
+        S_CLOCK =  this.inventorySlots.size() ;
+        this.addSlotToContainer(new SlotClock(playerInventory, Const.clockSlot, clockX, clockY)); 
+
+        S_COMPASS =  this.inventorySlots.size() ;
+        this.addSlotToContainer(new SlotCompass(playerInventory, Const.compassSlot, compassX, compassY)); 
         
         this.onCraftMatrixChanged(this.craftMatrix);
-		this.invo = (BigInventoryPlayer)playerInventory; 
+		this.invo = playerInventory; 
 	}
   
 	@Override

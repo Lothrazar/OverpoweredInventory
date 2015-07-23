@@ -27,6 +27,8 @@ public class BigInventoryPlayer extends InventoryPlayer
     private ItemStack currentItemStack;
     private ItemStack enderPearlStack;
     private ItemStack enderChestStack;
+    private ItemStack clockStack;
+    private ItemStack compassStack;
    
 	public BigInventoryPlayer(EntityPlayer player)
 	{
@@ -54,6 +56,9 @@ public class BigInventoryPlayer extends InventoryPlayer
         //check these first, otherwise it crashes thinking they are armor
         if(index == Const.enderPearlSlot){return enderPearlStack;}
         if(index == Const.enderChestSlot){return enderChestStack;} 
+        if(index == Const.clockSlot){return clockStack;}
+        if(index == Const.compassSlot){return compassStack;} 
+        
         if (index >= aitemstack.length)
         {
             index -= aitemstack.length;
@@ -83,6 +88,14 @@ public class BigInventoryPlayer extends InventoryPlayer
 		else if(slot == Const.enderChestSlot)
 		{
 			enderChestStack = stack;  
+		}
+		else if(slot == Const.clockSlot)
+		{
+			clockStack = stack;  
+		}
+		else if(slot == Const.compassSlot)
+		{
+			compassStack = stack;  
 		}
 		else
 		{
@@ -400,6 +413,20 @@ public class BigInventoryPlayer extends InventoryPlayer
             this.enderPearlStack.writeToNBT(nbttagcompound);
             tags.appendTag(nbttagcompound);
         }
+        if(this.clockStack != null)
+        {
+        	nbttagcompound = new NBTTagCompound();
+            nbttagcompound.setInteger(Const.NBT_SLOT, Const.clockSlot);  
+            this.clockStack.writeToNBT(nbttagcompound);
+            tags.appendTag(nbttagcompound);
+        }
+        if(this.compassStack != null)
+        {
+        	nbttagcompound = new NBTTagCompound();
+            nbttagcompound.setInteger(Const.NBT_SLOT, Const.compassSlot);  
+            this.compassStack.writeToNBT(nbttagcompound);
+            tags.appendTag(nbttagcompound);
+        }
 
         for (i = 0; i < this.armorInventory.length; ++i)
         {
@@ -447,6 +474,46 @@ public class BigInventoryPlayer extends InventoryPlayer
 
                  return itemstack;
              }
+    	}	
+    	else if(index == Const.clockSlot)
+    	{
+    		 if (this.clockStack.stackSize <= count)
+             {
+                 itemstack = this.clockStack;
+                 this.clockStack = null;
+                 return itemstack;
+             }
+    		 else
+             {
+                 itemstack = this.clockStack.splitStack(count);
+
+                 if (this.clockStack.stackSize == 0)
+                 {
+                	 this.clockStack = null;
+                 }
+
+                 return itemstack;
+             }
+    	}
+    	else if(index == Const.compassSlot)
+    	{
+    		 if (this.compassStack.stackSize <= count)
+             {
+                 itemstack = this.compassStack;
+                 this.compassStack = null;
+                 return itemstack;
+             }
+    		 else
+             {
+                 itemstack = this.compassStack.splitStack(count);
+
+                 if (this.compassStack.stackSize == 0)
+                 {
+                	 this.compassStack = null;
+                 }
+
+                 return itemstack;
+             }
     	}
     	else 
     		return super.decrStackSize(index, count);
@@ -476,6 +543,14 @@ public class BigInventoryPlayer extends InventoryPlayer
             	if(j == Const.enderChestSlot)
                 {
                 	enderChestStack = itemstack;
+                }
+            	if(j == Const.clockSlot)
+                {
+                	clockStack = itemstack;
+                }
+            	if(j == Const.compassSlot)
+                {
+            		compassStack = itemstack;
                 }
                 if (j >= 0 && j < this.mainInventory.length)
                 {

@@ -50,7 +50,7 @@ public class GuiBigInventory extends GuiInventory
 			int button_id = 99;
 			 
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
-					this.guiLeft + texture_width - width - 64, 
+					this.guiLeft + texture_width - width - 80, 
 					this.guiTop + texture_height - height - padding,
 					width,height, "EC",Const.INV_ENDER);
 			this.buttonList.add(btnEnder); 
