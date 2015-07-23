@@ -266,11 +266,30 @@ public class BigContainerPlayer extends ContainerPlayer
                         return null;
                     }  
         		}
-            	else if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END, false)
-            		//	|| !this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false)
-            			)
+            	else if(stackCopy.getItem() == Items.compass && 
+            		(
+        			p.inventory.getStackInSlot(Const.compassSlot) == null || 
+        			p.inventory.getStackInSlot(Const.compassSlot).stackSize < 1)
+        			)
+        		{ 
+            		if (!this.mergeItemStack(stackOrig, S_COMPASS, S_COMPASS+1, false))
+                	{ 
+                        return null;
+                    }  
+        		}
+            	else if(stackCopy.getItem() == Items.clock && 
+            		(
+        			p.inventory.getStackInSlot(Const.clockSlot) == null || 
+        			p.inventory.getStackInSlot(Const.clockSlot).stackSize < 1)
+        			)
+        		{ 
+            		if (!this.mergeItemStack(stackOrig, S_CLOCK, S_CLOCK+1, false))
+                	{ 
+                        return null;
+                    }  
+        		}
+            	else if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END, false)            			)
             	{
-            		//try sending it to the hotbar
                     return null;
                 }
             }
