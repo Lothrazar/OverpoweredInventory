@@ -25,10 +25,8 @@ import org.apache.logging.log4j.Level;
 import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
 import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonClose;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonDepositAll;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonWithdrawAll;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
+import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
 import com.lothrazar.powerinventory.proxy.ClientProxy;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket;
 

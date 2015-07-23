@@ -180,6 +180,9 @@ public class BigContainerPlayer extends ContainerPlayer
 	@Override
     public ItemStack transferStackInSlot(EntityPlayer p, int slotNumber)
     {  
+		//Thanks to coolAlias on the forums : 
+		//http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571051-custom-container-how-to-properly-override-shift
+		//above is from 2013 but still relevant
         ItemStack stackCopy = null;
         Slot slot = (Slot)this.inventorySlots.get(slotNumber);
 
