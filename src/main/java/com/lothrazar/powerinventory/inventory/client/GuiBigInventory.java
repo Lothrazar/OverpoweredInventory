@@ -128,7 +128,7 @@ public class GuiBigInventory extends GuiInventory
 
 			st = "textures/items/empty_bottle.png";
 			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
-			drawTexturedQuadFit(container.echestX, container.echestY,s,s,0); 
+			drawTexturedQuadFit(container.bottleX, container.bottleY,s,s,0); 
 		}
 		else 
 		{ 
