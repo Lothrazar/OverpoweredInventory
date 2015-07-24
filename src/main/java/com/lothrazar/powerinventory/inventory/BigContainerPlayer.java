@@ -36,17 +36,19 @@ public class BigContainerPlayer extends ContainerPlayer
 	final int padding = 6;
 	//these get used here for actual slot, and in GUI for texture
     //ender pearl is in the far bottom right corner, and the others move left relative to this
-	public final int pearlX = GuiBigInventory.texture_width - Const.square - padding; //we used padding six on gui
-	public final int pearlY = GuiBigInventory.texture_height - Const.square - padding; 
-	public final int compassX = pearlX - Const.square;
-	public final int compassY = pearlY;
-	public final int clockX = pearlX - 2*Const.square;
-	public final int clockY = pearlY;
-	public final int echestX = pearlX - 3*Const.square;
-	public final int echestY = pearlY;
+//armor is cx = 8;	cy = 8 + i * Const.square;
+	public final int pearlX = 80; 
+	public final int pearlY = 8; 
+	public final int compassX = pearlX;
+	public final int compassY = pearlY + Const.square;
+	public final int clockX = pearlX;
+	public final int clockY = pearlY + 2*Const.square;
+	public final int echestX = pearlX;
+	public final int echestY = pearlY + 3*Const.square;
 
-	public final int bottleX = pearlX - 80;
-	public final int bottleY = padding;
+	public final int bottleX = GuiBigInventory.texture_width - Const.square - padding - 1;
+	public final int bottleY = 20 + 2 * Const.square;
+
 //store slot numbers as we go. so that transferStack.. is actually readable
 	
 	//these are slot Numbers, (not indexes)
@@ -77,7 +79,7 @@ public class BigContainerPlayer extends ContainerPlayer
         
         S_RESULT = this.inventorySlots.size();
         this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 
-        		174, 
+        		174+20, //was 174
         		40));
 
         S_CRAFT_START = this.inventorySlots.size();
@@ -85,7 +87,7 @@ public class BigContainerPlayer extends ContainerPlayer
         { 
             for (j = 0; j < craftSize; ++j)
             {  
-    			cx = 88 + j * Const.square ;
+    			cx = 88+20 + j * Const.square ;//was 88
     			cy = 20 + i * Const.square ;
 
         		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * this.craftSize, cx , cy)); 
