@@ -40,7 +40,7 @@ public class GuiButtonOpenInventory extends GuiButton
     			//other GUI's have to be hit from server side first to open
         		//send packet to server from client (this) makes sense
         		NBTTagCompound tags = new NBTTagCompound();
-        		tags.setInteger("i", invType);
+        		tags.setInteger("i", invType);//TODO: use const.nbt flag
     			ModInv.instance.network.sendToServer(new EnderChestPacket(tags));
     		break;
     		} 

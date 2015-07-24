@@ -27,8 +27,6 @@ public class UtilInventory
 		int zMin = (int) player.posZ - RADIUS;
 		int zMax = (int) player.posZ + RADIUS;
 		 
-		//int xDistance, zDistance, distance , distanceClosest = RADIUS * RADIUS;
-		
 		BlockPos posCurrent = null; 
 		for (int xLoop = xMin; xLoop <= xMax; xLoop++)
 		{
@@ -39,11 +37,6 @@ public class UtilInventory
 					posCurrent = new BlockPos(xLoop, yLoop, zLoop);
 					if(player.worldObj.getBlockState(posCurrent).getBlock().equals(blockHunt))
 					{ 
-						//xDistance = (int) Math.abs(xLoop - player.posX );
-						//zDistance = (int) Math.abs(zLoop - player.posZ );
-						
-						//distance = (int) distanceBetweenHorizontal(player.getPosition(), posCurrent);
-						
 						found.add(posCurrent);
 					} 
 				}
@@ -56,7 +49,7 @@ public class UtilInventory
 	public static void moveallContainerToPlayer(EntityPlayer player,Container container) //W
 	{
 		ItemStack source,destination;
-		//player.inventoryContainer.getInventory().size()
+
 		int cont = 0;
 		for(int ip = Const.hotbarSize; ip < player.inventory.getSizeInventory() - Const.armorSize; ip++)
 		{
@@ -69,8 +62,6 @@ public class UtilInventory
 				
 				if(destination == null)
 				{
-					//System.out.println("player at "+ip+" NEW STACK  "+source.getDisplayName()+" "+source.stackSize +" FROM CONT "+i);
-					//System.out.println(player.inventory.mainInventory.length);//384
 					player.inventory.setInventorySlotContents(ip, source);
 				 
 					player.inventoryContainer.getSlot(ip).putStack(source);
@@ -79,7 +70,6 @@ public class UtilInventory
 					// okay, now we are done with source
 					//start at the next one later 
 					
-					 
 				}
 				else
 				{
@@ -100,9 +90,7 @@ public class UtilInventory
 							//so toDeposit is only 12 and we take that off the 55 in player invo
 					 
 							destination.stackSize += toDeposit;
-						//	System.out.println("player at "+ip+" add of "+toDeposit );
-						//	System.out.println("room="+room);
-							//player.inventory.setInventorySlotContents(ip, destination);
+	
 							player.inventoryContainer.getSlot(ip).putStack(destination);
 							
 							//now decrement source
@@ -128,10 +116,7 @@ public class UtilInventory
 	public static void moveallPlayerToContainer(EntityPlayer player, Container container)//D
 	{ 
 		ItemStack source,destination;
-		//AFTER coding this i found 
-		//container.canAddItemToSlot(slotIn, stack, stackSizeMatters)
-		//which may or may not help? but this works anyway
-		//container.getSlot(1).isItemValid(stack)
+
 		for(int i = 0; i < container.getInventory().size(); i++)
 		{
 			for(int ip = Const.hotbarSize; ip < player.inventory.getSizeInventory() - Const.armorSize; ip++)
@@ -144,7 +129,7 @@ public class UtilInventory
 				{ 
 					container.getSlot(i).putStack(source);
 
-//System.out.println("set null "+ip);
+
 					player.inventory.setInventorySlotContents(ip, null);//and remove it from player inventory
 				}
 				else
@@ -170,8 +155,7 @@ public class UtilInventory
 					 		//
 	
 							if(source.stackSize - toDeposit == 0)
-							{
-System.out.println("set null "+ip);
+							{ 
 								player.inventory.setInventorySlotContents(ip, null);
 							}
 							else
@@ -190,9 +174,6 @@ System.out.println("set null "+ip);
   	{ 
 		//source: https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
 		
-  	//	int totalItemsMoved = 0; 
-  	//	int totalSlotsFreed = 0;
-  		 
 		ItemStack chestItem;
 		ItemStack invItem;
 		int room;
@@ -211,18 +192,12 @@ System.out.println("set null "+ip);
 		
 			if(chestItem == null) {   continue; }//  empty chest slot
 			 
-			//ItemStack item;
-			
 			for(int islotInv = Const.hotbarSize; islotInv < player.inventory.getSizeInventory() - Const.armorSize; islotInv++)
 			{
-				//item = invo.getStackInSlot(i);
-				 
+			 
 				invItem = player.inventory.getStackInSlot(islotInv);
 				
-				if(invItem == null) 
-				{ 
-					continue;
-			    }//empty inventory slot
+				if(invItem == null)  {continue;}//empty inventory slot
 		 
   				if( invItem.getItem().equals(chestItem.getItem()) && invItem.getItemDamage() ==  chestItem.getItemDamage() )
   				{  
@@ -242,15 +217,10 @@ System.out.println("set null "+ip);
 
   					invItem.stackSize -= toDeposit;
 
-  					//totalItemsMoved += toDeposit;
-  					//totalTypesMoved++;
-  					
   					if(invItem.stackSize <= 0)//because of calculations above, should not be below zero
   					{
   						//item stacks with zero count do not destroy themselves, they show up and have unexpected behavior in game so set to empty
   						player.inventory.setInventorySlotContents(islotInv,null); 
-  						
-  					//	totalSlotsFreed++;
   					}
   					else
   					{
@@ -260,9 +230,5 @@ System.out.println("set null "+ip);
   				}//end if items match   
   			}//close loop on player inventory items 
 		}//close loop on chest items
- 
-		//System.out.println("yes"+totalSlotsFreed);
-	 
   	}
-
 }

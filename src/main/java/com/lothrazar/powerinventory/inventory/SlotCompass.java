@@ -28,7 +28,6 @@ public class SlotCompass extends Slot
 		return (stack != null && stack.getItem() == Items.compass);
     }
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public int getSlotStackLimit()
     {

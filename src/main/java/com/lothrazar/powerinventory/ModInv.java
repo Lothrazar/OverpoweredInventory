@@ -29,29 +29,25 @@ import net.minecraftforge.fml.relauncher.Side;
 @Mod(modid = Const.MODID, useMetadata=true)
 public class ModInv
 {
-//TASKS BEFORE RELEASE:
-	
-	//TODO 1: lang file support for key.ender, and for ALL button text -- on hold till features all in and finalized
-
-
-	//??maybe? 6: on item pickup (pearl/chest) put it in the special slot by default-if possible
-	//??maybe? shift click out of hotbar should go directly to special slots, work same way as armor
  
- 
-	//disable exp-fill button if slot is empty
+	//TODO 
+	
+	// lang file support for key.ender, and for ALL button text -- on hold till features all in and finalized
+	// implement shift clicking with exp bottle slot
+	//add expPerBottle integer to config file
 	
 	
-	
-	//maybe? maybe not? 10: left/right buttons could merge stacks ? OR add a middle button that does some sort of merge/sort?
+	//??POSSIBLE additions? 
+	// on item pickup (pearl/chest) put it in the special slot by default-if possible
+	//shift click out of hotbar should go directly to special slots, work same way as armor
+	// left/right buttons could merge stacks ? OR add a middle button that does some sort of merge/sort?
 	
 	 
 	//idea: liquid storage? bucket slot, fillButton, drainButton, and a # showing whats stored (leaves empty behind)
-	//but only one type of lq at a time, and have a max /64
+		//but only one type of lq at a time, and have a max /64
 	
-	//idea: exp numbers? such as  450/5200 = for next level (90453= total)  
-	//and EXP bottle filling slot similar to liquid, empty bottles slot where you can drain from player into bottle
-	//so if you put in 20 bottles, only eenough xp to fill 10, then the ten go out as full and the rest stay
-	  
+	//Display exact exp numbers? such as  450/5200 = for next level (90453= total)  
+ 
 	@Instance(Const.MODID)
 	public static ModInv instance;
 	
@@ -72,11 +68,7 @@ public class ModInv
     	network.registerMessage(FilterButtonPacket.class, FilterButtonPacket.class, packetID++, Side.SERVER);
     	network.registerMessage(EnderPearlPacket.class, EnderPearlPacket.class, packetID++, Side.SERVER);
     	network.registerMessage(ExpButtonPacket.class, ExpButtonPacket.class, packetID++, Side.SERVER);
-    	
-    	//TODO: fix these one day...
-    	//network.registerMessage(DepositButtonPacket.class, DepositButtonPacket.class, DepositButtonPacket.ID, Side.SERVER);
-    	//network.registerMessage(WithdrawButtonPacket.class, WithdrawButtonPacket.class, WithdrawButtonPacket.ID, Side.SERVER);
-
+    	 
 		config = new Configuration(event.getSuggestedConfigurationFile(), true);
     	loadConfig(event);
 		
@@ -92,9 +84,7 @@ public class ModInv
     	ModConfig.filterRange = config.getInt("button_filter_range", category, 12, 1, 32, "Range of the filter button to reach nearby chests");
 		ModConfig.showText = config.getBoolean("show_text",category,false,"Show or hide the 'Crafting' text in the inventory");
 		ModConfig.showCharacter = config.getBoolean("show_character",category,true,"Show or hide the animated character text in the inventory");
-		//ModConfig.showEnderButton = config.getBoolean("button_ender_chest",category,true,"Show or hide the ender chest button");
 		ModConfig.showSortButtons = config.getBoolean("move_inventory_buttons",category,true,"Show or hide the inventory shifting buttons << >>");
-		//ModConfig.showFilterButton = config.getBoolean("button_filter",category,true,"Show or hide the filter button");
 		
 		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
 		

@@ -87,8 +87,6 @@ public class ExpButtonPacket implements IMessage , IMessageHandler<ExpButtonPack
 		 					player.getPosition().getX(),player.getPosition().getY(),player.getPosition().getZ(),
 		 					new ItemStack(Items.glass_bottle,emptyBottlesLeft)));
 				}
-			
-			
 			} 
 		}
 		

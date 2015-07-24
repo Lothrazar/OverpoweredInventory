@@ -144,8 +144,6 @@ public class GuiBigInventory extends GuiInventory
 		if(container.invo.getStackInSlot(Const.clockSlot) == null)
 		{  
 			drawTextureSimple("textures/items/empty_clock.png",container.clockX, container.clockY,s,s);
-			//this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
-			//drawTexturedQuadFit(container.clockX, container.clockY,s,s,0);
 		}
 	}
 	 

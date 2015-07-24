@@ -158,8 +158,7 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 	{
 		int iEmpty = -1;
 		ItemStack item = null;
-		//0 to 8 is crafting
-		//armor is 384-387
+
 		for(int i = Const.hotbarSize; i < invo.getSizeInventory() - Const.armorSize;i++)
 		{ 
 			item = invo.getStackInSlot(i);

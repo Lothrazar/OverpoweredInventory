@@ -28,7 +28,6 @@ public class SlotClock extends Slot
 		return (stack != null && stack.getItem() == Items.clock);
     }
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public int getSlotStackLimit()
     {

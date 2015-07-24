@@ -459,7 +459,6 @@ public class BigInventoryPlayer extends InventoryPlayer
     @Override
     public ItemStack decrStackSize(int index, int count)
     {
-    	//without this, ender pearls cannot be taken out
         ItemStack itemstack;
 //TODO: these ifelse brnaches are almost all identical. find a way to share code? make function?
     	if(index == Const.enderChestSlot)

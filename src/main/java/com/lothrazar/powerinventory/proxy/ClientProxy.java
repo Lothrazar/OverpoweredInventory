@@ -24,8 +24,5 @@ public class ClientProxy extends CommonProxy
 		
 		keyEnder = new KeyBinding(keyEnderName, Keyboard.KEY_Z, keyCategory); 
         ClientRegistry.registerKeyBinding(ClientProxy.keyEnder);
-        
-      
-		
 	}
 }

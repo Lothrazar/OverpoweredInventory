@@ -36,7 +36,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	final int padding = 6;
 	//these get used here for actual slot, and in GUI for texture
     //ender pearl is in the far bottom right corner, and the others move left relative to this
-//armor is cx = 8;	cy = 8 + i * Const.square;
+
 	public final int pearlX = 80; 
 	public final int pearlY = 8; 
 	public final int compassX = pearlX;
@@ -49,9 +49,8 @@ public class BigContainerPlayer extends ContainerPlayer
 	public final int bottleX = GuiBigInventory.texture_width - Const.square - padding - 1;
 	public final int bottleY = 20 + 2 * Const.square;
 
-//store slot numbers as we go. so that transferStack.. is actually readable
-	
-	//these are slot Numbers, (not indexes)
+//store slot numbers  (not indexes) as we go. so that transferStack.. is actually readable
+	 
 	static int S_RESULT;
 	static int S_CRAFT_START;
 	static int S_CRAFT_END;
@@ -61,7 +60,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	static int S_BAR_END;
 	static int S_MAIN_START;
 	static int S_MAIN_END;
-	static int S_ECHEST;//these two are 388 399, which are different than the Slot Indices in Const.
+	static int S_ECHEST;
 	static int S_PEARL;
 	static int S_CLOCK;
 	static int S_COMPASS;
@@ -76,7 +75,6 @@ public class BigContainerPlayer extends ContainerPlayer
  
         int i,j,cx,cy;//rows and cols of vanilla, not extra
    
-        
         S_RESULT = this.inventorySlots.size();
         this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 
         		200,  
@@ -183,7 +181,6 @@ public class BigContainerPlayer extends ContainerPlayer
     {
         super.onContainerClosed(playerIn);
 
-       // if(playerIn.capabilities.isCreativeMode == false) //i think we were dropping stuff from hotbar?
         for (int i = 0; i < craftSize*craftSize; ++i) // was 4
         {
             ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
@@ -209,8 +206,6 @@ public class BigContainerPlayer extends ContainerPlayer
         ItemStack stackCopy = null;
         Slot slot = (Slot)this.inventorySlots.get(slotNumber);
 
-        //if(p.worldObj.isRemote ){return null;}//ignore clientside..stops double span on System, but probably remove for production
-
 		if (slot != null && slot.getHasStack())
         {
             ItemStack stackOrig = slot.getStack();
@@ -226,7 +221,6 @@ public class BigContainerPlayer extends ContainerPlayer
             }
             else if (slotNumber >= S_CRAFT_START && slotNumber <= S_CRAFT_END) 
             { 
-            	//does this always start at bottom right?
                 if (!this.mergeItemStack(stackOrig,  S_BAR_START, S_MAIN_END, false))//was 9,45
                 {
                     return null;
@@ -340,45 +334,4 @@ public class BigContainerPlayer extends ContainerPlayer
 
         return stackCopy;
     }
-	/*
-	//copied/inspired from UtilInventory. TODO: try and share code with that?
-	private boolean simpleMerge(EntityPlayer p, int slotFrom, int slotTo, ItemStack stackOrig, int max) 
-	{
-	 
-		ItemStack dest = p.inventory.getStackInSlot(slotTo);
-		
-		if(dest == null)
-		{ 
-			p.inventory.setInventorySlotContents(slotTo, stackOrig);
-			p.inventory.setInventorySlotContents(slotFrom, null);
-			return true;
-		}
-		else
-		{
-			int room = max - dest.stackSize;//max was Items.ender_pearl.getItemStackLimit()
-	 
-			if(room > 0)
-			{ 
-				int toDeposit = Math.min(dest.stackSize,room);
-			
-				dest.stackSize += toDeposit;
-				p.inventory.setInventorySlotContents(slotTo, dest);
-
-				stackOrig.stackSize -= toDeposit;
- 
-				if(stackOrig.stackSize <= 0)//because of calculations above, should not be below zero
-				{
-					//item stacks with zero count do not destroy themselves, they show up and have unexpected behavior in game so set to empty
-					p.inventory.setInventorySlotContents(slotFrom,null);  
-				}
-				else
-				{ 
-					p.inventory.setInventorySlotContents(slotFrom, stackOrig); 
-				} 
-				return true;
-			}
-			else return false;
-		}
-	}*/
-	
 }

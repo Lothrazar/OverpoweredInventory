@@ -26,11 +26,8 @@ public class GuiButtonExp extends GuiButton
     	boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     	
     	if(pressed)
-    	{ 
-    		NBTTagCompound tags = new NBTTagCompound();
- 
-    		//tags.setInteger(SortButtonPacket.NBT_SORT, sortType);
-    		ModInv.instance.network.sendToServer(new ExpButtonPacket(tags));
+    	{   
+    		ModInv.instance.network.sendToServer(new ExpButtonPacket(new NBTTagCompound()));
     	}
     	
     	return pressed;
