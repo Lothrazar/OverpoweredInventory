@@ -28,7 +28,7 @@ public class GuiButtonExp extends GuiButton
     	if(pressed)
     	{ 
     		NBTTagCompound tags = new NBTTagCompound();
-  System.out.println("exp btn");
+ 
     		//tags.setInteger(SortButtonPacket.NBT_SORT, sortType);
     		ModInv.instance.network.sendToServer(new ExpButtonPacket(tags));
     	}

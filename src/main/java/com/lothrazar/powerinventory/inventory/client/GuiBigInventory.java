@@ -13,6 +13,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
 /**
@@ -45,36 +46,29 @@ public class GuiBigInventory extends GuiInventory
 		if(this.container != null && this.mc.playerController.isInCreativeMode() == false)
 		{
 			final int height = 20;
-			final int width = 30;
-			final int widthlrg = 58;
+			final int width = 26;
+		//	final int widthlrg = 58;
 			final int padding = 6;
 			int button_id = 99;
 			 
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
-					this.guiLeft + texture_width - width - 80, 
-					this.guiTop + texture_height - height - padding,
-					width,height, "EC",Const.INV_ENDER);
+					this.guiLeft + container.echestX + width  -8, 
+					this.guiTop + container.echestY+4,
+					width/2-1,height-2, "",Const.INV_ENDER);
+			
 			this.buttonList.add(btnEnder); 
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
 
 			this.buttonList.add(new GuiButtonExp(button_id++, 
-					this.guiLeft + texture_width - 3*widthlrg - padding, 
-					this.guiTop + height + padding,
-					widthlrg,height,"Fill"));
-			
-			if(ModConfig.showFilterButton)
-			{   
-				this.buttonList.add(new GuiButtonFilter(button_id++, 
-						this.guiLeft + texture_width-widthlrg - padding, 
-						this.guiTop + padding,
-						widthlrg,height));
-			}
-			
+					this.guiLeft + container.bottleX - 10 - width, 
+					this.guiTop + container.bottleY,
+					width,height,StatCollector.translateToLocal("button.exp")));
+		 
 			if(ModConfig.showSortButtons)
 			{  
-				int x = guiLeft + 180;
-				int y = guiTop + texture_height - width+4;
-				int x_spacing = 32;
+				int x_spacing = width + padding/2;
+				int x = guiLeft + texture_width -  5*x_spacing - padding;
+				int y = guiTop + texture_height - height - padding;
 				 
 				GuiButton btn;
 
@@ -86,7 +80,12 @@ public class GuiBigInventory extends GuiInventory
 				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_LEFT,"<");
 				this.buttonList.add(btn);
 
-				x += x_spacing+4;
+				x += x_spacing;
+				
+				this.buttonList.add(new GuiButtonFilter(button_id++,x, y,width,height));
+				this.buttonList.add(btn);
+
+				x += x_spacing;
 
 				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_RIGHT,">");
 				this.buttonList.add(btn);

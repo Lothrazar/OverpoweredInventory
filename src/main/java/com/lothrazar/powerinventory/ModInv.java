@@ -1,5 +1,6 @@
 package com.lothrazar.powerinventory;
 
+import net.minecraft.init.Items;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Logger;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -36,6 +38,8 @@ public class ModInv
  
 	//TODO 8: implement the enderpearls stacking to 64, toggled from config file
  
+	//disable exp-fill button if slot is empty
+	
 	
 	
 	//maybe? maybe not? 10: left/right buttons could merge stacks ? OR add a middle button that does some sort of merge/sort?
@@ -77,6 +81,18 @@ public class ModInv
     	loadConfig(event);
 		
     	proxy.registerHandlers();
+    	
+    	
+    	
+    }
+    
+    @EventHandler
+    public void preInit(FMLInitializationEvent event)
+    {
+    	if(ModConfig.enderPearl64)
+    	{
+    		Items.ender_pearl.setMaxStackSize(64);
+    	}
     }
     
 	private void loadConfig(FMLPreInitializationEvent event) 
@@ -89,8 +105,10 @@ public class ModInv
 		ModConfig.showText = config.getBoolean("show_text",category,false,"Show or hide the 'Crafting' text in the inventory");
 		ModConfig.showCharacter = config.getBoolean("show_character",category,true,"Show or hide the animated character text in the inventory");
 		//ModConfig.showEnderButton = config.getBoolean("button_ender_chest",category,true,"Show or hide the ender chest button");
-		ModConfig.showSortButtons = config.getBoolean("button_sort",category,true,"Show or hide the ender chest button");
-		ModConfig.showFilterButton = config.getBoolean("button_filter",category,true,"Show or hide the filter button");
+		ModConfig.showSortButtons = config.getBoolean("move_inventory_buttons",category,true,"Show or hide the inventory shifting buttons << >>");
+		//ModConfig.showFilterButton = config.getBoolean("button_filter",category,true,"Show or hide the filter button");
+		
+		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
 		
 		config.save();
 	}
