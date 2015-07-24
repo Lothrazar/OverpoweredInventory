@@ -81,18 +81,6 @@ public class ModInv
     	loadConfig(event);
 		
     	proxy.registerHandlers();
-    	
-    	
-    	
-    }
-    
-    @EventHandler
-    public void preInit(FMLInitializationEvent event)
-    {
-    	if(ModConfig.enderPearl64)
-    	{
-    		Items.ender_pearl.setMaxStackSize(64);
-    	}
     }
     
 	private void loadConfig(FMLPreInitializationEvent event) 
@@ -110,6 +98,15 @@ public class ModInv
 		
 		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
 		
-		config.save();
+		if(config.hasChanged()){config.save();}
 	}
+    
+    @EventHandler
+    public void preInit(FMLInitializationEvent event)
+    {
+    	if(ModConfig.enderPearl64)
+    	{
+    		Items.ender_pearl.setMaxStackSize(64);
+    	}
+    }
 }

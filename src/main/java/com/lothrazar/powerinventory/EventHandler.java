@@ -6,14 +6,27 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.Random;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -28,7 +41,7 @@ import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
 import com.lothrazar.powerinventory.proxy.ClientProxy;
-import com.lothrazar.powerinventory.proxy.EnderPearlPacket;
+import com.lothrazar.powerinventory.proxy.EnderPearlPacket; 
 
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -237,13 +250,57 @@ public class EventHandler
 			ModInv.logger.log(Level.ERROR, "Failed to load slot unlock cache", e);
 		}
 	}
-	
+  
+	//below was imported from my PowerApples mod
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
+	public void onRenderTextOverlay(RenderGameOverlayEvent.Text event)
 	{
-		if(event.modID.equals(Const.MODID))
+		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;  
+	
+		if(player.isSneaking() && 
+			player.worldObj.isRemote == true)//client side only -> possibly redundant because of SideOnly
 		{
-			ModInv.config.save(); 
+			int size = 16;
+			
+			int xLeft = 20;
+			int xRight = Minecraft.getMinecraft().displayWidth/2 - size*2;
+			int yBottom = Minecraft.getMinecraft().displayHeight/2 - size*2;
+
+			if(player.inventory.getStackInSlot(Const.clockSlot) != null)
+				renderItemAt(new ItemStack(Items.clock),xLeft,yBottom,size);
+			
+			if(player.inventory.getStackInSlot(Const.compassSlot) != null)
+				renderItemAt(new ItemStack(Items.compass),xRight,yBottom,size);
+ 
 		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	private static void renderItemAt(ItemStack stack, int x, int y, int dim)
+	{
+		@SuppressWarnings("deprecation")
+		IBakedModel iBakedModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack);
+		@SuppressWarnings("deprecation")
+		TextureAtlasSprite textureAtlasSprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(iBakedModel.getTexture().getIconName());
+		
+		renderTexture( textureAtlasSprite, x, y, dim);
+	}
+	@SideOnly(Side.CLIENT)
+	public static void renderTexture( TextureAtlasSprite textureAtlasSprite , int x, int y, int dim)
+	{	
+		//special thanks to http://www.minecraftforge.net/forum/index.php?topic=26613.0
+		
+        Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+		Tessellator tessellator = Tessellator.getInstance();
+
+		int height = dim, width = dim;
+		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		worldrenderer.startDrawingQuads();
+		worldrenderer.addVertexWithUV((double)(x),          (double)(y + height),  0.0, (double)textureAtlasSprite.getMinU(), (double)textureAtlasSprite.getMaxV());
+		worldrenderer.addVertexWithUV((double)(x + width),  (double)(y + height),  0.0, (double)textureAtlasSprite.getMaxU(), (double)textureAtlasSprite.getMaxV());
+		worldrenderer.addVertexWithUV((double)(x + width),  (double)(y),           0.0, (double)textureAtlasSprite.getMaxU(), (double)textureAtlasSprite.getMinV());
+		worldrenderer.addVertexWithUV((double)(x),          (double)(y),           0.0, (double)textureAtlasSprite.getMinU(), (double)textureAtlasSprite.getMinV());
+		tessellator.draw();
 	}
 }
