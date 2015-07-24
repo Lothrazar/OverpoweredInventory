@@ -49,18 +49,20 @@ public class GuiBigInventory extends GuiInventory
 			final int width = 26;
 		//	final int widthlrg = 58;
 			final int padding = 6;
+			final int tiny = 12;
 			int button_id = 99;
 			 
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
-					this.guiLeft + container.echestX + width  -8, 
-					this.guiTop + container.echestY+4,
-					width/2-1,height-2, "",Const.INV_ENDER);
+					this.guiLeft + container.echestX + 18, 
+					this.guiTop + container.echestY-1,
+					10,height
+					, "",Const.INV_ENDER);
 			
 			this.buttonList.add(btnEnder); 
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
 
 			this.buttonList.add(new GuiButtonExp(button_id++, 
-					this.guiLeft + container.bottleX - 10 - width, 
+					this.guiLeft + container.bottleX - width - padding, 
 					this.guiTop + container.bottleY,
 					width,height,StatCollector.translateToLocal("button.exp")));
 		 
