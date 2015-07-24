@@ -111,10 +111,8 @@ public class GuiBigInventory extends GuiInventory
 		if(container.invo.getStackInSlot(Const.enderChestSlot) == null)
 		{
 			btnEnder.enabled = false;
-
-			st = "textures/items/empty_enderchest.png";
-			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
-			drawTexturedQuadFit(container.echestX, container.echestY,s,s,0); 
+ 
+			drawTextureSimple("textures/items/empty_enderchest.png",container.echestX, container.echestY,s,s); 
 		}
 		else 
 		{ 
@@ -125,10 +123,8 @@ public class GuiBigInventory extends GuiInventory
 		   container.invo.getStackInSlot(Const.bottleSlot).getItem() == Items.experience_bottle	)
 		{
 			btnExp.enabled = false;
-
-			st = "textures/items/empty_bottle.png";
-			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
-			drawTexturedQuadFit(container.bottleX, container.bottleY,s,s,0); 
+  
+			drawTextureSimple("textures/items/empty_bottle.png",container.bottleX, container.bottleY,s,s); 
 		}
 		else 
 		{ 
@@ -136,23 +132,18 @@ public class GuiBigInventory extends GuiInventory
 		}
 
 		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
-		{ 
-			st = "textures/items/empty_enderpearl.png";
-			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
-			drawTexturedQuadFit(container.pearlX, container.pearlY,s,s,0);
+		{  
+			drawTextureSimple("textures/items/empty_enderpearl.png",container.pearlX, container.pearlY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.compassSlot) == null)
 		{ 
-			st = "textures/items/empty_compass.png";
-			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
-			drawTexturedQuadFit(container.compassX, container.compassY,s,s,0);
+			drawTextureSimple("textures/items/empty_compass.png",container.compassX, container.compassY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.clockSlot) == null)
-		{ 
-			st = "textures/items/empty_clock.png";
-			drawTextureSimple(st,container.clockX, container.clockY,s,s);
+		{  
+			drawTextureSimple("textures/items/empty_clock.png",container.clockX, container.clockY,s,s);
 			//this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
 			//drawTexturedQuadFit(container.clockX, container.clockY,s,s,0);
 		}
