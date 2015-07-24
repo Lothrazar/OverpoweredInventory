@@ -79,7 +79,7 @@ public class BigContainerPlayer extends ContainerPlayer
         
         S_RESULT = this.inventorySlots.size();
         this.addSlotToContainer(new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 
-        		174+20, //was 174
+        		200,  
         		40));
 
         S_CRAFT_START = this.inventorySlots.size();
@@ -87,7 +87,7 @@ public class BigContainerPlayer extends ContainerPlayer
         { 
             for (j = 0; j < craftSize; ++j)
             {  
-    			cx = 88+20 + j * Const.square ;//was 88
+    			cx = 114 + j * Const.square ; 
     			cy = 20 + i * Const.square ;
 
         		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * this.craftSize, cx , cy)); 
