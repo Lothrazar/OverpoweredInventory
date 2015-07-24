@@ -35,8 +35,8 @@ public class ModInv
 
 
 	//??maybe? 6: on item pickup (pearl/chest) put it in the special slot by default-if possible
+	//??maybe? shift click out of hotbar should go directly to special slots, work same way as armor
  
-	//TODO 8: implement the enderpearls stacking to 64, toggled from config file
  
 	//disable exp-fill button if slot is empty
 	

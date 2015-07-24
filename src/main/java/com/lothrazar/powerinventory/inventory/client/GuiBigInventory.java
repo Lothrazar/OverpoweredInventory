@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -61,10 +62,12 @@ public class GuiBigInventory extends GuiInventory
 			this.buttonList.add(btnEnder); 
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
 
-			this.buttonList.add(new GuiButtonExp(button_id++, 
+			btnExp = new GuiButtonExp(button_id++, 
 					this.guiLeft + container.bottleX - width - padding+1, 
 					this.guiTop + container.bottleY-2,
-					width,height,StatCollector.translateToLocal("button.exp")));
+					width,height,StatCollector.translateToLocal("button.exp"));
+			this.buttonList.add(btnExp);
+			btnExp.enabled = false;
 		 
 			if(ModConfig.showSortButtons)
 			{  
@@ -101,7 +104,7 @@ public class GuiBigInventory extends GuiInventory
 		}
     }
 	
-	private void checkButtons()
+	private void checkSlotsEmpty()
 	{
 		final int s = 16;
 		String st;
@@ -111,12 +114,25 @@ public class GuiBigInventory extends GuiInventory
 
 			st = "textures/items/empty_enderchest.png";
 			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
-			drawTexturedQuadFit(container.echestX, container.echestY,s,s,0);
-			
+			drawTexturedQuadFit(container.echestX, container.echestY,s,s,0); 
 		}
 		else 
 		{ 
 			btnEnder.enabled = true; 
+		}
+		
+		if(container.invo.getStackInSlot(Const.bottleSlot) == null || 
+		   container.invo.getStackInSlot(Const.bottleSlot).getItem() == Items.experience_bottle	)
+		{
+			btnExp.enabled = false;
+
+			st = "textures/items/empty_bottle.png";
+			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
+			drawTexturedQuadFit(container.echestX, container.echestY,s,s,0); 
+		}
+		else 
+		{ 
+			btnExp.enabled = true; 
 		}
 
 		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
@@ -136,11 +152,17 @@ public class GuiBigInventory extends GuiInventory
 		if(container.invo.getStackInSlot(Const.clockSlot) == null)
 		{ 
 			st = "textures/items/empty_clock.png";
-			this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
-			drawTexturedQuadFit(container.clockX, container.clockY,s,s,0);
+			drawTextureSimple(st,container.clockX, container.clockY,s,s);
+			//this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, st)); 
+			//drawTexturedQuadFit(container.clockX, container.clockY,s,s,0);
 		}
 	}
-	
+	 
+	public void drawTextureSimple(String texture,double x, double y, double width, double height)
+	{
+		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, texture)); 
+		drawTexturedQuadFit(x,y,width,height,0);
+	}
 	public static void drawTexturedQuadFit(double x, double y, double width, double height, double zLevel)
 	{
 		//because the vanilla code REQUIRES textures to be powers of two AND are force dto be max of 256??? WHAT?
@@ -176,7 +198,7 @@ public class GuiBigInventory extends GuiInventory
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{ 
-		this.checkButtons();
+		this.checkSlotsEmpty();
 		
 		if(ModConfig.showText)
 			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
