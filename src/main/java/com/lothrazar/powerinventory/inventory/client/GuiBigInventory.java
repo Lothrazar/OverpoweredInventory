@@ -160,6 +160,7 @@ public class GuiBigInventory extends GuiInventory
 	 
 	public void drawTextureSimple(String texture,double x, double y, double width, double height)
 	{
+		//wrapper for drawTexturedQuadFit
 		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, texture)); 
 		drawTexturedQuadFit(x,y,width,height,0);
 	}

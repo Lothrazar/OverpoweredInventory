@@ -66,33 +66,29 @@ public class ExpButtonPacket implements IMessage , IMessageHandler<ExpButtonPack
 			//if we can fill 17, but ony have 16, just do the whole stack
 			if(bottlesToDrain >= bottles.stackSize)
 			{
-				bottlesToDrain = bottles.stackSize; 
-				//just do the whole thing
+				bottlesToDrain = bottles.stackSize;   //just do the whole thing
 			}
-			else //therefore bottlesToDrain < bottles.stackSize
-			{
-				//so we can drain them all BUT
-				//we cannot set the whole stack, the whole slot because that would waste empties
-				//drop the empty ones in the world to pick up
-				
-				int emptyBottlesLeft = bottles.stackSize - bottlesToDrain;
-	 
-				if(player.worldObj.isRemote  ==  false)//this always passes because of the network packets, but keep it for consistency
-				{	
-					player.worldObj.spawnEntityInWorld(new EntityItem(player.worldObj,
-		 					player.getPosition().getX(),player.getPosition().getY(),player.getPosition().getZ(),
-		 					new ItemStack(Items.glass_bottle,emptyBottlesLeft)));
-				}
-		 
-			}
-
-			//now , in either case, we can drain the exp into the bottles
-			
+	  
 			if(bottlesToDrain > 0)
 			{ 
 				UtilExperience.drainExp(player, bottlesToDrain * ModConfig.expPerBottle);
 				
 				player.inventory.setInventorySlotContents(Const.bottleSlot, new ItemStack(Items.experience_bottle,bottlesToDrain));
+			
+			
+				if(bottlesToDrain < bottles.stackSize) 
+				{	
+					//what iff:
+					//we cannot set the whole stack, the whole slot because that would waste empties
+					//drop the empty ones in the world to pick up 
+					int emptyBottlesLeft = bottles.stackSize - bottlesToDrain;
+					
+					player.worldObj.spawnEntityInWorld(new EntityItem(player.worldObj,
+		 					player.getPosition().getX(),player.getPosition().getY(),player.getPosition().getZ(),
+		 					new ItemStack(Items.glass_bottle,emptyBottlesLeft)));
+				}
+			
+			
 			} 
 		}
 		
