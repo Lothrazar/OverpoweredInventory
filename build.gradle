@@ -19,7 +19,7 @@ apply plugin: 'forge'
 
 version = "1.8-1.0.0"
 group= "com.lothrazar.powerinventory" 
-archivesBaseName = "PowerInventory"
+archivesBaseName = "OverpoweredInventory"
 
 minecraft {
     version = "1.8-11.14.3.1446"
