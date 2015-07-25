@@ -311,7 +311,7 @@ public class BigContainerPlayer extends ContainerPlayer
                     return null;
                 }
             }
-            else if(slotNumber == S_PEARL || slotNumber == S_ECHEST  || slotNumber == S_COMPASS  || slotNumber == S_CLOCK)
+            else if(slotNumber == S_PEARL || slotNumber == S_ECHEST  || slotNumber == S_COMPASS  || slotNumber == S_CLOCK || slotNumber == S_BOTTLE)
             { 
             	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
             	{
