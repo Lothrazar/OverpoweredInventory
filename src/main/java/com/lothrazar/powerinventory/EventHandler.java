@@ -6,8 +6,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
-import java.util.Random;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -22,9 +20,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
@@ -35,7 +30,6 @@ import net.minecraftforge.event.world.WorldEvent;
 
 import org.apache.logging.log4j.Level;
 
-import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
 import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
@@ -43,7 +37,6 @@ import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket; 
 
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -129,7 +122,9 @@ public class EventHandler
 		   event.gui instanceof net.minecraft.client.gui.inventory.GuiBrewingStand || 
 		   event.gui instanceof net.minecraft.client.gui.inventory.GuiBeacon || 
 		   event.gui instanceof net.minecraft.client.gui.inventory.GuiCrafting || 
-		   event.gui instanceof net.minecraft.client.gui.inventory.GuiFurnace)
+		   event.gui instanceof net.minecraft.client.gui.inventory.GuiFurnace || 
+		   event.gui instanceof net.minecraft.client.gui.inventory.GuiScreenHorseInventory
+		   )
 		{
 			//trapped, regular chests, minecart chests, and enderchest all use this class
 			//which extends  GuiContainer

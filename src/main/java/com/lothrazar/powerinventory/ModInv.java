@@ -31,10 +31,13 @@ import net.minecraftforge.fml.relauncher.Side;
 public class ModInv
 {
 	//??POSSIBLE additions? 
+	
+	//a back button in inventory. shows only IF we use I, then back goes back into where we were??
+	
 	// on item pickup (pearl/chest) put it in the special slot by default-if possible
 	//shift click out of hotbar should go directly to special slots, work same way as armor
 	// left/right buttons could merge stacks ? OR add a middle button that does some sort of merge/sort?
-	
+
 	 
 	//idea: liquid//potion storage? bucket slot, fillButton, drainButton, and a # showing whats stored (leaves empty behind)
 		//but only one type of lq at a time, and have a max /64
