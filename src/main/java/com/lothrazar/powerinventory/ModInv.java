@@ -34,8 +34,7 @@ public class ModInv
 	
 	// lang file support for key.ender, and for ALL button text -- on hold till features all in and finalized
 	// implement shift clicking with exp bottle slot
-	//add expPerBottle integer to config file
-	
+
 	
 	//??POSSIBLE additions? 
 	// on item pickup (pearl/chest) put it in the special slot by default-if possible
@@ -85,9 +84,10 @@ public class ModInv
 		ModConfig.showText = config.getBoolean("show_text",category,false,"Show or hide the 'Crafting' text in the inventory");
 		ModConfig.showCharacter = config.getBoolean("show_character",category,true,"Show or hide the animated character text in the inventory");
 		ModConfig.showSortButtons = config.getBoolean("move_inventory_buttons",category,true,"Show or hide the inventory shifting buttons << >>");
-		
 		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
 		
+		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
+		  
 		if(config.hasChanged()){config.save();}
 	}
     
