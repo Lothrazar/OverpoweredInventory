@@ -48,11 +48,21 @@ public class GuiBigInventory extends GuiInventory
 		{
 			final int height = 20;
 			final int width = 26;
-		//	final int widthlrg = 58;
+			final int widthlrg = 58;
 			final int padding = 6;
 			//final int tiny = 12;
 			int button_id = 99;
-			 
+			
+			this.buttonList.add(new GuiButtonDump(button_id++,
+					this.guiLeft + texture_width - widthlrg - padding, 
+					this.guiTop + padding,
+					widthlrg,height));
+
+			this.buttonList.add(new GuiButtonFilter(button_id++,
+					this.guiLeft + texture_width - widthlrg - 2*padding - widthlrg, 
+					this.guiTop + padding,
+					widthlrg,height));
+
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
 					this.guiLeft + container.echestX + 19, 
 					this.guiTop + container.echestY-1,
@@ -83,11 +93,6 @@ public class GuiBigInventory extends GuiInventory
 				x += x_spacing;
 			 
 				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_LEFT,"<");
-				this.buttonList.add(btn);
-
-				x += x_spacing;
-				
-				this.buttonList.add(new GuiButtonFilter(button_id++,x, y,width + 4,height));
 				this.buttonList.add(btn);
 
 				x += x_spacing + 4;

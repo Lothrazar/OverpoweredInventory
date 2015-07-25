@@ -48,7 +48,7 @@ public class UtilInventory
 		
 		return found; 
 	}
-
+/*
 	public static void moveallContainerToPlayer(EntityPlayer player,Container container) //W
 	{
 		ItemStack source,destination;
@@ -112,10 +112,11 @@ public class UtilInventory
 				}
 			}
 		}
-	}
+	}*/
 	
 	//TODO: refactor above and below to share code, code reuse, find some generic bits ?
 	//they are /almost/ copy-pastes in reverse of each other
+	/*
 	public static void moveallPlayerToContainer(EntityPlayer player, Container container)//D
 	{ 
 		ItemStack source,destination;
@@ -171,7 +172,37 @@ public class UtilInventory
 				}
 			}
 		}	
-	}
+	}*/
+	public static void dumpFromPlayerToChestEntity(World world, TileEntityChest chest, EntityPlayer player)
+  	{ 
+
+		ItemStack chestItem;
+		ItemStack invItem;
+	 
+		int START_CHEST = 0; 
+		int END_CHEST =  START_CHEST + 3*9; 
+		
+		//inventory and chest has 9 rows by 3 columns, never changes. same as 64 max stack size
+		for(int islotChest = START_CHEST; islotChest < END_CHEST; islotChest++)
+		{ 
+			chestItem = chest.getStackInSlot(islotChest);
+		
+			if(chestItem != null) {   continue; }//  chest slot not empty, skip over it
+			 
+			for(int islotInv = Const.hotbarSize; islotInv < player.inventory.getSizeInventory() - Const.armorSize; islotInv++)
+			{
+				invItem = player.inventory.getStackInSlot(islotInv);
+				
+				if(invItem == null)  {continue;}//empty inventory slot
+		 
+  			  
+				chest.setInventorySlotContents(islotChest, invItem);
+ 
+  				player.inventory.setInventorySlotContents(islotInv,null); 
+  			 
+  			}//close loop on player inventory items 
+		}//close loop on chest items
+  	}
 	
 	public static void sortFromPlayerToChestEntity(World world, TileEntityChest chest, EntityPlayer player)
   	{ 

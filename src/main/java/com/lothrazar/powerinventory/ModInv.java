@@ -6,6 +6,7 @@ import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Logger;
 
 import com.lothrazar.powerinventory.proxy.CommonProxy; 
+import com.lothrazar.powerinventory.proxy.DumpButtonPacket;
 import com.lothrazar.powerinventory.proxy.EnderChestPacket;
 import com.lothrazar.powerinventory.proxy.ExpButtonPacket;
 import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
@@ -55,11 +56,12 @@ public class ModInv
     	network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     	
     	int packetID = 0;
-    	network.registerMessage(EnderChestPacket.class, EnderChestPacket.class, packetID++, Side.SERVER);
-    	network.registerMessage(SortButtonPacket.class, SortButtonPacket.class, packetID++, Side.SERVER);
-    	network.registerMessage(FilterButtonPacket.class, FilterButtonPacket.class, packetID++, Side.SERVER);
-    	network.registerMessage(EnderPearlPacket.class, EnderPearlPacket.class, packetID++, Side.SERVER);
-    	network.registerMessage(ExpButtonPacket.class, ExpButtonPacket.class, packetID++, Side.SERVER);
+    	network.registerMessage(EnderChestPacket.class,  EnderChestPacket.class,  packetID++, Side.SERVER);
+    	network.registerMessage(SortButtonPacket.class,  SortButtonPacket.class,  packetID++, Side.SERVER);
+    	network.registerMessage(FilterButtonPacket.class,FilterButtonPacket.class,packetID++, Side.SERVER);
+    	network.registerMessage(EnderPearlPacket.class,  EnderPearlPacket.class,  packetID++, Side.SERVER);
+    	network.registerMessage(ExpButtonPacket.class,   ExpButtonPacket.class,   packetID++, Side.SERVER);
+    	network.registerMessage(DumpButtonPacket.class,  DumpButtonPacket.class,  packetID++, Side.SERVER);
     	 
 		config = new Configuration(event.getSuggestedConfigurationFile(), true);
     	loadConfig(event);
