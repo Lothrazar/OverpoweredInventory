@@ -82,7 +82,7 @@ public class GuiBigInventory extends GuiInventory
 			if(ModConfig.showSortButtons)
 			{  
 				int x_spacing = width + padding/2;
-				int x = guiLeft + texture_width -  5*x_spacing - padding;
+				int x = guiLeft + texture_width -  4*x_spacing - padding+1;
 				int y = guiTop + texture_height - height - padding;
 				 
 				GuiButton btn;
@@ -95,7 +95,7 @@ public class GuiBigInventory extends GuiInventory
 				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_LEFT,"<");
 				this.buttonList.add(btn);
 
-				x += x_spacing + 4;
+				x += x_spacing;
 
 				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_RIGHT,">");
 				this.buttonList.add(btn);
