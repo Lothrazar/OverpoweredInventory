@@ -29,20 +29,13 @@ import net.minecraftforge.fml.relauncher.Side;
 @Mod(modid = Const.MODID, useMetadata=true)
 public class ModInv
 {
- 
-	//TODO 
-	
-	// lang file support for key.ender, and for ALL button text -- on hold till features all in and finalized
-	// implement shift clicking with exp bottle slot
-
-	
 	//??POSSIBLE additions? 
 	// on item pickup (pearl/chest) put it in the special slot by default-if possible
 	//shift click out of hotbar should go directly to special slots, work same way as armor
 	// left/right buttons could merge stacks ? OR add a middle button that does some sort of merge/sort?
 	
 	 
-	//idea: liquid storage? bucket slot, fillButton, drainButton, and a # showing whats stored (leaves empty behind)
+	//idea: liquid//potion storage? bucket slot, fillButton, drainButton, and a # showing whats stored (leaves empty behind)
 		//but only one type of lq at a time, and have a max /64
 	
 	//Display exact exp numbers? such as  450/5200 = for next level (90453= total)  
