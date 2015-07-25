@@ -292,6 +292,13 @@ public class BigContainerPlayer extends ContainerPlayer
                         return null;
                     }  
         		}
+            	else if(stackCopy.getItem() == Items.glass_bottle )
+        		{ 
+            		if (!this.mergeItemStack(stackOrig, S_BOTTLE, S_BOTTLE+1, false))
+                	{ 
+                        return null;
+                    }  
+        		}
             	else if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END, false)            			)
             	{
                     return null;
