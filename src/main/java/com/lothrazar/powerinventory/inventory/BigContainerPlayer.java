@@ -243,7 +243,7 @@ public class BigContainerPlayer extends ContainerPlayer
                     return null;
                 } 
             }
-            else if (slotNumber >= S_MAIN_START && slotNumber < S_MAIN_END) // Hotbar
+            else if (slotNumber >= S_MAIN_START && slotNumber <= S_MAIN_END) // main inv grid
             { 
             	//only from here are we doing the special items
             	
