@@ -303,8 +303,9 @@ public class BigContainerPlayer extends ContainerPlayer
                         return null;
                     }  
         		}
-            	else if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END, false)            			)
+            	else if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END+1, false)            			)
             	{
+            		
                     return null;
                 }
             }
