@@ -188,18 +188,17 @@ public class UtilInventory
 			chestItem = chest.getStackInSlot(islotChest);
 		
 			if(chestItem != null) {   continue; }//  chest slot not empty, skip over it
-			 
+	 
 			for(int islotInv = Const.hotbarSize; islotInv < player.inventory.getSizeInventory() - Const.armorSize; islotInv++)
 			{
 				invItem = player.inventory.getStackInSlot(islotInv);
 				
 				if(invItem == null)  {continue;}//empty inventory slot
-		 
-  			  
+				  
 				chest.setInventorySlotContents(islotChest, invItem);
  
   				player.inventory.setInventorySlotContents(islotInv,null); 
-  			 
+  				break;
   			}//close loop on player inventory items 
 		}//close loop on chest items
   	}

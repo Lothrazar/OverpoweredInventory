@@ -52,7 +52,7 @@ public class DumpButtonPacket implements IMessage , IMessageHandler<DumpButtonPa
 			if(p.worldObj.getTileEntity(pos) instanceof TileEntityChest)
 			{
 				//merge first then dump
-				UtilInventory.sortFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos), p);
+				//UtilInventory.sortFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos), p);
 				UtilInventory.dumpFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos), p);
 			}
 		}
