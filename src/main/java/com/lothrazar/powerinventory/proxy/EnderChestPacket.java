@@ -39,6 +39,9 @@ public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPa
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 		
+		if( p.inventory.getStackInSlot(Const.enderChestSlot) != null)
+			p.displayGUIChest(p.getInventoryEnderChest());
+		/*
 		int invType = message.tags.getInteger("i");
 
 		switch(invType)
@@ -50,7 +53,7 @@ public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPa
 
 			//this packet should not have been sent. but keep empty branch so i remember it
 			break;
-		}
+		}*/
 
 		return null;
 	}

@@ -7,8 +7,9 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
  
 public class ClientProxy extends CommonProxy
 {
-	public static KeyBinding keyEnder;  
-	public static final String keyEnderName = "key.ender";
+	public static KeyBinding keyEnderpearl;  
+	public static KeyBinding keyEnderchest;  
+ 
 	public static final String keyCategory = "key.categories.inventory";
 
 	@Override
@@ -22,7 +23,10 @@ public class ClientProxy extends CommonProxy
 	{
 		super.registerHandlers();
 		
-		keyEnder = new KeyBinding(keyEnderName, Keyboard.KEY_Z, keyCategory); 
-        ClientRegistry.registerKeyBinding(ClientProxy.keyEnder);
+		keyEnderpearl = new KeyBinding("key.enderpearl", Keyboard.KEY_Z, keyCategory); 
+        ClientRegistry.registerKeyBinding(ClientProxy.keyEnderpearl);
+        
+        keyEnderchest = new KeyBinding("key.enderchest", Keyboard.KEY_I, keyCategory); 
+        ClientRegistry.registerKeyBinding(ClientProxy.keyEnderchest);
 	}
 }

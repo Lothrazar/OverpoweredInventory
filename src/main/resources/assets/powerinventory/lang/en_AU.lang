@@ -1,4 +1,5 @@
 button.filter=Merge
 button.dump=Deposit All
 button.exp=Fill
-key.ender=Quick Pearl
+key.enderpearl=Quick Pearl
+key.enderchest=Ender Inventory

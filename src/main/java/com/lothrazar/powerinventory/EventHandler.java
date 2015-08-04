@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -35,6 +36,7 @@ import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
 import com.lothrazar.powerinventory.proxy.ClientProxy;
+import com.lothrazar.powerinventory.proxy.EnderChestPacket;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket; 
 
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -54,9 +56,15 @@ public class EventHandler
 	@SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) 
     {   
-        if(ClientProxy.keyEnder.isPressed() )
+	
+        if(ClientProxy.keyEnderpearl.isPressed() )
         { 	     
         	 ModInv.instance.network.sendToServer( new EnderPearlPacket());   
+        }  
+        if(ClientProxy.keyEnderchest.isPressed() && container.invo.getStackInSlot(Const.enderChestSlot) == null)
+        { 	     
+        	
+        	 ModInv.instance.network.sendToServer( new EnderChestPacket());   
         }  
     }
 	

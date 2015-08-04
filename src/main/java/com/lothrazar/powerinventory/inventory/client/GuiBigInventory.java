@@ -113,18 +113,18 @@ public class GuiBigInventory extends GuiInventory
 	private void checkSlotsEmpty()
 	{
 		final int s = 16;
-		String st;
+		//String st;
 		if(container.invo.getStackInSlot(Const.enderChestSlot) == null)
 		{
 			btnEnder.enabled = false;
-			btnEnder.visible = btnExp.enabled;
+			btnEnder.visible = btnEnder.enabled;
  
 			drawTextureSimple("textures/items/empty_enderchest.png",container.echestX, container.echestY,s,s); 
 		}
 		else 
 		{ 
 			btnEnder.enabled = true; 
-			btnEnder.visible = btnExp.enabled;
+			btnEnder.visible = btnEnder.enabled;
 		}
 		
 		if(container.invo.getStackInSlot(Const.bottleSlot) == null || 
