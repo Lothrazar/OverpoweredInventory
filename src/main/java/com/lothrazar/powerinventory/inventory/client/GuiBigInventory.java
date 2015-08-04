@@ -52,17 +52,19 @@ public class GuiBigInventory extends GuiInventory
 			final int padding = 6;
 			//final int tiny = 12;
 			int button_id = 99;
-			
-			this.buttonList.add(new GuiButtonDump(button_id++,
-					this.guiLeft + texture_width - widthlrg - padding, 
-					this.guiTop + padding,
-					widthlrg,height));
 
-			this.buttonList.add(new GuiButtonFilter(button_id++,
-					this.guiLeft + texture_width - widthlrg - 2*padding - widthlrg, 
-					this.guiTop + padding,
-					widthlrg,height));
-
+			if(ModConfig.showMergeDeposit)
+			{
+				this.buttonList.add(new GuiButtonDump(button_id++,
+						this.guiLeft + texture_width - widthlrg - padding, 
+						this.guiTop + padding,
+						widthlrg,height));
+	
+				this.buttonList.add(new GuiButtonFilter(button_id++,
+						this.guiLeft + texture_width - widthlrg - 2*padding - widthlrg, 
+						this.guiTop + padding,
+						widthlrg,height));
+			}
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
 					this.guiLeft + container.echestX + 19, 
 					this.guiTop + container.echestY-1,
@@ -199,9 +201,9 @@ public class GuiBigInventory extends GuiInventory
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{ 
 		this.checkSlotsEmpty();
+		 
+		//this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
 		
-		if(ModConfig.showText)
-			this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
 /*
 		Slot s;
 		int show;

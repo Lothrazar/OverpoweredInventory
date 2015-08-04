@@ -67,23 +67,23 @@ public class ModInv
     	network.registerMessage(DumpButtonPacket.class,  DumpButtonPacket.class,  packetID++, Side.SERVER);
     	 
 		config = new Configuration(event.getSuggestedConfigurationFile(), true);
-    	loadConfig(event);
+    	loadConfig();
 		
     	proxy.registerHandlers();
     }
     
-	private void loadConfig(FMLPreInitializationEvent event) 
+	private void loadConfig() 
 	{
     	config.load();
     	 
     	String category = Configuration.CATEGORY_GENERAL;
 		
     	ModConfig.filterRange = config.getInt("button_filter_range", category, 12, 1, 32, "Range of the filter button to reach nearby chests");
-		//ModConfig.showText = config.getBoolean("show_text",category,false,"Show or hide the 'Crafting' text in the inventory");
 		ModConfig.showCharacter = config.getBoolean("show_character",category,true,"Show or hide the animated character text in the inventory");
-		//ModConfig.showSortButtons = config.getBoolean("move_inventory_buttons",category,true,"Show or hide the inventory shifting buttons << >>");
+		ModConfig.showSortButtons = config.getBoolean("move_inventory_buttons",category,true,"Show or hide the inventory shifting buttons << >>");
+		ModConfig.showCornerButtons = config.getBoolean("show_corner_buttons",category,true,"Show or hide the corner inventory buttons in other GUI's");
 		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
-		
+		ModConfig.showMergeDeposit = config.getBoolean("merge_deposit_buttons", category, true, "Show or hide the merge deposit buttons in upper right corner.");
 		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
 		  
 		if(config.hasChanged()){config.save();}

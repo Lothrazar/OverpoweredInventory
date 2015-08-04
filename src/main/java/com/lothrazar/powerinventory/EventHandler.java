@@ -61,7 +61,7 @@ public class EventHandler
         { 	     
         	 ModInv.instance.network.sendToServer( new EnderPearlPacket());   
         }  
-        if(ClientProxy.keyEnderchest.isPressed() && container.invo.getStackInSlot(Const.enderChestSlot) == null)
+        if(ClientProxy.keyEnderchest.isPressed())
         { 	     
         	
         	 ModInv.instance.network.sendToServer( new EnderChestPacket());   
@@ -125,28 +125,31 @@ public class EventHandler
 	{
 		if(event.gui == null){return;}//probably doesnt ever happen
 
-		if(event.gui instanceof net.minecraft.client.gui.inventory.GuiChest || 
-		   event.gui instanceof net.minecraft.client.gui.inventory.GuiDispenser || 
-		   event.gui instanceof net.minecraft.client.gui.inventory.GuiBrewingStand || 
-		   event.gui instanceof net.minecraft.client.gui.inventory.GuiBeacon || 
-		   event.gui instanceof net.minecraft.client.gui.inventory.GuiCrafting || 
-		   event.gui instanceof net.minecraft.client.gui.inventory.GuiFurnace || 
-		   event.gui instanceof net.minecraft.client.gui.inventory.GuiScreenHorseInventory
-		   )
+		if(ModConfig.showCornerButtons)
 		{
-			//trapped, regular chests, minecart chests, and enderchest all use this class
-			//which extends  GuiContainer
-
-			int padding = 10;
-			
-			int x,y = padding,w = 20,h = w;
-			
-			x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
-			
-			event.buttonList.add(new GuiButtonClose(256, x,y,w,h));
-			
-			x = x - padding - w;
-			event.buttonList.add(new GuiButtonOpenInventory(256, x,y,w,h,"I",Const.INV_PLAYER));
+			if(event.gui instanceof net.minecraft.client.gui.inventory.GuiChest || 
+			   event.gui instanceof net.minecraft.client.gui.inventory.GuiDispenser || 
+			   event.gui instanceof net.minecraft.client.gui.inventory.GuiBrewingStand || 
+			   event.gui instanceof net.minecraft.client.gui.inventory.GuiBeacon || 
+			   event.gui instanceof net.minecraft.client.gui.inventory.GuiCrafting || 
+			   event.gui instanceof net.minecraft.client.gui.inventory.GuiFurnace || 
+			   event.gui instanceof net.minecraft.client.gui.inventory.GuiScreenHorseInventory
+			   )
+			{
+				//trapped, regular chests, minecart chests, and enderchest all use this class
+				//which extends  GuiContainer
+	
+				int padding = 10;
+				
+				int x,y = padding,w = 20,h = w;
+				
+				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
+				
+				event.buttonList.add(new GuiButtonClose(256, x,y,w,h));
+				
+				x = x - padding - w;
+				event.buttonList.add(new GuiButtonOpenInventory(256, x,y,w,h,"E",Const.INV_PLAYER));
+			}
 		}
 	}
 	

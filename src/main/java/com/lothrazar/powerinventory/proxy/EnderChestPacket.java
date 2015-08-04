@@ -5,6 +5,8 @@ import com.lothrazar.powerinventory.Const;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -41,6 +43,8 @@ public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPa
 		
 		if( p.inventory.getStackInSlot(Const.enderChestSlot) != null)
 			p.displayGUIChest(p.getInventoryEnderChest());
+		else 
+			p.addChatMessage(new ChatComponentText("slot.enderchest"));
 		/*
 		int invType = message.tags.getInteger("i");
 
