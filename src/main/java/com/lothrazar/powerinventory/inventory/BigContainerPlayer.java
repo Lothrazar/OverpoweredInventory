@@ -216,7 +216,7 @@ public class BigContainerPlayer extends ContainerPlayer
             stackCopy = stackOrig.copy();
             if (slotNumber == S_RESULT)  
             { 
-            	System.out.printf("\ntest result %d %d ___  ",S_MAIN_START,S_MAIN_END);
+            	//System.out.printf("\ntest result %d %d ___  ",S_MAIN_START,S_MAIN_END);
                 if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))//was starting at S_BAR_START
                 {
                     return null;
