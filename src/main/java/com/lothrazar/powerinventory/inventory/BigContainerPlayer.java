@@ -46,7 +46,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	public final int echestX = pearlX;
 	public final int echestY = pearlY + 3*Const.square;
 
-	public final int bottleX = GuiBigInventory.texture_width - Const.square - padding - 1;
+	public final int bottleX = Const.texture_width - Const.square - padding - 1;
 	public final int bottleY = 20 + 2 * Const.square;
 
 //store slot numbers  (not indexes) as we go. so that transferStack.. is actually readable

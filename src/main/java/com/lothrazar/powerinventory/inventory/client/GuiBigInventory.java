@@ -25,8 +25,6 @@ public class GuiBigInventory extends GuiInventory
 {
 	private BigContainerPlayer container;
 
-	public static final int texture_width = 464;
-	public static final int texture_height = 382;
 
 	GuiButton btnEnder;
 	GuiButton btnExp;
@@ -34,8 +32,8 @@ public class GuiBigInventory extends GuiInventory
 	{
 		super(player);
 		container = player.inventoryContainer instanceof BigContainerPlayer? (BigContainerPlayer)player.inventoryContainer : null;
-		this.xSize = texture_width;
-		this.ySize = texture_height;
+		this.xSize = Const.texture_width;
+		this.ySize = Const.texture_height;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -56,12 +54,12 @@ public class GuiBigInventory extends GuiInventory
 			if(ModConfig.showMergeDeposit)
 			{
 				this.buttonList.add(new GuiButtonDump(button_id++,
-						this.guiLeft + texture_width - widthlrg - padding, 
+						this.guiLeft + this.xSize - widthlrg - padding, 
 						this.guiTop + padding,
 						widthlrg,height));
 	
 				this.buttonList.add(new GuiButtonFilter(button_id++,
-						this.guiLeft + texture_width - widthlrg - 2*padding - widthlrg, 
+						this.guiLeft + this.xSize - widthlrg - 2*padding - widthlrg, 
 						this.guiTop + padding,
 						widthlrg,height));
 			}
@@ -85,8 +83,8 @@ public class GuiBigInventory extends GuiInventory
 			{  
 				width = 18;
 				int x_spacing = width + padding/2;
-				int x = guiLeft + texture_width -  4*x_spacing - padding+1;
-				int y = guiTop + texture_height - height - padding;
+				int x = guiLeft + this.xSize -  4*x_spacing - padding+1;
+				int y = guiTop + this.ySize - height - padding;
 				 
 				GuiButton btn;
 

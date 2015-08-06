@@ -88,6 +88,43 @@ public class ModInv
 		  
 		
 		ModConfig.smallMedLarge = config.getString("small_med_large", category, "med", "Valid values are only exactly small/med/large.  WARNING: BACKUP YOUR WORLD BEFORE CHANGING THIS.  Changes your inventory size, for use if your GUI Scale requirements are different.");
+		//todo validate/use/etc
+		if(ModConfig.smallMedLarge == "large")//only place magics get used
+		{
+			 
+	 //testing
+
+			Const.MORE_ROWS = 15;
+		 
+			Const.MORE_COLS = 2*9;
+
+			Const.texture_width = 464;
+			Const.texture_height = 382;
+		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_18x27.png";//18x27
+		}
+		else if(ModConfig.smallMedLarge == "med")
+		{
+
+			Const.MORE_ROWS = 12;//texture 15x25
+		 
+			Const.MORE_COLS = 16;
+
+			Const.texture_width = 464;
+			Const.texture_height = 382;
+		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_15x25.png";
+		}
+		//12x18 is abandoned
+		else//assume its small
+		{
+			Const.MORE_ROWS = 3;
+		 
+			Const.MORE_COLS = 9;
+
+			Const.texture_width = 336;
+			Const.texture_height = 241;
+		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_6x18.png";
+		}
+		
 		
 		if(config.hasChanged()){config.save();}
 	}
