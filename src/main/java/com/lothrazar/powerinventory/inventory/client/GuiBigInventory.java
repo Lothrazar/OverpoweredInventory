@@ -98,6 +98,13 @@ public class GuiBigInventory extends GuiInventory
 				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_LEFT,"<");
 				this.buttonList.add(btn);
 
+			/*	x += x_spacing;
+			 
+				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_SMART,"!!");
+				this.buttonList.add(btn);
+				
+				*/
+				
 				x += x_spacing;
 
 				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_RIGHT,">");

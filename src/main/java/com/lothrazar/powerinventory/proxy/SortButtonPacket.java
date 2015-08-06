@@ -60,6 +60,8 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 			break;
 		case Const.SORT_RIGHTALL:
 			UtilInventory.shiftRightAll(invo);
+		case Const.SORT_SMART:
+			
 			break;
 		}
 	  

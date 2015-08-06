@@ -40,6 +40,7 @@ public class Const
 	
 	public final static int SORT_LEFT = 1;
 	public final static int SORT_RIGHT = 2;
+	public final static int SORT_SMART = 7;
 	public final static int SORT_LEFTALL = -1;
 	public final static int SORT_RIGHTALL = -2;
 }

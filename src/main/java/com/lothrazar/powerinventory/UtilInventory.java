@@ -1,7 +1,9 @@
 package com.lothrazar.powerinventory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 import net.minecraft.block.Block;
@@ -374,5 +376,33 @@ public class UtilInventory
 				iEmpty = i;		
 			}
 		}
+	}
+
+	public static void sort(InventoryPlayer invo) 
+	{
+
+		Map<String,ItemStack> dict = new HashMap<String,ItemStack>() ;
+		
+		ArrayList<Integer> empty = new ArrayList<Integer>();
+		ItemStack item = null;
+		
+		for(int i = Const.hotbarSize; i < invo.getSizeInventory() - Const.armorSize;i++)
+		{ 
+			item = invo.getStackInSlot(i);
+			
+			if(item == null)
+			{
+				empty.add(i);
+			}
+			else
+			{ 
+				
+
+				dict.put(item.getUnlocalizedName()+item.getItemDamage(),item);
+			}
+		}
+		
+		
+		
 	}
 }
