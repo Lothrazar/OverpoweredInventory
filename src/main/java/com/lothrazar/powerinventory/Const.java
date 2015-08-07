@@ -30,7 +30,7 @@ public class Const
 	public final static int invoSize  = ALL_COLS * ALL_ROWS;//15*25=375 
 
 	//these are slot indices. different than slot numbers (important)
-    public static final int enderPearlSlot = 777; 
+    public static final int enderPearlSlot = 77777; 
     public static final int enderChestSlot = enderPearlSlot+1;
     public static final int clockSlot = enderPearlSlot+2;
     public static final int compassSlot = enderPearlSlot+3;

@@ -9,10 +9,8 @@ public class ModConfig
 	public static boolean enderPearl64;
 	
 
-	public static String smallMedLarge;
-	public static final String isSmall = "small";
-	public static final String isMed = "med";
-	public static final String isLarge = "large";
+	public static String smallMedLarge="med";
+
 	
 	public static int filterRange; 
 	public static int expPerBottle;

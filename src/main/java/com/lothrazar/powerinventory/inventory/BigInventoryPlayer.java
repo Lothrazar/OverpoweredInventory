@@ -66,6 +66,7 @@ public class BigInventoryPlayer extends InventoryPlayer
             index -= aitemstack.length;
             aitemstack = this.armorInventory;
         }
+        if(index>=aitemstack.length){return null;}//TODO: is this only from swapping configsizes???
 
         return aitemstack[index];
     }
