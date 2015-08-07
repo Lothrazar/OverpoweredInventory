@@ -58,6 +58,10 @@ public class ModInv
     	logger = event.getModLog();
     	network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
     	
+		config = new Configuration(event.getSuggestedConfigurationFile(), true);
+    	loadConfig();
+		
+    	
     	int packetID = 0;
     	network.registerMessage(EnderChestPacket.class,  EnderChestPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(SortButtonPacket.class,  SortButtonPacket.class,  packetID++, Side.SERVER);
@@ -66,9 +70,6 @@ public class ModInv
     	network.registerMessage(ExpButtonPacket.class,   ExpButtonPacket.class,   packetID++, Side.SERVER);
     	network.registerMessage(DumpButtonPacket.class,  DumpButtonPacket.class,  packetID++, Side.SERVER);
     	 
-		config = new Configuration(event.getSuggestedConfigurationFile(), true);
-    	loadConfig();
-		
     	proxy.registerHandlers();
     }
     
@@ -87,8 +88,8 @@ public class ModInv
 		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
 		  
 		
-		//ModConfig.smallMedLarge = config.getString("small_med_large", category, "med", "Valid values are only exactly small/med/large.  WARNING: BACKUP YOUR WORLD BEFORE CHANGING THIS.  Changes your inventory size, for use if your GUI Scale requirements are different.");
-		//todo validate/use/etc
+		ModConfig.smallMedLarge = config.getString("small_med_large", category, "med", "Valid values are only exactly small/med/large.  WARNING: BACKUP YOUR WORLD BEFORE CHANGING THIS.  Changes your inventory size, for use if your GUI Scale requirements are different.");
+ 
 		if(ModConfig.smallMedLarge == "large")//only place magics get used
 		{
 			 
@@ -111,7 +112,7 @@ public class ModInv
 
 			Const.texture_width = 464;
 			Const.texture_height = 382;
-		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_15x25.png";
+		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_15x25.png";//375 total
 		}
 		//12x18 is abandoned
 		else//assume its small
@@ -120,12 +121,14 @@ public class ModInv
 		 
 			Const.MORE_COLS = 9;
 
-			Const.texture_width = 336;
-			Const.texture_height = 241;
-		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_6x18.png";
+			Const.texture_width = 338;
+			Const.texture_height = 221;
+		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_6x18.png";//6*18 is 108..so yeah?
 		}
-		
-		
+
+		Const.ALL_COLS = 9 + Const.MORE_COLS;
+		Const.ALL_ROWS = 3 + Const.MORE_ROWS;
+		Const.INVOSIZE  = Const.ALL_COLS * Const.ALL_ROWS;
 		if(config.hasChanged()){config.save();}
 	}
     

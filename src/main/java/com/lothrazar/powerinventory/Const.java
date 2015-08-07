@@ -23,11 +23,11 @@ public class Const
 	public final static int hotbarSize = 9;
 	public final static int armorSize = 4; 
  
-	public static int MORE_ROWS = 12;
-	public final static int ALL_ROWS = 3 + MORE_ROWS;//3+12=15
-	public static int MORE_COLS = 16;
-	public final static int ALL_COLS = 9 + MORE_COLS;//9+16=25
-	public final static int invoSize  = ALL_COLS * ALL_ROWS;//15*25=375 
+	public static int MORE_ROWS;
+	public static int MORE_COLS;
+	public static int ALL_COLS;
+	public static int ALL_ROWS;
+	public static int INVOSIZE;
 
 	//these are slot indices. different than slot numbers (important)
     public static final int enderPearlSlot = 77777; 
