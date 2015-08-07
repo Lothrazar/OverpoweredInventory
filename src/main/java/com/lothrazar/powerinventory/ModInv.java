@@ -88,9 +88,9 @@ public class ModInv
 		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
 		  
 		
-		ModConfig.smallMedLarge = config.getString("small_med_large", category, "med", "Valid values are only exactly small/med/large.  WARNING: BACKUP YOUR WORLD BEFORE CHANGING THIS.  Changes your inventory size, for use if your GUI Scale requirements are different.");
+		ModConfig.smallMedLarge = config.getString("normal_small", category, "normal", "Valid values are only exactly normal/small.  WARNING: BACKUP YOUR WORLD BEFORE CHANGING THIS.  Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18");
  
-		if(ModConfig.smallMedLarge == "large")//only place magics get used
+		/*if(ModConfig.smallMedLarge == "large")//only place magics get used
 		{
 			 
 	 //testing
@@ -103,7 +103,8 @@ public class ModInv
 			Const.texture_height = 382;
 		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_18x27.png";//18x27
 		}
-		else if(ModConfig.smallMedLarge == "med")
+		else 
+			*/if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
 		{
 
 			Const.MORE_ROWS = 12;//texture 15x25
