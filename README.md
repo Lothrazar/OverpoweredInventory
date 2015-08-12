@@ -1,6 +1,5 @@
-InfiniteInvo - Mutated
-============
 
-[no longer true, text of source:Enlarge the vanilla Minecraft inventory infintely (or until Java runs out of memory at 2.14 billion slot!)]
 
-Fork by Lothrazar.  Removes many features of original mod by Funwayguy, wile keeps some such as scroll bar. adds features from my existing mods as well as some unique flavours, see more here https://github.com/PrinceOfAmber/SamsPowerups.
+
+Overpowered Inventory is by Sam Bassett (@lothrazar) , and this mod does not have any of the infiniteinvo features, but instead adds some unique flavours.  Contains some code from InfiniteInvo by Funwayguy, I forked that mod initially to learn how to build an inventory and a few things.  For screenshots, details, and releases, see the post at 
+http://www.curse.com/mc-mods/minecraft/233168-overpowered-inventory-375-inventory-slots-and-more
