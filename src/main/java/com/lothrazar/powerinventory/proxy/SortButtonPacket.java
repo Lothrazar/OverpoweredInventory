@@ -61,7 +61,10 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 		case Const.SORT_RIGHTALL:
 			UtilInventory.shiftRightAll(invo);
 		case Const.SORT_SMART:
+			System.out.println("new sort");
 			
+			
+			UtilInventory.sort(invo);
 			break;
 		}
 	  

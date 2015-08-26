@@ -1,6 +1,8 @@
 package com.lothrazar.powerinventory;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -380,29 +382,63 @@ public class UtilInventory
 
 	public static void sort(InventoryPlayer invo) 
 	{
+		int iSize =  invo.getSizeInventory() - Const.armorSize;
 
-		Map<String,ItemStack> dict = new HashMap<String,ItemStack>() ;
+		Map<String,SortGroup> unames = new HashMap<String,SortGroup>();
+		//Map<String,ItemStack> classes = new HashMap<String,ItemStack>();
 		
-		ArrayList<Integer> empty = new ArrayList<Integer>();
+		//ItemStack[] dict = new ItemStack[iSize]; 
+		//ArrayList<Integer> empty = new ArrayList<Integer>();
 		ItemStack item = null;
+		SortGroup temp;
+		String key = "";
 		
-		for(int i = Const.hotbarSize; i < invo.getSizeInventory() - Const.armorSize;i++)
+		for(int i = Const.hotbarSize; i < iSize;i++)
 		{ 
 			item = invo.getStackInSlot(i);
+			if(item == null){continue;}
+			key = item.getUnlocalizedName() + item.getItemDamage();
 			
-			if(item == null)
+			if(item != null)
 			{
-				empty.add(i);
-			}
-			else
-			{ 
+				temp = unames.get(key);
+				if(temp == null) {temp = new SortGroup(key);}
 				
+				temp.add(item);
+				
+				unames.put(key,temp);
+			}
+			//classes.put(item.getItem().getClass().getName(), item);
+		}
 
-				dict.put(item.getUnlocalizedName()+item.getItemDamage(),item);
+		//http://stackoverflow.com/questions/780541/how-to-sort-a-hashmap-in-java
+	 
+		ArrayList<SortGroup> sorted = new ArrayList<SortGroup>(unames.values());
+		Collections.sort(sorted, new Comparator<SortGroup>() 
+		{
+	        public int compare(SortGroup o1, SortGroup o2) 
+	        {
+	            return o1.key.compareTo(o2.key);
+	        }
+	    });
+
+		int k = Const.hotbarSize + 1;
+		for (SortGroup p : sorted) 
+		{
+			//System.out.println(p.key+" "+p.stacks.size());
+			
+			for(int i = 0; i < p.stacks.size(); i++)
+			{
+				invo.setInventorySlotContents(k, null);
+				invo.setInventorySlotContents(k, p.stacks.get(i));
+				k++;
 			}
 		}
-		
-		
-		
+
+		for(int j = k; j < iSize; j++)
+		{
+			invo.setInventorySlotContents(j, null);
+		}
 	}
+	
 }
