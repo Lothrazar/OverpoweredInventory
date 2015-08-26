@@ -422,7 +422,7 @@ public class UtilInventory
 	        }
 	    });
 
-		int k = Const.hotbarSize + 1;
+		int k = Const.hotbarSize;
 		for (SortGroup p : sorted) 
 		{
 			//System.out.println(p.key+" "+p.stacks.size());
