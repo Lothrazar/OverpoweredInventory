@@ -382,6 +382,10 @@ public class UtilInventory
 
 	public static void sort(InventoryPlayer invo) 
 	{
+		
+		
+		int sortType = invo.player.worldObj.rand.nextInt(2);
+		
 		int iSize =  invo.getSizeInventory() - Const.armorSize;
 
 		Map<String,SortGroup> unames = new HashMap<String,SortGroup>();
@@ -394,8 +398,12 @@ public class UtilInventory
 		{ 
 			item = invo.getStackInSlot(i);
 			if(item == null){continue;}
-			key = item.getItem().getClass().getName()+item.getUnlocalizedName() + item.getItemDamage();
 			
+			if(sortType == 0)			
+				key = item.getItem().getClass().getName()+item.getUnlocalizedName() + item.getItemDamage();
+			else if(sortType == 1)
+				key = item.getDisplayName()+ item.getItemDamage();
+				
 			if(item != null)
 			{
 				temp = unames.get(key);
