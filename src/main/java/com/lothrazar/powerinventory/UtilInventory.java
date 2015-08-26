@@ -409,9 +409,30 @@ public class UtilInventory
 					//try to merge with top
 					ItemStack top = temp.stacks.remove(temp.stacks.size()-1);
 					//
+					
+					int room = top.getMaxStackSize() - top.stackSize;
+					
+					if(room>0)
+					{
+						int moveover = Math.min(item.stackSize,room);
+						
+						top.stackSize += moveover;
+						
+						item.stackSize -= moveover;
+						
+						if(item.stackSize == 0) 
+						{
+							item = null;
+							invo.setInventorySlotContents(i, item);
+						}
+					}
+					
+					 temp.stacks.add(top);
+					
 				}
 				
-				temp.add(item);
+				if(item != null)
+					temp.add(item);
 				
 				unames.put(key,temp);
 			}
