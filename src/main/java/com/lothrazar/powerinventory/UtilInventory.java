@@ -428,14 +428,14 @@ public class UtilInventory
 final static String NBT_SORT = Const.MODID+"_sort";
 final static int SORT_ALPH = 0;
 final static int SORT_ALPHI = 1;
-final static int SORT_CLASS = 2;
+
 	private static int getNextSort(EntityPlayer p)
 	{
 		int prev = p.getEntityData().getInteger(NBT_SORT);
 		
 		int n = prev+1;
 		
-		if(n>=3)n=0;
+		if(n>=2)n=0;
 		
 		 p.getEntityData().setInteger(NBT_SORT,n);
 		 
@@ -461,9 +461,9 @@ final static int SORT_CLASS = 2;
 			if(sortType == SORT_ALPH)			
 				key = item.getUnlocalizedName() + item.getItemDamage();
 			else if(sortType == SORT_ALPHI)			
-				key = item.getUnlocalizedName()+ item.getItem().getClass().getName() + item.getItemDamage();
-			else if(sortType == SORT_CLASS)
-				key = item.getItem().getClass().getName()+ item.getItemDamage();
+				key = item.getItem().getClass().getName() + item.getUnlocalizedName()+ item.getItemDamage();
+			//else if(sortType == SORT_CLASS)
+			//	key = item.getItem().getClass().getName()+ item.getItemDamage();
 				
 		 
 			temp = unames.get(key);
