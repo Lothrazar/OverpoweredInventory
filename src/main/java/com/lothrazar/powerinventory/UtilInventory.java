@@ -379,13 +379,29 @@ public class UtilInventory
 			}
 		}
 	}
-
+final static String NBT_SORT = Const.MODID+"_sort";
+final static int SORT_ALPH = 0;
+final static int SORT_CLASS = 1;
+	private static int getNextSort(EntityPlayer p)
+	{
+		int prev = p.getEntityData().getInteger(NBT_SORT);
+		
+		int n = prev+1;
+		
+		if(n>=2)n=0;
+		
+		 p.getEntityData().setInteger(NBT_SORT,n);
+		 
+		return n;
+	}
 	public static void sort(InventoryPlayer invo) 
 	{
 		
 		
-		int sortType = invo.player.worldObj.rand.nextInt(2);
+		//int sortType = invo.player.worldObj.rand.nextInt(2);
 		
+		int sortType = getNextSort(invo.player);
+		System.out.println("sorttype = "+sortType);
 		int iSize =  invo.getSizeInventory() - Const.armorSize;
 
 		Map<String,SortGroup> unames = new HashMap<String,SortGroup>();
@@ -399,9 +415,9 @@ public class UtilInventory
 			item = invo.getStackInSlot(i);
 			if(item == null){continue;}
 			
-			if(sortType == 0)			
+			if(sortType == SORT_ALPH)			
 				key = item.getItem().getClass().getName()+item.getUnlocalizedName() + item.getItemDamage();
-			else if(sortType == 1)
+			else if(sortType == SORT_CLASS)
 				key = item.getDisplayName()+ item.getItemDamage();
 				
 			if(item != null)
