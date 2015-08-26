@@ -491,5 +491,34 @@ final static int SORT_CLASS = 2;
 		
 		
 	}
-	
+
+	public static void doSort(EntityPlayer p,int sortType)
+	{
+		InventoryPlayer invo = p.inventory;
+		
+		switch(sortType)
+		{
+		case Const.SORT_LEFT:
+			UtilInventory.shiftLeftOne(invo);
+			break;
+		case Const.SORT_RIGHT:
+			UtilInventory.shiftRightOne(invo);
+			break;
+		case Const.SORT_LEFTALL:
+			UtilInventory.shiftLeftAll(invo);
+			break;
+		case Const.SORT_RIGHTALL:
+			UtilInventory.shiftRightAll(invo);
+		case Const.SORT_SMART:
+	 
+			
+			UtilInventory.sort(invo);
+			
+			
+			break;
+		}
+		//does nothing?		invo.markDirty();
+				invo.currentItem = invo.currentItem;
+		return ;
+	}
 }

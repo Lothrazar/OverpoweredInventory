@@ -43,32 +43,13 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 	public IMessage onMessage(SortButtonPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
- 
-		InventoryPlayer invo = p.inventory;
+
 		int sortType = message.tags.getInteger(NBT_SORT);
-		
-		switch(sortType)
-		{
-		case Const.SORT_LEFT:
-			UtilInventory.shiftLeftOne(invo);
-			break;
-		case Const.SORT_RIGHT:
-			UtilInventory.shiftRightOne(invo);
-			break;
-		case Const.SORT_LEFTALL:
-			UtilInventory.shiftLeftAll(invo);
-			break;
-		case Const.SORT_RIGHTALL:
-			UtilInventory.shiftRightAll(invo);
-		case Const.SORT_SMART:
-			System.out.println("new sort");
-			
-			
-			UtilInventory.sort(invo);
-			break;
-		}
-	  
+		UtilInventory.doSort( p,sortType);
+ 
+ 
 		return null;
 	}
+
 	
 }

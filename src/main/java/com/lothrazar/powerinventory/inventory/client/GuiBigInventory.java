@@ -87,28 +87,29 @@ public class GuiBigInventory extends GuiInventory
 				int y = guiTop + this.ySize - height - padding;
 				 
 				GuiButton btn;
-
-				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_LEFTALL,"<<");
+				 
+				 
+				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_LEFTALL,"<<");
 				this.buttonList.add(btn);
 
 				x += x_spacing;
 			 
-				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_LEFT,"<");
+				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_LEFT,"<");
 				this.buttonList.add(btn);
 
 				x += x_spacing;
 			 
-				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_SMART,StatCollector.translateToLocal("button.sort"));
+				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_SMART,StatCollector.translateToLocal("button.sort"));
 				this.buttonList.add(btn);
 				
 				x += x_spacing;
 
-				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_RIGHT,">");
+				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_RIGHT,">");
 				this.buttonList.add(btn);
 				  
 				x += x_spacing;
 				
-				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_RIGHTALL,">>");
+				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_RIGHTALL,">>");
 				this.buttonList.add(btn);
 				
 			}

@@ -156,9 +156,11 @@ public class EventHandler
 				
 				y += h + padding;
 				
-				event.buttonList.add(new GuiButtonSort(button_id++, x, y ,w,h, Const.SORT_RIGHT,">"));
+				event.buttonList.add(new GuiButtonSort(Minecraft.getMinecraft().thePlayer,button_id++, x, y ,w,h, Const.SORT_RIGHT,">"));
 				x = x - padding - w;
-				event.buttonList.add(new GuiButtonSort(button_id++, x, y ,w,h, Const.SORT_LEFT,"<"));
+				
+				event.buttonList.add(new GuiButtonSort(Minecraft.getMinecraft().thePlayer,button_id++, x, y ,w,h, Const.SORT_LEFT,"<"));
+				
 			}
 		}
 	}

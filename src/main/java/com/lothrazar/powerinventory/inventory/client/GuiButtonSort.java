@@ -1,10 +1,12 @@
 package com.lothrazar.powerinventory.inventory.client;
 
 import com.lothrazar.powerinventory.proxy.SortButtonPacket;
-
 import com.lothrazar.powerinventory.ModInv;
+import com.lothrazar.powerinventory.UtilInventory;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -14,10 +16,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiButtonSort extends GuiButton 
 { 
 	private int sortType;
-    public GuiButtonSort(int buttonId, int x, int y, int w,int h,  int sort, String text)
+	private EntityPlayer player;
+	private boolean doManualSync = true;
+    public GuiButtonSort(EntityPlayer p,int buttonId, int x, int y, int w,int h,  int sort, String text)
     {
     	super(buttonId, x, y, w,h, text ); 
     	sortType = sort;
+    	player=p;
     }
 
     @SideOnly(Side.CLIENT)
@@ -31,7 +36,13 @@ public class GuiButtonSort extends GuiButton
     		NBTTagCompound tags = new NBTTagCompound();
   
     		tags.setInteger(SortButtonPacket.NBT_SORT, sortType);
-    		ModInv.instance.network.sendToServer(new SortButtonPacket(tags));
+    		
+    		ModInv.instance.network.sendToServer(new SortButtonPacket(tags));//does server
+    		
+    		//we only NEEDto do this in the upper right outer buttons, not the ones INSDE the player GUIInventory
+    		//forum thread old but related http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/1429140-forge-pushing-server-side-changes-ontileentity-to
+    		if(doManualSync)
+    			UtilInventory.doSort( player,sortType);//does client by hand, so it stays aligned with server
     	}
     	
     	return pressed;
