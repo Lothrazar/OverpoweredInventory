@@ -404,6 +404,13 @@ public class UtilInventory
 				temp = unames.get(key);
 				if(temp == null) {temp = new SortGroup(key);}
 				
+				if(temp.stacks.size()>0)
+				{
+					//try to merge with top
+					ItemStack top = temp.stacks.remove(temp.stacks.size()-1);
+					//
+				}
+				
 				temp.add(item);
 				
 				unames.put(key,temp);

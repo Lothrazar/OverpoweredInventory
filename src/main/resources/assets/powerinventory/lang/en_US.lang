@@ -1,6 +1,7 @@
 button.filter=Merge
 button.dump=Deposit All
 button.exp=Fill
+button.sort=S
 key.enderpearl=Quick Pearl
 key.enderchest=Ender Inventory
 slot.enderchest=No Ender Chest equipped
