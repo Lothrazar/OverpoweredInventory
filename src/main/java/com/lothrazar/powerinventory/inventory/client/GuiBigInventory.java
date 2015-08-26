@@ -83,7 +83,7 @@ public class GuiBigInventory extends GuiInventory
 			{  
 				width = 18;
 				int x_spacing = width + padding/2;
-				int x = guiLeft + this.xSize -  4*x_spacing - padding+1;
+				int x = guiLeft + this.xSize - 5*x_spacing - padding+1;
 				int y = guiTop + this.ySize - height - padding;
 				 
 				GuiButton btn;
@@ -98,7 +98,7 @@ public class GuiBigInventory extends GuiInventory
 
 				x += x_spacing;
 			 
-				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_SMART,"!!");
+				btn = new GuiButtonSort(button_id++, x, y ,width,height, Const.SORT_SMART,StatCollector.translateToLocal("button.sort"));
 				this.buttonList.add(btn);
 				
 				x += x_spacing;
