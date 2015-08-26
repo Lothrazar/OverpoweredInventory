@@ -381,14 +381,15 @@ public class UtilInventory
 	}
 final static String NBT_SORT = Const.MODID+"_sort";
 final static int SORT_ALPH = 0;
-final static int SORT_CLASS = 1;
+final static int SORT_ALPHI = 1;
+final static int SORT_CLASS = 2;
 	private static int getNextSort(EntityPlayer p)
 	{
 		int prev = p.getEntityData().getInteger(NBT_SORT);
 		
 		int n = prev+1;
 		
-		if(n>=2)n=0;
+		if(n>=3)n=0;
 		
 		 p.getEntityData().setInteger(NBT_SORT,n);
 		 
@@ -396,10 +397,6 @@ final static int SORT_CLASS = 1;
 	}
 	public static void sort(InventoryPlayer invo) 
 	{
-		
-		
-		//int sortType = invo.player.worldObj.rand.nextInt(2);
-		
 		int sortType = getNextSort(invo.player);
 		System.out.println("sorttype = "+sortType);
 		int iSize =  invo.getSizeInventory() - Const.armorSize;
@@ -416,46 +413,46 @@ final static int SORT_CLASS = 1;
 			if(item == null){continue;}
 			
 			if(sortType == SORT_ALPH)			
-				key = item.getItem().getClass().getName()+item.getUnlocalizedName() + item.getItemDamage();
+				key = item.getUnlocalizedName() + item.getItemDamage();
+			else if(sortType == SORT_ALPHI)			
+				key = item.getUnlocalizedName()+ item.getItem().getClass().getName() + item.getItemDamage();
 			else if(sortType == SORT_CLASS)
-				key = item.getDisplayName()+ item.getItemDamage();
+				key = item.getItem().getClass().getName()+ item.getItemDamage();
 				
-			if(item != null)
-			{
-				temp = unames.get(key);
-				if(temp == null) {temp = new SortGroup(key);}
-				
-				if(temp.stacks.size()>0)
-				{
-					//try to merge with top
-					ItemStack top = temp.stacks.remove(temp.stacks.size()-1);
+		 
+			temp = unames.get(key);
+			if(temp == null) {temp = new SortGroup(key);}
 			
-					int room = top.getMaxStackSize() - top.stackSize;
+			if(temp.stacks.size() > 0)
+			{
+				//try to merge with top
+				ItemStack top = temp.stacks.remove(temp.stacks.size()-1);
+		
+				int room = top.getMaxStackSize() - top.stackSize;
+				
+				if(room > 0)
+				{
+					int moveover = Math.min(item.stackSize,room);
 					
-					if(room > 0)
+					top.stackSize += moveover;
+					
+					item.stackSize -= moveover;
+					
+					if(item.stackSize == 0) 
 					{
-						int moveover = Math.min(item.stackSize,room);
-						
-						top.stackSize += moveover;
-						
-						item.stackSize -= moveover;
-						
-						if(item.stackSize == 0) 
-						{
-							item = null;
-							invo.setInventorySlotContents(i, item);
-						}
+						item = null;
+						invo.setInventorySlotContents(i, item);
 					}
-					
-					 temp.stacks.add(top);
-					
 				}
 				
-				if(item != null)
-					temp.add(item);
-				
-				unames.put(key,temp);
+				 temp.stacks.add(top);
 			}
+			
+			if(item != null)
+				temp.add(item);
+			
+			unames.put(key,temp);
+		 
 		}
 
 		//http://stackoverflow.com/questions/780541/how-to-sort-a-hashmap-in-java
