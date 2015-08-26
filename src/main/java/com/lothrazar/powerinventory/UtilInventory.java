@@ -385,10 +385,7 @@ public class UtilInventory
 		int iSize =  invo.getSizeInventory() - Const.armorSize;
 
 		Map<String,SortGroup> unames = new HashMap<String,SortGroup>();
-		//Map<String,ItemStack> classes = new HashMap<String,ItemStack>();
-		
-		//ItemStack[] dict = new ItemStack[iSize]; 
-		//ArrayList<Integer> empty = new ArrayList<Integer>();
+
 		ItemStack item = null;
 		SortGroup temp;
 		String key = "";
@@ -408,11 +405,10 @@ public class UtilInventory
 				{
 					//try to merge with top
 					ItemStack top = temp.stacks.remove(temp.stacks.size()-1);
-					//
-					
+			
 					int room = top.getMaxStackSize() - top.stackSize;
 					
-					if(room>0)
+					if(room > 0)
 					{
 						int moveover = Math.min(item.stackSize,room);
 						
@@ -436,7 +432,6 @@ public class UtilInventory
 				
 				unames.put(key,temp);
 			}
-			//classes.put(item.getItem().getClass().getName(), item);
 		}
 
 		//http://stackoverflow.com/questions/780541/how-to-sort-a-hashmap-in-java
