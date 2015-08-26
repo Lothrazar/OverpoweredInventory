@@ -42,7 +42,7 @@ public class GuiButtonSort extends GuiButton
     		
     		//we only NEEDto do this in the upper right outer buttons, not the ones INSDE the player GUIInventory
     		//forum thread old but related http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/modification-development/1429140-forge-pushing-server-side-changes-ontileentity-to
-    		
+    	
     		if(doManualSync)
     			UtilInventory.doSort( player,sortType);//does client by hand, so it stays aligned with server
     	}

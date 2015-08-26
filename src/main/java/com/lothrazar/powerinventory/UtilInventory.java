@@ -333,7 +333,7 @@ public class UtilInventory
 		invo.setInventorySlotContents(to, invo.getStackInSlot(from));
 		invo.setInventorySlotContents(from, null);
 	}
-	
+	/*
 	public static void shiftRightOne(InventoryPlayer invo) 
 	{
 		int iEmpty = -1;
@@ -356,15 +356,52 @@ public class UtilInventory
 			 
 			}//else keep looking
 		}
+	}*/
+	public static void shiftRightOne(InventoryPlayer invo) 
+	{ 
+		Map<Integer,ItemStack> newLocations = new HashMap<Integer,ItemStack>();	
+		
+		int iNew;
+ 
+		int END = invo.getSizeInventory() - Const.armorSize;
+		for(int i = Const.hotbarSize; i < END;i++)
+		{ 
+			 
+			if(i == END-1) iNew = Const.hotbarSize;
+			else iNew = i + 1;
+			
+			newLocations.put((Integer)iNew, invo.getStackInSlot(i));
+		 
+		}
+		
+		for (Map.Entry<Integer,ItemStack> entry : newLocations.entrySet()) 
+		{ 
+			invo.setInventorySlotContents(entry.getKey().intValue(),entry.getValue());
+		}
+		
 	}
 	
 	public static void shiftLeftOne(InventoryPlayer invo) 
 	{
-		int iEmpty = -1;
-		ItemStack item = null;
-
-		for(int i = Const.hotbarSize; i < invo.getSizeInventory() - Const.armorSize;i++)
+		//int iEmpty = -1;
+		//ItemStack item = null;
+		
+		Map<Integer,ItemStack> newLocations = new HashMap<Integer,ItemStack>();	
+		
+		int iNew;
+ 
+		int END = invo.getSizeInventory() - Const.armorSize;
+		for(int i = Const.hotbarSize; i < END;i++)
 		{ 
+			 
+			if(i == Const.hotbarSize) iNew = END-1;
+			else iNew = i - 1;
+			
+			newLocations.put((Integer)iNew, invo.getStackInSlot(i));
+			
+			//newLocations.set(iNew, invo.getStackInSlot(i));
+			
+			/*
 			item = invo.getStackInSlot(i);
 			
 			if(item == null)
@@ -376,9 +413,18 @@ public class UtilInventory
 				moveFromTo(invo,i,iEmpty);
 				
 				iEmpty = i;		
-			}
+			}*/
+		}
+		
+		for (Map.Entry<Integer,ItemStack> entry : newLocations.entrySet()) 
+		{
+		  //  System.out.println("key=" + entry.getKey() + ", value=" + entry.getValue());
+			invo.setInventorySlotContents(entry.getKey().intValue(),entry.getValue());
 		}
 	}
+	
+	
+	
 final static String NBT_SORT = Const.MODID+"_sort";
 final static int SORT_ALPH = 0;
 final static int SORT_ALPHI = 1;
@@ -398,7 +444,7 @@ final static int SORT_CLASS = 2;
 	public static void sort(InventoryPlayer invo) 
 	{
 		int sortType = getNextSort(invo.player);
-		System.out.println("sorttype = "+sortType);
+
 		int iSize =  invo.getSizeInventory() - Const.armorSize;
 
 		Map<String,SortGroup> unames = new HashMap<String,SortGroup>();
@@ -509,16 +555,12 @@ final static int SORT_CLASS = 2;
 			break;
 		case Const.SORT_RIGHTALL:
 			UtilInventory.shiftRightAll(invo);
+			break;
 		case Const.SORT_SMART:
-	 
-			
 			UtilInventory.sort(invo);
-			
-			
 			break;
 		}
-		//does nothing?		invo.markDirty();
-				invo.currentItem = invo.currentItem;
+ 
 		return ;
 	}
 }
