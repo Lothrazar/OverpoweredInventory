@@ -35,6 +35,7 @@ import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
 import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
+import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
 import com.lothrazar.powerinventory.proxy.EnderChestPacket;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket; 
@@ -136,6 +137,7 @@ public class EventHandler
 			   event.gui instanceof net.minecraft.client.gui.inventory.GuiScreenHorseInventory
 			   )
 			{
+				int button_id = 256;
 				//trapped, regular chests, minecart chests, and enderchest all use this class
 				//which extends  GuiContainer
 	
@@ -145,10 +147,18 @@ public class EventHandler
 				
 				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
 				
-				event.buttonList.add(new GuiButtonClose(256, x,y,w,h));
+				event.buttonList.add(new GuiButtonClose(button_id++, x,y,w,h));
 				
 				x = x - padding - w;
-				event.buttonList.add(new GuiButtonOpenInventory(256, x,y,w,h,"E",Const.INV_PLAYER));
+				event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,"E",Const.INV_PLAYER));
+				
+				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
+				
+				y += h + padding;
+				
+				event.buttonList.add(new GuiButtonSort(button_id++, x, y ,w,h, Const.SORT_RIGHT,">"));
+				x = x - padding - w;
+				event.buttonList.add(new GuiButtonSort(button_id++, x, y ,w,h, Const.SORT_LEFT,"<"));
 			}
 		}
 	}

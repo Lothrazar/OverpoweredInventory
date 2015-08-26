@@ -483,6 +483,13 @@ final static int SORT_CLASS = 2;
 		{
 			invo.setInventorySlotContents(j, null);
 		}
+		
+		
+		//alternately loop by rows
+		//so we start at k again, add Const.ALL_COLS to go down one row
+		
+		
+		
 	}
 	
 }
