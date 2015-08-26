@@ -397,7 +397,7 @@ public class UtilInventory
 		{ 
 			item = invo.getStackInSlot(i);
 			if(item == null){continue;}
-			key = item.getUnlocalizedName() + item.getItemDamage();
+			key = item.getItem().getClass().getName()+item.getUnlocalizedName() + item.getItemDamage();
 			
 			if(item != null)
 			{
