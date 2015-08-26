@@ -47,7 +47,6 @@ public class SortButtonPacket implements IMessage , IMessageHandler<SortButtonPa
 		int sortType = message.tags.getInteger(NBT_SORT);
 		UtilInventory.doSort( p,sortType);
  
- 
 		return null;
 	}
 
