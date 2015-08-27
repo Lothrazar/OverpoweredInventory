@@ -288,49 +288,28 @@ public class EventHandler
  
 		}
 	}
-	  static ResourceLocation getResourceLocation(final String blockTexture) {
-		    String domain = "minecraft";
-		    String path = blockTexture;
-		    final int domainSeparator = blockTexture.indexOf(':');
 
-		    if (domainSeparator >= 0) {
-		      path = blockTexture.substring(domainSeparator + 1);
-
-		      if (domainSeparator > 1) {
-		        domain = blockTexture.substring(0, domainSeparator);
-		      }
-		    }
-		    final String resourcePath = "textures/items/" + path + ".png";  // base path and PNG are hardcoded in Minecraft
-		    return new ResourceLocation(domain.toLowerCase(), resourcePath);
-	  }
 	@SideOnly(Side.CLIENT)
 	private static void renderItemAt(ItemStack stack, int x, int y, int dim)
 	{
-	
 		//1.7 help thanks to https://github.com/Zyin055/zyinhud/blob/26f52ca29894447bca4378ef30f551b397ab7a29/src/main/java/com/zyin/zyinhud/mods/DurabilityInfo.java
-		//Minecraft.getMinecraft().getTextureManager
-		//@SuppressWarnings("deprecation")
-		//IBakedModel iBakedModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack);
-	
-		//Minecraft.getMinecraft().getTextureManager().bindTexture(Minecraft.getMinecraft().getTextureManager().getResourceLocation(
-		//stack.getItemSpriteNumber()));
-		
+
 		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationItemsTexture);
-		
-		// System.out.println(stack.getItemSpriteNumber());
- System.out.println(stack.getIconIndex().getIconName()+stack.getItemSpriteNumber());//this is just like "clock" or "compass"
  //http://www.minecraftforge.net/forum/index.php?topic=24313.0
 // ResourceLocation resourceLocation = getResourceLocation(stack.getIconIndex().getIconName());
  
- 
- 
+		if(stack.getIconIndex()  instanceof TextureAtlasSprite)
+			renderTexture( (TextureAtlasSprite)stack.getIconIndex() , x, y, dim);
+		 //TODO: else we do this	
+		/*
+		//but its not working anyway. and we dont need it for ONLY compass/clock
 		TextureAtlasSprite textureAtlasSprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(
-				 stack.getItem().getIconFromDamage(0).getIconName()
-				// resourceLocation.getResourcePath()
-				);//iBakedModel.getTexture().getIconName()
+		 stack.getItem().getIconFromDamage(0).getIconName()
+		// resourceLocation.getResourcePath()
+		);//iBakedModel.getTexture().getIconName()
 		
-		renderTexture( (TextureAtlasSprite)stack.getIconIndex() , x, y, dim);
-		 
+		*/
+
 		
 	}
 	@SideOnly(Side.CLIENT)
@@ -343,8 +322,7 @@ public class EventHandler
 		Tessellator tessellator = Tessellator.instance;//.getInstance();
 	 
 		int height = dim, width = dim;
-		//WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-		
+	
 		tessellator.startDrawingQuads();
 		tessellator.addVertexWithUV((double)(x),          (double)(y + height),  0.0, (double)textureAtlasSprite.getMinU(), (double)textureAtlasSprite.getMaxV());
 		tessellator.addVertexWithUV((double)(x + width),  (double)(y + height),  0.0, (double)textureAtlasSprite.getMaxU(), (double)textureAtlasSprite.getMaxV());
