@@ -14,7 +14,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.BlockPos;
+ 
 import net.minecraft.world.World;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
@@ -42,7 +42,7 @@ public class UtilInventory
 				for (int zLoop = zMin; zLoop <= zMax; zLoop++)
 				{  
 					posCurrent = new BlockPos(xLoop, yLoop, zLoop);
-					if(player.worldObj.getBlockState(posCurrent).getBlock().equals(blockHunt))
+					if(player.worldObj.getBlock(xLoop, yLoop, zLoop).equals(blockHunt))//.getBlockState(posCurrent)
 					{ 
 						found.add(posCurrent);
 					} 

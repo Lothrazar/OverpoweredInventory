@@ -2,7 +2,7 @@ package com.lothrazar.powerinventory.proxy;
 
 import com.lothrazar.powerinventory.*;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler; 
+import cpw.mods.fml.common.FMLCommonHandler; 
 
 public class CommonProxy
 {

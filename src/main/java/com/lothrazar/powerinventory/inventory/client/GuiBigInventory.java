@@ -176,15 +176,15 @@ public class GuiBigInventory extends GuiInventory
 		//THANKS hydroflame  ON FORUMS 
 		//http://www.minecraftforge.net/forum/index.php/topic,11229.msg57594.html#msg57594
 		
-		Tessellator tessellator = Tessellator.getInstance();
+		Tessellator tessellator = Tessellator.instance;
   
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.startDrawingQuads();
+		//WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		tessellator.startDrawingQuads();
         
-        worldrenderer.addVertexWithUV(x + 0, y + height, zLevel, 0,1);
-        worldrenderer.addVertexWithUV(x + width, y + height, zLevel, 1, 1);
-        worldrenderer.addVertexWithUV(x + width, y + 0, zLevel, 1,0);
-        worldrenderer.addVertexWithUV(x + 0, y + 0, zLevel, 0, 0);
+		tessellator.addVertexWithUV(x + 0, y + height, zLevel, 0,1);
+		tessellator.addVertexWithUV(x + width, y + height, zLevel, 1, 1);
+		tessellator.addVertexWithUV(x + width, y + 0, zLevel, 1,0);
+		tessellator.addVertexWithUV(x + 0, y + 0, zLevel, 0, 0);
         tessellator.draw();
 	}
 	
@@ -196,9 +196,9 @@ public class GuiBigInventory extends GuiInventory
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
 
         drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
-      
-        if(ModConfig.showCharacter)
-        	drawEntityOnScreen(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
+ 
+        if(ModConfig.showCharacter)//drawEntityOnScreen
+        	func_147046_a(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
 	}
 
 	@Override

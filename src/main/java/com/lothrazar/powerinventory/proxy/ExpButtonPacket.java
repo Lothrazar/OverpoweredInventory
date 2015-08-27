@@ -12,12 +12,12 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.BlockPos;
+//import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.common.network.ByteBufUtils;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
@@ -84,7 +84,7 @@ public class ExpButtonPacket implements IMessage , IMessageHandler<ExpButtonPack
 					int emptyBottlesLeft = bottles.stackSize - bottlesToDrain;
 					
 					player.worldObj.spawnEntityInWorld(new EntityItem(player.worldObj,
-		 					player.getPosition().getX(),player.getPosition().getY(),player.getPosition().getZ(),
+		 					player.posX,player.posY,player.posZ,
 		 					new ItemStack(Items.glass_bottle,emptyBottlesLeft)));
 				}
 			} 

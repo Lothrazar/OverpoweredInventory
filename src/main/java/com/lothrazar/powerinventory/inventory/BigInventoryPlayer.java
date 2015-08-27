@@ -15,8 +15,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ReportedException;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 /**
  * @author https://github.com/Funwayguy/InfiniteInvo
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
@@ -167,12 +167,15 @@ public class BigInventoryPlayer extends InventoryPlayer
         }
 
         return -1;
+        
+ 
     }
     
     @SideOnly(Side.CLIENT)
     @Override
-    public void setCurrentItem(Item item, int meta, boolean var3flag, boolean var4flag)
+    public void func_146030_a(Item item, int meta, boolean var3flag, boolean var4flag)
     {
+    	////setCurrentItem
         this.currentItemStack = this.getCurrentItem();
         int k;
 
