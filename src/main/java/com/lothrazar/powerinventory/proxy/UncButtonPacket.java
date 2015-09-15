@@ -48,10 +48,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 	public IMessage onMessage(UncButtonPacket message, MessageContext ctx)
 	{
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
-
-
-
-
+ 
 		World w = player.worldObj;
 		double x = player.posX;
 		double y = player.posY;
@@ -65,23 +62,18 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 		ItemStack s;
 		int outsize = 0;
 		
-		
 		ArrayList<EntityItem> drops = new ArrayList<EntityItem>();
 		 
 		if(toUncraft != null)
 		for(Object next : CraftingManager.getInstance().getRecipeList())
 		{
-			//check ore dictionary first to avoid Class cast exceptions
+			//check ore dictionary for some
 			 
 			if(next instanceof ShapedOreRecipe)
 			{
 				ShapedOreRecipe r = (ShapedOreRecipe) next;
-
-				//TODO: requires config file input for custom recipe?
-				System.out.println("--------OREshaped "+r.getRecipeOutput().getDisplayName());
-				//LADDER is in here, even though it takes sticks. WEIRD right?
-
-				if(r.getRecipeOutput().getItem() == toUncraft.getItem())
+ 
+				if(r.getRecipeOutput().isItemEqual(toUncraft))
 				{
 					outsize = r.getRecipeOutput().stackSize;
 				
@@ -90,6 +82,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 					if(toUncraft.stackSize >= outsize)
 					{
 						player.inventory.decrStackSize(Const.uncraftSlot, outsize); // toUncraft.stackSize -= outsize;
+						
 						Object maybeOres;
 						for(i = 0; i < r.getInput().length; i++) 
 						{
@@ -98,8 +91,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 							if(maybeOres instanceof ArrayList && (ArrayList<ItemStack>)maybeOres != null)//<ItemStack>
 							{ 
 								ArrayList<ItemStack> ores = (ArrayList<ItemStack>)maybeOres;
-								//System.out.println("ore ARRAYLIST "+ores.size());
-								
+							
 								if(ores.size() == 1)
 								{
 									//sticks,iron,and so on
@@ -107,16 +99,19 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 									s = ores.get(0);
 
 									if(s != null)
-										player.worldObj.spawnEntityInWorld(new EntityItem(w, x,y,z, s.copy()));
+										drops.add(new EntityItem(w, x,y,z, s.copy()));
 									
-								} //else size is > 1 , so its something like wooden planks
+								}
+								//else size is > 1 , so its something like wooden planks
+								//TODO:maybe with a config file or something, but not for now
 							}
 							if(maybeOres instanceof ItemStack)//<ItemStack>
 							{
-								System.out.println("ore - item stack");
-							}
-							//if(s != null)
-							//	player.worldObj.spawnEntityInWorld(new EntityItem(w, x,y,z, s.copy()));
+								s = (ItemStack)maybeOres;
+
+								if(s != null)
+									drops.add(new EntityItem(w, x,y,z, s.copy()));
+							} 
 						}
 					}
 					break;
@@ -128,40 +123,75 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 				//TODO: requires config file input for custom recipe?
 				//for example, its not fair to turn a chest into 8 oak planks,
 				//since it could have been made with birch or something.
-				System.out.println("=====OREshapeless "+r.getRecipeOutput().getDisplayName());
+				//System.out.println("=====OREshapeless "+r.getRecipeOutput().getDisplayName());
 
-				if(r.getRecipeOutput().getItem() == toUncraft.getItem())
+				if(r.getRecipeOutput().isItemEqual(toUncraft))
 				{
-					//r.getInput()//an array of objects
-					
-				}
-			}
-			else if(next instanceof ShapedRecipes)
-			{
-				ShapedRecipes r = (ShapedRecipes) next;
 
-				////System.out.println("___shaped"+r.getRecipeOutput().getDisplayName());
-				
-				if(r.getRecipeOutput().getItem() == toUncraft.getItem())
-				{  
 					outsize = r.getRecipeOutput().stackSize;
-				 
-		 
+					
 					//outsize is 3 means the recipe makes three items total. so MINUS three
 					//from the toUncraft for EACH LOOP
 					if(toUncraft.stackSize >= outsize)
 					{
 						player.inventory.decrStackSize(Const.uncraftSlot, outsize); // toUncraft.stackSize -= outsize;
+						Object maybeOres;
+						for(i = 0; i < r.getInput().size(); i++) 
+						{
+							maybeOres = r.getInput().get(i);
+
+							if(maybeOres instanceof ArrayList && (ArrayList<ItemStack>)maybeOres != null)//<ItemStack>
+							{ 
+								ArrayList<ItemStack> ores = (ArrayList<ItemStack>)maybeOres;
+							
+								if(ores.size() == 1)
+								{
+									//sticks,iron,and so on
+									
+									s = ores.get(0);
+
+									if(s != null)
+										drops.add(new EntityItem(w, x,y,z, s.copy()));
+									
+								}
+								//else size is > 1 , so its something like wooden planks
+								//TODO:maybe with a config file or something, but not for now
+							}
+							if(maybeOres instanceof ItemStack)//<ItemStack>
+							{
+								s = (ItemStack)maybeOres;
+
+								if(s != null)
+									drops.add(new EntityItem(w, x,y,z, s.copy()));
+							} 
+						}
+					}
+					break;
+				} 
+			}
+			else if(next instanceof ShapedRecipes)
+			{
+				ShapedRecipes r = (ShapedRecipes) next;
+ 
+				if(r.getRecipeOutput().isItemEqual( toUncraft ) )
+				{  
+
+					outsize = r.getRecipeOutput().stackSize;
+				  
+					//outsize is 3 means the recipe makes three items total. so MINUS three
+					//from the toUncraft for EACH LOOP
+					if(toUncraft.stackSize >= outsize)
+					{
+						player.inventory.decrStackSize(Const.uncraftSlot, outsize); // toUncraft.stackSize -= outsize;
+
 						
 						for(i = 0; i < r.recipeItems.length; i++) 
 						{
 							s = r.recipeItems[i];
 
-							if(s != null)
-							{
-								//drops.add(arg0)
-								player.worldObj.spawnEntityInWorld(new EntityItem(w, x,y,z, s.copy()));
-							}
+							if(s != null)  
+								drops.add(new EntityItem(w, x,y,z, s.copy()));  
+							 
 						}
 					}
 					break;
@@ -175,8 +205,10 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 
 //System.out.println("====="+r.getRecipeOutput().getDisplayName());
 				
-				if(r.getRecipeOutput().getItem() == toUncraft.getItem())
+				if(r.getRecipeOutput().isItemEqual( toUncraft))
 				{  
+					System.out.println("match 4");
+					
 					outsize = r.getRecipeOutput().stackSize;
 				
 					if(toUncraft.stackSize >= outsize)
@@ -188,12 +220,18 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 							s = (ItemStack)r.recipeItems.get(i);
 							
 							if(s != null)
-								player.worldObj.spawnEntityInWorld(new EntityItem(w, x,y,z, s.copy()));
+								drops.add(new EntityItem(w, x,y,z, s.copy()));
 						}
 					}
 					break;
 				}
 			} 
+		}
+		
+		
+		for(EntityItem d :drops)
+		{
+			w.spawnEntityInWorld(d);
 		}
 		 
 		return null; 
