@@ -70,10 +70,12 @@ public class GuiBigInventory extends GuiInventory
 			
 
 			btnUncraft = new GuiButtonUnc(button_id++, 
-					this.guiLeft + container.uncraftX - 20 ,
+					this.guiLeft + container.uncraftX - 51 ,
 					this.guiTop + container.uncraftY-1,
-					width,height,StatCollector.translateToLocal("button.unc"));
+					width+20,height,StatCollector.translateToLocal("button.unc"));
 			this.buttonList.add(btnUncraft); 
+			btnUncraft.enabled = false;// turn it on based on ender chest present or not
+			btnUncraft.visible = btnUncraft.enabled;
 
 			
 			
@@ -133,7 +135,7 @@ public class GuiBigInventory extends GuiInventory
 	private void checkSlotsEmpty()
 	{
 		final int s = 16;
-		//String st;
+ 
 		if(container.invo.getStackInSlot(Const.enderChestSlot) == null)
 		{
 			btnEnder.enabled = false;
@@ -145,6 +147,17 @@ public class GuiBigInventory extends GuiInventory
 		{ 
 			btnEnder.enabled = true; 
 			btnEnder.visible = btnEnder.enabled;
+		}
+		
+		if(container.invo.getStackInSlot(Const.uncraftSlot) == null)
+		{ 
+			btnUncraft.enabled = false;
+			btnUncraft.visible = btnUncraft.enabled; 
+		}
+		else 
+		{ 
+			btnUncraft.enabled = true; 
+			btnUncraft.visible = btnUncraft.enabled;
 		}
 		
 		if(container.invo.getStackInSlot(Const.bottleSlot) == null || 

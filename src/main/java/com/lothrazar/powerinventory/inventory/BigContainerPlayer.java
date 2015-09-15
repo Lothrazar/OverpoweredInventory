@@ -50,7 +50,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	public final int bottleY = 20 + 2 * Const.square;
 
 	public final int uncraftX = bottleX;
-	public final int uncraftY = bottleY - 17;
+	public final int uncraftY = bottleY - 24;
 	
 //store slot numbers  (not indexes) as we go. so that transferStack.. is actually readable
 	 
