@@ -28,6 +28,7 @@ public class GuiBigInventory extends GuiInventory
 
 	GuiButton btnEnder;
 	GuiButton btnExp;
+	GuiButton btnUncraft;
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
@@ -50,6 +51,9 @@ public class GuiBigInventory extends GuiInventory
 			final int padding = 6;
 			//final int tiny = 12;
 			int button_id = 99;
+			
+			
+
 
 			if(ModConfig.showMergeDeposit)
 			{
@@ -63,6 +67,16 @@ public class GuiBigInventory extends GuiInventory
 						this.guiTop + padding,
 						widthlrg,height));
 			}
+			
+
+			btnUncraft = new GuiButtonUnc(button_id++, 
+					this.guiLeft + container.uncraftX - 20 ,
+					this.guiTop + container.uncraftY-1,
+					width,height,StatCollector.translateToLocal("button.unc"));
+			this.buttonList.add(btnUncraft); 
+
+			
+			
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
 					this.guiLeft + container.echestX + 19, 
 					this.guiTop + container.echestY-1,
@@ -70,6 +84,7 @@ public class GuiBigInventory extends GuiInventory
 			this.buttonList.add(btnEnder); 
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
 			btnEnder.visible = btnEnder.enabled;
+			
 
 			btnExp = new GuiButtonExp(button_id++, 
 					this.guiLeft + container.bottleX - width - padding+1, 
@@ -87,7 +102,6 @@ public class GuiBigInventory extends GuiInventory
 				int y = guiTop + this.ySize - height - padding;
 				 
 				GuiButton btn;
-				 
 				 
 				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_LEFTALL,"<<",false);
 				this.buttonList.add(btn);
@@ -169,6 +183,7 @@ public class GuiBigInventory extends GuiInventory
 		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, texture)); 
 		drawTexturedQuadFit(x,y,width,height,0);
 	}
+	
 	public static void drawTexturedQuadFit(double x, double y, double width, double height, double zLevel)
 	{
 		//because the vanilla code REQUIRES textures to be powers of two AND are force dto be max of 256??? WHAT?
