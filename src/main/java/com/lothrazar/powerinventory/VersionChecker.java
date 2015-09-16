@@ -47,7 +47,7 @@ public class VersionChecker implements Runnable
         
         
         
-        String current = "1.0.5"; 
+        String current = "1.0.6"; 
        // System.out.println("Latest mod version = "+latestVersion);
         isLatestVersion = current.equals(latestVersion);
      //   System.out.println("Are you running latest version = "+isLatestVersion);

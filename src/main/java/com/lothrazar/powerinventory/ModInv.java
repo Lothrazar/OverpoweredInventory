@@ -90,7 +90,6 @@ public class ModInv
     @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
     public void onEvent(PlayerTickEvent event)
     {
-      System.out.println("!!"+versionChecker.getLatestVersion());
         if (!sentVersionMessage && event.player.worldObj.isRemote 
               && !versionChecker.isLatestVersion()
               && versionChecker.getLatestVersion() != "")
