@@ -1,6 +1,10 @@
 package com.lothrazar.powerinventory;
 
+import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Items;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Logger;
@@ -14,12 +18,17 @@ import com.lothrazar.powerinventory.proxy.EnderPearlPacket;
 import com.lothrazar.powerinventory.proxy.SortButtonPacket; 
 import com.lothrazar.powerinventory.proxy.UncButtonPacket;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
@@ -61,7 +70,7 @@ public class ModInv
     	
 		config = new Configuration(event.getSuggestedConfigurationFile(), true);
     	loadConfig();
-		
+
     	
     	int packetID = 0;
     	network.registerMessage(EnderChestPacket.class,  EnderChestPacket.class,  packetID++, Side.SERVER);
@@ -73,8 +82,36 @@ public class ModInv
     	network.registerMessage(UncButtonPacket.class,   UncButtonPacket.class,  packetID++, Side.SERVER);
     	
     	proxy.registerHandlers();
+		MinecraftForge.EVENT_BUS.register(instance);
+		FMLCommonHandler.instance().bus().register(instance);
     }
+    boolean sentVersionMessage = false;//only send it once
+    VersionChecker versionChecker ;
+    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+    public void onEvent(PlayerTickEvent event)
+    {
+      
+        if (!sentVersionMessage && event.player.worldObj.isRemote 
+              && !versionChecker.isLatestVersion())
+        {
+            ClickEvent versionCheckChatClickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, 
+                  "http://www.curse.com/mc-mods/Minecraft/233168-overpowered-inventory-375-inventory-slots-and-more");
+            ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(versionCheckChatClickEvent);
+            ChatComponentText text = new ChatComponentText("Overpowered Inventory mod is out of date.  Click here to open the webpage with the new version.");
+            text.setChatStyle(clickableChatStyle);
+            event.player.addChatMessage(text);
+            sentVersionMessage = true;
+        } 
+    }
+
     
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent  event)
+    {
+    	versionChecker = new VersionChecker();
+    	Thread versionCheckThread = new Thread(versionChecker, "Version Check");
+    	versionCheckThread.start();
+    }
 	private void loadConfig() 
 	{
     	config.load();
@@ -136,11 +173,13 @@ public class ModInv
 	}
     
     @EventHandler
-    public void preInit(FMLInitializationEvent event)
+    public void init(FMLInitializationEvent event)
     {
     	if(ModConfig.enderPearl64)
     	{
     		Items.ender_pearl.setMaxStackSize(64);
     	}
     }
+    
+    
 }

@@ -51,10 +51,7 @@ public class GuiBigInventory extends GuiInventory
 			final int padding = 6;
 			//final int tiny = 12;
 			int button_id = 99;
-			
-			
-
-
+			 
 			if(ModConfig.showMergeDeposit)
 			{
 				this.buttonList.add(new GuiButtonDump(button_id++,
@@ -67,27 +64,23 @@ public class GuiBigInventory extends GuiInventory
 						this.guiTop + padding,
 						widthlrg,height));
 			}
-			
-
+			 
 			btnUncraft = new GuiButtonUnc(button_id++, 
 					this.guiLeft + container.uncraftX - 51 ,
-					this.guiTop + container.uncraftY-1,
-					width+20,height,StatCollector.translateToLocal("button.unc"));
+					this.guiTop + container.uncraftY - 1,
+					width + 20,height,StatCollector.translateToLocal("button.unc"));
 			this.buttonList.add(btnUncraft); 
 			btnUncraft.enabled = false;// turn it on based on ender chest present or not
 			btnUncraft.visible = btnUncraft.enabled;
 
-			
-			
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
 					this.guiLeft + container.echestX + 19, 
-					this.guiTop + container.echestY-1,
+					this.guiTop + container.echestY - 1,
 					12,height, "I",Const.INV_ENDER); 
 			this.buttonList.add(btnEnder); 
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
 			btnEnder.visible = btnEnder.enabled;
 			
-
 			btnExp = new GuiButtonExp(button_id++, 
 					this.guiLeft + container.bottleX - width - padding+1, 
 					this.guiTop + container.bottleY-2,
@@ -127,7 +120,6 @@ public class GuiBigInventory extends GuiInventory
 				
 				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_RIGHTALL,">>",false);
 				this.buttonList.add(btn);
-				
 			}
 		}
     }
