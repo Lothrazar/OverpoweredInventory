@@ -18,7 +18,7 @@ public class VersionChecker implements Runnable
         InputStream in = null;
         try 
         {
-            in = new URL("https://raw.githubusercontent.com/PrinceOfAmber/OverpoweredInventory/master/version.txt").openStream();
+            in = new URL("https://raw.githubusercontent.com/PrinceOfAmber/OverpoweredInventory/backport17/version.dat").openStream();
         } 
         catch (MalformedURLException e) 
         { 
@@ -42,10 +42,15 @@ public class VersionChecker implements Runnable
             IOUtils.closeQuietly(in);
         }
         
-        String current = "1.0.6"; 
-        System.out.println("Latest mod version = "+latestVersion);
+        
+        System.out.println(latestVersion);
+        
+        
+        
+        String current = "1.0.5"; 
+       // System.out.println("Latest mod version = "+latestVersion);
         isLatestVersion = current.equals(latestVersion);
-        System.out.println("Are you running latest version = "+isLatestVersion);
+     //   System.out.println("Are you running latest version = "+isLatestVersion);
         /*YES IT WORKS 
          * 
          * [18:46:08] [Version Check/INFO] [STDOUT]: [com.lothrazar.powerinventory.VersionChecker:run:50]: Latest mod version = 1.0.0

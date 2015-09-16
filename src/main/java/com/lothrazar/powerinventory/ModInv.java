@@ -90,14 +90,15 @@ public class ModInv
     @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
     public void onEvent(PlayerTickEvent event)
     {
-      
+      System.out.println("!!"+versionChecker.getLatestVersion());
         if (!sentVersionMessage && event.player.worldObj.isRemote 
-              && !versionChecker.isLatestVersion())
+              && !versionChecker.isLatestVersion()
+              && versionChecker.getLatestVersion() != "")
         {
-            ClickEvent versionCheckChatClickEvent = new ClickEvent(ClickEvent.Action.OPEN_URL, 
+            ClickEvent url = new ClickEvent(ClickEvent.Action.OPEN_URL, 
                   "http://www.curse.com/mc-mods/Minecraft/233168-overpowered-inventory-375-inventory-slots-and-more");
-            ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(versionCheckChatClickEvent);
-            ChatComponentText text = new ChatComponentText("Overpowered Inventory mod is out of date.  Click here to open the webpage with the new version.");
+            ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(url);
+            ChatComponentText text = new ChatComponentText("Overpowered Inventory has a new version out!  Click here to open the webpage with "+versionChecker.getLatestVersion());
             text.setChatStyle(clickableChatStyle);
             event.player.addChatMessage(text);
             sentVersionMessage = true;
