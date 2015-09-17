@@ -7,6 +7,7 @@ import com.lothrazar.powerinventory.*;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -44,26 +45,40 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 		ByteBufUtils.writeTag(buf, this.tags);
 	}
 
-	@Override
-	public IMessage onMessage(UncButtonPacket message, MessageContext ctx)
-	{
-		EntityPlayer player = ctx.getServerHandler().playerEntity;
- 
+	private void dropItems(EntityPlayer player, ItemStack s)
+	{ 
+		//this fn is null safe, it gets nulls all the time
+		if(s == null || s.getItem() == Items.milk_bucket){return;}
+		//also, when crafting cake you get the empty bucket back.
+		//so dont refund full buckets or else thats free infinite iron
+		
 		World w = player.worldObj;
 		double x = player.posX;
 		double y = player.posY;
 		double z = player.posZ;
-		//in the game, they drop between 3 and 11 experience //src http://minecraft.gamepedia.com/Bottle_o'_Enchanting
-		//int e =ModConfig.expPerBottle;
-		 
+
+		ItemStack stack = s.copy();
+		stack.stackSize = 1;
+		//we set to 1 because recipe registry is bugged in some forge versions
+		//EXAMPLE: crafting a Hay Bale takes 9 wheat, so 9 stacks of 1
+		//but forge tells me its 9 stacks of 9 !?!?
+		
+		w.spawnEntityInWorld(new EntityItem(w, x,y,z,stack));
+	}
+	
+	@Override
+	public IMessage onMessage(UncButtonPacket message, MessageContext ctx)
+	{
+		EntityPlayer player = ctx.getServerHandler().playerEntity;
+  
 		ItemStack toUncraft = player.inventory.getStackInSlot(Const.uncraftSlot);
  
 		int i;
-		ItemStack s;
+		Object maybeOres;
 		int outsize = 0;
-		
-		ArrayList<EntityItem> drops = new ArrayList<EntityItem>();
-		 
+
+		//outsize is 3 means the recipe makes three items total. so MINUS three
+		//from the toUncraft for EACH LOOP
 		if(toUncraft != null)
 		for(Object next : CraftingManager.getInstance().getRecipeList())
 		{
@@ -77,13 +92,8 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 				{
 					outsize = r.getRecipeOutput().stackSize;
 				
-					//outsize is 3 means the recipe makes three items total. so MINUS three
-					//from the toUncraft for EACH LOOP
 					if(toUncraft.stackSize >= outsize)
 					{
-						player.inventory.decrStackSize(Const.uncraftSlot, outsize); // toUncraft.stackSize -= outsize;
-						
-						Object maybeOres;
 						for(i = 0; i < r.getInput().length; i++) 
 						{
 							maybeOres = r.getInput()[i];
@@ -95,22 +105,14 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 								if(ores.size() == 1)
 								{
 									//sticks,iron,and so on
-									
-									s = ores.get(0);
-
-									if(s != null)
-										drops.add(new EntityItem(w, x,y,z, s.copy()));
-									
+									dropItems(player, ores.get(0));
 								}
 								//else size is > 1 , so its something like wooden planks
 								//TODO:maybe with a config file or something, but not for now
 							}
 							if(maybeOres instanceof ItemStack)//<ItemStack>
 							{
-								s = (ItemStack)maybeOres;
-
-								if(s != null)
-									drops.add(new EntityItem(w, x,y,z, s.copy()));
+								dropItems(player, (ItemStack)maybeOres); 
 							} 
 						}
 					}
@@ -120,22 +122,13 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 			else if(next instanceof ShapelessOreRecipe)
 			{
 				ShapelessOreRecipe r = (ShapelessOreRecipe) next;
-				//TODO: requires config file input for custom recipe?
-				//for example, its not fair to turn a chest into 8 oak planks,
-				//since it could have been made with birch or something.
-				//System.out.println("=====OREshapeless "+r.getRecipeOutput().getDisplayName());
-
+		
 				if(r.getRecipeOutput().isItemEqual(toUncraft))
 				{
-
 					outsize = r.getRecipeOutput().stackSize;
 					
-					//outsize is 3 means the recipe makes three items total. so MINUS three
-					//from the toUncraft for EACH LOOP
 					if(toUncraft.stackSize >= outsize)
 					{
-						player.inventory.decrStackSize(Const.uncraftSlot, outsize); // toUncraft.stackSize -= outsize;
-						Object maybeOres;
 						for(i = 0; i < r.getInput().size(); i++) 
 						{
 							maybeOres = r.getInput().get(i);
@@ -146,12 +139,8 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 							
 								if(ores.size() == 1)
 								{
-									//sticks,iron,and so on
-									
-									s = ores.get(0);
-
-									if(s != null)
-										drops.add(new EntityItem(w, x,y,z, s.copy()));
+									dropItems(player, ores.get(0)); 
+									//sticks,iron,and so on 
 									
 								}
 								//else size is > 1 , so its something like wooden planks
@@ -159,10 +148,8 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 							}
 							if(maybeOres instanceof ItemStack)//<ItemStack>
 							{
-								s = (ItemStack)maybeOres;
-
-								if(s != null)
-									drops.add(new EntityItem(w, x,y,z, s.copy()));
+								dropItems(player, (ItemStack)maybeOres); 
+						
 							} 
 						}
 					}
@@ -175,23 +162,13 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
  
 				if(r.getRecipeOutput().isItemEqual( toUncraft ) )
 				{  
-
 					outsize = r.getRecipeOutput().stackSize;
 				  
-					//outsize is 3 means the recipe makes three items total. so MINUS three
-					//from the toUncraft for EACH LOOP
 					if(toUncraft.stackSize >= outsize)
 					{
-						player.inventory.decrStackSize(Const.uncraftSlot, outsize); // toUncraft.stackSize -= outsize;
-
-						
 						for(i = 0; i < r.recipeItems.length; i++) 
 						{
-							s = r.recipeItems[i];
-
-							if(s != null)  
-								drops.add(new EntityItem(w, x,y,z, s.copy()));  
-							 
+							dropItems(player, r.recipeItems[i]); 
 						}
 					}
 					break;
@@ -200,27 +177,16 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 			else if(next instanceof ShapelessRecipes)
 			{
 				ShapelessRecipes r = (ShapelessRecipes) next;
-				//this is almost a copy paste of shaped recipe
-				//except recipeItems is a List not an array
 
-//System.out.println("====="+r.getRecipeOutput().getDisplayName());
-				
 				if(r.getRecipeOutput().isItemEqual( toUncraft))
 				{  
-					System.out.println("match 4");
-					
 					outsize = r.getRecipeOutput().stackSize;
 				
 					if(toUncraft.stackSize >= outsize)
 					{
-						player.inventory.decrStackSize(Const.uncraftSlot, outsize);  
-						
 						for(i = 0; i < r.recipeItems.size(); i++) 
 						{
-							s = (ItemStack)r.recipeItems.get(i);
-							
-							if(s != null)
-								drops.add(new EntityItem(w, x,y,z, s.copy()));
+							dropItems(player, (ItemStack)r.recipeItems.get(i));
 						}
 					}
 					break;
@@ -228,12 +194,13 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 			} 
 		}
 		
-		
-		for(EntityItem d :drops)
+		if(outsize > 0)
 		{
-			w.spawnEntityInWorld(d);
+			player.inventory.decrStackSize(Const.uncraftSlot, outsize); // toUncraft.stackSize -= outsize;
+			 
+			player.playSound("random.break", 1.0F, 1.0F);//same sound as breaking a too
 		}
-		 
+		
 		return null; 
 	}
 }
