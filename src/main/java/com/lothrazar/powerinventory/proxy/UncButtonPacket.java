@@ -8,6 +8,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -82,6 +83,17 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 		double z = player.posZ;
 		drops.add(new EntityItem(w, x,y,z,stack));
 	}
+	//TODO: in future versions we may add a blacklist to uncrafting
+	//TODO: also an option: allow Custom reverses
+	//such as: currently Crafting Table et all do nothing
+	//but we could allow a config file to say "crafting table -> 8 sticks or whatever?
+	
+	private static final ArrayList<Item> blacklist = new ArrayList<Item>(){{
+		add(Items.chainmail_boots);
+		add(Items.chainmail_chestplate);
+		add(Items.chainmail_helmet);
+		add(Items.chainmail_leggings);
+	}};
 	
 	@Override
 	public IMessage onMessage(UncButtonPacket message, MessageContext ctx)
@@ -90,6 +102,9 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 		
 		ItemStack toUncraft = player.inventory.getStackInSlot(Const.uncraftSlot);
 		if(toUncraft == null){return null;}
+		
+		if(blacklist.contains(toUncraft.getItem())){return null;}
+		
 		drops = new ArrayList<EntityItem>();
 		int i;
 		Object maybeOres;
