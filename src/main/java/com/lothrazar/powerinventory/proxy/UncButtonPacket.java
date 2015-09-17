@@ -46,46 +46,60 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 	}
 	
 	//todo: put in a blacklist from config file
-
-	private void dropItems(EntityPlayer player, ItemStack s)
+	private ArrayList<EntityItem> drops;
+	private void addDrop(EntityPlayer player, ItemStack s)
 	{ 
 		//this fn is null safe, it gets nulls all the time
 		if(s == null || s.getItem() == Items.milk_bucket){return;}
 		//also, when crafting cake you get the empty bucket back.
 		//so dont refund full buckets or else thats free infinite iron
 		
+
+		
+		ItemStack stack = s.copy();
+		stack.stackSize = 1;
+		//bugged out wooden planks from something like a note block or chest
+		//where , there are a whole bunch of wooden plank types it COULD be but no way to know for sure
+		//by default (if checking Only number) this blocks all oak/quartz
+		if(stack.getItemDamage() == 32767 )
+		{
+			if("tile.wood.oak".equals( stack.getUnlocalizedName()))
+			{
+				System.out.println("skipoak");
+				return;
+			}
+			
+			stack.setItemDamage(0);//do not make invalid quartz
+		}
+				
+		//we set to 1 because recipe registry is bugged in some forge versions
+		//EXAMPLE: crafting a Hay Bale takes 9 wheat, so 9 stacks of 1
+		//but forge tells me its 9 stacks of 9 !?!?
+
 		World w = player.worldObj;
 		double x = player.posX;
 		double y = player.posY;
 		double z = player.posZ;
-
-		//bugged out wooden planks from something like a note block or chest
-		//where , there are a whole bunch of wooden plank types it COULD be but no way to know for sure
-		if(s.getItemDamage() == 32767){return;}
-		
-		ItemStack stack = s.copy();
-		stack.stackSize = 1;
-		//we set to 1 because recipe registry is bugged in some forge versions
-		//EXAMPLE: crafting a Hay Bale takes 9 wheat, so 9 stacks of 1
-		//but forge tells me its 9 stacks of 9 !?!?
-		
-		w.spawnEntityInWorld(new EntityItem(w, x,y,z,stack));
+		drops.add(new EntityItem(w, x,y,z,stack));
 	}
 	
 	@Override
 	public IMessage onMessage(UncButtonPacket message, MessageContext ctx)
 	{
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
-  
+		
 		ItemStack toUncraft = player.inventory.getStackInSlot(Const.uncraftSlot);
- 
+		if(toUncraft == null){return null;}
+		drops = new ArrayList<EntityItem>();
 		int i;
 		Object maybeOres;
 		int outsize = 0;
+		
+		//TODO: need a blacklist. for example: chain armor
 
 		//outsize is 3 means the recipe makes three items total. so MINUS three
 		//from the toUncraft for EACH LOOP
-		if(toUncraft != null)
+		
 		for(Object next : CraftingManager.getInstance().getRecipeList())
 		{
 			//check ore dictionary for some
@@ -107,18 +121,18 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 							if(maybeOres instanceof ArrayList && (ArrayList<ItemStack>)maybeOres != null)//<ItemStack>
 							{ 
 								ArrayList<ItemStack> ores = (ArrayList<ItemStack>)maybeOres;
-							
+						
 								if(ores.size() == 1)
 								{
 									//sticks,iron,and so on
-									dropItems(player, ores.get(0));
+									addDrop(player, ores.get(0));
 								}
 								//else size is > 1 , so its something like wooden planks
 								//TODO:maybe with a config file or something, but not for now
 							}
 							if(maybeOres instanceof ItemStack)//<ItemStack>
 							{
-								dropItems(player, (ItemStack)maybeOres); 
+								addDrop(player, (ItemStack)maybeOres); 
 							} 
 						}
 					}
@@ -145,16 +159,15 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 							
 								if(ores.size() == 1)
 								{
-									dropItems(player, ores.get(0)); 
+									addDrop(player, ores.get(0)); 
 									//sticks,iron,and so on 
-									
 								}
 								//else size is > 1 , so its something like wooden planks
 								//TODO:maybe with a config file or something, but not for now
 							}
 							if(maybeOres instanceof ItemStack)//<ItemStack>
 							{
-								dropItems(player, (ItemStack)maybeOres); 
+								addDrop(player, (ItemStack)maybeOres); 
 						
 							} 
 						}
@@ -174,7 +187,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 					{
 						for(i = 0; i < r.recipeItems.length; i++) 
 						{
-							dropItems(player, r.recipeItems[i]); 
+							addDrop(player, r.recipeItems[i]); 
 						}
 					}
 					break;
@@ -192,7 +205,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 					{
 						for(i = 0; i < r.recipeItems.size(); i++) 
 						{
-							dropItems(player, (ItemStack)r.recipeItems.get(i));
+							addDrop(player, (ItemStack)r.recipeItems.get(i));
 						}
 					}
 					break;
@@ -200,8 +213,12 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 			} 
 		}
 		
-		if(outsize > 0)
+		if(drops.size() > 0)  //if(outsize > 0)
 		{
+			for(EntityItem ei : drops)
+			{
+				player.worldObj.spawnEntityInWorld(ei); 
+			}
 			player.inventory.decrStackSize(Const.uncraftSlot, outsize); // toUncraft.stackSize -= outsize;
 			 
 			player.playSound("random.break", 1.0F, 1.0F);//same sound as breaking a too
