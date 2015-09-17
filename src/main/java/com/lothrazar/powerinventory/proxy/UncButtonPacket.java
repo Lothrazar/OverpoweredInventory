@@ -44,6 +44,8 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 	{
 		ByteBufUtils.writeTag(buf, this.tags);
 	}
+	
+	//todo: put in a blacklist from config file
 
 	private void dropItems(EntityPlayer player, ItemStack s)
 	{ 
@@ -57,6 +59,10 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 		double y = player.posY;
 		double z = player.posZ;
 
+		//bugged out wooden planks from something like a note block or chest
+		//where , there are a whole bunch of wooden plank types it COULD be but no way to know for sure
+		if(s.getItemDamage() == 32767){return;}
+		
 		ItemStack stack = s.copy();
 		stack.stackSize = 1;
 		//we set to 1 because recipe registry is bugged in some forge versions
