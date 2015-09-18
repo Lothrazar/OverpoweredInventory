@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.proxy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.lothrazar.powerinventory.*;
 
@@ -54,7 +55,8 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 		if(s == null || s.getItem() == Items.milk_bucket){return;}
 		//also, when crafting cake you get the empty bucket back.
 		//so dont refund full buckets or else thats free infinite iron
-		
+
+		//System.out.println("add drop + "+s.getUnlocalizedName());
 
 		
 		ItemStack stack = s.copy();
@@ -63,10 +65,9 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 		//where , there are a whole bunch of wooden plank types it COULD be but no way to know for sure
 		//by default (if checking Only number) this blocks all oak/quartz
 		if(stack.getItemDamage() == 32767 )
-		{
+		{ 
 			if("tile.wood.oak".equals( stack.getUnlocalizedName()))
-			{
-				System.out.println("skipoak");
+			{ 
 				return;
 			}
 			
@@ -122,32 +123,31 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 			if(next instanceof ShapedOreRecipe)
 			{
 				ShapedOreRecipe r = (ShapedOreRecipe) next;
- 
 				if(r.getRecipeOutput().isItemEqual(toUncraft))
-				{
+				{ 
 					outsize = r.getRecipeOutput().stackSize;
 				
 					if(toUncraft.stackSize >= outsize)
 					{
+						// System.out.println("input size is :"+r.getInput().length);
 						for(i = 0; i < r.getInput().length; i++) 
 						{
 							maybeOres = r.getInput()[i];
-
-							if(maybeOres instanceof ArrayList && (ArrayList<ItemStack>)maybeOres != null)//<ItemStack>
+ 
+							if(maybeOres instanceof ItemStack)//<ItemStack>
+							{
+								addDrop(player, (ItemStack)maybeOres); 
+							} 
+							else if( maybeOres instanceof List &&  (List<ItemStack>)maybeOres != null)//<ItemStack>
 							{ 
-								ArrayList<ItemStack> ores = (ArrayList<ItemStack>)maybeOres;
+								//if its UnmodifiableRandomAccessList , then it is List but not ArrayList
+								List<ItemStack> ores = (List<ItemStack>)maybeOres;
 						
 								if(ores.size() == 1)
 								{
 									//sticks,iron,and so on
 									addDrop(player, ores.get(0));
 								}
-								//else size is > 1 , so its something like wooden planks
-								//TODO:maybe with a config file or something, but not for now
-							}
-							if(maybeOres instanceof ItemStack)//<ItemStack>
-							{
-								addDrop(player, (ItemStack)maybeOres); 
 							} 
 						}
 					}
@@ -160,6 +160,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 		
 				if(r.getRecipeOutput().isItemEqual(toUncraft))
 				{
+					// System.out.println("ShapelessOreRecipe");
 					outsize = r.getRecipeOutput().stackSize;
 					
 					if(toUncraft.stackSize >= outsize)
@@ -168,23 +169,21 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 						{
 							maybeOres = r.getInput().get(i);
 
-							if(maybeOres instanceof ArrayList && (ArrayList<ItemStack>)maybeOres != null)//<ItemStack>
+							if(maybeOres instanceof ItemStack)//<ItemStack>
+							{
+								addDrop(player, (ItemStack)maybeOres);  
+							} 
+							else if(maybeOres instanceof List && (List<ItemStack>)maybeOres != null)//<ItemStack>
 							{ 
-								ArrayList<ItemStack> ores = (ArrayList<ItemStack>)maybeOres;
+								//if its UnmodifiableRandomAccessList , then it is List but not ArrayList
+								List<ItemStack> ores = (List<ItemStack>)maybeOres;
 							
 								if(ores.size() == 1)
 								{
 									addDrop(player, ores.get(0)); 
 									//sticks,iron,and so on 
-								}
-								//else size is > 1 , so its something like wooden planks
-								//TODO:maybe with a config file or something, but not for now
+								} 
 							}
-							if(maybeOres instanceof ItemStack)//<ItemStack>
-							{
-								addDrop(player, (ItemStack)maybeOres); 
-						
-							} 
 						}
 					}
 					break;
@@ -196,6 +195,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
  
 				if(r.getRecipeOutput().isItemEqual( toUncraft ) )
 				{  
+					// System.out.println("ShapedRecipes");
 					outsize = r.getRecipeOutput().stackSize;
 				  
 					if(toUncraft.stackSize >= outsize)
@@ -214,6 +214,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 
 				if(r.getRecipeOutput().isItemEqual( toUncraft))
 				{  
+					// System.out.println("ShapelessRecipes");
 					outsize = r.getRecipeOutput().stackSize;
 				
 					if(toUncraft.stackSize >= outsize)
