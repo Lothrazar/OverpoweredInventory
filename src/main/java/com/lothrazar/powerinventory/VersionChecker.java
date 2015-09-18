@@ -18,7 +18,7 @@ public class VersionChecker implements Runnable
         InputStream in = null;
         try 
         {
-            in = new URL("https://raw.githubusercontent.com/PrinceOfAmber/OverpoweredInventory/backport17/version.dat").openStream();
+            in = new URL("https://raw.githubusercontent.com/PrinceOfAmber/OverpoweredInventory/master/version.dat").openStream();
         } 
         catch (MalformedURLException e) 
         { 
@@ -43,7 +43,7 @@ public class VersionChecker implements Runnable
         }
         
         
-        System.out.println(latestVersion);
+       // System.out.println(latestVersion);
         
         
         
