@@ -24,10 +24,10 @@ import org.lwjgl.opengl.GL11;
 public class GuiBigInventory extends GuiInventory
 {
 	private BigContainerPlayer container;
-
-
+ 
 	GuiButton btnEnder;
 	GuiButton btnExp;
+	GuiButton btnUncraft;
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
@@ -63,6 +63,15 @@ public class GuiBigInventory extends GuiInventory
 						this.guiTop + padding,
 						widthlrg,height));
 			}
+			
+			btnUncraft = new GuiButtonUnc(button_id++, 
+					this.guiLeft + container.uncraftX - 51 ,
+					this.guiTop + container.uncraftY - 1,
+					width + 20,height,StatCollector.translateToLocal("button.unc"));
+			this.buttonList.add(btnUncraft); 
+			btnUncraft.enabled = false;// turn it on based on ender chest present or not
+			btnUncraft.visible = btnUncraft.enabled;
+			
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
 					this.guiLeft + container.echestX + 19, 
 					this.guiTop + container.echestY-1,
@@ -132,6 +141,17 @@ public class GuiBigInventory extends GuiInventory
 			btnEnder.enabled = true; 
 			btnEnder.visible = btnEnder.enabled;
 		}
+		       
+		if(container.invo.getStackInSlot(Const.uncraftSlot) == null)
+		{ 
+			btnUncraft.enabled = false;
+			btnUncraft.visible = btnUncraft.enabled; 
+		}
+		else 
+		{ 
+			btnUncraft.enabled = true; 
+			btnUncraft.visible = btnUncraft.enabled;
+		}		
 		
 		if(container.invo.getStackInSlot(Const.bottleSlot) == null || 
 		   container.invo.getStackInSlot(Const.bottleSlot).getItem() == Items.experience_bottle	)

@@ -1,6 +1,10 @@
 package com.lothrazar.powerinventory;
 
+import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Items;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatStyle;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Logger;
@@ -12,13 +16,19 @@ import com.lothrazar.powerinventory.proxy.ExpButtonPacket;
 import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket;
 import com.lothrazar.powerinventory.proxy.SortButtonPacket; 
+import com.lothrazar.powerinventory.proxy.UncButtonPacket;
 
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -69,10 +79,40 @@ public class ModInv
     	network.registerMessage(EnderPearlPacket.class,  EnderPearlPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(ExpButtonPacket.class,   ExpButtonPacket.class,   packetID++, Side.SERVER);
     	network.registerMessage(DumpButtonPacket.class,  DumpButtonPacket.class,  packetID++, Side.SERVER);
-    	 
+    	network.registerMessage(UncButtonPacket.class,   UncButtonPacket.class,   packetID++, Side.SERVER);
+    	
     	proxy.registerHandlers();
+    	MinecraftForge.EVENT_BUS.register(instance);
+    	FMLCommonHandler.instance().bus().register(instance);
+    	
+    }
+    boolean sentVersionMessage = false;//only send it once
+    VersionChecker versionChecker ;
+    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+    public void onEvent(PlayerTickEvent event)
+    {
+        if (!sentVersionMessage && event.player.worldObj.isRemote 
+              && !versionChecker.isLatestVersion()
+              && versionChecker.getLatestVersion() != "")
+        {
+            ClickEvent url = new ClickEvent(ClickEvent.Action.OPEN_URL, 
+                  "http://www.curse.com/mc-mods/Minecraft/233168-overpowered-inventory-375-inventory-slots-and-more");
+            ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(url);
+            ChatComponentText text = new ChatComponentText("Overpowered Inventory has a new version out!  Click here to open the webpage with "+versionChecker.getLatestVersion());
+            text.setChatStyle(clickableChatStyle);
+            event.player.addChatMessage(text);
+            sentVersionMessage = true;
+        } 
     }
     
+    
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent  event)
+    {
+    	versionChecker = new VersionChecker();
+    	Thread versionCheckThread = new Thread(versionChecker, "Version Check");
+    	versionCheckThread.start();
+    }
 	private void loadConfig() 
 	{
     	config.load();
@@ -134,7 +174,7 @@ public class ModInv
 	}
     
     @EventHandler
-    public void preInit(FMLInitializationEvent event)
+    public void init(FMLInitializationEvent event)
     {
     	if(ModConfig.enderPearl64)
     	{

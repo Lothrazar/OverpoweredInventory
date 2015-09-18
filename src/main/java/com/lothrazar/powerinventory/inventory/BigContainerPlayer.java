@@ -48,6 +48,8 @@ public class BigContainerPlayer extends ContainerPlayer
 
 	public final int bottleX = Const.texture_width - Const.square - padding - 1;
 	public final int bottleY = 20 + 2 * Const.square;
+	public final int uncraftX = bottleX;
+	public final int uncraftY = bottleY - 24;
 
 //store slot numbers  (not indexes) as we go. so that transferStack.. is actually readable
 	 
@@ -65,6 +67,8 @@ public class BigContainerPlayer extends ContainerPlayer
 	static int S_CLOCK;
 	static int S_COMPASS;
 	static int S_BOTTLE;
+	static int S_UNCRAFT;
+	
 	public BigContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
 	{
 		super(playerInventory, isLocal, player);
@@ -158,6 +162,9 @@ public class BigContainerPlayer extends ContainerPlayer
         
         S_BOTTLE =  this.inventorySlots.size() ;
         this.addSlotToContainer(new SlotBottle(playerInventory, Const.bottleSlot, bottleX, bottleY)); 
+
+        S_UNCRAFT =  this.inventorySlots.size() ;//TODO: should it work like crafting window and dump contents
+        this.addSlotToContainer(new Slot(playerInventory, Const.uncraftSlot, uncraftX, uncraftY)); 
         
         this.onCraftMatrixChanged(this.craftMatrix);
 		this.invo = playerInventory; 
@@ -317,7 +324,7 @@ public class BigContainerPlayer extends ContainerPlayer
                     return null;
                 }
             }
-            else if(slotNumber == S_PEARL || slotNumber == S_ECHEST  || slotNumber == S_COMPASS  || slotNumber == S_CLOCK || slotNumber == S_BOTTLE)
+            else if(slotNumber == S_PEARL || slotNumber == S_ECHEST  || slotNumber == S_COMPASS  || slotNumber == S_CLOCK || slotNumber == S_BOTTLE || slotNumber == S_UNCRAFT)
             { 
             	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
             	{

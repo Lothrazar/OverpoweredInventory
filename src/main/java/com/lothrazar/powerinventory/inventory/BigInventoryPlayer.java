@@ -30,7 +30,8 @@ public class BigInventoryPlayer extends InventoryPlayer
     private ItemStack clockStack;
     private ItemStack compassStack;
     private ItemStack bottleStack;
-   
+    private ItemStack uncraftStack;
+    
 	public BigInventoryPlayer(EntityPlayer player)
 	{
 		super(player);
@@ -60,6 +61,7 @@ public class BigInventoryPlayer extends InventoryPlayer
         if(index == Const.clockSlot){return clockStack;}
         if(index == Const.compassSlot){return compassStack;} 
         if(index == Const.bottleSlot){return bottleStack;} 
+        if(index == Const.uncraftSlot){return uncraftStack;} 
         
         if (index >= aitemstack.length)
         {
@@ -103,6 +105,10 @@ public class BigInventoryPlayer extends InventoryPlayer
 		else if(slot == Const.bottleSlot)
 		{
 			bottleStack = stack;  
+		}
+		else if(slot == Const.uncraftSlot)
+		{
+			this.uncraftStack = stack;  
 		}
 		else
 		{
@@ -441,7 +447,13 @@ public class BigInventoryPlayer extends InventoryPlayer
             this.bottleStack.writeToNBT(nbttagcompound);
             tags.appendTag(nbttagcompound);
         }
-
+        if(this.uncraftStack != null)
+        {
+        	nbttagcompound = new NBTTagCompound();
+            nbttagcompound.setInteger(Const.NBT_SLOT, Const.uncraftSlot);  
+            this.uncraftStack.writeToNBT(nbttagcompound);
+            tags.appendTag(nbttagcompound);
+        }
         for (i = 0; i < this.armorInventory.length; ++i)
         {
             if (this.armorInventory[i] != null)
@@ -548,6 +560,26 @@ public class BigInventoryPlayer extends InventoryPlayer
                  return itemstack;
              }
     	}
+    	else if(index == Const.uncraftSlot)
+    	{
+    		 if (this.uncraftStack.stackSize <= count)
+    	      {
+    	          itemstack = this.uncraftStack;
+    	          this.uncraftStack = null;
+    	          return itemstack;
+    	      }
+    		 else
+    	      {
+    	          itemstack = this.uncraftStack.splitStack(count);
+    	
+    	          if (this.uncraftStack.stackSize == 0)
+    	          {
+    	         	 this.uncraftStack = null;
+    	          }
+    	
+    	          return itemstack;
+    	      }
+    	}
     	else 
     		return super.decrStackSize(index, count);
     }
@@ -589,6 +621,10 @@ public class BigInventoryPlayer extends InventoryPlayer
                 {
             		bottleStack = itemstack;
                 }
+            	if(j == Const.uncraftSlot)
+            	{
+            	this.uncraftStack = itemstack;
+            	}
                 if (j >= 0 && j < this.mainInventory.length)
                 {
             		this.mainInventory[j] = itemstack;
