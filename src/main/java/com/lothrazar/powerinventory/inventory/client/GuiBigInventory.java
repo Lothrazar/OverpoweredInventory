@@ -151,14 +151,14 @@ public class GuiBigInventory extends GuiInventory
 			btnUncraft.enabled = true; 
 			btnUncraft.visible = btnUncraft.enabled;
 		}
-		
+
 		if(container.invo.getStackInSlot(Const.bottleSlot) == null || 
 		   container.invo.getStackInSlot(Const.bottleSlot).getItem() == Items.experience_bottle	)
 		{
 			btnExp.enabled = false;
 			btnExp.visible = btnExp.enabled;
   
-			drawTextureSimple("textures/items/empty_bottle.png",container.bottleX, container.bottleY,s,s); 
+		//	drawTextureSimple("textures/items/empty_bottle.png",container.bottleX, container.bottleY,s,s); 
 		}
 		else 
 		{ 
@@ -186,11 +186,12 @@ public class GuiBigInventory extends GuiInventory
 	{
 		//wrapper for drawTexturedQuadFit
 		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, texture)); 
-		drawTexturedQuadFit(x,y,width,height,0);
+		drawTexturedQuadFit(x,y,width,height);
 	}
 	
-	public static void drawTexturedQuadFit(double x, double y, double width, double height, double zLevel)
+	public static void drawTexturedQuadFit(double x, double y, double width, double height)
 	{
+		double zLevel = 0;
 		//because the vanilla code REQUIRES textures to be powers of two AND are force dto be max of 256??? WHAT?
 		//so this one actually works
 		//THANKS hydroflame  ON FORUMS 
@@ -215,15 +216,28 @@ public class GuiBigInventory extends GuiInventory
         GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
 
-        drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
+        drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize);
  
         if(ModConfig.showCharacter)//drawEntityOnScreen
         	func_147046_a(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
+	
+
+        drawSlotAt(container.bottleX, container.bottleY);
 	}
 
+	private void drawSlotAt(int x, int y)
+	{
+        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, "textures/gui/inventory_slot.png"));
+         
+        //was this.drawTexturedModalRect
+        drawTexturedQuadFit(this.guiLeft+ x -1, this.guiTop+ y -1,  Const.square, Const.square);
+	}
+	
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{ 
+		
+
 		this.checkSlotsEmpty();
 		 
 		//this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);
