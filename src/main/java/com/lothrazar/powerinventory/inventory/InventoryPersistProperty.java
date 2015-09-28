@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.standalone.InventoryCustomPlayer;
 
 import net.minecraft.entity.Entity;
@@ -58,12 +59,13 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	 */
 	public void onJoinWorld()
 	{
-		if(!(player.inventory instanceof BigInventoryPlayer))
-		{
-			player.inventory = new BigInventoryPlayer(player);
-			player.inventoryContainer = new BigContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
-			player.openContainer = player.inventoryContainer;
-		}
+		if(ModConfig.enableCompatMode == false)
+			if(!(player.inventory instanceof BigInventoryPlayer))
+			{
+				player.inventory = new BigInventoryPlayer(player);
+				player.inventoryContainer = new BigContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
+				player.openContainer = player.inventoryContainer;
+			}
 		
 		if(prevPlayer != null)
 		{
@@ -89,14 +91,15 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	{
 		this.inventory.readFromNBT(compound);
 		
-		if(!(player.inventory instanceof BigInventoryPlayer))
-		{
-			player.inventory = new BigInventoryPlayer(player);
-			player.inventoryContainer = new BigContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
-			player.openContainer = player.inventoryContainer;
-			((BigInventoryPlayer)player.inventory).readFromNBT(compound.getTagList(Const.NBT_INVENTORY, 10));
+		if(ModConfig.enableCompatMode == false)
+			if(!(player.inventory instanceof BigInventoryPlayer))
+			{
+				player.inventory = new BigInventoryPlayer(player);
+				player.inventoryContainer = new BigContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
+				player.openContainer = player.inventoryContainer;
+				((BigInventoryPlayer)player.inventory).readFromNBT(compound.getTagList(Const.NBT_INVENTORY, 10));
+			}
 		}
-	}
 	
 	@Override
 	public void init(Entity entity, World world)

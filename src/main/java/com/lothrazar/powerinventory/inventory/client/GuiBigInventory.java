@@ -68,16 +68,16 @@ public class GuiBigInventory extends GuiInventory
 			if(ModConfig.enableUncrafting)
 		    {
 				btnUncraft = new GuiButtonUnc(button_id++, 
-						this.guiLeft + container.uncraftX - 51 ,
-						this.guiTop + container.uncraftY - 1,
+						this.guiLeft + Const.uncraftX - 51 ,
+						this.guiTop + Const.uncraftY - 1,
 						width + 20,height,StatCollector.translateToLocal("button.unc"));
 				this.buttonList.add(btnUncraft); 
 				btnUncraft.enabled = false;// turn it on based on ender chest present or not
 				btnUncraft.visible = btnUncraft.enabled;
 		    }
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
-					this.guiLeft + container.echestX + 19, 
-					this.guiTop + container.echestY - 1,
+					this.guiLeft + Const.echestX + 19, 
+					this.guiTop + Const.echestY - 1,
 					12,height, "I",Const.INV_ENDER); 
 			this.buttonList.add(btnEnder); 
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
@@ -86,8 +86,8 @@ public class GuiBigInventory extends GuiInventory
 			if(ModConfig.enableEnchantBottles)
 		    {
 				btnExp = new GuiButtonExp(button_id++, 
-						this.guiLeft + container.bottleX - width - padding+1, 
-						this.guiTop + container.bottleY-2,
+						this.guiLeft + Const.bottleX - width - padding+1, 
+						this.guiTop + Const.bottleY-2,
 						width,height,StatCollector.translateToLocal("button.exp"));
 				this.buttonList.add(btnExp);
 				
@@ -139,7 +139,7 @@ public class GuiBigInventory extends GuiInventory
 			btnEnder.enabled = false;
 			btnEnder.visible = btnEnder.enabled;
  
-			drawTextureSimple("textures/items/empty_enderchest.png",container.echestX, container.echestY,s,s); 
+			drawTextureSimple("textures/items/empty_enderchest.png",Const.echestX, Const.echestY,s,s); 
 		}
 		else 
 		{ 
@@ -165,7 +165,7 @@ public class GuiBigInventory extends GuiInventory
 				btnExp.enabled = false;
 				btnExp.visible = btnExp.enabled;
 	  
-				drawTextureSimple("textures/items/empty_bottle.png",container.bottleX, container.bottleY,s,s); 
+				drawTextureSimple("textures/items/empty_bottle.png",Const.bottleX, Const.bottleY,s,s); 
 			}
 			else 
 			{ 
@@ -175,17 +175,17 @@ public class GuiBigInventory extends GuiInventory
 
 		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
-			drawTextureSimple("textures/items/empty_enderpearl.png",container.pearlX, container.pearlY,s,s);
+			drawTextureSimple("textures/items/empty_enderpearl.png",Const.pearlX, Const.pearlY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.compassSlot) == null)
 		{ 
-			drawTextureSimple("textures/items/empty_compass.png",container.compassX, container.compassY,s,s);
+			drawTextureSimple("textures/items/empty_compass.png",Const.compassX, Const.compassY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.clockSlot) == null)
 		{  
-			drawTextureSimple("textures/items/empty_clock.png",container.clockX, container.clockY,s,s);
+			drawTextureSimple("textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
 		}
 	}
 	 
@@ -230,10 +230,10 @@ public class GuiBigInventory extends GuiInventory
 	
         //if feature is enabled, draw these
         if(ModConfig.enableEnchantBottles)
-        	drawSlotAt(container.bottleX, container.bottleY);
+        	drawSlotAt(Const.bottleX, Const.bottleY);
 
         if(ModConfig.enableUncrafting)
-        	drawSlotAt(container.uncraftX, container.uncraftY);
+        	drawSlotAt(Const.uncraftX, Const.uncraftY);
 	}
 
 	private void drawSlotAt(int x, int y)

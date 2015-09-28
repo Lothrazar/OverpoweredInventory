@@ -38,7 +38,7 @@ import com.lothrazar.powerinventory.inventory.client.GuiButtonClose;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
-import com.lothrazar.powerinventory.proxy.EnderChestPacket;
+import com.lothrazar.powerinventory.proxy.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket; 
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -66,7 +66,7 @@ public class EventHandler
         if(ClientProxy.keyEnderchest.isPressed())
         { 	     
         	
-        	 ModInv.instance.network.sendToServer( new EnderChestPacket());   
+        	 ModInv.instance.network.sendToServer( new OpenInventoryPacket());   
         }  
     }
 	
@@ -114,10 +114,12 @@ public class EventHandler
 	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event)
 	{
-		if(event.gui != null && event.gui.getClass() == GuiInventory.class && !(event.gui instanceof GuiBigInventory))
-		{
-			event.gui = new GuiBigInventory(Minecraft.getMinecraft().thePlayer);
-		}
+
+		if(ModConfig.enableCompatMode == false)
+			if(event.gui != null && event.gui.getClass() == GuiInventory.class && !(event.gui instanceof GuiBigInventory))
+			{
+				event.gui = new GuiBigInventory(Minecraft.getMinecraft().thePlayer);
+			}
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -126,8 +128,27 @@ public class EventHandler
 	public void onGuiPostInit(InitGuiEvent.Post event)
 	{
 		if(event.gui == null){return;}//probably doesnt ever happen
+		
+		int button_id = 256;
+		//trapped, regular chests, minecart chests, and enderchest all use this class
+		//which extends  GuiContainer
 
-		if(ModConfig.showCornerButtons)
+		int padding = 10;
+		
+		int x,y = padding,w = 20,h = w;
+
+		if(ModConfig.enableCompatMode)
+		{
+			if(event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory)
+			{
+				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
+	
+				event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,"E",Const.INV_SOLO));
+				
+			}
+
+		}
+		else if(ModConfig.showCornerButtons)
 		{
 			if(event.gui instanceof net.minecraft.client.gui.inventory.GuiChest || 
 			   event.gui instanceof net.minecraft.client.gui.inventory.GuiDispenser || 
@@ -138,13 +159,7 @@ public class EventHandler
 			   event.gui instanceof net.minecraft.client.gui.inventory.GuiScreenHorseInventory
 			   )
 			{
-				int button_id = 256;
-				//trapped, regular chests, minecart chests, and enderchest all use this class
-				//which extends  GuiContainer
-	
-				int padding = 10;
 				
-				int x,y = padding,w = 20,h = w;
 				
 				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
 				

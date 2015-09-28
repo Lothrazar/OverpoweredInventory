@@ -1,9 +1,14 @@
 package com.lothrazar.powerinventory.standalone;
 
+import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.ModConfig;
+import com.lothrazar.powerinventory.inventory.SlotBottle;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemArmor;
@@ -17,7 +22,9 @@ public class ContainerCustomPlayer extends Container
 			INV_START = ARMOR_END+1, INV_END = INV_START+26, HOTBAR_START = INV_END+1,
 
 			HOTBAR_END = HOTBAR_START+8;
-	
+
+	static int S_BOTTLE;
+	static int S_UNCRAFT;
 	private EntityPlayer thePlayer;
 	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
@@ -26,20 +33,31 @@ public class ContainerCustomPlayer extends Container
 		int i;
 		
 		
-		int slot = 0;
+		//int slot = 0;
 		
+	    if(ModConfig.enableEnchantBottles)
+        {
+	        S_BOTTLE =  this.inventorySlots.size() ;
+	        this.addSlotToContainer(new SlotBottle(inventoryCustom, Const.bottleSlot, Const.bottleX, Const.bottleY)); 
+        }
+        
+        if(ModConfig.enableUncrafting)
+        {
+	        S_UNCRAFT =  this.inventorySlots.size() ; 
+	        this.addSlotToContainer(new Slot(inventoryCustom, Const.uncraftSlot, Const.uncraftX, Const.uncraftY)); 
+        }
 		//this.addSlotToContainer(new Slot(inventoryCustom, slot++, 81, 8));
 
 		//this.addSlotToContainer(new Slot(inventoryCustom, slot++, 81, 26));
 	
 		
 		//armor slots would go here
-		 for (i = 0; i < 4; ++i)
+		 for (i = 0; i < Const.armorSize; ++i)
         {
             final int k = i;
             this.addSlotToContainer(new Slot(inventoryPlayer, inventoryPlayer.getSizeInventory() - 1 - i, 8, 8 + i * 18)
             {
-                private static final String __OBFID = "CL_00001755";
+               // private static final String __OBFID = "CL_00001755";
               
                 public int getSlotStackLimit()
                 {
@@ -116,29 +134,16 @@ public class ContainerCustomPlayer extends Container
 			}// Item is in inventory / hotbar, try to place either in custom or armor slots
 			else 
 			{
-			 /*
+			 
 			  // any specific items moved into our own slots
-				if (itemstack1.getItem() instanceof ItemUseMana)
-				{
-					if (!this.mergeItemStack(itemstack1, 0, InventoryCustomPlayer.INV_SIZE, false))
-					{
-						return null;
-					}
-				
-				} 
-				else if (itemstack1.getItem() instanceof ItemArmor)
-				{
-					int type = ((ItemArmor) itemstack1.getItem()).armorType;
-					
-					if (!this.mergeItemStack(itemstack1, ARMOR_START + type, ARMOR_START + type + 1, false))
-					{
-						return null;
-					}
-				}
-
-				// item in player's inventory, but not in action bar
-				
-				else */ if (slotNum >= INV_START && slotNum < HOTBAR_START)
+				if(itemstackCopy.getItem() == Items.glass_bottle )
+        		{ 
+            		if (!this.mergeItemStack(stack, S_BOTTLE, S_BOTTLE+1, false))
+                	{ 
+                        return null;
+                    }  
+        		}
+				else  if (slotNum >= INV_START && slotNum < HOTBAR_START)
 				{
 				
 					// place in action bar

@@ -17,12 +17,12 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPacket, IMessage>
+public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInventoryPacket, IMessage>
 {
-	public EnderChestPacket() {}
+	public OpenInventoryPacket() {}
 	NBTTagCompound tags = new NBTTagCompound(); 
 	
-	public EnderChestPacket(NBTTagCompound ptags)
+	public OpenInventoryPacket(NBTTagCompound ptags)
 	{
 		tags = ptags;
 	}
@@ -40,24 +40,26 @@ public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPa
 	}
 
 	@Override
-	public IMessage onMessage(EnderChestPacket message, MessageContext ctx)
+	public IMessage onMessage(OpenInventoryPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 		
 		
-		boolean altMode=true;
-		if(altMode)
+		if(message.tags.getInteger("i") == Const.INV_SOLO)
 		{
+			System.out.println("open solo gui");
+			System.out.println("open solo gui");
+			System.out.println("open solo gui");
+			System.out.println("open solo gui");
 			p.openGui(ModInv.instance, GuiHandler.GUI_CUSTOM_INV, p.worldObj, (int) p.posX, (int) p.posY, (int) p.posZ);
-
-			return null;
 		}
-		
-		if( p.inventory.getStackInSlot(Const.enderChestSlot) != null)
-			p.displayGUIChest(p.getInventoryEnderChest());
-		else 
-			p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));
-		
+		else
+		{
+			if( p.inventory.getStackInSlot(Const.enderChestSlot) != null)
+				p.displayGUIChest(p.getInventoryEnderChest());
+			else 
+				p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));
+		}		
 		
 		
 		/*

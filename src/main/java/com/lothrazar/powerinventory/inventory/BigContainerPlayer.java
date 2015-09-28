@@ -34,24 +34,10 @@ public class BigContainerPlayer extends ContainerPlayer
 	public BigInventoryPlayer invo;
     public boolean isLocalWorld;
 
-	final int padding = 6;
 	//these get used here for actual slot, and in GUI for texture
     //ender pearl is in the far bottom right corner, and the others move left relative to this
 
-	public final int pearlX = 80; 
-	public final int pearlY = 8; 
-	public final int compassX = pearlX;
-	public final int compassY = pearlY + Const.square;
-	public final int clockX = pearlX;
-	public final int clockY = pearlY + 2*Const.square;
-	public final int echestX = pearlX;
-	public final int echestY = pearlY + 3*Const.square;
-
-	public final int bottleX = Const.texture_width - Const.square - padding - 1;
-	public final int bottleY = 20 + 2 * Const.square;
-
-	public final int uncraftX = bottleX;
-	public final int uncraftY = bottleY - 24;
+	
 	
 //store slot numbers  (not indexes) as we go. so that transferStack.. is actually readable
 	 
@@ -150,27 +136,27 @@ public class BigContainerPlayer extends ContainerPlayer
         S_MAIN_END = this.inventorySlots.size() - 1;
         
         S_PEARL =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, pearlX, pearlY));
+        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, Const.pearlX, Const.pearlY));
 
         S_ECHEST =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, echestX, echestY)); 
+        this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, Const.echestX, Const.echestY)); 
 
         S_CLOCK =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotClock(playerInventory, Const.clockSlot, clockX, clockY)); 
+        this.addSlotToContainer(new SlotClock(playerInventory, Const.clockSlot, Const.clockX, Const.clockY)); 
 
         S_COMPASS =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotCompass(playerInventory, Const.compassSlot, compassX, compassY)); 
+        this.addSlotToContainer(new SlotCompass(playerInventory, Const.compassSlot, Const.compassX, Const.compassY)); 
         
         if(ModConfig.enableEnchantBottles)
         {
 	        S_BOTTLE =  this.inventorySlots.size() ;
-	        this.addSlotToContainer(new SlotBottle(playerInventory, Const.bottleSlot, bottleX, bottleY)); 
+	        this.addSlotToContainer(new SlotBottle(playerInventory, Const.bottleSlot, Const.bottleX, Const.bottleY)); 
         }
         
         if(ModConfig.enableUncrafting)
         {
-	        S_UNCRAFT =  this.inventorySlots.size() ;//TODO: should it work like crafting window and dump contents
-	        this.addSlotToContainer(new Slot(playerInventory, Const.uncraftSlot, uncraftX, uncraftY)); 
+	        S_UNCRAFT =  this.inventorySlots.size() ; 
+	        this.addSlotToContainer(new Slot(playerInventory, Const.uncraftSlot, Const.uncraftX, Const.uncraftY)); 
         }
         
         this.onCraftMatrixChanged(this.craftMatrix);
@@ -181,12 +167,13 @@ public class BigContainerPlayer extends ContainerPlayer
 	public Slot getSlotFromInventory(IInventory invo, int id)
 	{
 		Slot slot = super.getSlotFromInventory(invo, id);
+		/*
 		if(slot == null)
 		{
 			Exception e = new NullPointerException();
 			 
 			ModInv.logger.log(Level.FATAL, e.getStackTrace()[1].getClassName() + "." + e.getStackTrace()[1].getMethodName() + ":" + e.getStackTrace()[1].getLineNumber() + " is requesting slot " + id + " from inventory " + invo.getInventoryName() + " (" + invo.getClass().getName() + ") and got NULL!", e);
-		}
+		}*/
 		return slot;
 	}
 	

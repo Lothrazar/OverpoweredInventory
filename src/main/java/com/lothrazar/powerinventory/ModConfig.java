@@ -19,6 +19,13 @@ public class ModConfig
 	public static boolean enableUncrafting;
 	public static boolean enableEnchantBottles;
 	
+	
+	
+	
+	
+
+	public static boolean enableCompatMode;
+	
 	//2: add in/fix the armor background images
 	
 	

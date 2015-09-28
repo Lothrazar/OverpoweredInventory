@@ -11,12 +11,16 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryCustomPlayer implements IInventory
 {
-	public static final int INV_SIZE = Const.INVOSIZE;
+	public static final int INV_SIZE = 36;
 	ItemStack[] inventory = new ItemStack[INV_SIZE];
 //thanks for http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571597-forge-1-6-4-1-8-custom-inventories-in-items-and
 	private final String tagName = "opinvtags";
 	private final String tagSlot = "Slot";
 	
+
+    private ItemStack bottleStack;
+    private ItemStack uncraftStack;
+    
 	@Override
 	public int getSizeInventory()
 	{
@@ -27,6 +31,17 @@ public class InventoryCustomPlayer implements IInventory
 	@Override
 	public ItemStack getStackInSlot(int slot)
 	{
+        if(slot == Const.bottleSlot){return bottleStack;} 
+        if(slot == Const.uncraftSlot){return uncraftStack;} 
+        /*
+        if (index >= aitemstack.length)
+        {
+            index -= aitemstack.length;
+            aitemstack = this.armorInventory;
+        }
+        if(index>=aitemstack.length){return null;}//TODO: is this only from swapping configsizes???
+*/
+        
 		return inventory[slot];
 	}
 
@@ -78,13 +93,23 @@ public class InventoryCustomPlayer implements IInventory
 	}
 
 	@Override
-	public void setInventorySlotContents(int slot, ItemStack itemstack)
+	public void setInventorySlotContents(int slot, ItemStack stack)
 	{
-		this.inventory[slot] = itemstack;
-
-		if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit())
+		if(slot == Const.bottleSlot)
 		{
-			itemstack.stackSize = this.getInventoryStackLimit();
+			bottleStack = stack;  
+		}
+		else if(slot == Const.uncraftSlot)
+		{
+			this.uncraftStack = stack;  
+		}
+		else
+			this.inventory[slot] = stack;
+// 
+		
+		if (stack != null && stack.stackSize > this.getInventoryStackLimit())
+		{
+			stack.stackSize = this.getInventoryStackLimit();
 		}
 
 		this.onInventoryChanged();

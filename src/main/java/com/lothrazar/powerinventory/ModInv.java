@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.lothrazar.powerinventory.proxy.CommonProxy; 
 import com.lothrazar.powerinventory.proxy.DumpButtonPacket;
-import com.lothrazar.powerinventory.proxy.EnderChestPacket;
+import com.lothrazar.powerinventory.proxy.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.ExpButtonPacket;
 import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket;
@@ -74,7 +74,7 @@ public class ModInv
 
     	
     	int packetID = 0;
-    	network.registerMessage(EnderChestPacket.class,  EnderChestPacket.class,  packetID++, Side.SERVER);
+    	network.registerMessage(OpenInventoryPacket.class,  OpenInventoryPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(SortButtonPacket.class,  SortButtonPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(FilterButtonPacket.class,FilterButtonPacket.class,packetID++, Side.SERVER);
     	network.registerMessage(EnderPearlPacket.class,  EnderPearlPacket.class,  packetID++, Side.SERVER);
@@ -133,6 +133,10 @@ public class ModInv
 		ModConfig.enableEnchantBottles =  config.getBoolean("enable_enchantbottles",category,true,"Lets you disable the enchanting bottle filling slot and button");
 		
 		
+		
+		ModConfig.enableCompatMode =  config.getBoolean("compatibility_mode",category,false,"!!!");
+		
+		
 		ModConfig.smallMedLarge = config.getString("normal_small", category, "normal", "Valid values are only exactly normal/small.    Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18.  WARNING: EMPTY YOUR PLAYERS INVENTORY IN A CHEST before changing this.  And to be safe, BACKUP YOUR WORLD!");
 		
 		if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
@@ -166,7 +170,9 @@ public class ModInv
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-   	 	NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+    	//if comp
+    	if(ModConfig.enableCompatMode)
+   	 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
    	 	
     	if(ModConfig.enderPearl64)
     	{

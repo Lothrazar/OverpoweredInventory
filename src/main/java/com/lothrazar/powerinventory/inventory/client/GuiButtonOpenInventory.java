@@ -1,6 +1,6 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.proxy.EnderChestPacket;
+import com.lothrazar.powerinventory.proxy.OpenInventoryPacket;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
 
@@ -37,11 +37,12 @@ public class GuiButtonOpenInventory extends GuiButton
     			Minecraft.getMinecraft().displayGuiScreen(new GuiBigInventory(mc.thePlayer));
     			break;
     		case Const.INV_ENDER:
+    		case Const.INV_SOLO:
     			//other GUI's have to be hit from server side first to open
         		//send packet to server from client (this) makes sense
         		NBTTagCompound tags = new NBTTagCompound();
         		tags.setInteger("i", invType);//TODO: use const.nbt flag
-    			ModInv.instance.network.sendToServer(new EnderChestPacket(tags));
+    			ModInv.instance.network.sendToServer(new OpenInventoryPacket(tags));
     		break;
     		} 
     	}
