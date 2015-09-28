@@ -52,25 +52,25 @@ public class BigInventoryPlayer extends InventoryPlayer
 	}
 	
 	@Override
-	public ItemStack getStackInSlot(int index)
+	public ItemStack getStackInSlot(int slot)
     {
         ItemStack[] aitemstack = this.mainInventory;
         //check these first, otherwise it crashes thinking they are armor
-        if(index == Const.enderPearlSlot){return enderPearlStack;}
-        if(index == Const.enderChestSlot){return enderChestStack;} 
-        if(index == Const.clockSlot){return clockStack;}
-        if(index == Const.compassSlot){return compassStack;} 
-        if(index == Const.bottleSlot){return bottleStack;} 
-        if(index == Const.uncraftSlot){return uncraftStack;} 
+        if(slot == Const.enderPearlSlot){return enderPearlStack;}
+        if(slot == Const.enderChestSlot){return enderChestStack;} 
+        if(slot == Const.clockSlot){return clockStack;}
+        if(slot == Const.compassSlot){return compassStack;} 
+        if(slot == Const.bottleSlot){return bottleStack;} 
+        if(slot == Const.uncraftSlot){return uncraftStack;} 
         
-        if (index >= aitemstack.length)
+        if (slot >= aitemstack.length)
         {
-            index -= aitemstack.length;
+            slot -= aitemstack.length;
             aitemstack = this.armorInventory;
         }
-        if(index>=aitemstack.length){return null;}//TODO: is this only from swapping configsizes???
+        if(slot>=aitemstack.length){return null;}//TODO: is this only from swapping configsizes???
 
-        return aitemstack[index];
+        return aitemstack[slot];
     }
 	
 	@Override

@@ -3,6 +3,10 @@ package com.lothrazar.powerinventory.standalone;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.inventory.SlotBottle;
+import com.lothrazar.powerinventory.inventory.SlotClock;
+import com.lothrazar.powerinventory.inventory.SlotCompass;
+import com.lothrazar.powerinventory.inventory.SlotEnderChest;
+import com.lothrazar.powerinventory.inventory.SlotEnderPearl;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -17,6 +21,7 @@ import net.minecraft.util.IIcon;
 
 public class ContainerCustomPlayer extends Container
 {
+	private EntityPlayer thePlayer;
 	private static final int ARMOR_START = InventoryCustomPlayer.INV_SIZE, ARMOR_END = ARMOR_START+3,
 
 			INV_START = ARMOR_END+1, INV_END = INV_START+26, HOTBAR_START = INV_END+1,
@@ -25,7 +30,10 @@ public class ContainerCustomPlayer extends Container
 
 	static int S_BOTTLE;
 	static int S_UNCRAFT;
-	private EntityPlayer thePlayer;
+	static int S_ECHEST;
+	static int S_PEARL;
+	static int S_CLOCK;
+	static int S_COMPASS;
 	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
 		thePlayer = player;
@@ -33,7 +41,18 @@ public class ContainerCustomPlayer extends Container
 		int i;
 		
 		
-		//int slot = 0;
+		S_PEARL =  this.inventorySlots.size() ;
+        this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.enderPearlSlot, Const.pearlX, Const.pearlY));
+
+        S_ECHEST =  this.inventorySlots.size() ;
+        this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.enderChestSlot, Const.echestX, Const.echestY)); 
+
+        S_CLOCK =  this.inventorySlots.size() ;
+        this.addSlotToContainer(new SlotClock(inventoryCustom, Const.clockSlot, Const.clockX, Const.clockY)); 
+
+        S_COMPASS =  this.inventorySlots.size() ;
+        this.addSlotToContainer(new SlotCompass(inventoryCustom, Const.compassSlot, Const.compassX, Const.compassY)); 
+        
 		
 	    if(ModConfig.enableEnchantBottles)
         {
@@ -46,10 +65,7 @@ public class ContainerCustomPlayer extends Container
 	        S_UNCRAFT =  this.inventorySlots.size() ; 
 	        this.addSlotToContainer(new Slot(inventoryCustom, Const.uncraftSlot, Const.uncraftX, Const.uncraftY)); 
         }
-		//this.addSlotToContainer(new Slot(inventoryCustom, slot++, 81, 8));
-
-		//this.addSlotToContainer(new Slot(inventoryCustom, slot++, 81, 26));
-	
+	 
 		
 		//armor slots would go here
 		 for (i = 0; i < Const.armorSize; ++i)

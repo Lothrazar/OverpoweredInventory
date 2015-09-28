@@ -18,6 +18,10 @@ public class InventoryCustomPlayer implements IInventory
 	private final String tagSlot = "Slot";
 	
 
+    private ItemStack enderPearlStack;
+    private ItemStack enderChestStack;
+    private ItemStack clockStack;
+    private ItemStack compassStack;
     private ItemStack bottleStack;
     private ItemStack uncraftStack;
     
@@ -33,6 +37,10 @@ public class InventoryCustomPlayer implements IInventory
 	{
         if(slot == Const.bottleSlot){return bottleStack;} 
         if(slot == Const.uncraftSlot){return uncraftStack;} 
+        if(slot == Const.enderPearlSlot){return enderPearlStack;}
+        if(slot == Const.enderChestSlot){return enderChestStack;} 
+        if(slot == Const.clockSlot){return clockStack;}
+        if(slot == Const.compassSlot){return compassStack;} 
         /*
         if (index >= aitemstack.length)
         {
@@ -95,7 +103,23 @@ public class InventoryCustomPlayer implements IInventory
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack)
 	{
-		if(slot == Const.bottleSlot)
+		if(slot == Const.enderPearlSlot)
+		{
+			enderPearlStack = stack;  
+		}
+		else if(slot == Const.enderChestSlot)
+		{
+			enderChestStack = stack;  
+		}
+		else if(slot == Const.clockSlot)
+		{
+			clockStack = stack;  
+		}
+		else if(slot == Const.compassSlot)
+		{
+			compassStack = stack;  
+		}
+		else if(slot == Const.bottleSlot)
 		{
 			bottleStack = stack;  
 		}

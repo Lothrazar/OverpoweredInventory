@@ -164,6 +164,29 @@ public class ModInv
 		Const.ALL_COLS = 9 + Const.MORE_COLS;
 		Const.ALL_ROWS = 3 + Const.MORE_ROWS;
 		Const.INVOSIZE  = Const.ALL_COLS * Const.ALL_ROWS;
+		
+		
+		if(ModConfig.enableCompatMode)
+		{
+			Const.texture_width = 176;
+			Const.texture_height = 166;
+			
+			int charSpace = 54;// moving stuff left
+			
+			//TODO: these get set twice, or more, we should fix this whole setup but for now just get it working
+			Const.compassX -= charSpace;
+			Const.clockX -= charSpace;
+			Const.pearlX -= charSpace;
+			Const.echestX -= charSpace;
+			
+			Const.bottleX = Const.texture_width - Const.square - Const.padding - 1;
+			 
+			Const.uncraftX = Const.bottleX;
+		}
+		
+		
+		
+		
 		if(config.hasChanged()){config.save();}
 	}
     

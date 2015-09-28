@@ -193,28 +193,9 @@ public class GuiBigInventory extends GuiInventory
 	{
 		//wrapper for drawTexturedQuadFit
 		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, texture)); 
-		drawTexturedQuadFit(x,y,width,height);
+		Const.drawTexturedQuadFit(x,y,width,height);
 	}
-	
-	public static void drawTexturedQuadFit(double x, double y, double width, double height)
-	{
-		double zLevel = 0;
-		//because the vanilla code REQUIRES textures to be powers of two AND are force dto be max of 256??? WHAT?
-		//so this one actually works
-		//THANKS hydroflame  ON FORUMS 
-		//http://www.minecraftforge.net/forum/index.php/topic,11229.msg57594.html#msg57594
-		
-		Tessellator tessellator = Tessellator.instance;
-  
-		//WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-		tessellator.startDrawingQuads();
-        
-		tessellator.addVertexWithUV(x + 0, y + height, zLevel, 0,1);
-		tessellator.addVertexWithUV(x + width, y + height, zLevel, 1, 1);
-		tessellator.addVertexWithUV(x + width, y + 0, zLevel, 1,0);
-		tessellator.addVertexWithUV(x + 0, y + 0, zLevel, 0, 0);
-        tessellator.draw();
-	}
+
 	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
@@ -223,7 +204,7 @@ public class GuiBigInventory extends GuiInventory
         GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
 
-        drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize);
+        Const.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize);
  
         if(ModConfig.showCharacter)//drawEntityOnScreen
         	func_147046_a(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
@@ -241,7 +222,7 @@ public class GuiBigInventory extends GuiInventory
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, "textures/gui/inventory_slot.png"));
          
         //was this.drawTexturedModalRect
-        drawTexturedQuadFit(this.guiLeft+ x -1, this.guiTop+ y -1,  Const.square, Const.square);
+        Const.drawTexturedQuadFit(this.guiLeft+ x -1, this.guiTop+ y -1,  Const.square, Const.square);
 	}
 	
 	@Override

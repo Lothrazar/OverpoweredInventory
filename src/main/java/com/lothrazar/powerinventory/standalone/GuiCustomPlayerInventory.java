@@ -101,26 +101,28 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
 		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID,  "textures/gui/inventory.png"));
 		
-		drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
+		Const.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize);//,0
  
-	}
-	
-	public static void drawTexturedQuadFit(double x, double y, double width, double height, double zLevel)
-	{
-		//because the vanilla code REQUIRES textures to be powers of two AND are force dto be max of 256??? WHAT?
-		//so this one actually works
-		//THANKS hydroflame  ON FORUMS 
-		//http://www.minecraftforge.net/forum/index.php/topic,11229.msg57594.html#msg57594
-		
-		Tessellator tessellator = Tessellator.instance;
-  
-		//WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-		tessellator.startDrawingQuads();
+        //if feature is enabled, draw these
+        if(ModConfig.enableEnchantBottles)
+        	drawSlotAt(Const.bottleX, Const.bottleY);
+
+        if(ModConfig.enableUncrafting)
+        	drawSlotAt(Const.uncraftX, Const.uncraftY);
         
-		tessellator.addVertexWithUV(x + 0, y + height, zLevel, 0,1);
-		tessellator.addVertexWithUV(x + width, y + height, zLevel, 1, 1);
-		tessellator.addVertexWithUV(x + width, y + 0, zLevel, 1,0);
-		tessellator.addVertexWithUV(x + 0, y + 0, zLevel, 0, 0);
-        tessellator.draw();
+
+    	drawSlotAt(Const.echestX, Const.echestY);
+    	drawSlotAt(Const.pearlX, Const.pearlY);
+    	drawSlotAt(Const.clockX, Const.clockY);
+    	drawSlotAt(Const.compassX, Const.compassY);
 	}
+
+	private void drawSlotAt(int x, int y)
+	{
+        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, "textures/gui/inventory_slot.png"));
+         
+        //was this.drawTexturedModalRect
+        Const.drawTexturedQuadFit(this.guiLeft+ x -1, this.guiTop+ y -1,  Const.square, Const.square);
+	}
+
 }
