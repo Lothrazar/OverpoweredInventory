@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.standalone.InventoryCustomPlayer;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -86,6 +87,8 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	@Override
 	public void loadNBTData(NBTTagCompound compound)
 	{
+		this.inventory.readFromNBT(compound);
+		
 		if(!(player.inventory instanceof BigInventoryPlayer))
 		{
 			player.inventory = new BigInventoryPlayer(player);
@@ -109,6 +112,16 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 		}
 	}
 
+	
+	public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
+	
+	
+	
+
 	@Override
-	public void saveNBTData(NBTTagCompound compound) {}
+	public void saveNBTData(NBTTagCompound properties) 
+	{
+		this.inventory.writeToNBT(properties);
+		
+	}
 }

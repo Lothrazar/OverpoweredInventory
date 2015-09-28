@@ -1,6 +1,8 @@
 package com.lothrazar.powerinventory.proxy;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.ModInv;
+import com.lothrazar.powerinventory.standalone.GuiHandler;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,6 +43,15 @@ public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPa
 	public IMessage onMessage(EnderChestPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
+		
+		
+		boolean altMode=true;
+		if(altMode)
+		{
+			p.openGui(ModInv.instance, GuiHandler.GUI_CUSTOM_INV, p.worldObj, (int) p.posX, (int) p.posY, (int) p.posZ);
+
+			return null;
+		}
 		
 		if( p.inventory.getStackInSlot(Const.enderChestSlot) != null)
 			p.displayGUIChest(p.getInventoryEnderChest());

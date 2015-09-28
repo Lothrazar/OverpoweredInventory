@@ -17,6 +17,7 @@ import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket;
 import com.lothrazar.powerinventory.proxy.SortButtonPacket; 
 import com.lothrazar.powerinventory.proxy.UncButtonPacket;
+import com.lothrazar.powerinventory.standalone.GuiHandler;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -165,6 +166,8 @@ public class ModInv
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
+   	 	NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+   	 	
     	if(ModConfig.enderPearl64)
     	{
     		Items.ender_pearl.setMaxStackSize(64);
