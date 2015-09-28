@@ -70,7 +70,7 @@ public class GuiBigInventory extends GuiInventory
 				btnUncraft = new GuiButtonUnc(button_id++, 
 						this.guiLeft + Const.uncraftX - 51 ,
 						this.guiTop + Const.uncraftY - 1,
-						width + 20,height,StatCollector.translateToLocal("button.unc"));
+						width + 20,height);
 				this.buttonList.add(btnUncraft); 
 				btnUncraft.enabled = false;// turn it on based on ender chest present or not
 				btnUncraft.visible = btnUncraft.enabled;
@@ -88,7 +88,7 @@ public class GuiBigInventory extends GuiInventory
 				btnExp = new GuiButtonExp(button_id++, 
 						this.guiLeft + Const.bottleX - width - padding+1, 
 						this.guiTop + Const.bottleY-2,
-						width,height,StatCollector.translateToLocal("button.exp"));
+						width,height);
 				this.buttonList.add(btnExp);
 				
 				btnExp.enabled = false;

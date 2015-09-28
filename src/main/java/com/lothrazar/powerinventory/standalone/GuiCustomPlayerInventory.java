@@ -19,11 +19,11 @@ import net.minecraft.util.StatCollector;
 
 public class GuiCustomPlayerInventory extends GuiContainer
 {
-/*
+
 	GuiButton btnEnder;
 	GuiButton btnExp;
 	GuiButton btnUncraft;
-	*/
+	
 	ResourceLocation res = new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE);
 	private final InventoryCustomPlayer inventory;
 	private final EntityPlayer thePlayer;
@@ -45,14 +45,15 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		super.initGui();
 
 		int button_id = 199;
-		final int padding = 6;
-		/*
+		int width = 26;
+		final int height = 20;
+		
 		if(ModConfig.enableUncrafting)
 	    {
 			btnUncraft = new GuiButtonUnc(button_id++, 
 					this.guiLeft + Const.uncraftX - 51 ,
 					this.guiTop + Const.uncraftY - 1,
-					width + 20,height,StatCollector.translateToLocal("button.unc"));
+					width + 20,height);
 			this.buttonList.add(btnUncraft); 
 			btnUncraft.enabled = false;// turn it on based on ender chest present or not
 			//btnUncraft.visible = btnUncraft.enabled;
@@ -69,16 +70,14 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		if(ModConfig.enableEnchantBottles)
 	    {
 			btnExp = new GuiButtonExp(button_id++, 
-					this.guiLeft + Const.bottleX - width - padding+1, 
+					this.guiLeft + Const.bottleX - width - Const.padding+1, 
 					this.guiTop + Const.bottleY-2,
-					width,height,StatCollector.translateToLocal("button.exp"));
+					width,height);
 			this.buttonList.add(btnExp);
 			
 			btnExp.enabled = false;
 			//btnExp.visible = btnExp.enabled;
 	    }
-		*/
-		
     }
 	
 	public void drawScreen(int par1, int par2, float par3)

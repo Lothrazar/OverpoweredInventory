@@ -7,6 +7,7 @@ import com.lothrazar.powerinventory.ModInv;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 /** 
@@ -14,9 +15,9 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class GuiButtonExp extends GuiButton 
 {  
-    public GuiButtonExp(int buttonId, int x, int y, int w,int h,  String text)
+    public GuiButtonExp(int buttonId, int x, int y, int w,int h)
     {
-    	super(buttonId, x, y, w,h, text );  
+    	super(buttonId, x, y, w,h, StatCollector.translateToLocal("button.exp") );  
     }
 
     @SideOnly(Side.CLIENT)

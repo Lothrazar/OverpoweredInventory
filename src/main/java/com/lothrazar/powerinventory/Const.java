@@ -55,7 +55,7 @@ public class Const
 	
 	
 
-	final static int padding = 6;
+	public final static int padding = 6;
 	
 	
 	
