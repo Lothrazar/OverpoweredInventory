@@ -26,14 +26,14 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	
 	ResourceLocation res = new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE);
 	private final InventoryCustomPlayer inventory;
-	private final EntityPlayer thePlayer;
+	//private final EntityPlayer thePlayer;
 	
 	
 	public GuiCustomPlayerInventory(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
 		super(new ContainerCustomPlayer(player, inventoryPlayer, inventoryCustom));
 		inventory = inventoryCustom;
-		thePlayer = player;
+		//thePlayer = player;
 
 	}
 	
@@ -55,7 +55,7 @@ public class GuiCustomPlayerInventory extends GuiContainer
 					this.guiTop + Const.uncraftY - 1,
 					width + 20,height);
 			this.buttonList.add(btnUncraft); 
-			btnUncraft.enabled = false;// turn it on based on ender chest present or not
+			//btnUncraft.enabled = false;// turn it on based on ender chest present or not
 			//btnUncraft.visible = btnUncraft.enabled;
 	    }
 		
@@ -64,7 +64,7 @@ public class GuiCustomPlayerInventory extends GuiContainer
 				this.guiTop + Const.echestY - 1,
 				12,height, "I",Const.INV_ENDER); 
 		this.buttonList.add(btnEnder); 
-		btnEnder.enabled = false;// turn it on based on ender chest present or not
+		//btnEnder.enabled = false;// turn it on based on ender chest present or not
 		//btnEnder.visible = btnEnder.enabled;
 		
 		if(ModConfig.enableEnchantBottles)
@@ -75,7 +75,7 @@ public class GuiCustomPlayerInventory extends GuiContainer
 					width,height);
 			this.buttonList.add(btnExp);
 			
-			btnExp.enabled = false;
+			//btnExp.enabled = false;
 			//btnExp.visible = btnExp.enabled;
 	    }
     }

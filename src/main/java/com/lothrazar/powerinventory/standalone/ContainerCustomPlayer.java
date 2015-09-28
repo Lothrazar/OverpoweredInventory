@@ -27,7 +27,7 @@ public class ContainerCustomPlayer extends Container
 			INV_START = ARMOR_END+1, INV_END = INV_START+26, HOTBAR_START = INV_END+1,
 
 			HOTBAR_END = HOTBAR_START+8;
-
+	public InventoryCustomPlayer invo;
 	static int S_BOTTLE;
 	static int S_UNCRAFT;
 	static int S_ECHEST;
@@ -111,7 +111,7 @@ public class ContainerCustomPlayer extends Container
         }
 
 		
-		
+		invo = inventoryCustom;
 	}
 	
 	@Override

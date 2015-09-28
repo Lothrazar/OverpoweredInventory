@@ -3,6 +3,7 @@ package com.lothrazar.powerinventory.proxy;
 import java.util.ArrayList;
 
 import com.lothrazar.powerinventory.*;
+import com.lothrazar.powerinventory.standalone.ContainerCustomPlayer;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityItem;
@@ -100,7 +101,21 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 	{
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 		
-		ItemStack toUncraft = player.inventory.getStackInSlot(Const.uncraftSlot);
+		ItemStack toUncraft;// = player.inventory.getStackInSlot(Const.uncraftSlot);
+		
+		if(player.openContainer instanceof ContainerCustomPlayer)
+		{
+			ContainerCustomPlayer c = (ContainerCustomPlayer)player.openContainer ;
+			
+			toUncraft = c.invo.getStackInSlot(Const.uncraftSlot);
+		}
+		else
+		{
+
+			toUncraft = player.inventory.getStackInSlot(Const.uncraftSlot);
+		}
+		
+		
 		if(toUncraft == null){return null;}
 		
 		if(blacklist.contains(toUncraft.getItem())){return null;}

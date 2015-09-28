@@ -3,6 +3,7 @@ package com.lothrazar.powerinventory.proxy;
 import java.util.ArrayList;
 
 import com.lothrazar.powerinventory.*;
+import com.lothrazar.powerinventory.standalone.ContainerCustomPlayer;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityItem;
@@ -47,12 +48,20 @@ public class ExpButtonPacket implements IMessage , IMessageHandler<ExpButtonPack
 	public IMessage onMessage(ExpButtonPacket message, MessageContext ctx)
 	{
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
-		
+		ItemStack bottles ;
+		if(player.openContainer instanceof ContainerCustomPlayer)
+		{
+			ContainerCustomPlayer c = (ContainerCustomPlayer)player.openContainer ;
+			
+			bottles = c.invo.getStackInSlot(Const.bottleSlot);
+		}
+		else
+		{
+
+			bottles = player.inventory.getStackInSlot(Const.bottleSlot);
+		}
 		//in the game, they drop between 3 and 11 experience //src http://minecraft.gamepedia.com/Bottle_o'_Enchanting
-		//int e =ModConfig.expPerBottle;
-		
-		ItemStack bottles = player.inventory.getStackInSlot(Const.bottleSlot);
-		
+	 
 		if(bottles != null && bottles.getItem() == Items.glass_bottle)
 		{
 			double current = UtilExperience.getExpTotal(player);

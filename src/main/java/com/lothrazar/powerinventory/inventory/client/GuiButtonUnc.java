@@ -30,6 +30,8 @@ public class GuiButtonUnc extends GuiButton
     	
     	if(pressed)
     	{   
+    		//TODO: save inventory as part of button
+    		//send item as NBT data in the packet
     	//TODO	if(player.inventory.getStackInSlot(Const.uncraftSlot) != null)
     			ModInv.instance.network.sendToServer(new UncButtonPacket(new NBTTagCompound()));
     	}

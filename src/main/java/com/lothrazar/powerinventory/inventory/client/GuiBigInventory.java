@@ -132,6 +132,7 @@ public class GuiBigInventory extends GuiInventory
 	
 	private void checkSlotsEmpty()
 	{
+		//TODO: interface-ey stuff to share code more
 		final int s = 16;
  
 		if(container.invo.getStackInSlot(Const.enderChestSlot) == null)
