@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Level;
 
 import com.google.common.collect.Lists;
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
 /**
@@ -160,11 +161,17 @@ public class BigContainerPlayer extends ContainerPlayer
         S_COMPASS =  this.inventorySlots.size() ;
         this.addSlotToContainer(new SlotCompass(playerInventory, Const.compassSlot, compassX, compassY)); 
         
-        S_BOTTLE =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotBottle(playerInventory, Const.bottleSlot, bottleX, bottleY)); 
+        if(ModConfig.enableEnchantBottles)
+        {
+	        S_BOTTLE =  this.inventorySlots.size() ;
+	        this.addSlotToContainer(new SlotBottle(playerInventory, Const.bottleSlot, bottleX, bottleY)); 
+        }
         
-        S_UNCRAFT =  this.inventorySlots.size() ;//TODO: should it work like crafting window and dump contents
-        this.addSlotToContainer(new Slot(playerInventory, Const.uncraftSlot, uncraftX, uncraftY)); 
+        if(ModConfig.enableUncrafting)
+        {
+	        S_UNCRAFT =  this.inventorySlots.size() ;//TODO: should it work like crafting window and dump contents
+	        this.addSlotToContainer(new Slot(playerInventory, Const.uncraftSlot, uncraftX, uncraftY)); 
+        }
         
         this.onCraftMatrixChanged(this.craftMatrix);
 		this.invo = playerInventory; 

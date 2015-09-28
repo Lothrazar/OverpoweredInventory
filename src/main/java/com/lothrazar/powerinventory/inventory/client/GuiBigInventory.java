@@ -64,15 +64,17 @@ public class GuiBigInventory extends GuiInventory
 						this.guiTop + padding,
 						widthlrg,height));
 			}
-			 
-			btnUncraft = new GuiButtonUnc(button_id++, 
-					this.guiLeft + container.uncraftX - 51 ,
-					this.guiTop + container.uncraftY - 1,
-					width + 20,height,StatCollector.translateToLocal("button.unc"));
-			this.buttonList.add(btnUncraft); 
-			btnUncraft.enabled = false;// turn it on based on ender chest present or not
-			btnUncraft.visible = btnUncraft.enabled;
 
+			if(ModConfig.enableUncrafting)
+		    {
+				btnUncraft = new GuiButtonUnc(button_id++, 
+						this.guiLeft + container.uncraftX - 51 ,
+						this.guiTop + container.uncraftY - 1,
+						width + 20,height,StatCollector.translateToLocal("button.unc"));
+				this.buttonList.add(btnUncraft); 
+				btnUncraft.enabled = false;// turn it on based on ender chest present or not
+				btnUncraft.visible = btnUncraft.enabled;
+		    }
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
 					this.guiLeft + container.echestX + 19, 
 					this.guiTop + container.echestY - 1,
@@ -81,13 +83,17 @@ public class GuiBigInventory extends GuiInventory
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
 			btnEnder.visible = btnEnder.enabled;
 			
-			btnExp = new GuiButtonExp(button_id++, 
-					this.guiLeft + container.bottleX - width - padding+1, 
-					this.guiTop + container.bottleY-2,
-					width,height,StatCollector.translateToLocal("button.exp"));
-			this.buttonList.add(btnExp);
-			btnExp.enabled = false;
-			btnExp.visible = btnExp.enabled;
+			if(ModConfig.enableEnchantBottles)
+		    {
+				btnExp = new GuiButtonExp(button_id++, 
+						this.guiLeft + container.bottleX - width - padding+1, 
+						this.guiTop + container.bottleY-2,
+						width,height,StatCollector.translateToLocal("button.exp"));
+				this.buttonList.add(btnExp);
+				
+				btnExp.enabled = false;
+				btnExp.visible = btnExp.enabled;
+		    }
 		 
 			if(ModConfig.showSortButtons)
 			{  
@@ -140,31 +146,32 @@ public class GuiBigInventory extends GuiInventory
 			btnEnder.enabled = true; 
 			btnEnder.visible = btnEnder.enabled;
 		}
-		
-		if(container.invo.getStackInSlot(Const.uncraftSlot) == null)
-		{ 
-			btnUncraft.enabled = false;
-			btnUncraft.visible = btnUncraft.enabled; 
-		}
-		else 
-		{ 
-			btnUncraft.enabled = true; 
-			btnUncraft.visible = btnUncraft.enabled;
-		}
+		if(ModConfig.enableUncrafting) 
+			if(container.invo.getStackInSlot(Const.uncraftSlot) == null)
+			{ 
+				btnUncraft.enabled = false;
+				btnUncraft.visible = btnUncraft.enabled; 
+			}
+			else 
+			{ 
+				btnUncraft.enabled = true; 
+				btnUncraft.visible = btnUncraft.enabled;
+			}
 
-		if(container.invo.getStackInSlot(Const.bottleSlot) == null || 
-		   container.invo.getStackInSlot(Const.bottleSlot).getItem() == Items.experience_bottle	)
-		{
-			btnExp.enabled = false;
-			btnExp.visible = btnExp.enabled;
-  
-		//	drawTextureSimple("textures/items/empty_bottle.png",container.bottleX, container.bottleY,s,s); 
-		}
-		else 
-		{ 
-			btnExp.enabled = true; 
-			btnExp.visible = btnExp.enabled;
-		}
+		if(ModConfig.enableEnchantBottles) 
+			if(container.invo.getStackInSlot(Const.bottleSlot) == null || 
+			   container.invo.getStackInSlot(Const.bottleSlot).getItem() == Items.experience_bottle	)
+			{
+				btnExp.enabled = false;
+				btnExp.visible = btnExp.enabled;
+	  
+				drawTextureSimple("textures/items/empty_bottle.png",container.bottleX, container.bottleY,s,s); 
+			}
+			else 
+			{ 
+				btnExp.enabled = true; 
+				btnExp.visible = btnExp.enabled;
+			}
 
 		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
@@ -221,8 +228,12 @@ public class GuiBigInventory extends GuiInventory
         if(ModConfig.showCharacter)//drawEntityOnScreen
         	func_147046_a(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
 	
+        //if feature is enabled, draw these
+        if(ModConfig.enableEnchantBottles)
+        	drawSlotAt(container.bottleX, container.bottleY);
 
-        drawSlotAt(container.bottleX, container.bottleY);
+        if(ModConfig.enableUncrafting)
+        	drawSlotAt(container.uncraftX, container.uncraftY);
 	}
 
 	private void drawSlotAt(int x, int y)

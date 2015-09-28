@@ -85,6 +85,7 @@ public class ModInv
 		MinecraftForge.EVENT_BUS.register(instance);
 		FMLCommonHandler.instance().bus().register(instance);
     }
+    
     boolean sentVersionMessage = false;//only send it once
     VersionChecker versionChecker ;
     @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
@@ -104,7 +105,6 @@ public class ModInv
         } 
     }
 
-    
     @EventHandler
     public void postInit(FMLPostInitializationEvent  event)
     {
@@ -112,6 +112,7 @@ public class ModInv
     	Thread versionCheckThread = new Thread(versionChecker, "Version Check");
     	versionCheckThread.start();
     }
+    
 	private void loadConfig() 
 	{
     	config.load();
@@ -123,27 +124,17 @@ public class ModInv
 		ModConfig.showSortButtons = config.getBoolean("move_inventory_buttons",category,true,"Show or hide the inventory shifting buttons << >>");
 		ModConfig.showCornerButtons = config.getBoolean("show_corner_buttons",category,true,"Show or hide the corner inventory buttons in other GUI's");
 		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
+		
 		ModConfig.showMergeDeposit = config.getBoolean("merge_deposit_buttons", category, true, "Show or hide the merge deposit buttons in upper right corner.");
 		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
 		  
+		ModConfig.enableUncrafting = config.getBoolean("enable_uncrafting",category,true,"Lets you disable the uncrafting slot and button");
+		ModConfig.enableEnchantBottles =  config.getBoolean("enable_enchantbottles",category,true,"Lets you disable the enchanting bottle filling slot and button");
 		
-		ModConfig.smallMedLarge = config.getString("normal_small", category, "normal", "Valid values are only exactly normal/small.  WARNING: BACKUP YOUR WORLD BEFORE CHANGING THIS.  Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18");
- 
-		/*if(ModConfig.smallMedLarge == "large")//only place magics get used
-		{
-			 
-	 //testing
-
-			Const.MORE_ROWS = 15;
-		 
-			Const.MORE_COLS = 2*9;
-
-			Const.texture_width = 464;
-			Const.texture_height = 382;
-		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_18x27.png";//18x27
-		}
-		else 
-			*/if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
+		
+		ModConfig.smallMedLarge = config.getString("normal_small", category, "normal", "Valid values are only exactly normal/small.    Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18.  WARNING: EMPTY YOUR PLAYERS INVENTORY IN A CHEST before changing this.  And to be safe, BACKUP YOUR WORLD!");
+		
+		if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
 		{
 
 			Const.MORE_ROWS = 12;//texture 15x25
@@ -154,7 +145,6 @@ public class ModInv
 			Const.texture_height = 382;
 		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_15x25.png";//375 total
 		}
-		//12x18 is abandoned
 		else//assume its small
 		{
 			Const.MORE_ROWS = 3;

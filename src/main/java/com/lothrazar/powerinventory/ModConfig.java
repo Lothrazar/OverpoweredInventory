@@ -15,7 +15,9 @@ public class ModConfig
 	public static int filterRange; 
 	public static int expPerBottle;
 	
-	
+
+	public static boolean enableUncrafting;
+	public static boolean enableEnchantBottles;
 	
 	//2: add in/fix the armor background images
 	
