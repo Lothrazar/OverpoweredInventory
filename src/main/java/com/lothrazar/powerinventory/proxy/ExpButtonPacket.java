@@ -10,6 +10,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityChest;
@@ -48,18 +49,19 @@ public class ExpButtonPacket implements IMessage , IMessageHandler<ExpButtonPack
 	public IMessage onMessage(ExpButtonPacket message, MessageContext ctx)
 	{
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
-		ItemStack bottles ;
+	 
+		IInventory invo;
 		if(player.openContainer instanceof ContainerCustomPlayer)
 		{
 			ContainerCustomPlayer c = (ContainerCustomPlayer)player.openContainer ;
-			
-			bottles = c.invo.getStackInSlot(Const.bottleSlot);
+			invo = c.invo;
 		}
 		else
 		{
-
-			bottles = player.inventory.getStackInSlot(Const.bottleSlot);
+			invo = player.inventory;
 		}
+		
+		ItemStack bottles = invo.getStackInSlot(Const.bottleSlot);
 		//in the game, they drop between 3 and 11 experience //src http://minecraft.gamepedia.com/Bottle_o'_Enchanting
 	 
 		if(bottles != null && bottles.getItem() == Items.glass_bottle)
@@ -82,7 +84,7 @@ public class ExpButtonPacket implements IMessage , IMessageHandler<ExpButtonPack
 			{ 
 				UtilExperience.drainExp(player, bottlesToDrain * ModConfig.expPerBottle);
 				
-				player.inventory.setInventorySlotContents(Const.bottleSlot, new ItemStack(Items.experience_bottle,bottlesToDrain));
+				invo.setInventorySlotContents(Const.bottleSlot, new ItemStack(Items.experience_bottle,bottlesToDrain));
 			
 			
 				if(bottlesToDrain < bottles.stackSize) 
