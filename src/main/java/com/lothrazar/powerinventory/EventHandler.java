@@ -18,6 +18,7 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
@@ -294,13 +295,25 @@ public class EventHandler
 			int xLeft = 20;
 			int xRight = Minecraft.getMinecraft().displayWidth/2 - size*2;
 			int yBottom = Minecraft.getMinecraft().displayHeight/2 - size*2;
-
-			if(player.inventory.getStackInSlot(Const.clockSlot) != null)
+			
+			IInventory invo = null;
+			
+			if(ModConfig.enableCompatMode)
+			{
+				InventoryPersistProperty prop = InventoryPersistProperty.get(player);
+				
+				invo = prop.inventory;
+			}
+			else
+			{			
+				invo = player.inventory;
+			}
+			
+			if(invo != null && invo.getStackInSlot(Const.clockSlot) != null)
 				renderItemAt(new ItemStack(Items.clock),xLeft,yBottom,size);
 			
-			if(player.inventory.getStackInSlot(Const.compassSlot) != null)
-				renderItemAt(new ItemStack(Items.compass),xRight,yBottom,size);
- 
+			if(invo != null && invo.getStackInSlot(Const.compassSlot) != null)
+				renderItemAt(new ItemStack(Items.compass),xRight,yBottom,size);	
 		}
 	}
 
