@@ -1,10 +1,12 @@
 package com.lothrazar.powerinventory.proxy;
 
 import com.lothrazar.powerinventory.*;
+import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import cpw.mods.fml.common.network.ByteBufUtils;
@@ -40,8 +42,22 @@ public class EnderPearlPacket implements IMessage , IMessageHandler<EnderPearlPa
 	public IMessage onMessage(EnderPearlPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
-		 
- 		ItemStack pearls = p.inventory.getStackInSlot(Const.enderPearlSlot);
+
+		IInventory invo;
+		
+		if(ModConfig.enableCompatMode)
+		{
+			InventoryPersistProperty prop = InventoryPersistProperty.get(p);
+			
+			invo = prop.inventory;
+		}
+		else
+		{			
+			invo = p.inventory;
+		}
+		
+		
+ 		ItemStack pearls = invo.getStackInSlot(Const.enderPearlSlot);
  
  		if(pearls != null)
  		{
@@ -50,7 +66,7 @@ public class EnderPearlPacket implements IMessage , IMessageHandler<EnderPearlPa
  	 		p.worldObj.playSoundAtEntity(p, "random.bow", 1.0F, 1.0F);   // ref http://minecraft.gamepedia.com/Sounds.json
  	 		
  	 		if(p.capabilities.isCreativeMode == false)
- 	 			p.inventory.decrStackSize(Const.enderPearlSlot, 1);
+ 	 			invo.decrStackSize(Const.enderPearlSlot, 1);
  		}
  	
 		return null;
