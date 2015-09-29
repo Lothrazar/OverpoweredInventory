@@ -53,29 +53,154 @@ public class InventoryCustomPlayer implements IInventory
 		return inventory[slot];
 	}
 
-	@Override
-	public ItemStack decrStackSize(int slot, int amount)
-	{
-		ItemStack stack = getStackInSlot(slot);
-		if(stack != null)
-		{
-			if (stack.stackSize > amount)
-			{
-				stack = stack.splitStack(amount);
-			}
-			if (stack.stackSize == 0)
-			{
-				setInventorySlotContents(slot, null);
-			}
-		}
-		else
-		{
-			setInventorySlotContents(slot, null);
-		}
 
-		this.onInventoryChanged();
-		return stack;
-	}
+    @Override
+    public ItemStack decrStackSize(int index, int count)
+    {
+        ItemStack itemstack;
+//TODO: these ifelse brnaches are almost all identical. find a way to share code? make function?
+    	if(index == Const.enderChestSlot)
+    	{ 
+            itemstack = this.enderChestStack;
+            this.enderChestStack = null;
+            return itemstack;
+    	}    	
+    	else if(index == Const.enderPearlSlot)
+    	{
+    		 if (this.enderPearlStack.stackSize <= count)
+             {
+                 itemstack = this.enderPearlStack;
+                 this.enderPearlStack = null;
+                 return itemstack;
+             }
+    		 else
+             {
+                 itemstack = this.enderPearlStack.splitStack(count);
+
+                 if (this.enderPearlStack.stackSize == 0)
+                 {
+                	 this.enderPearlStack = null;
+                 }
+
+                 return itemstack;
+             }
+    	}	
+    	else if(index == Const.clockSlot)
+    	{
+    		 if (this.clockStack.stackSize <= count)
+             {
+                 itemstack = this.clockStack;
+                 this.clockStack = null;
+                 return itemstack;
+             }
+    		 else
+             {
+                 itemstack = this.clockStack.splitStack(count);
+
+                 if (this.clockStack.stackSize == 0)
+                 {
+                	 this.clockStack = null;
+                 }
+
+                 return itemstack;
+             }
+    	}
+    	else if(index == Const.compassSlot)
+    	{
+    		 if (this.compassStack.stackSize <= count)
+             {
+                 itemstack = this.compassStack;
+                 this.compassStack = null;
+                 return itemstack;
+             }
+    		 else
+             {
+                 itemstack = this.compassStack.splitStack(count);
+
+                 if (this.compassStack.stackSize == 0)
+                 {
+                	 this.compassStack = null;
+                 }
+
+                 return itemstack;
+             }
+    	}
+    	else if(index == Const.bottleSlot)
+    	{
+    		 if (this.bottleStack.stackSize <= count)
+             {
+                 itemstack = this.bottleStack;
+                 this.bottleStack = null;
+                 return itemstack;
+             }
+    		 else
+             {
+                 itemstack = this.bottleStack.splitStack(count);
+
+                 if (this.bottleStack.stackSize == 0)
+                 {
+                	 this.bottleStack = null;
+                 }
+
+                 return itemstack;
+             }
+    	}
+    	else if(index == Const.uncraftSlot)
+    	{
+    		 if (this.uncraftStack.stackSize <= count)
+             {
+                 itemstack = this.uncraftStack;
+                 this.uncraftStack = null;
+                 return itemstack;
+             }
+    		 else
+             {
+                 itemstack = this.uncraftStack.splitStack(count);
+
+                 if (this.uncraftStack.stackSize == 0)
+                 {
+                	 this.uncraftStack = null;
+                 }
+
+                 return itemstack;
+             }
+    	}
+    	else 
+    	{
+    		//copied from SUPER player
+    		 
+    			int p_70298_1_ = index;
+    			int p_70298_2_ = count;
+    	  
+    	        ItemStack[] aitemstack = this.inventory;
+ 
+    	        if (aitemstack[p_70298_1_] != null)
+    	        {
+    	       
+    	            if (aitemstack[p_70298_1_].stackSize <= p_70298_2_)
+    	            {
+    	                itemstack = aitemstack[p_70298_1_];
+    	                aitemstack[p_70298_1_] = null;
+    	                return itemstack;
+    	            }
+    	            else
+    	            {
+    	                itemstack = aitemstack[p_70298_1_].splitStack(p_70298_2_);
+
+    	                if (aitemstack[p_70298_1_].stackSize == 0)
+    	                {
+    	                    aitemstack[p_70298_1_] = null;
+    	                }
+
+    	                return itemstack;
+    	            }
+    	        }
+    	        else
+    	        {
+    	            return null;
+    	        }
+    	}
+    }
 
 	private void onInventoryChanged()
 	{

@@ -68,7 +68,7 @@ public class ContainerCustomPlayer extends Container
 	 
 		
 		//armor slots would go here
-		 for (i = 0; i < Const.armorSize; ++i)
+	/*	 for (i = 0; i < Const.armorSize; ++i)
         {
             final int k = i;
             this.addSlotToContainer(new Slot(inventoryPlayer, inventoryPlayer.getSizeInventory() - 1 - i, 8, 8 + i * 18)
@@ -92,7 +92,7 @@ public class ContainerCustomPlayer extends Container
                     return ItemArmor.func_94602_b(k);
                 }
             });
-        }
+        }*/
 
 		
 		//vanilla invo slots
@@ -138,6 +138,7 @@ public class ContainerCustomPlayer extends Container
 			
 			if (slotNum < INV_START)
 			{
+				System.out.println(slotNum +" < "+ INV_START);
 				// try to place in player inventory / action bar
 				
 				if (!this.mergeItemStack(stack, INV_START, HOTBAR_END + 1, true))

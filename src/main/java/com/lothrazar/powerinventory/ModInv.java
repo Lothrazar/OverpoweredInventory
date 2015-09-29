@@ -171,7 +171,7 @@ public class ModInv
 			Const.texture_width = 176;
 			Const.texture_height = 166;
 			
-			int charSpace = 54;// moving stuff left
+			int charSpace = 54 + 18;// moving stuff left
 			
 			//TODO: these get set twice, or more, we should fix this whole setup but for now just get it working
 			Const.compassX -= charSpace;

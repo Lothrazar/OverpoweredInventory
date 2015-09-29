@@ -56,6 +56,7 @@ public class BigContainerPlayer extends ContainerPlayer
 	static int S_COMPASS;
 	static int S_BOTTLE;
 	static int S_UNCRAFT;
+	
 	public BigContainerPlayer(BigInventoryPlayer playerInventory, boolean isLocal, EntityPlayer player)
 	{
 		super(playerInventory, isLocal, player);
