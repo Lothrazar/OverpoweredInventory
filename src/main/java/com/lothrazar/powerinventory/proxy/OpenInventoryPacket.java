@@ -46,11 +46,7 @@ public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInven
 		
 		
 		if(message.tags.getInteger("i") == Const.INV_SOLO)
-		{
-			System.out.println("open solo gui");
-			System.out.println("open solo gui");
-			System.out.println("open solo gui");
-			System.out.println("open solo gui");
+		{ 
 			p.openGui(ModInv.instance, GuiHandler.GUI_CUSTOM_INV, p.worldObj, (int) p.posX, (int) p.posY, (int) p.posZ);
 		}
 		else

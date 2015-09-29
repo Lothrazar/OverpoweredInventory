@@ -9,6 +9,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -100,21 +101,20 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 	public IMessage onMessage(UncButtonPacket message, MessageContext ctx)
 	{
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
-		
-		ItemStack toUncraft;// = player.inventory.getStackInSlot(Const.uncraftSlot);
+		 
+		IInventory invo;
 		
 		if(player.openContainer instanceof ContainerCustomPlayer)
 		{
 			ContainerCustomPlayer c = (ContainerCustomPlayer)player.openContainer ;
-			
-			toUncraft = c.invo.getStackInSlot(Const.uncraftSlot);
+			invo = c.invo; 
 		}
 		else
 		{
-
-			toUncraft = player.inventory.getStackInSlot(Const.uncraftSlot);
+			invo = player.inventory; 
 		}
 		
+		ItemStack toUncraft = invo.getStackInSlot(Const.uncraftSlot);
 		
 		if(toUncraft == null){return null;}
 		
@@ -249,7 +249,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 			{
 				player.worldObj.spawnEntityInWorld(ei); 
 			}
-			player.inventory.decrStackSize(Const.uncraftSlot, outsize); // toUncraft.stackSize -= outsize;
+			invo.decrStackSize(Const.uncraftSlot, outsize); // toUncraft.stackSize -= outsize;
 			 
 			player.playSound("random.break", 1.0F, 1.0F);//same sound as breaking a too
 		}
