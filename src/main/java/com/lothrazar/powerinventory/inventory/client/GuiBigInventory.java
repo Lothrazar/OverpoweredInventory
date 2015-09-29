@@ -189,7 +189,7 @@ public class GuiBigInventory extends GuiInventory
 			drawTextureSimple("textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
 		}
 	}
-	 
+	 //TODO: this is double din both guis?
 	public void drawTextureSimple(String texture,double x, double y, double width, double height)
 	{
 		//wrapper for drawTexturedQuadFit

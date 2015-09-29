@@ -13,6 +13,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
@@ -92,8 +93,79 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	protected void drawGuiContainerForegroundLayer(	int p_146976_2_, int p_146976_3_)
 	{ 
 		//drawing text and such on screen
+		this.checkSlotsEmpty();
 		
 	}
+	
+	private void checkSlotsEmpty()
+	{
+		//TODO: interface-ey stuff to share code more
+		
+		//!!!
+		final int s = 16;
+ 
+		if(inventory.getStackInSlot(Const.enderChestSlot) == null)
+		{
+			btnEnder.enabled = false;
+			btnEnder.visible = btnEnder.enabled;
+ 
+			drawTextureSimple("textures/items/empty_enderchest.png",Const.echestX, Const.echestY,s,s); 
+		}
+		else 
+		{ 
+			btnEnder.enabled = true; 
+			btnEnder.visible = btnEnder.enabled;
+		}
+		if(ModConfig.enableUncrafting) 
+			if(inventory.getStackInSlot(Const.uncraftSlot) == null)
+			{ 
+				btnUncraft.enabled = false;
+				btnUncraft.visible = btnUncraft.enabled; 
+			}
+			else 
+			{ 
+				btnUncraft.enabled = true; 
+				btnUncraft.visible = btnUncraft.enabled;
+			}
+
+		if(ModConfig.enableEnchantBottles) 
+			if(inventory.getStackInSlot(Const.bottleSlot) == null || 
+					inventory.getStackInSlot(Const.bottleSlot).getItem() == Items.experience_bottle	)
+			{
+				btnExp.enabled = false;
+				btnExp.visible = btnExp.enabled;
+	  
+				drawTextureSimple("textures/items/empty_bottle.png",Const.bottleX, Const.bottleY,s,s); 
+			}
+			else 
+			{ 
+				btnExp.enabled = true; 
+				btnExp.visible = btnExp.enabled;
+			}
+
+		if(inventory.getStackInSlot(Const.enderPearlSlot) == null)
+		{  
+			drawTextureSimple("textures/items/empty_enderpearl.png",Const.pearlX, Const.pearlY,s,s);
+		}
+
+		if(inventory.getStackInSlot(Const.compassSlot) == null)
+		{ 
+			drawTextureSimple("textures/items/empty_compass.png",Const.compassX, Const.compassY,s,s);
+		}
+
+		if(inventory.getStackInSlot(Const.clockSlot) == null)
+		{  
+			drawTextureSimple("textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
+		}
+	}
+	 
+	public void drawTextureSimple(String texture,double x, double y, double width, double height)
+	{
+		//wrapper for drawTexturedQuadFit
+		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, texture)); 
+		Const.drawTexturedQuadFit(x,y,width,height);
+	}
+	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float p_146976_1_,	int p_146976_2_, int p_146976_3_)
 	{ 

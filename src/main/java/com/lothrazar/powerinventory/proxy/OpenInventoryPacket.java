@@ -51,10 +51,11 @@ public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInven
 		}
 		else
 		{
-			if( p.inventory.getStackInSlot(Const.enderChestSlot) != null)
+			//test isnt needed since button is always hidden when we want it to be
+			//if( p.inventory.getStackInSlot(Const.enderChestSlot) != null)
 				p.displayGUIChest(p.getInventoryEnderChest());
-			else 
-				p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));
+			//else 
+			//	p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));
 		}		
 		
 		
