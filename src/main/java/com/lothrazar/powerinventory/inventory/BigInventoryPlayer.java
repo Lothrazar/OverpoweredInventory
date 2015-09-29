@@ -402,70 +402,70 @@ public class BigInventoryPlayer extends InventoryPlayer
     public NBTTagList writeToNBT(NBTTagList tags)
     {
         int i;
-        NBTTagCompound nbttagcompound;
+        NBTTagCompound tagcompound;
 
         for (i = 0; i < this.mainInventory.length; ++i)
         {
             if (this.mainInventory[i] != null)
             {
-                nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setInteger(Const.NBT_SLOT, i);
-                this.mainInventory[i].writeToNBT(nbttagcompound);
-                tags.appendTag(nbttagcompound);
+                tagcompound = new NBTTagCompound();
+                tagcompound.setInteger(Const.NBT_SLOT, i);
+                this.mainInventory[i].writeToNBT(tagcompound);
+                tags.appendTag(tagcompound);
             }
         }
-
+//TODO: array or share code with InventoryCustomPlayer !!!
         if(this.enderChestStack != null)
         {
-        	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.enderChestSlot);  
-            this.enderChestStack.writeToNBT(nbttagcompound);
-            tags.appendTag(nbttagcompound);
+        	tagcompound = new NBTTagCompound();
+            tagcompound.setInteger(Const.NBT_SLOT, Const.enderChestSlot);  
+            this.enderChestStack.writeToNBT(tagcompound);
+            tags.appendTag(tagcompound);
         }
         if(this.enderPearlStack != null)
         {
-        	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.enderPearlSlot);  
-            this.enderPearlStack.writeToNBT(nbttagcompound);
-            tags.appendTag(nbttagcompound);
+        	tagcompound = new NBTTagCompound();
+            tagcompound.setInteger(Const.NBT_SLOT, Const.enderPearlSlot);  
+            this.enderPearlStack.writeToNBT(tagcompound);
+            tags.appendTag(tagcompound);
         }
         if(this.clockStack != null)
         {
-        	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.clockSlot);  
-            this.clockStack.writeToNBT(nbttagcompound);
-            tags.appendTag(nbttagcompound);
+        	tagcompound = new NBTTagCompound();
+            tagcompound.setInteger(Const.NBT_SLOT, Const.clockSlot);  
+            this.clockStack.writeToNBT(tagcompound);
+            tags.appendTag(tagcompound);
         }
         if(this.compassStack != null)
         {
-        	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.compassSlot);  
-            this.compassStack.writeToNBT(nbttagcompound);
-            tags.appendTag(nbttagcompound);
+        	tagcompound = new NBTTagCompound();
+            tagcompound.setInteger(Const.NBT_SLOT, Const.compassSlot);  
+            this.compassStack.writeToNBT(tagcompound);
+            tags.appendTag(tagcompound);
         }
         if(this.bottleStack != null)
         {
-        	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.bottleSlot);  
-            this.bottleStack.writeToNBT(nbttagcompound);
-            tags.appendTag(nbttagcompound);
+        	tagcompound = new NBTTagCompound();
+            tagcompound.setInteger(Const.NBT_SLOT, Const.bottleSlot);  
+            this.bottleStack.writeToNBT(tagcompound);
+            tags.appendTag(tagcompound);
         }
         if(this.uncraftStack != null)
         {
-        	nbttagcompound = new NBTTagCompound();
-            nbttagcompound.setInteger(Const.NBT_SLOT, Const.uncraftSlot);  
-            this.uncraftStack.writeToNBT(nbttagcompound);
-            tags.appendTag(nbttagcompound);
+        	tagcompound = new NBTTagCompound();
+            tagcompound.setInteger(Const.NBT_SLOT, Const.uncraftSlot);  
+            this.uncraftStack.writeToNBT(tagcompound);
+            tags.appendTag(tagcompound);
         }
 
         for (i = 0; i < this.armorInventory.length; ++i)
         {
             if (this.armorInventory[i] != null)
             {
-                nbttagcompound = new NBTTagCompound();
-                nbttagcompound.setInteger(Const.NBT_SLOT, i + (Integer.MAX_VALUE - 100)); // Give armor slots the last 100 integer spaces
-                this.armorInventory[i].writeToNBT(nbttagcompound);
-                tags.appendTag(nbttagcompound);
+                tagcompound = new NBTTagCompound();
+                tagcompound.setInteger(Const.NBT_SLOT, i + (Integer.MAX_VALUE - 100)); // Give armor slots the last 100 integer spaces
+                this.armorInventory[i].writeToNBT(tagcompound);
+                tags.appendTag(tagcompound);
                 
             }
         }
@@ -596,15 +596,18 @@ public class BigInventoryPlayer extends InventoryPlayer
     {
         this.mainInventory = new ItemStack[MathHelper.clamp_int(Const.INVOSIZE, 27, Integer.MAX_VALUE - 100) + 9];
         this.armorInventory = new ItemStack[armorInventory == null? 4 : armorInventory.length]; // Just in case it isn't standard size
+        ItemStack itemstack;
+        NBTTagCompound nbttagcompound;
         
         for (int i = 0; i < tags.tagCount(); ++i)
         {
-            NBTTagCompound nbttagcompound = tags.getCompoundTagAt(i);
+        	nbttagcompound = tags.getCompoundTagAt(i);
             int j = nbttagcompound.getInteger(Const.NBT_SLOT);
-            ItemStack itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound);
+            itemstack = ItemStack.loadItemStackFromNBT(nbttagcompound);
 
             if (itemstack != null)
             {
+            	
             	if(j == Const.enderPearlSlot)
             	{
             		enderPearlStack = itemstack;

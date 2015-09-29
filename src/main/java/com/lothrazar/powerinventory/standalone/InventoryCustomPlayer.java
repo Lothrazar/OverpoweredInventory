@@ -311,43 +311,119 @@ public class InventoryCustomPlayer implements IInventory
 		return true;
 	}
 
-	public void writeToNBT(NBTTagCompound tagcompound)
+	public void writeToNBT(NBTTagCompound tags)
 	{
 		NBTTagList nbttaglist = new NBTTagList();
+		NBTTagCompound tagcompound;
 	
 		for (int i = 0; i < this.getSizeInventory(); ++i)
 		{
 			if (this.getStackInSlot(i) != null)
 			{
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+				tagcompound = new NBTTagCompound();
+				tagcompound.setInteger(tagSlot,  i);
 			
-				nbttagcompound1.setByte(tagSlot, (byte) i);
+				this.getStackInSlot(i).writeToNBT(tagcompound);
 			
-				this.getStackInSlot(i).writeToNBT(nbttagcompound1);
-			
-				nbttaglist.appendTag(nbttagcompound1);
+				nbttaglist.appendTag(tagcompound);
 			}
 		}
-	
-		tagcompound.setTag(tagName, nbttaglist);
 
+		//TODO: array or share code with InventoryCustomPlayer !!!
+        if(this.enderChestStack != null)
+        {
+        	tagcompound = new NBTTagCompound();
+			tagcompound.setInteger(tagSlot,  Const.enderChestSlot);
+       
+            this.enderChestStack.writeToNBT(tagcompound);
+            nbttaglist.appendTag(tagcompound);
+        }
+        if(this.enderPearlStack != null)
+        {
+        	//System.out.println("write nbg EnderPearl slot = "+Const.enderPearlSlot);
+        	tagcompound = new NBTTagCompound();
+        	tagcompound.setInteger(tagSlot,  Const.enderPearlSlot);  
+            this.enderPearlStack.writeToNBT(tagcompound);
+            nbttaglist.appendTag(tagcompound);
+        }
+        if(this.clockStack != null)
+        {
+        	tagcompound = new NBTTagCompound();
+        	tagcompound.setInteger(tagSlot,  Const.clockSlot);  
+            this.clockStack.writeToNBT(tagcompound);
+            nbttaglist.appendTag(tagcompound);
+        }
+        if(this.compassStack != null)
+        {
+        	tagcompound = new NBTTagCompound();
+        	tagcompound.setInteger(tagSlot,  Const.compassSlot);  
+            this.compassStack.writeToNBT(tagcompound);
+            nbttaglist.appendTag(tagcompound);
+        }
+        if(this.bottleStack != null)
+        {
+        	tagcompound = new NBTTagCompound();
+        	tagcompound.setInteger(tagSlot,  Const.bottleSlot);  
+            this.bottleStack.writeToNBT(tagcompound);
+            nbttaglist.appendTag(tagcompound);
+        }
+        if(this.uncraftStack != null)
+        {
+        	tagcompound = new NBTTagCompound();
+        	tagcompound.setInteger(tagSlot,  Const.uncraftSlot);  
+            this.uncraftStack.writeToNBT(tagcompound);
+            nbttaglist.appendTag(tagcompound);
+        }
+        
+		tags.setTag(tagName, nbttaglist);
 	}
 
 	public void readFromNBT(NBTTagCompound tagcompound)
 	{
-
+		//TODO: share / do code reuse with BigInvo
 		NBTTagList nbttaglist = tagcompound.getTagList(tagName,Constants.NBT.TAG_COMPOUND);
-	
+		ItemStack itemstack;
+    	//System.out.println("READ  COUNT = "+nbttaglist.tagCount());
 		for (int i = 0; i < nbttaglist.tagCount(); ++i)
 		{
 			NBTTagCompound tags = nbttaglist.getCompoundTagAt(i);//tagAt
 		
-			byte b = tags.getByte(tagSlot);
-		
+			int b = tags.getInteger(tagSlot);
+
+        	//System.out.println("READ b = "+b+" and i = "+i);//what the -47 ??
+			itemstack = ItemStack.loadItemStackFromNBT(tags);
 			if (b >= 0 && b < this.getSizeInventory())
 			{
-				this.setInventorySlotContents(b, ItemStack.loadItemStackFromNBT(tags));
+				this.setInventorySlotContents(b, itemstack);
 			}
+
+			else if (itemstack != null)
+            {
+            	if(b == Const.enderPearlSlot)
+            	{
+            		enderPearlStack = itemstack;
+            	}
+            	if(b == Const.enderChestSlot)
+                {
+                	enderChestStack = itemstack;
+                }
+            	if(b == Const.clockSlot)
+                {
+                	clockStack = itemstack;
+                }
+            	if(b == Const.compassSlot)
+                {
+            		compassStack = itemstack;
+                }
+            	if(b == Const.bottleSlot)
+                {
+            		bottleStack = itemstack;
+                }
+            	if(b == Const.uncraftSlot)
+                {
+            		this.uncraftStack = itemstack;
+                }
+            }
 		}
 	}
 }
