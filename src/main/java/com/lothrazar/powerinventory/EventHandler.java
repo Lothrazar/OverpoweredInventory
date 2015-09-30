@@ -295,7 +295,7 @@ public class EventHandler
             ClickEvent url = new ClickEvent(ClickEvent.Action.OPEN_URL, 
                   "http://www.curse.com/mc-mods/Minecraft/233168-overpowered-inventory-375-inventory-slots-and-more");
             ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(url);
-            ChatComponentText text = new ChatComponentText("Overpowered Inventory has a new version out!  Click here to open the webpage with "+ModInv.versionChecker.getLatestVersion());
+            ChatComponentText text = new ChatComponentText("Overpowered Inventory has a new update out!  Click here to open the webpage and check out version "+ModInv.versionChecker.getLatestVersion());
             text.setChatStyle(clickableChatStyle);
             event.player.addChatMessage(text);
             ModInv.sentVersionMessage = true;
