@@ -81,13 +81,13 @@ public class ModConfig
 		else if(ModConfig.smallMedLarge.equalsIgnoreCase("large"))
 		{
 			//might as well add more rows too. work in progress
-			Const.MORE_ROWS = 12; 
+			Const.MORE_ROWS = 13; 
 			 
 			Const.MORE_COLS = 18;
 
 			Const.texture_width = 500;
-			Const.texture_height = 382;
-		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_15x27.png";
+			Const.texture_height = 400;
+		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_15x28.png";
 		    
 		    int offset = 18*2;
 		    Const.bottleX += offset; 
