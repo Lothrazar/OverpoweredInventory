@@ -68,7 +68,6 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 		{
 			if("tile.wood.oak".equals( stack.getUnlocalizedName()))
 			{
-				System.out.println("skipoak");
 				return;
 			}
 			
