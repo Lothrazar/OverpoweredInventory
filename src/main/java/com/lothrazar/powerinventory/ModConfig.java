@@ -105,6 +105,11 @@ public class ModConfig
 
 			Const.texture_width = 338;
 			Const.texture_height = 221;
+
+		    int offset = 18*7;
+		    Const.bottleX -= offset; 
+			Const.uncraftX -= offset; 
+			
 		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_6x18.png";//6*18 is 108..so yeah?
 		}
 
