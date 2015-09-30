@@ -97,7 +97,7 @@ public class ModConfig
 
 			Const.texture_width = 500;
 			Const.texture_height = 400;
-		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_15x28.png";
+		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_16x28.png";
 		    
 		    int offset = 18*2;
 		    Const.bottleX += offset; 
