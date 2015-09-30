@@ -1,7 +1,6 @@
 package com.lothrazar.powerinventory.inventory.client;
 
 import com.lothrazar.powerinventory.proxy.ExpButtonPacket;
-import com.lothrazar.powerinventory.proxy.SortButtonPacket;
 import com.lothrazar.powerinventory.ModInv;
 
 import net.minecraft.client.Minecraft;

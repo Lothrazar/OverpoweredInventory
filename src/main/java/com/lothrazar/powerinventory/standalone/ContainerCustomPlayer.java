@@ -8,8 +8,6 @@ import com.lothrazar.powerinventory.inventory.SlotCompass;
 import com.lothrazar.powerinventory.inventory.SlotEnderChest;
 import com.lothrazar.powerinventory.inventory.SlotEnderPearl;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
@@ -17,13 +15,11 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 
 public class ContainerCustomPlayer extends Container
 {
-	private EntityPlayer thePlayer;
+	//private EntityPlayer thePlayer;
  
 
 	static int S_BAR_START;
@@ -39,7 +35,7 @@ public class ContainerCustomPlayer extends Container
 	static int S_COMPASS;
 	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
-		thePlayer = player;
+	//	thePlayer = player;
 
 		int i;
 		
