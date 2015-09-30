@@ -41,16 +41,31 @@ public class ModConfig
 		
 		ModConfig.showMergeDeposit = config.getBoolean("merge_deposit_buttons", category, true, "Show or hide the merge deposit buttons in upper right corner.");
 		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
-		  
+		
+		
+		category = "warning_advanced";
+		
+		config.addCustomCategoryComment(category, "This section is for disabling and changes major features.  Always empty your inventory before changing these.");
+		
+		
 		ModConfig.enableUncrafting = config.getBoolean("enable_uncrafting",category,true,"Lets you disable the uncrafting slot and button");
 		ModConfig.enableEnchantBottles =  config.getBoolean("enable_enchantbottles",category,true,"Lets you disable the enchanting bottle filling slot and button");
 		
-		
-		
-		ModConfig.enableCompatMode =  config.getBoolean("compatibility_mode",category,false,"!!!");
-		
-		
 		ModConfig.smallMedLarge = config.getString("normal_small", category, "normal", "Valid values are only exactly normal/small.    Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18.  WARNING: EMPTY YOUR PLAYERS INVENTORY IN A CHEST before changing this.  And to be safe, BACKUP YOUR WORLD!");
+		
+
+		category = "warning_compatibility";
+		config.addCustomCategoryComment(category, "Compatibility mode is intended for advanced users and modpack creators. "
+				+ "It is intended to be turned on if you are using other mods that crash the game or conflict with this mod in some way.  For example, mods that alter the vanilla inventory using ASM techniques, or mods that add tabs (such as Tinkers construct or Custom NPCs).");
+		
+		
+		ModConfig.enableCompatMode =  config.getBoolean("compatibility_mode",category,false,"False is the regular mod with everything normal.  "
+				+ "True will give you the regular vanilla inventory, not replaced or changed in any way for compatibility reasons.  Instead, push the upper right button to use the mini version.");
+		
+		
+	
+		
+		
 		
 		if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
 		{

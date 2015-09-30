@@ -107,6 +107,4 @@ public class ModInv
     		Items.ender_pearl.setMaxStackSize(64);
     	}
     }
-    
-    
 }
