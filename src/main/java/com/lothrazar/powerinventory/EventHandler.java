@@ -286,6 +286,10 @@ public class EventHandler
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
     public void onEvent(PlayerTickEvent event)
     {
+		if(ModInv.versionChecker == null || ModConfig.blockVersionChecker == true)
+		{
+			return;//blocked by config file
+		}
         if (!ModInv.sentVersionMessage && event.player.worldObj.isRemote 
               && !ModInv.versionChecker.isLatestVersion()
               && ModInv.versionChecker.getLatestVersion() != "")

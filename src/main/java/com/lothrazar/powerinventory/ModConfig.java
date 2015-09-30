@@ -22,6 +22,7 @@ public class ModConfig
 	public static boolean enableEnchantBottles;
 	
 	public static boolean enableCompatMode;
+	public static boolean blockVersionChecker;
 	
 
 	private static Configuration config;
@@ -52,7 +53,8 @@ public class ModConfig
 		ModConfig.enableEnchantBottles =  config.getBoolean("enable_enchantbottles",category,true,"Lets you disable the enchanting bottle filling slot and button");
 		
 		ModConfig.smallMedLarge = config.getString("main_size", category, "normal", "Valid values are only exactly 'normal', 'small', 'large'.    Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18.  WARNING: EMPTY YOUR PLAYERS INVENTORY IN A CHEST before changing this.  And to be safe, BACKUP YOUR WORLD!");
-		
+
+		ModConfig.blockVersionChecker = config.getBoolean("block_versionchecker",category,false,"By default, this checks once on game startup for a new mod update version.  Set as true to block this check and notice.  Config entry added for modpack creators.");
 
 		category = "warning_compatibility";
 		config.addCustomCategoryComment(category, "Compatibility mode is intended for advanced users and modpack creators. "
@@ -64,7 +66,6 @@ public class ModConfig
 		
 		
 	
-		
 		
 		
 		if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))

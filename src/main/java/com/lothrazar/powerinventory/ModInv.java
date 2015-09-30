@@ -82,9 +82,12 @@ public class ModInv
     @EventHandler
     public void postInit(FMLPostInitializationEvent  event)
     {
-    	versionChecker = new VersionChecker();
-    	Thread versionCheckThread = new Thread(versionChecker, "Version Check");
-    	versionCheckThread.start();
+    	if(ModConfig.blockVersionChecker == false)
+    	{
+	    	versionChecker = new VersionChecker();
+	    	Thread versionCheckThread = new Thread(versionChecker, "Version Check");
+	    	versionCheckThread.start();
+    	}
     }
     
     @EventHandler
