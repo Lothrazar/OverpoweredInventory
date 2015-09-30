@@ -12,9 +12,11 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -22,11 +24,12 @@ import net.minecraft.util.IIcon;
 public class ContainerCustomPlayer extends Container
 {
 	private EntityPlayer thePlayer;
-	private static final int ARMOR_START = InventoryCustomPlayer.INV_SIZE, ARMOR_END = ARMOR_START+3,
+ 
 
-			INV_START = ARMOR_END+1, INV_END = INV_START+26, HOTBAR_START = INV_END+1,
-
-			HOTBAR_END = HOTBAR_START+8;
+	static int S_BAR_START;
+	static int S_BAR_END;
+	static int S_MAIN_START;
+	static int S_MAIN_END;
 	public InventoryCustomPlayer invo;
 	static int S_BOTTLE;
 	static int S_UNCRAFT;
@@ -41,30 +44,6 @@ public class ContainerCustomPlayer extends Container
 		int i;
 		
 		
-		S_PEARL =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.enderPearlSlot, Const.pearlX, Const.pearlY));
-
-        S_ECHEST =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.enderChestSlot, Const.echestX, Const.echestY)); 
-
-        S_CLOCK =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotClock(inventoryCustom, Const.clockSlot, Const.clockX, Const.clockY)); 
-
-        S_COMPASS =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotCompass(inventoryCustom, Const.compassSlot, Const.compassX, Const.compassY)); 
-        
-		
-	    if(ModConfig.enableEnchantBottles)
-        {
-	        S_BOTTLE =  this.inventorySlots.size() ;
-	        this.addSlotToContainer(new SlotBottle(inventoryCustom, Const.bottleSlot, Const.bottleX, Const.bottleY)); 
-        }
-        
-        if(ModConfig.enableUncrafting)
-        {
-	        S_UNCRAFT =  this.inventorySlots.size() ; 
-	        this.addSlotToContainer(new Slot(inventoryCustom, Const.uncraftSlot, Const.uncraftX, Const.uncraftY)); 
-        }
 	 
 		
 		//armor slots would go here
@@ -94,8 +73,17 @@ public class ContainerCustomPlayer extends Container
             });
         }*/
 
-		
+
+        //hotbar
+        S_BAR_START = this.inventorySlots.size();
+        for (i = 0; i < Const.hotbarSize; ++i)
+        {
+            this.addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
+        }
+        S_BAR_END = this.inventorySlots.size() - 1;
+        
 		//vanilla invo slots
+        S_MAIN_START = this.inventorySlots.size();
         for (i = 0; i < 3; ++i)
         {
             for (int j = 0; j < 9; ++j)
@@ -103,13 +91,33 @@ public class ContainerCustomPlayer extends Container
                 this.addSlotToContainer(new Slot(inventoryPlayer, j + (i + 1) * 9, 8 + j * 18, 84 + i * 18));
             }
         }
+        S_MAIN_END = this.inventorySlots.size() - 1;
 
-        //hotbar
-        for (i = 0; i < 9; ++i)
+
+		S_PEARL =  this.inventorySlots.size() ;
+        this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.enderPearlSlot, Const.pearlX, Const.pearlY));
+
+        S_ECHEST =  this.inventorySlots.size() ;
+        this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.enderChestSlot, Const.echestX, Const.echestY)); 
+
+        S_CLOCK =  this.inventorySlots.size() ;
+        this.addSlotToContainer(new SlotClock(inventoryCustom, Const.clockSlot, Const.clockX, Const.clockY)); 
+
+        S_COMPASS =  this.inventorySlots.size() ;
+        this.addSlotToContainer(new SlotCompass(inventoryCustom, Const.compassSlot, Const.compassX, Const.compassY)); 
+        
+		
+	    if(ModConfig.enableEnchantBottles)
         {
-            this.addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
+	        S_BOTTLE =  this.inventorySlots.size() ;
+	        this.addSlotToContainer(new SlotBottle(inventoryCustom, Const.bottleSlot, Const.bottleX, Const.bottleY)); 
         }
-
+        
+        if(ModConfig.enableUncrafting)
+        {
+	        S_UNCRAFT =  this.inventorySlots.size() ; 
+	        this.addSlotToContainer(new Slot(inventoryCustom, Const.uncraftSlot, Const.uncraftX, Const.uncraftY)); 
+        }
 		
 		invo = inventoryCustom;
 	}
@@ -122,71 +130,100 @@ public class ContainerCustomPlayer extends Container
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer player, int slotNum)
+	public ItemStack transferStackInSlot(EntityPlayer p, int slotNumber)
 	{
-		ItemStack itemstackCopy = null;
+		ItemStack stackCopy = null;
 		
-		Slot slot = (Slot) this.inventorySlots.get(slotNum);
+		Slot slot = (Slot) this.inventorySlots.get(slotNumber);
 		
 		if (slot != null && slot.getHasStack())
 		{
 			
-			ItemStack stack = slot.getStack();
+			ItemStack stackOrig = slot.getStack();
 			
-			itemstackCopy = stack.copy();
-			// Either armor slot or custom item slot was clicked
-			
-			if (slotNum < INV_START)
-			{
-				System.out.println(slotNum +" < "+ INV_START);
-				// try to place in player inventory / action bar
-				
-				if (!this.mergeItemStack(stack, INV_START, HOTBAR_END + 1, true))
-				{			
-					return null;			
-				}
-
-				slot.onSlotChange(stack, itemstackCopy);
-			
-			}// Item is in inventory / hotbar, try to place either in custom or armor slots
-			else 
-			{
-			 
-			  // any specific items moved into our own slots
-				if(itemstackCopy.getItem() == Items.glass_bottle )
-        		{ 
-            		if (!this.mergeItemStack(stack, S_BOTTLE, S_BOTTLE+1, false))
+			stackCopy = stackOrig.copy();
+	
+			if (slotNumber >= S_MAIN_START && slotNumber <= S_MAIN_END) // main inv grid
+			{ 
+            	//only from here are we doing the special items
+            //ALL COPIED FROM BigContainer
+            	if(stackCopy.getItem() == Items.ender_pearl && 
+            		(	
+        			invo.getStackInSlot(Const.enderPearlSlot) == null || 
+        			invo.getStackInSlot(Const.enderPearlSlot).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))
+        			)
+        		{
+            		 
+            		if (!this.mergeItemStack(stackOrig, S_PEARL, S_PEARL+1, false))
                 	{ 
                         return null;
                     }  
         		}
-				else  if (slotNum >= INV_START && slotNum < HOTBAR_START)
-				{
-				
-					// place in action bar
-					
-					if (!this.mergeItemStack(stack, HOTBAR_START, HOTBAR_START + 1, false))
-					
-					{
-					
-					return null;
-					
-					}
-
-				}// item in action bar - place in player inventory
-				else if (slotNum >= HOTBAR_START && slotNum < HOTBAR_END + 1)
-				{
-					if (!this.mergeItemStack(stack, INV_START, INV_END + 1, false))
-					{
-					return null;
-					}
-				}
-
-			}//end of giant else branch
-
+            	else if(stackCopy.getItem() == Item.getItemFromBlock(Blocks.ender_chest) && 
+            		(
+        			invo.getStackInSlot(Const.enderChestSlot) == null || 
+        			invo.getStackInSlot(Const.enderChestSlot).stackSize < 1)
+        			)
+        		{ 
+            		if (!this.mergeItemStack(stackOrig, S_ECHEST, S_ECHEST+1, false))
+                	{ 
+                        return null;
+                    }  
+        		}
+            	else if(stackCopy.getItem() == Items.compass && 
+            		(
+        			invo.getStackInSlot(Const.compassSlot) == null || 
+        			invo.getStackInSlot(Const.compassSlot).stackSize < 1)
+        			)
+        		{ 
+            		if (!this.mergeItemStack(stackOrig, S_COMPASS, S_COMPASS+1, false))
+                	{ 
+                        return null;
+                    }  
+        		}
+            	else if(stackCopy.getItem() == Items.clock && 
+            		(
+        			invo.getStackInSlot(Const.clockSlot) == null || 
+        			invo.getStackInSlot(Const.clockSlot).stackSize < 1)
+        			)
+        		{ 
+            		if (!this.mergeItemStack(stackOrig, S_CLOCK, S_CLOCK+1, false))
+                	{ 
+                        return null;
+                    }  
+        		}
+            	else if(stackCopy.getItem() == Items.glass_bottle && ModConfig.enableEnchantBottles )
+        		{ 
+            		if (!this.mergeItemStack(stackOrig, S_BOTTLE, S_BOTTLE+1, false))
+                	{ 
+                        return null;
+                    }  
+        		}
+            	else if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END+1, false)            			)
+            	{
+            		
+                    return null;
+                }
+            }///===
+            else if (slotNumber >= S_BAR_START && slotNumber <= S_BAR_END) // Hotbar
+            { 
+            	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
+            	{
+                    return null;
+                }
+            }
+            else if(slotNumber == S_PEARL || slotNumber == S_ECHEST  || slotNumber == S_COMPASS  || slotNumber == S_CLOCK || slotNumber == S_BOTTLE
+            		|| slotNumber == S_UNCRAFT)
+            { 
+            	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
+            	{
+                    return null;
+                }
+            }
+			
 			//now cleanup steps
 
-			if (stack.stackSize == 0)
+			if (stackOrig.stackSize == 0)
 			{
 				slot.putStack((ItemStack) null);
 			}
@@ -194,16 +231,16 @@ public class ContainerCustomPlayer extends Container
 			{
 				slot.onSlotChanged();
 			}
-			if (stack.stackSize == itemstackCopy.stackSize)
+			if (stackOrig.stackSize == stackCopy.stackSize)
 			{
 				return null;
 			}
 
-			slot.onPickupFromSlot(player, stack);
+			slot.onPickupFromSlot(p, stackOrig);
 
 		}
 
-		return itemstackCopy;
+		return stackCopy;
 	
 	} //end transfer function
 }

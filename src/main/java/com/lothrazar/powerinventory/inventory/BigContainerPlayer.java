@@ -111,6 +111,7 @@ public class BigContainerPlayer extends ContainerPlayer
             }); 
         }
         S_ARMOR_END = this.inventorySlots.size() - 1;
+        
         S_BAR_START = this.inventorySlots.size();
         for (i = 0; i < Const.hotbarSize; ++i)
         { 
@@ -120,6 +121,7 @@ public class BigContainerPlayer extends ContainerPlayer
             this.addSlotToContainer(new Slot(playerInventory, i, cx, cy));
         }
         S_BAR_END = this.inventorySlots.size() - 1;
+        
         S_MAIN_START = this.inventorySlots.size();
         int slotIndex = Const.hotbarSize;
         
@@ -299,7 +301,7 @@ public class BigContainerPlayer extends ContainerPlayer
                         return null;
                     }  
         		}
-            	else if(stackCopy.getItem() == Items.glass_bottle )
+            	else if(stackCopy.getItem() == Items.glass_bottle && ModConfig.enableEnchantBottles )
         		{ 
             		if (!this.mergeItemStack(stackOrig, S_BOTTLE, S_BOTTLE+1, false))
                 	{ 
