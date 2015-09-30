@@ -14,6 +14,9 @@ public class SlotEnderPearl extends Slot
 		super(inventoryIn, index, xPosition, yPosition);
  
 		slotIndex = index;
+		
+		//I TRIED THIS< it doesnt WORK
+		// this.setBackgroundIconTexture( new ResourceLocation(Const.MODID, "textures/items/empty_enderpearl.png"));
 	}
 	
 	@Override
