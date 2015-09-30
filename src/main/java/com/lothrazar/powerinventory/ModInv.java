@@ -83,28 +83,11 @@ public class ModInv
     	network.registerMessage(UncButtonPacket.class,   UncButtonPacket.class,  packetID++, Side.SERVER);
     	
     	proxy.registerHandlers();
-		MinecraftForge.EVENT_BUS.register(instance);
-		FMLCommonHandler.instance().bus().register(instance);
     }
     
-    boolean sentVersionMessage = false;//only send it once
-    VersionChecker versionChecker ;
-    @SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-    public void onEvent(PlayerTickEvent event)
-    {
-        if (!sentVersionMessage && event.player.worldObj.isRemote 
-              && !versionChecker.isLatestVersion()
-              && versionChecker.getLatestVersion() != "")
-        {
-            ClickEvent url = new ClickEvent(ClickEvent.Action.OPEN_URL, 
-                  "http://www.curse.com/mc-mods/Minecraft/233168-overpowered-inventory-375-inventory-slots-and-more");
-            ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(url);
-            ChatComponentText text = new ChatComponentText("Overpowered Inventory has a new version out!  Click here to open the webpage with "+versionChecker.getLatestVersion());
-            text.setChatStyle(clickableChatStyle);
-            event.player.addChatMessage(text);
-            sentVersionMessage = true;
-        } 
-    }
+    static boolean sentVersionMessage = false;//only send it once
+    static VersionChecker versionChecker ;
+    
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent  event)

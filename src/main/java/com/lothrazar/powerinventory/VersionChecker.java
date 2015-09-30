@@ -16,9 +16,12 @@ public class VersionChecker implements Runnable
     public void run() 
     {
         InputStream in = null;
+        String repo = "https://raw.githubusercontent.com/PrinceOfAmber/OverpoweredInventory/";
+        String branch = "master-1710";
+        String file = "/version.dat";
         try 
         {
-            in = new URL("https://raw.githubusercontent.com/PrinceOfAmber/OverpoweredInventory/backport17/version.dat").openStream();
+            in = new URL(repo + branch + file).openStream();
         } 
         catch (MalformedURLException e) 
         { 
