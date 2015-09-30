@@ -51,7 +51,7 @@ public class ModConfig
 		ModConfig.enableUncrafting = config.getBoolean("enable_uncrafting",category,true,"Lets you disable the uncrafting slot and button");
 		ModConfig.enableEnchantBottles =  config.getBoolean("enable_enchantbottles",category,true,"Lets you disable the enchanting bottle filling slot and button");
 		
-		ModConfig.smallMedLarge = config.getString("normal_small", category, "normal", "Valid values are only exactly normal/small.    Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18.  WARNING: EMPTY YOUR PLAYERS INVENTORY IN A CHEST before changing this.  And to be safe, BACKUP YOUR WORLD!");
+		ModConfig.smallMedLarge = config.getString("main_size", category, "normal", "Valid values are only exactly 'normal', 'small', 'large'.    Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18.  WARNING: EMPTY YOUR PLAYERS INVENTORY IN A CHEST before changing this.  And to be safe, BACKUP YOUR WORLD!");
 		
 
 		category = "warning_compatibility";
@@ -78,8 +78,26 @@ public class ModConfig
 			Const.texture_height = 382;
 		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_15x25.png";//375 total
 		}
+		else if(ModConfig.smallMedLarge.equalsIgnoreCase("large"))
+		{
+			//might as well add more rows too. work in progress
+			Const.MORE_ROWS = 12; 
+			 
+			Const.MORE_COLS = 18;
+
+			Const.texture_width = 500;
+			Const.texture_height = 382;
+		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_15x27.png";
+		    
+		    int offset = 18*2;
+		    Const.bottleX += offset; 
+			Const.uncraftX += offset; 
+		}
+
 		else//assume its small
 		{
+			//config.setString("normal_small","small");
+			ModConfig.smallMedLarge = "small";
 			Const.MORE_ROWS = 3;
 		 
 			Const.MORE_COLS = 9;
