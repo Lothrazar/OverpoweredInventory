@@ -191,6 +191,36 @@ public class GuiBigInventory extends GuiInventory
 			if(ModConfig.enableSlotOutlines)
 				drawTextureSimple("textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
 		}
+		//now do all armor
+
+		
+		
+		if(ModConfig.enableSlotOutlines)
+		{
+			int armorLeft =  Const.padding+2;
+			int armorTop = Const.padding+2;
+	//		
+			
+			int sq = s + 2;//sep btw armor slots
+			
+			
+			if(container.invo.armorInventory[0] == null)
+			{
+				drawTextureSimple("textures/items/empty_armor_slot_boots.png",armorLeft, armorTop+3*sq,s,s);
+			}
+			if(container.invo.armorInventory[1] == null)
+			{
+				drawTextureSimple("textures/items/empty_armor_slot_leggings.png",armorLeft, armorTop+2*sq,s,s);
+			}
+			if(container.invo.armorInventory[2] == null)
+			{
+				drawTextureSimple("textures/items/empty_armor_slot_chestplate.png",armorLeft, armorTop+1*sq,s,s);
+			}
+			if(container.invo.armorInventory[3] == null)
+			{
+				drawTextureSimple("textures/items/empty_armor_slot_helmet.png",armorLeft, armorTop+0*sq,s,s);				
+			}
+		}
 	}
 	 //TODO: this is double din both guis?
 	public void drawTextureSimple(String texture,double x, double y, double width, double height)
