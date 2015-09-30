@@ -26,6 +26,7 @@ public class ModConfig
 	
 
 	private static Configuration config;
+	public static boolean enableSlotOutlines;
 
 	public static void loadConfig(Configuration c) 
 	{
@@ -42,6 +43,12 @@ public class ModConfig
 		
 		ModConfig.showMergeDeposit = config.getBoolean("merge_deposit_buttons", category, true, "Show or hide the merge deposit buttons in upper right corner.");
 		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
+
+		category = "cosmetic";
+		
+		
+		ModConfig.enableSlotOutlines = config.getBoolean("slot_outlines",category,true,"Normally the special slots have outlines to indicate the allowed items, but you can disable them here.  ");
+
 		
 		
 		category = "warning_advanced";
@@ -56,6 +63,8 @@ public class ModConfig
 
 		ModConfig.blockVersionChecker = config.getBoolean("block_versionchecker",category,false,"By default, this checks once on game startup for a new mod update version.  Set as true to block this check and notice.  Config entry added for modpack creators.");
 
+		
+		
 		category = "warning_compatibility";
 		config.addCustomCategoryComment(category, "Compatibility mode is intended for advanced users and modpack creators. "
 				+ "It is intended to be turned on if you are using other mods that crash the game or conflict with this mod in some way.  For example, mods that alter the vanilla inventory using ASM techniques, or mods that add tabs (such as Tinkers construct or Custom NPCs).");

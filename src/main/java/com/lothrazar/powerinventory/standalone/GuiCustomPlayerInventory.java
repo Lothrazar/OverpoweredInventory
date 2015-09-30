@@ -105,8 +105,9 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		{
 			btnEnder.enabled = false;
 			btnEnder.visible = btnEnder.enabled;
- 
-			drawTextureSimple("textures/items/empty_enderchest.png",Const.echestX, Const.echestY,s,s); 
+
+			if(ModConfig.enableSlotOutlines)
+				drawTextureSimple("textures/items/empty_enderchest.png",Const.echestX, Const.echestY,s,s); 
 		}
 		else 
 		{ 
@@ -131,8 +132,9 @@ public class GuiCustomPlayerInventory extends GuiContainer
 			{
 				btnExp.enabled = false;
 				btnExp.visible = btnExp.enabled;
-	  
-				drawTextureSimple("textures/items/empty_bottle.png",Const.bottleX, Const.bottleY,s,s); 
+
+				if(ModConfig.enableSlotOutlines)
+					drawTextureSimple("textures/items/empty_bottle.png",Const.bottleX, Const.bottleY,s,s); 
 			}
 			else 
 			{ 
@@ -142,17 +144,20 @@ public class GuiCustomPlayerInventory extends GuiContainer
 
 		if(inventory.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
-			drawTextureSimple("textures/items/empty_enderpearl.png",Const.pearlX, Const.pearlY,s,s);
+			if(ModConfig.enableSlotOutlines)
+				drawTextureSimple("textures/items/empty_enderpearl.png",Const.pearlX, Const.pearlY,s,s);
 		}
 
 		if(inventory.getStackInSlot(Const.compassSlot) == null)
 		{ 
-			drawTextureSimple("textures/items/empty_compass.png",Const.compassX, Const.compassY,s,s);
+			if(ModConfig.enableSlotOutlines)
+				drawTextureSimple("textures/items/empty_compass.png",Const.compassX, Const.compassY,s,s);
 		}
 
 		if(inventory.getStackInSlot(Const.clockSlot) == null)
 		{  
-			drawTextureSimple("textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
+			if(ModConfig.enableSlotOutlines)
+				drawTextureSimple("textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
 		}
 	}
 	 

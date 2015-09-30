@@ -28,6 +28,7 @@ public class GuiBigInventory extends GuiInventory
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
+		
 		container = player.inventoryContainer instanceof BigContainerPlayer? (BigContainerPlayer)player.inventoryContainer : null;
 		this.xSize = Const.texture_width;
 		this.ySize = Const.texture_height;
@@ -131,12 +132,14 @@ public class GuiBigInventory extends GuiInventory
 		//TODO: interface-ey stuff to share code more
 		final int s = 16;
  
+		
 		if(container.invo.getStackInSlot(Const.enderChestSlot) == null)
 		{
 			btnEnder.enabled = false;
 			btnEnder.visible = btnEnder.enabled;
- 
-			drawTextureSimple("textures/items/empty_enderchest.png",Const.echestX, Const.echestY,s,s); 
+
+			if(ModConfig.enableSlotOutlines)
+				drawTextureSimple("textures/items/empty_enderchest.png",Const.echestX, Const.echestY,s,s); 
 		}
 		else 
 		{ 
@@ -161,8 +164,9 @@ public class GuiBigInventory extends GuiInventory
 			{
 				btnExp.enabled = false;
 				btnExp.visible = btnExp.enabled;
-	  
-				drawTextureSimple("textures/items/empty_bottle.png",Const.bottleX, Const.bottleY,s,s); 
+
+				if(ModConfig.enableSlotOutlines)
+					drawTextureSimple("textures/items/empty_bottle.png",Const.bottleX, Const.bottleY,s,s); 
 			}
 			else 
 			{ 
@@ -172,17 +176,20 @@ public class GuiBigInventory extends GuiInventory
 
 		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
-			drawTextureSimple("textures/items/empty_enderpearl.png",Const.pearlX, Const.pearlY,s,s);
+			if(ModConfig.enableSlotOutlines)
+				drawTextureSimple("textures/items/empty_enderpearl.png",Const.pearlX, Const.pearlY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.compassSlot) == null)
 		{ 
-			drawTextureSimple("textures/items/empty_compass.png",Const.compassX, Const.compassY,s,s);
+			if(ModConfig.enableSlotOutlines)
+				drawTextureSimple("textures/items/empty_compass.png",Const.compassX, Const.compassY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.clockSlot) == null)
 		{  
-			drawTextureSimple("textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
+			if(ModConfig.enableSlotOutlines)
+				drawTextureSimple("textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
 		}
 	}
 	 //TODO: this is double din both guis?
