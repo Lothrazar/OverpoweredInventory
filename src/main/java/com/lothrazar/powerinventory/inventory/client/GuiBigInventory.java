@@ -194,7 +194,7 @@ public class GuiBigInventory extends GuiInventory
 		//now do all armor
 
 		
-		
+		/*
 		if(ModConfig.enableSlotOutlines)
 		{
 			int armorLeft =  Const.padding+2;
@@ -220,7 +220,7 @@ public class GuiBigInventory extends GuiInventory
 			{
 				drawTextureSimple("textures/items/empty_armor_slot_helmet.png",armorLeft, armorTop+0*sq,s,s);				
 			}
-		}
+		}*/
 	}
 	 //TODO: this is double din both guis?
 	public void drawTextureSimple(String texture,double x, double y, double width, double height)
