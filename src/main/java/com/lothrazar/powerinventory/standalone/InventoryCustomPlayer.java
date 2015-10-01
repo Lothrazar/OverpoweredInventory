@@ -7,6 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.util.Constants;
 
 public class InventoryCustomPlayer implements IInventory
@@ -265,21 +266,6 @@ public class InventoryCustomPlayer implements IInventory
 	}
 
 	@Override
-	public String getInventoryName()
-	{
-
-		return "opinv.name";
-	}
-
-	@Override
-	public boolean hasCustomInventoryName()
-	{
-
-		
-		return false;
-	}
-
-	@Override
 	public int getInventoryStackLimit()
 	{
 
@@ -298,13 +284,7 @@ public class InventoryCustomPlayer implements IInventory
 	{ 
 		return true;
 	}
-
-	@Override
-	public void openInventory(){}
-
-	@Override
-	public void closeInventory(){}
-
+	
 	@Override
 	public boolean isItemValidForSlot(int slot, ItemStack itemstack)
 	{ 
@@ -426,4 +406,56 @@ public class InventoryCustomPlayer implements IInventory
             }
 		}
 	}
+
+	@Override
+	public String getName() {
+		return "";
+	}
+
+	@Override
+	public boolean hasCustomName() 
+	{
+		return false;
+	}
+
+	@Override
+	public IChatComponent getDisplayName() 
+	{
+		return null;
+	}
+
+	@Override
+	public void openInventory(EntityPlayer player) 
+	{
+	}
+
+	@Override
+	public void closeInventory(EntityPlayer player) 
+	{
+	}
+
+	@Override
+	public int getField(int id) 
+	{
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) 
+	{
+		
+	}
+
+	@Override
+	public int getFieldCount() 
+	{
+		return 0;
+	}
+
+	@Override
+	public void clear() 
+	{
+		
+	}
+
 }

@@ -11,8 +11,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.resources.model.IBakedModel;
 //import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
@@ -43,12 +45,12 @@ import com.lothrazar.powerinventory.proxy.ClientProxy;
 import com.lothrazar.powerinventory.proxy.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket; 
 
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.PlayerTickEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 /**
  * @author https://github.com/Funwayguy/InfiniteInvo
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
@@ -343,42 +345,28 @@ public class EventHandler
 	@SideOnly(Side.CLIENT)
 	private static void renderItemAt(ItemStack stack, int x, int y, int dim)
 	{
-		//1.7 help thanks to https://github.com/Zyin055/zyinhud/blob/26f52ca29894447bca4378ef30f551b397ab7a29/src/main/java/com/zyin/zyinhud/mods/DurabilityInfo.java
-
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationItemsTexture);
- //http://www.minecraftforge.net/forum/index.php?topic=24313.0
-// ResourceLocation resourceLocation = getResourceLocation(stack.getIconIndex().getIconName());
- 
-		if(stack.getIconIndex()  instanceof TextureAtlasSprite)
-			renderTexture( (TextureAtlasSprite)stack.getIconIndex() , x, y, dim);
-		 //TODO: else we do this	
-		/*
-		//but its not working anyway. and we dont need it for ONLY compass/clock
-		TextureAtlasSprite textureAtlasSprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(
-		 stack.getItem().getIconFromDamage(0).getIconName()
-		// resourceLocation.getResourcePath()
-		);//iBakedModel.getTexture().getIconName()
+		@SuppressWarnings("deprecation")
+		IBakedModel iBakedModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack);
+		@SuppressWarnings("deprecation")
+		TextureAtlasSprite textureAtlasSprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(iBakedModel.getTexture().getIconName());
 		
-		*/
-
-		
+		renderTexture( textureAtlasSprite, x, y, dim);
 	}
+	
 	@SideOnly(Side.CLIENT)
 	public static void renderTexture( TextureAtlasSprite textureAtlasSprite , int x, int y, int dim)
 	{	
 		//special thanks to http://www.minecraftforge.net/forum/index.php?topic=26613.0
-		
-        Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationItemsTexture);
-        
-		Tessellator tessellator = Tessellator.instance;//.getInstance();
-	 
+		 Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+		Tessellator tessellator = Tessellator.getInstance();
+
 		int height = dim, width = dim;
-	
-		tessellator.startDrawingQuads();
-		tessellator.addVertexWithUV((double)(x),          (double)(y + height),  0.0, (double)textureAtlasSprite.getMinU(), (double)textureAtlasSprite.getMaxV());
-		tessellator.addVertexWithUV((double)(x + width),  (double)(y + height),  0.0, (double)textureAtlasSprite.getMaxU(), (double)textureAtlasSprite.getMaxV());
-		tessellator.addVertexWithUV((double)(x + width),  (double)(y),           0.0, (double)textureAtlasSprite.getMaxU(), (double)textureAtlasSprite.getMinV());
-		tessellator.addVertexWithUV((double)(x),          (double)(y),           0.0, (double)textureAtlasSprite.getMinU(), (double)textureAtlasSprite.getMinV());
+		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		worldrenderer.startDrawingQuads();
+		worldrenderer.addVertexWithUV((double)(x),          (double)(y + height),  0.0, (double)textureAtlasSprite.getMinU(), (double)textureAtlasSprite.getMaxV());
+		worldrenderer.addVertexWithUV((double)(x + width),  (double)(y + height),  0.0, (double)textureAtlasSprite.getMaxU(), (double)textureAtlasSprite.getMaxV());
+		worldrenderer.addVertexWithUV((double)(x + width),  (double)(y),           0.0, (double)textureAtlasSprite.getMaxU(), (double)textureAtlasSprite.getMinV());
+		worldrenderer.addVertexWithUV((double)(x),          (double)(y),           0.0, (double)textureAtlasSprite.getMinU(), (double)textureAtlasSprite.getMinV());
 		tessellator.draw();
 	}
 }

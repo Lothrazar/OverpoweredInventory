@@ -9,11 +9,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.BlockPos;
 //import net.minecraft.util.BlockPos;
-import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
@@ -49,11 +50,11 @@ public class DumpButtonPacket implements IMessage , IMessageHandler<DumpButtonPa
 
 		for(BlockPos pos : locations)
 		{
-			if(p.worldObj.getTileEntity(pos.x,pos.y,pos.z) instanceof TileEntityChest)
+			if(p.worldObj.getTileEntity(pos) instanceof TileEntityChest)
 			{
 				//merge first then dump
 				//UtilInventory.sortFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos), p);
-				UtilInventory.dumpFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos.x,pos.y,pos.z), p);
+				UtilInventory.dumpFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos), p);
 			}
 		}
 		
