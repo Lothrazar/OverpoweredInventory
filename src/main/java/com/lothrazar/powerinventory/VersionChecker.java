@@ -17,7 +17,7 @@ public class VersionChecker implements Runnable
     {
         InputStream in = null;
         String repo = "https://raw.githubusercontent.com/PrinceOfAmber/OverpoweredInventory/";
-        String branch = "master-1710";
+        String branch = "master-18";
         String file = "/version.dat";
         try 
         {
@@ -45,7 +45,7 @@ public class VersionChecker implements Runnable
             IOUtils.closeQuietly(in);
         }
         
-        String current = "1.0.7"; //TODO: get from mcinfo or something i guess
+        String current = "1.0.8"; //TODO: get from mcinfo or something i guess
        // System.out.println("Latest mod version = "+latestVersion);
         isLatestVersion = current.equals(latestVersion);
      //   System.out.println("Are you running latest version = "+isLatestVersion);

@@ -17,12 +17,12 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.7.10-1.0.7"
+version = "1.8-1.0.8"
 group= "com.lothrazar.powerinventory" 
 archivesBaseName = "OverpoweredInventory"
 
 minecraft {
-    version = "1.7.10-10.13.4.1448-1.7.10"
+   version = "1.8-11.14.3.1446"
     runDir = "eclipse"
 }
 
