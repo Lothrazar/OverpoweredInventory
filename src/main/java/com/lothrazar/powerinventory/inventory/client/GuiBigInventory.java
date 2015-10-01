@@ -238,7 +238,7 @@ public class GuiBigInventory extends GuiInventory
         GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
 
-        Const.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize,0);
+        Const.drawTexturedQuadFit(this.guiLeft, this.guiTop,Const.texture_width,Const.texture_height);
  
         if(ModConfig.showCharacter)//drawEntityOnScreen
         	drawEntityOnScreen(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
