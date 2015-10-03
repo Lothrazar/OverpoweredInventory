@@ -10,12 +10,6 @@ import java.util.HashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.client.resources.model.IBakedModel;
-//import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Items;
@@ -55,6 +49,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author https://github.com/Funwayguy/InfiniteInvo
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
  */
+@SuppressWarnings("deprecation")
 public class EventHandler
 {
 	public static File worldDir;
@@ -120,7 +115,6 @@ public class EventHandler
 	@SubscribeEvent
 	public void onGuiOpen(GuiOpenEvent event)
 	{
-
 		if(ModConfig.enableCompatMode == false)
 			if(event.gui != null && event.gui.getClass() == GuiInventory.class && !(event.gui instanceof GuiBigInventory))
 			{
@@ -165,8 +159,6 @@ public class EventHandler
 			   event.gui instanceof net.minecraft.client.gui.inventory.GuiScreenHorseInventory
 			   )
 			{
-				
-				
 				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
 				
 				event.buttonList.add(new GuiButtonClose(button_id++, x,y,w,h));
@@ -182,7 +174,6 @@ public class EventHandler
 				x = x - padding - w;
 				
 				event.buttonList.add(new GuiButtonSort(Minecraft.getMinecraft().thePlayer,button_id++, x, y ,w,h, Const.SORT_LEFT,"<",true));
-				
 			}
 		}
 	}
@@ -305,10 +296,10 @@ public class EventHandler
             ModInv.sentVersionMessage = true;
         } 
     }
-	//below was imported from my PowerApples mod
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
-	public void onRenderTextOverlay(RenderGameOverlayEvent.Text event)
+	public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) 	//below was imported from my PowerApples mod
 	{
 		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;  
 	
@@ -335,38 +326,10 @@ public class EventHandler
 			}
 			
 			if(invo != null && invo.getStackInSlot(Const.clockSlot) != null)
-				renderItemAt(new ItemStack(Items.clock),xLeft,yBottom,size);
+				UtilTextureRender.renderItemAt(new ItemStack(Items.clock),xLeft,yBottom,size);
 			
 			if(invo != null && invo.getStackInSlot(Const.compassSlot) != null)
-				renderItemAt(new ItemStack(Items.compass),xRight,yBottom,size);	
+				UtilTextureRender.renderItemAt(new ItemStack(Items.compass),xRight,yBottom,size);	
 		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	private static void renderItemAt(ItemStack stack, int x, int y, int dim)
-	{
-		@SuppressWarnings("deprecation")
-		IBakedModel iBakedModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack);
-		@SuppressWarnings("deprecation")
-		TextureAtlasSprite textureAtlasSprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(iBakedModel.getTexture().getIconName());
-		
-		renderTexture( textureAtlasSprite, x, y, dim);
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public static void renderTexture( TextureAtlasSprite textureAtlasSprite , int x, int y, int dim)
-	{	
-		//special thanks to http://www.minecraftforge.net/forum/index.php?topic=26613.0
-		 Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
-		Tessellator tessellator = Tessellator.getInstance();
-
-		int height = dim, width = dim;
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-		worldrenderer.startDrawingQuads();
-		worldrenderer.addVertexWithUV((double)(x),          (double)(y + height),  0.0, (double)textureAtlasSprite.getMinU(), (double)textureAtlasSprite.getMaxV());
-		worldrenderer.addVertexWithUV((double)(x + width),  (double)(y + height),  0.0, (double)textureAtlasSprite.getMaxU(), (double)textureAtlasSprite.getMaxV());
-		worldrenderer.addVertexWithUV((double)(x + width),  (double)(y),           0.0, (double)textureAtlasSprite.getMaxU(), (double)textureAtlasSprite.getMinV());
-		worldrenderer.addVertexWithUV((double)(x),          (double)(y),           0.0, (double)textureAtlasSprite.getMinU(), (double)textureAtlasSprite.getMinV());
-		tessellator.draw();
 	}
 }

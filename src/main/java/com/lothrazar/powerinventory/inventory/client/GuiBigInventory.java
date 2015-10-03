@@ -2,6 +2,7 @@ package com.lothrazar.powerinventory.inventory.client;
 
 import com.lothrazar.powerinventory.Const; 
 import com.lothrazar.powerinventory.ModConfig;
+import com.lothrazar.powerinventory.UtilTextureRender;
 import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 
 import net.minecraft.client.gui.GuiButton;
@@ -13,18 +14,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 
 import org.lwjgl.opengl.GL11;
-/**
- * @author https://github.com/Funwayguy/InfiniteInvo
- * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
- */
+
 public class GuiBigInventory extends GuiInventory
 {
 	private BigContainerPlayer container;
 
-
-	GuiButton btnEnder;
-	GuiButton btnExp;
-	GuiButton btnUncraft;
+	private GuiButton btnEnder;
+	private GuiButton btnExp;
+	private GuiButton btnUncraft;
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
@@ -139,7 +136,7 @@ public class GuiBigInventory extends GuiInventory
 			btnEnder.visible = btnEnder.enabled;
 
 			if(ModConfig.enableSlotOutlines)
-				drawTextureSimple("textures/items/empty_enderchest.png",Const.echestX, Const.echestY,s,s); 
+				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_enderchest.png",Const.echestX, Const.echestY,s,s); 
 		}
 		else 
 		{ 
@@ -166,7 +163,7 @@ public class GuiBigInventory extends GuiInventory
 				btnExp.visible = btnExp.enabled;
 
 				if(ModConfig.enableSlotOutlines)
-					drawTextureSimple("textures/items/empty_bottle.png",Const.bottleX, Const.bottleY,s,s); 
+					UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_bottle.png",Const.bottleX, Const.bottleY,s,s); 
 			}
 			else 
 			{ 
@@ -177,24 +174,24 @@ public class GuiBigInventory extends GuiInventory
 		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
 			if(ModConfig.enableSlotOutlines)
-				drawTextureSimple("textures/items/empty_enderpearl.png",Const.pearlX, Const.pearlY,s,s);
+				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_enderpearl.png",Const.pearlX, Const.pearlY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.compassSlot) == null)
 		{ 
 			if(ModConfig.enableSlotOutlines)
-				drawTextureSimple("textures/items/empty_compass.png",Const.compassX, Const.compassY,s,s);
+				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_compass.png",Const.compassX, Const.compassY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.clockSlot) == null)
 		{  
 			if(ModConfig.enableSlotOutlines)
-				drawTextureSimple("textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
+				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
 		}
 		//now do all armor
 
 		
-		/*
+		
 		if(ModConfig.enableSlotOutlines)
 		{
 			int armorLeft =  Const.padding+2;
@@ -206,31 +203,23 @@ public class GuiBigInventory extends GuiInventory
 			
 			if(container.invo.armorInventory[0] == null)
 			{
-				drawTextureSimple("textures/items/empty_armor_slot_boots.png",armorLeft, armorTop+3*sq,s,s);
+				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_armor_slot_boots.png",armorLeft, armorTop+3*sq,s,s);
 			}
 			if(container.invo.armorInventory[1] == null)
 			{
-				drawTextureSimple("textures/items/empty_armor_slot_leggings.png",armorLeft, armorTop+2*sq,s,s);
+				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_armor_slot_leggings.png",armorLeft, armorTop+2*sq,s,s);
 			}
 			if(container.invo.armorInventory[2] == null)
 			{
-				drawTextureSimple("textures/items/empty_armor_slot_chestplate.png",armorLeft, armorTop+1*sq,s,s);
+				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_armor_slot_chestplate.png",armorLeft, armorTop+1*sq,s,s);
 			}
 			if(container.invo.armorInventory[3] == null)
 			{
-				drawTextureSimple("textures/items/empty_armor_slot_helmet.png",armorLeft, armorTop+0*sq,s,s);				
+				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_armor_slot_helmet.png",armorLeft, armorTop+0*sq,s,s);				
 			}
-		}*/
+		}
 	}
-	 //TODO: this is double din both guis?
-	public void drawTextureSimple(String texture,double x, double y, double width, double height)
-	{
-		//wrapper for drawTexturedQuadFit
-		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, texture)); 
-		Const.drawTexturedQuadFit(x,y,width,height);
-	}
-
-	
+	 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{ 
@@ -238,7 +227,7 @@ public class GuiBigInventory extends GuiInventory
         GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
 
-        Const.drawTexturedQuadFit(this.guiLeft, this.guiTop,Const.texture_width,Const.texture_height);
+        UtilTextureRender.drawTexturedQuadFit(this.guiLeft, this.guiTop,Const.texture_width,Const.texture_height);
  
         if(ModConfig.showCharacter)//drawEntityOnScreen
         	drawEntityOnScreen(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
@@ -256,14 +245,12 @@ public class GuiBigInventory extends GuiInventory
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, "textures/gui/inventory_slot.png"));
          
         //was this.drawTexturedModalRect
-        Const.drawTexturedQuadFit(this.guiLeft+ x -1, this.guiTop+ y -1,  Const.square, Const.square);
+        UtilTextureRender.drawTexturedQuadFit(this.guiLeft+ x -1, this.guiTop+ y -1,  Const.square, Const.square);
 	}
 	
 	@Override
 	public void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{ 
-		
-
 		this.checkSlotsEmpty();
 		 
 		//this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 87, 32, 4210752);

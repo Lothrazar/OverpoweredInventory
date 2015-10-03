@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModConfig;
+import com.lothrazar.powerinventory.UtilTextureRender;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonExp;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonUnc;
@@ -17,7 +18,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiCustomPlayerInventory extends GuiContainer
 {
-
 	GuiButton btnEnder;
 	GuiButton btnExp;
 	GuiButton btnUncraft;
@@ -32,10 +32,7 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		super(new ContainerCustomPlayer(player, inventoryPlayer, inventoryCustom));
 		inventory = inventoryCustom;
 		//thePlayer = player;
-
 	}
-	
-	
 	
 	@Override
 	public void initGui()
@@ -82,9 +79,6 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	{
 		super.drawScreen(par1, par2, par3);
 	
-		//this.xSize_lo = (float)par1;
-	
-		//this.ySize_lo = (float)par2;
 	}
 	@Override
 	protected void drawGuiContainerForegroundLayer(	int p_146976_2_, int p_146976_3_)
@@ -107,7 +101,7 @@ public class GuiCustomPlayerInventory extends GuiContainer
 			btnEnder.visible = btnEnder.enabled;
 
 			if(ModConfig.enableSlotOutlines)
-				drawTextureSimple("textures/items/empty_enderchest.png",Const.echestX, Const.echestY,s,s); 
+				UtilTextureRender.drawTextureSimple("textures/items/empty_enderchest.png",Const.echestX, Const.echestY,s,s); 
 		}
 		else 
 		{ 
@@ -134,7 +128,7 @@ public class GuiCustomPlayerInventory extends GuiContainer
 				btnExp.visible = btnExp.enabled;
 
 				if(ModConfig.enableSlotOutlines)
-					drawTextureSimple("textures/items/empty_bottle.png",Const.bottleX, Const.bottleY,s,s); 
+					UtilTextureRender.drawTextureSimple("textures/items/empty_bottle.png",Const.bottleX, Const.bottleY,s,s); 
 			}
 			else 
 			{ 
@@ -145,29 +139,22 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		if(inventory.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
 			if(ModConfig.enableSlotOutlines)
-				drawTextureSimple("textures/items/empty_enderpearl.png",Const.pearlX, Const.pearlY,s,s);
+				UtilTextureRender.drawTextureSimple("textures/items/empty_enderpearl.png",Const.pearlX, Const.pearlY,s,s);
 		}
 
 		if(inventory.getStackInSlot(Const.compassSlot) == null)
 		{ 
 			if(ModConfig.enableSlotOutlines)
-				drawTextureSimple("textures/items/empty_compass.png",Const.compassX, Const.compassY,s,s);
+				UtilTextureRender.drawTextureSimple("textures/items/empty_compass.png",Const.compassX, Const.compassY,s,s);
 		}
 
 		if(inventory.getStackInSlot(Const.clockSlot) == null)
 		{  
 			if(ModConfig.enableSlotOutlines)
-				drawTextureSimple("textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
+				UtilTextureRender.drawTextureSimple("textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
 		}
 	}
 	 
-	public void drawTextureSimple(String texture,double x, double y, double width, double height)
-	{
-		//wrapper for drawTexturedQuadFit
-		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, texture)); 
-		Const.drawTexturedQuadFit(x,y,width,height);
-	}
-	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float p_146976_1_,	int p_146976_2_, int p_146976_3_)
 	{ 
@@ -175,7 +162,7 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
 		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID,  "textures/gui/inventory.png"));
 		
-		Const.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize);//,0
+		UtilTextureRender.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize);//,0
  
         //if feature is enabled, draw these
         if(ModConfig.enableEnchantBottles)
@@ -195,8 +182,6 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	{
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, "textures/gui/inventory_slot.png"));
          
-        //was this.drawTexturedModalRect
-        Const.drawTexturedQuadFit(this.guiLeft+ x -1, this.guiTop+ y -1,  Const.square, Const.square);
+        UtilTextureRender.drawTexturedQuadFit(this.guiLeft + x - 1, this.guiTop + y - 1,  Const.square, Const.square);
 	}
-
 }

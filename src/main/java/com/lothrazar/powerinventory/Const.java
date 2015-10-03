@@ -3,9 +3,7 @@ package com.lothrazar.powerinventory;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
  
-/** 
- * @author Sam Bassett aka Lothrazar
- */
+
 public class Const
 { 
     public static final String MODID = "powerinventory";
@@ -74,26 +72,6 @@ public class Const
 	public static int bottleY = 20 + 2 * Const.square; 
 	public static int uncraftX = bottleX;
 	public static int uncraftY = bottleY - 24;
-	public static void drawTexturedQuadFit(double x, double y, double width, double height)
-	{
-		Const.drawTexturedQuadFit(x,y,width,height,0);
-	}
-	public static void drawTexturedQuadFit(double x, double y, double width, double height, double zLevel)
-	{
-		//because the vanilla code REQUIRES textures to be powers of two AND are force dto be max of 256??? WHAT?
-		//so this one actually works
-		//THANKS hydroflame  ON FORUMS 
-		//http://www.minecraftforge.net/forum/index.php/topic,11229.msg57594.html#msg57594
-		
-		Tessellator tessellator = Tessellator.getInstance();
-  
-		WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.startDrawingQuads();
-        
-        worldrenderer.addVertexWithUV(x + 0, y + height, zLevel, 0,1);
-        worldrenderer.addVertexWithUV(x + width, y + height, zLevel, 1, 1);
-        worldrenderer.addVertexWithUV(x + width, y + 0, zLevel, 1,0);
-        worldrenderer.addVertexWithUV(x + 0, y + 0, zLevel, 0, 0);
-        tessellator.draw();
-	}
+	
+	
 }
