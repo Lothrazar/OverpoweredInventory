@@ -1,9 +1,5 @@
 package com.lothrazar.powerinventory;
-
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
  
-
 public class Const
 { 
     public static final String MODID = "powerinventory";

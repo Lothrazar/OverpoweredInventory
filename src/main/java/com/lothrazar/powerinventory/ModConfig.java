@@ -25,8 +25,9 @@ public class ModConfig
 	public static boolean blockVersionChecker;
 	
 
-	private static Configuration config;
+	public static Configuration config;
 	public static boolean enableSlotOutlines;
+	public static String categoryHighlander;
 
 	public static void loadConfig(Configuration c) 
 	{
@@ -34,11 +35,18 @@ public class ModConfig
     	config.load();
     	 
     	String category = Configuration.CATEGORY_GENERAL;
+    	
+    	// decide which category can be altered in game - there can be only one
+    	categoryHighlander = category;
 		
     	ModConfig.filterRange = config.getInt("button_filter_range", category, 12, 1, 32, "Range of the filter button to reach nearby chests");
 		ModConfig.showCharacter = config.getBoolean("show_character",category,true,"Show or hide the animated character text in the inventory");
 		ModConfig.showSortButtons = config.getBoolean("move_inventory_buttons",category,true,"Show or hide the inventory shifting buttons << >>");
 		ModConfig.showCornerButtons = config.getBoolean("show_corner_buttons",category,true,"Show or hide the corner inventory buttons in other GUI's");
+		
+		
+		
+		//this is NOT changeable in-game
 		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
 		
 		ModConfig.showMergeDeposit = config.getBoolean("merge_deposit_buttons", category, true, "Show or hide the merge deposit buttons in upper right corner.");

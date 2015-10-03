@@ -1,15 +1,15 @@
-package com.lothrazar.powerinventory.inventory;
+package com.lothrazar.powerinventory.inventory.slot;
 
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class SlotBottle extends Slot
+public class SlotClock extends Slot
 {
 	public int slotIndex;//overrides the private internal one
 	
-	public SlotBottle(IInventory inventoryIn, int index, int xPosition,int yPosition) 
+	public SlotClock(IInventory inventoryIn, int index, int xPosition,int yPosition) 
 	{
 		super(inventoryIn, index, xPosition, yPosition);
  
@@ -25,8 +25,12 @@ public class SlotBottle extends Slot
 	@Override
 	public boolean isItemValid(ItemStack stack)
     {
-		return (stack != null && 
-				(stack.getItem() == Items.glass_bottle || 
-				 stack.getItem() == Items.experience_bottle ));
+		return (stack != null && stack.getItem() == Items.clock);
+    }
+	
+	@Override
+	public int getSlotStackLimit()
+    {
+        return 1;
     }
 }

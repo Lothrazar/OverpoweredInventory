@@ -2,11 +2,7 @@ package com.lothrazar.powerinventory.standalone;
 
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModConfig;
-import com.lothrazar.powerinventory.inventory.SlotBottle;
-import com.lothrazar.powerinventory.inventory.SlotClock;
-import com.lothrazar.powerinventory.inventory.SlotCompass;
-import com.lothrazar.powerinventory.inventory.SlotEnderChest;
-import com.lothrazar.powerinventory.inventory.SlotEnderPearl;
+import com.lothrazar.powerinventory.inventory.slot.*;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

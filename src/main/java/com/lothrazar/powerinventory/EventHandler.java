@@ -49,7 +49,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  * @author https://github.com/Funwayguy/InfiniteInvo
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
  */
-@SuppressWarnings("deprecation")
 public class EventHandler
 {
 	public static File worldDir;

@@ -22,6 +22,7 @@ import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
+import com.lothrazar.powerinventory.inventory.slot.*;
 /**
  * @author https://github.com/Funwayguy/InfiniteInvo
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
