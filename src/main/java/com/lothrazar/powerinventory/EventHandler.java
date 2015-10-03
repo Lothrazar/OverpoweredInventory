@@ -39,6 +39,7 @@ import com.lothrazar.powerinventory.proxy.ClientProxy;
 import com.lothrazar.powerinventory.proxy.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.EnderPearlPacket; 
 
+import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -70,6 +71,12 @@ public class EventHandler
         }  
     }
 	
+	@SubscribeEvent
+	public void onConfigChanged(OnConfigChangedEvent event) 
+	{
+		if (event.modID.equals(Const.MODID)) ModConfig.syncConfig();
+	}
+
 	@SubscribeEvent
 	public void onEntityConstruct(EntityConstructing event) // More reliable than on entity join
 	{

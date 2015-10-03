@@ -16,7 +16,7 @@ public class IngameConfigGui extends GuiConfig
                 false, 
                 false, 
                 "Overpowered Inventory");
-        this.titleLine2 = "See the config file for even more options";
+        this.titleLine2 = "See the "+Const.MODID+".cfg file for even more options";
     }
 	
 	@Override

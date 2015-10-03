@@ -27,36 +27,38 @@ public class ModConfig
 
 	public static Configuration config;
 	public static boolean enableSlotOutlines;
-	public static String categoryHighlander;
+	public static final String categoryHighlander = "can_change_ingame";
 
 	public static void loadConfig(Configuration c) 
 	{
 		config = c;
     	config.load();
-    	 
-    	String category = Configuration.CATEGORY_GENERAL;
-    	
-    	// decide which category can be altered in game - there can be only one
-    	categoryHighlander = category;
+    	syncConfig();
+	}
+	
+	public static void syncConfig()
+	{
+    	// decide which ones can be altered in game - there can be only one
+    	String category = categoryHighlander;
 		
     	ModConfig.filterRange = config.getInt("button_filter_range", category, 12, 1, 32, "Range of the filter button to reach nearby chests");
 		ModConfig.showCharacter = config.getBoolean("show_character",category,true,"Show or hide the animated character text in the inventory");
 		ModConfig.showSortButtons = config.getBoolean("move_inventory_buttons",category,true,"Show or hide the inventory shifting buttons << >>");
 		ModConfig.showCornerButtons = config.getBoolean("show_corner_buttons",category,true,"Show or hide the corner inventory buttons in other GUI's");
 		
-		
-		
-		//this is NOT changeable in-game
-		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
-		
 		ModConfig.showMergeDeposit = config.getBoolean("merge_deposit_buttons", category, true, "Show or hide the merge deposit buttons in upper right corner.");
 		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
-
-		category = "cosmetic";
-		
 		
 		ModConfig.enableSlotOutlines = config.getBoolean("slot_outlines",category,true,"Normally the special slots have outlines to indicate the allowed items, but you can disable them here.  ");
+		ModConfig.enableUncrafting = config.getBoolean("enable_uncrafting",category,true,"Lets you disable the uncrafting slot and button");
+		ModConfig.enableEnchantBottles =  config.getBoolean("enable_enchantbottles",category,true,"Lets you disable the enchanting bottle filling slot and button");
+		
+		
 
+		category = "stacks";
+
+		//this is NOT changeable in-game
+		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
 		
 		
 		category = "warning_advanced";
@@ -64,8 +66,6 @@ public class ModConfig
 		config.addCustomCategoryComment(category, "This section is for disabling and changes major features.  Always empty your inventory before changing these.");
 		
 		
-		ModConfig.enableUncrafting = config.getBoolean("enable_uncrafting",category,true,"Lets you disable the uncrafting slot and button");
-		ModConfig.enableEnchantBottles =  config.getBoolean("enable_enchantbottles",category,true,"Lets you disable the enchanting bottle filling slot and button");
 		
 		ModConfig.smallMedLarge = config.getString("main_size", category, "normal", "Valid values are only exactly 'normal', 'small', 'large'.    Changes your inventory size, for use if your GUI Scale requirements are different.  normal = regular 15x25 inventory size, small = 6x18.  WARNING: EMPTY YOUR PLAYERS INVENTORY IN A CHEST before changing this.  And to be safe, BACKUP YOUR WORLD!");
 
@@ -81,10 +81,51 @@ public class ModConfig
 		ModConfig.enableCompatMode =  config.getBoolean("compatibility_mode",category,false,"False is the regular mod with everything normal.  "
 				+ "True will give you the regular vanilla inventory, not replaced or changed in any way for compatibility reasons.  Instead, push the upper right button to use the mini version.");
 		
+
+		//TODO: more stufffffffffffffffs
 		
-	
+//IDEAS::
+		//2: add in/fix the armor background images
 		
 		
+		//3: option to turn off background images (including armor)
+		
+		
+		//4 more 64 stacking
+		
+		
+		
+		
+		
+		//turn onn/off the uncrafting and ehcnat bottling
+		
+		
+		//turn off version checker 
+		
+		
+		
+		// exp cost for uncrafting added (default zero)  
+		
+		
+
+
+		//?? enable/disable 3x3 crafting
+		// ???: make the left 9 columns actually go vertically down so it matches player invo
+
+		if(config.hasChanged()){config.save();}
+		
+		
+		
+		
+		setupGuiFromConfig();
+		
+		
+		
+		
+	}
+
+	private static void setupGuiFromConfig()
+	{
 		if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
 		{
 
@@ -152,37 +193,5 @@ public class ModConfig
 			 
 			Const.uncraftX = Const.bottleX;
 		}
-		
-		
-		
-		
-		if(config.hasChanged()){config.save();}
 	}
-    
-	//2: add in/fix the armor background images
-	
-	
-	//3: option to turn off background images (including armor)
-	
-	
-	//4 more 64 stacking
-	
-	
-	
-	
-	
-	//turn onn/off the uncrafting and ehcnat bottling
-	
-	
-	//turn off version checker 
-	
-	
-	
-	// exp cost for uncrafting added (default zero)  
-	
-	
-
-
-	//?? enable/disable 3x3 crafting
-	// ???: make the left 9 columns actually go vertically down so it matches player invo
 }
