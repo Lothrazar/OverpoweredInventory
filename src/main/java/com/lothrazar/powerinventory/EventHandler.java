@@ -10,6 +10,7 @@ import java.util.HashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Items;
@@ -20,6 +21,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
+import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
@@ -338,4 +340,18 @@ public class EventHandler
 				UtilTextureRender.renderItemAt(new ItemStack(Items.compass),xRight,yBottom,size);	
 		}
 	}
+	
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent//(priority = EventPriority.NORMAL)
+    public void onRenderOverlay(RenderGameOverlayEvent event)
+    {
+		//force it to always show food - otherwise its hidden when riding a horse
+		
+		if(ModConfig.alwaysShowHungerbar)
+		{
+			GuiIngameForge.renderFood = true;
+		}
+    } 
+	
 }

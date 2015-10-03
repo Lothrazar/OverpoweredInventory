@@ -33,6 +33,7 @@ public class ModConfig
 	public static boolean snowballs64;
 	public static boolean food64;
 	public static boolean bucket64;
+	public static boolean alwaysShowHungerbar;
 	public static final String categoryHighlander = "can_change_ingame";
 
 	public static void loadConfig(Configuration c) 
@@ -59,7 +60,7 @@ public class ModConfig
 		ModConfig.enableUncrafting = config.getBoolean("enable_uncrafting",category,true,"Lets you disable the uncrafting slot and button");
 		ModConfig.enableEnchantBottles =  config.getBoolean("enable_enchantbottles",category,true,"Lets you disable the enchanting bottle filling slot and button");
 		
-		
+		ModConfig.alwaysShowHungerbar = config.getBoolean("always_show_hunger",category,true,"Always show hunger bar - even while mounted.  Horse health will show above the hunger bar.");
 
 		category = "stack_to_64";
 
@@ -70,7 +71,7 @@ public class ModConfig
 		ModConfig.snowballs64 = config.get(category,"snowballs",  true).getBoolean();
 		ModConfig.food64 = config.get(category,"allfood_cake_eggs_stew",  true).getBoolean();//cookie, stews, cakes
 		ModConfig.bucket64 = config.get(category,"empty_bucket",  true).getBoolean();
-		//?? maybe? record and horse armor?
+		//?? maybe? record and horse armor?saddle?
 		
 		category = "warning_advanced";
 		
