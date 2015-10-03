@@ -27,6 +27,12 @@ public class ModConfig
 
 	public static Configuration config;
 	public static boolean enableSlotOutlines;
+	public static boolean minecart64;
+	public static boolean boat64;
+	public static boolean doors64;
+	public static boolean snowballs64;
+	public static boolean food64;
+	public static boolean bucket64;
 	public static final String categoryHighlander = "can_change_ingame";
 
 	public static void loadConfig(Configuration c) 
@@ -55,11 +61,16 @@ public class ModConfig
 		
 		
 
-		category = "stacks";
+		category = "stack_to_64";
 
-		//this is NOT changeable in-game
-		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
-		
+		ModConfig.enderPearl64 = config.get( category,"ender_pearl", true).getBoolean();
+		ModConfig.minecart64 = config.get(category,"minecarts",  true).getBoolean();
+		ModConfig.boat64 = config.get(category,"boats",  true).getBoolean();
+		ModConfig.doors64 = config.get(category,"doors",  true).getBoolean();
+		ModConfig.snowballs64 = config.get(category,"snowballs",  true).getBoolean();
+		ModConfig.food64 = config.get(category,"allfood_cake_eggs_stew",  true).getBoolean();//cookie, stews, cakes
+		ModConfig.bucket64 = config.get(category,"empty_bucket",  true).getBoolean();
+		//?? maybe? record and horse armor?
 		
 		category = "warning_advanced";
 		
