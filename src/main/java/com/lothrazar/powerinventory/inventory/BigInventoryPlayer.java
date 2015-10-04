@@ -23,7 +23,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class BigInventoryPlayer extends InventoryPlayer
 {
-    @SideOnly(Side.CLIENT)
+    public static int INVOSIZE;
+	@SideOnly(Side.CLIENT)
     private ItemStack currentItemStack;
     private ItemStack enderPearlStack;
     private ItemStack enderChestStack;
@@ -35,7 +36,7 @@ public class BigInventoryPlayer extends InventoryPlayer
 	public BigInventoryPlayer(EntityPlayer player)
 	{
 		super(player);
-		this.mainInventory = new ItemStack[Const.INVOSIZE + Const.HOTBAR_SIZE];
+		this.mainInventory = new ItemStack[INVOSIZE + Const.HOTBAR_SIZE];
  
 		if(player.inventory != null)
 		{
@@ -595,7 +596,7 @@ public class BigInventoryPlayer extends InventoryPlayer
 	@Override
     public void readFromNBT(NBTTagList tags)
     {
-        this.mainInventory = new ItemStack[MathHelper.clamp_int(Const.INVOSIZE, 27, Integer.MAX_VALUE - 100) + 9];
+        this.mainInventory = new ItemStack[INVOSIZE + Const.HOTBAR_SIZE];
         this.armorInventory = new ItemStack[armorInventory == null? 4 : armorInventory.length]; // Just in case it isn't standard size
         ItemStack itemstack;
         NBTTagCompound nbttagcompound;

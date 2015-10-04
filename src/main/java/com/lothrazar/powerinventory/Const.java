@@ -25,7 +25,7 @@ public class Const
 	//width of the black box with the character in it (with the armor slots and stuff too)
 	public static final int WIDTH_CHARARMOR = 72; 
  
-	public static int INVOSIZE;
+	//public static int INVOSIZE;
 
 	//these are slot indices. different than slot numbers (important)
     public static final int enderPearlSlot = 77777; 
