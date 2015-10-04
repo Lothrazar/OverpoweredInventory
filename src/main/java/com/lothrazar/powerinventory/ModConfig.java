@@ -138,7 +138,7 @@ public class ModConfig
 			GuiBigInventory.texture_height = 382;
 		    //GuiBigInventory.backgroundTexture = "textures/gui/inventory_15x25.png";//375 total
 		    
-		    Const.bottleX = GuiBigInventory.texture_width - Const.SQ - Const.padding - 1;
+		    //Const.bottleX = GuiBigInventory.texture_width - Const.SQ - Const.padding - 1;
 		}
 		else if(ModConfig.smallMedLarge.equalsIgnoreCase("large"))
 		{
@@ -151,10 +151,10 @@ public class ModConfig
 			GuiBigInventory.texture_height = 400;
 			//GuiBigInventory.backgroundTexture = "textures/gui/inventory_16x28.png";
 		    
-		    int offset = 18*2;
-		    Const.bottleX = GuiBigInventory.texture_width - Const.SQ - Const.padding - 1;
-		    Const.bottleX += offset; 
-			Const.uncraftX += offset; 
+		  //  int offset = 18*2;
+		    //Const.bottleX = GuiBigInventory.texture_width - Const.SQ - Const.padding - 1;
+		    //Const.bottleX += offset; 
+			//Const.uncraftX += offset; 
 		}
 		else//assume its small
 		{
@@ -167,10 +167,9 @@ public class ModConfig
 			GuiBigInventory.texture_width = 338;
 			GuiBigInventory.texture_height = 221;
 
-		    int offset = 18*7;
-		    Const.bottleX = GuiBigInventory.texture_width - Const.SQ - Const.padding - 1;
-		    Const.bottleX -= offset; 
-			Const.uncraftX -= offset; 
+		    //int offset = 18*7;
+		   // Const.bottleX -= offset; 
+			//Const.uncraftX -= offset; 
 			
 			//6*18 is 108..so yeah?
 		}
@@ -178,7 +177,9 @@ public class ModConfig
 		GuiBigInventory.backgroundTexture = "textures/gui/inventory_" 
 						+ BigContainerPlayer.ALL_ROWS + "x" + BigContainerPlayer.ALL_COLS + ".png";
 		Const.INVOSIZE  = BigContainerPlayer.ALL_COLS * BigContainerPlayer.ALL_ROWS;
-		
+
+	    Const.bottleX = GuiBigInventory.texture_width - Const.SQ - Const.padding - 1;
+	    
 		if(ModConfig.enableCompatMode)
 		{
 			int texture_width = 176;//width of vanilla inventory.png same number as in source code
