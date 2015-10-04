@@ -270,7 +270,7 @@ public class UtilInventory
 		}//close loop on chest items
   	}
 	
-	public static void sortFromPlayerToChestEntity(World world, TileEntityChest chest, EntityPlayer player)
+	public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player)
   	{ 
 		//source: https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
 		
@@ -283,7 +283,7 @@ public class UtilInventory
 		//player inventory and the small chest have the same dimensions 
 		
 		int START_CHEST = 0; 
-		int END_CHEST =  START_CHEST + 3*9; 
+		int END_CHEST =  chest.getSizeInventory(); 
 		
 		//inventory and chest has 9 rows by 3 columns, never changes. same as 64 max stack size
 		for(int islotChest = START_CHEST; islotChest < END_CHEST; islotChest++)
