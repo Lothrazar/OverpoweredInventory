@@ -1,8 +1,8 @@
-package com.lothrazar.powerinventory.proxy;
+package com.lothrazar.powerinventory.net;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.GuiHandler;
 import com.lothrazar.powerinventory.ModInv;
-import com.lothrazar.powerinventory.standalone.GuiHandler;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;

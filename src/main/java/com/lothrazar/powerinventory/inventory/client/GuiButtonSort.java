@@ -1,6 +1,6 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.proxy.SortButtonPacket;
+import com.lothrazar.powerinventory.net.SortButtonPacket;
 import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.UtilInventory;
 

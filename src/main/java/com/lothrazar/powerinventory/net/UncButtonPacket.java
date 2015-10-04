@@ -1,9 +1,9 @@
-package com.lothrazar.powerinventory.proxy;
+package com.lothrazar.powerinventory.net;
 
 import java.util.ArrayList;
 
 import com.lothrazar.powerinventory.*;
-import com.lothrazar.powerinventory.standalone.ContainerCustomPlayer;
+import com.lothrazar.powerinventory.inventory.ContainerCustomPlayer;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityItem;

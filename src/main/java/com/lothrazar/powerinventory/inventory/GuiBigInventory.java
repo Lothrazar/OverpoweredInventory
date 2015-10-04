@@ -1,9 +1,14 @@
-package com.lothrazar.powerinventory.inventory.client;
+package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const; 
 import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.UtilTextureRender;
-import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonDump;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonExp;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonFilter;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonUnc;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -69,6 +74,7 @@ public class GuiBigInventory extends GuiInventory
 				btnUncraft.enabled = false;// turn it on based on ender chest present or not
 				btnUncraft.visible = btnUncraft.enabled;
 		    }
+			
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
 					this.guiLeft + Const.echestX + 19, 
 					this.guiTop + Const.echestY - 1,

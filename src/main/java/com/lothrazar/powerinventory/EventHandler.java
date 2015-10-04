@@ -10,7 +10,6 @@ import java.util.HashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Items;
@@ -32,14 +31,13 @@ import net.minecraftforge.event.world.WorldEvent;
 
 import org.apache.logging.log4j.Level;
 
-import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
-import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
+import com.lothrazar.powerinventory.inventory.GuiBigInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
+import com.lothrazar.powerinventory.net.EnderPearlPacket;
+import com.lothrazar.powerinventory.net.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
-import com.lothrazar.powerinventory.proxy.OpenInventoryPacket;
-import com.lothrazar.powerinventory.proxy.EnderPearlPacket; 
 
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;

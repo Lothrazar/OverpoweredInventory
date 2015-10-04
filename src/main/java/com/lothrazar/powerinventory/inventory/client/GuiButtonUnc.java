@@ -1,6 +1,6 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.proxy.UncButtonPacket;
+import com.lothrazar.powerinventory.net.UncButtonPacket;
 import com.lothrazar.powerinventory.ModInv;
 
 import net.minecraft.client.Minecraft;

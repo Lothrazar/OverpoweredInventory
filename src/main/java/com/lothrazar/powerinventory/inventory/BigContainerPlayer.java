@@ -11,17 +11,12 @@ import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.apache.logging.log4j.Level;
 
 import com.google.common.collect.Lists;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModConfig;
-import com.lothrazar.powerinventory.ModInv;
-import com.lothrazar.powerinventory.inventory.client.GuiBigInventory;
 import com.lothrazar.powerinventory.inventory.slot.*;
 /**
  * @author https://github.com/Funwayguy/InfiniteInvo

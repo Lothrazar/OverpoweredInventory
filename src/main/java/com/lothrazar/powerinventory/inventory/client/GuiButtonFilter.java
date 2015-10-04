@@ -1,8 +1,8 @@
 package com.lothrazar.powerinventory.inventory.client;
 
-import com.lothrazar.powerinventory.proxy.FilterButtonPacket;
-
+import com.lothrazar.powerinventory.net.FilterButtonPacket;
 import com.lothrazar.powerinventory.ModInv;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;

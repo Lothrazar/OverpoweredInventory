@@ -1,11 +1,11 @@
-package com.lothrazar.powerinventory.inventory;
+package com.lothrazar.powerinventory;
 
 import java.util.HashMap;
 import java.util.UUID;
 
-import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.ModConfig;
-import com.lothrazar.powerinventory.standalone.InventoryCustomPlayer;
+import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
+import com.lothrazar.powerinventory.inventory.BigInventoryPlayer;
+import com.lothrazar.powerinventory.inventory.InventoryCustomPlayer;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;

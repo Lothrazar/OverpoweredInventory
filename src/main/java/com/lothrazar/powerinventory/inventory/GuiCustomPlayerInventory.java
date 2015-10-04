@@ -1,4 +1,4 @@
-package com.lothrazar.powerinventory.standalone;
+package com.lothrazar.powerinventory.inventory;
 
 import org.lwjgl.opengl.GL11;
 
@@ -34,6 +34,7 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		//thePlayer = player;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui()
     { 

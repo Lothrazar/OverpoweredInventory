@@ -1,4 +1,4 @@
-package com.lothrazar.powerinventory.standalone;
+package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModConfig;

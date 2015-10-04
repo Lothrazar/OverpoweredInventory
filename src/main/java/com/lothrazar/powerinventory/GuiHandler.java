@@ -1,6 +1,7 @@
-package com.lothrazar.powerinventory.standalone;
+package com.lothrazar.powerinventory;
 
-import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
+import com.lothrazar.powerinventory.inventory.ContainerCustomPlayer;
+import com.lothrazar.powerinventory.inventory.GuiCustomPlayerInventory;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;

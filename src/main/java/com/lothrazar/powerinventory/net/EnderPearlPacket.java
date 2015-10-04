@@ -1,7 +1,6 @@
-package com.lothrazar.powerinventory.proxy;
+package com.lothrazar.powerinventory.net;
 
 import com.lothrazar.powerinventory.*;
-import com.lothrazar.powerinventory.inventory.InventoryPersistProperty;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityEnderPearl;
