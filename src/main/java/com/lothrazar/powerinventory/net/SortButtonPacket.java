@@ -1,12 +1,8 @@
 package com.lothrazar.powerinventory.net;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import com.lothrazar.powerinventory.*;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

@@ -1,19 +1,15 @@
 package com.lothrazar.powerinventory.net;
 
-import java.util.ArrayList;
-
 import com.lothrazar.powerinventory.*;
 import com.lothrazar.powerinventory.inventory.ContainerCustomPlayer;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntityChest;
 //import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
