@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class SlotCompass extends Slot
 {
+	public static String background = "textures/items/empty_compass.png";
 	public int slotIndex;//overrides the private internal one
 	
 	public SlotCompass(IInventory inventoryIn, int index, int xPosition,int yPosition) 
@@ -14,6 +15,7 @@ public class SlotCompass extends Slot
 		super(inventoryIn, index, xPosition, yPosition);
  
 		slotIndex = index;
+		//this.setBackgroundName(background);//doesnt actually work
 	}
 	
 	@Override

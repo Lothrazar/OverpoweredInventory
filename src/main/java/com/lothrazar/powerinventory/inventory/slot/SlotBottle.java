@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class SlotBottle extends Slot
 {
+	public static String background = "textures/items/empty_bottle.png";
 	public int slotIndex;//overrides the private internal one
 	
 	public SlotBottle(IInventory inventoryIn, int index, int xPosition,int yPosition) 
@@ -14,6 +15,7 @@ public class SlotBottle extends Slot
 		super(inventoryIn, index, xPosition, yPosition);
  
 		slotIndex = index;
+		//this.setBackgroundName(background);//doesnt actually work
 	}
 	
 	@Override

@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class SlotEnderPearl extends Slot
 {
+	public static String background = "textures/items/empty_enderpearl.png";
 	public int slotIndex;//overrides the private internal one
 	
 	public SlotEnderPearl(IInventory inventoryIn, int index, int xPosition,int yPosition) 

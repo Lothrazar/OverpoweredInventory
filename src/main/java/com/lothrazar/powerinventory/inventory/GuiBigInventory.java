@@ -3,12 +3,8 @@ package com.lothrazar.powerinventory.inventory;
 import com.lothrazar.powerinventory.Const; 
 import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.UtilTextureRender;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonDump;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonExp;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonFilter;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonUnc;
+import com.lothrazar.powerinventory.inventory.client.*;
+import com.lothrazar.powerinventory.inventory.slot.*;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -135,14 +131,13 @@ public class GuiBigInventory extends GuiInventory
 		//TODO: interface-ey stuff to share code more
 		final int s = 16;
  
-		
 		if(container.invo.getStackInSlot(Const.enderChestSlot) == null)
 		{
 			btnEnder.enabled = false;
 			btnEnder.visible = btnEnder.enabled;
 
 			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_enderchest.png",Const.echestX, Const.echestY,s,s); 
+				UtilTextureRender.drawTextureSimple(SlotEnderChest.background,Const.echestX, Const.echestY,s,s); 
 		}
 		else 
 		{ 
@@ -169,7 +164,7 @@ public class GuiBigInventory extends GuiInventory
 				btnExp.visible = btnExp.enabled;
 
 				if(ModConfig.enableSlotOutlines)
-					UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_bottle.png",Const.bottleX, Const.bottleY,s,s); 
+					UtilTextureRender.drawTextureSimple(SlotBottle.background,Const.bottleX, Const.bottleY,s,s); 
 			}
 			else 
 			{ 
@@ -180,24 +175,22 @@ public class GuiBigInventory extends GuiInventory
 		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
 			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_enderpearl.png",Const.pearlX, Const.pearlY,s,s);
+				UtilTextureRender.drawTextureSimple(SlotEnderPearl.background,Const.pearlX, Const.pearlY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.compassSlot) == null)
 		{ 
 			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_compass.png",Const.compassX, Const.compassY,s,s);
+				UtilTextureRender.drawTextureSimple(SlotCompass.background,Const.compassX, Const.compassY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.clockSlot) == null)
 		{  
 			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
+				UtilTextureRender.drawTextureSimple(SlotClock.background,Const.clockX, Const.clockY,s,s);
 		}
 		//now do all armor
 
-		
-		
 		if(ModConfig.enableSlotOutlines)
 		{
 			int armorLeft =  Const.padding+2;
@@ -209,19 +202,19 @@ public class GuiBigInventory extends GuiInventory
 			
 			if(container.invo.armorInventory[0] == null)
 			{
-				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_armor_slot_boots.png",armorLeft, armorTop+3*sq,s,s);
+				UtilTextureRender.drawTextureSimple("textures/items/empty_armor_slot_boots.png",armorLeft, armorTop+3*sq,s,s);
 			}
 			if(container.invo.armorInventory[1] == null)
 			{
-				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_armor_slot_leggings.png",armorLeft, armorTop+2*sq,s,s);
+				UtilTextureRender.drawTextureSimple("textures/items/empty_armor_slot_leggings.png",armorLeft, armorTop+2*sq,s,s);
 			}
 			if(container.invo.armorInventory[2] == null)
 			{
-				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_armor_slot_chestplate.png",armorLeft, armorTop+1*sq,s,s);
+				UtilTextureRender.drawTextureSimple("textures/items/empty_armor_slot_chestplate.png",armorLeft, armorTop+1*sq,s,s);
 			}
 			if(container.invo.armorInventory[3] == null)
 			{
-				UtilTextureRender.drawTextureSimple(this.mc.getTextureManager(),"textures/items/empty_armor_slot_helmet.png",armorLeft, armorTop+0*sq,s,s);				
+				UtilTextureRender.drawTextureSimple("textures/items/empty_armor_slot_helmet.png",armorLeft, armorTop+0*sq,s,s);				
 			}
 		}
 	}
