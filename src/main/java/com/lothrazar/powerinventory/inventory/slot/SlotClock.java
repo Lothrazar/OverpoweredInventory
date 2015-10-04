@@ -8,11 +8,13 @@ import net.minecraft.item.ItemStack;
 public class SlotClock extends Slot
 {
 	public static String background = "textures/items/empty_clock.png";
+	public static int posX;
+	public static int posY;
 	public int slotIndex;//overrides the private internal one
 	
-	public SlotClock(IInventory inventoryIn, int index, int xPosition,int yPosition) 
+	public SlotClock(IInventory inventoryIn, int index) 
 	{
-		super(inventoryIn, index, xPosition, yPosition);
+		super(inventoryIn, index, posX, posY);
  
 		slotIndex = index;
 		//this.setBackgroundName(background);//doesnt actually work

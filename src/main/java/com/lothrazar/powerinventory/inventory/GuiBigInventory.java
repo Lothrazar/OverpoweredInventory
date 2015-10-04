@@ -78,8 +78,8 @@ public class GuiBigInventory extends GuiInventory
 		    }
 			
 			btnEnder = new GuiButtonOpenInventory(button_id++, 
-					this.guiLeft + Const.echestX + 19, 
-					this.guiTop + Const.echestY - 1,
+					this.guiLeft + SlotEnderChest.posX + 19, 
+					this.guiTop + SlotEnderChest.posY - 1,
 					12,height, "I",Const.INV_ENDER); 
 			this.buttonList.add(btnEnder); 
 			btnEnder.enabled = false;// turn it on based on ender chest present or not
@@ -143,7 +143,7 @@ public class GuiBigInventory extends GuiInventory
 			btnEnder.visible = btnEnder.enabled;
 
 			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple(SlotEnderChest.background,Const.echestX, Const.echestY,s,s); 
+				UtilTextureRender.drawTextureSimple(SlotEnderChest.background,SlotEnderChest.posX, SlotEnderChest.posY,s,s); 
 		}
 		else 
 		{ 
@@ -181,19 +181,19 @@ public class GuiBigInventory extends GuiInventory
 		if(container.invo.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
 			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple(SlotEnderPearl.background,Const.pearlX, Const.pearlY,s,s);
+				UtilTextureRender.drawTextureSimple(SlotEnderPearl.background,SlotEnderPearl.posX, SlotEnderPearl.posY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.compassSlot) == null)
 		{ 
 			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple(SlotCompass.background,Const.compassX, Const.compassY,s,s);
+				UtilTextureRender.drawTextureSimple(SlotCompass.background,SlotCompass.posX, SlotCompass.posY,s,s);
 		}
 
 		if(container.invo.getStackInSlot(Const.clockSlot) == null)
 		{  
 			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple(SlotClock.background,Const.clockX, Const.clockY,s,s);
+				UtilTextureRender.drawTextureSimple(SlotClock.background,SlotClock.posX, SlotClock.posY,s,s);
 		}
 		//now do all armor
 

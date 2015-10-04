@@ -142,16 +142,16 @@ public class BigContainerPlayer extends ContainerPlayer
         S_MAIN_END = this.inventorySlots.size() - 1;
         
         S_PEARL =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot, Const.pearlX, Const.pearlY));
+        this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot));
 
         S_ECHEST =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot, Const.echestX, Const.echestY)); 
+        this.addSlotToContainer(new SlotEnderChest(playerInventory, Const.enderChestSlot)); 
 
         S_CLOCK =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotClock(playerInventory, Const.clockSlot, Const.clockX, Const.clockY)); 
+        this.addSlotToContainer(new SlotClock(playerInventory, Const.clockSlot)); 
 
         S_COMPASS =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotCompass(playerInventory, Const.compassSlot, Const.compassX, Const.compassY)); 
+        this.addSlotToContainer(new SlotCompass(playerInventory, Const.compassSlot)); 
         
         if(ModConfig.enableEnchantBottles)
         {

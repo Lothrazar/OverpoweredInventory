@@ -55,18 +55,7 @@ public class Const
 
 	public final static int padding = 6;
 	public final static int paddingLrg = 8;
-	
-	
-	
-	public static int pearlX;// = Const.WIDTH_CHARWINDOW + paddingLrg; 
-	public static int pearlY;// = paddingLrg; 
-	public static int compassX;// = pearlX;
-	public static int compassY;// = pearlY + Const.SQ;
-	public static int clockX;// = pearlX;
-	public static int clockY;// = pearlY + 2*Const.SQ;
-	public static int echestX;// = pearlX;
-	public static int echestY;// = pearlY + 3*Const.SQ; 
-	
+	 
 	public static int bottleX;// = Const.texture_width - Const.square - padding - 1;
 	public static int bottleY = 20 + 2 * Const.SQ; 
 	public static int uncraftX;// = bottleX;

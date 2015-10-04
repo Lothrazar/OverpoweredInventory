@@ -87,16 +87,16 @@ public class ContainerCustomPlayer extends Container
 
 
 		S_PEARL =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.enderPearlSlot, Const.pearlX, Const.pearlY));
+        this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.enderPearlSlot));
 
         S_ECHEST =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.enderChestSlot, Const.echestX, Const.echestY)); 
+        this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.enderChestSlot)); 
 
         S_CLOCK =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotClock(inventoryCustom, Const.clockSlot, Const.clockX, Const.clockY)); 
+        this.addSlotToContainer(new SlotClock(inventoryCustom, Const.clockSlot)); 
 
         S_COMPASS =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotCompass(inventoryCustom, Const.compassSlot, Const.compassX, Const.compassY)); 
+        this.addSlotToContainer(new SlotCompass(inventoryCustom, Const.compassSlot)); 
         
 		
 	    if(ModConfig.enableEnchantBottles)

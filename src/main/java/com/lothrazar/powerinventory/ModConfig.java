@@ -3,6 +3,7 @@ package com.lothrazar.powerinventory;
 import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 import com.lothrazar.powerinventory.inventory.BigInventoryPlayer;
 import com.lothrazar.powerinventory.inventory.GuiBigInventory;
+import com.lothrazar.powerinventory.inventory.slot.*;
 
 import net.minecraftforge.common.config.Configuration;
  
@@ -199,16 +200,19 @@ public class ModConfig
 
 		//for each column we set the first slot, and then the rest relative to that one
 		
-		//four slots on left column
-		Const.pearlY = Const.paddingLrg; 	
-		Const.compassY = Const.pearlY + Const.SQ; 
-		Const.clockY = Const.pearlY + 2 * Const.SQ; 
-		Const.echestY = Const.pearlY + 3 * Const.SQ;  
+		//all our special slots are Singletons.
+		//that is, only one appears per inventory
 		
-		Const.compassX = xSlotColumn; 
-		Const.pearlX = xSlotColumn; 
-		Const.clockX = xSlotColumn;  
-		Const.echestX = xSlotColumn; 
+		//four slots on left column
+		SlotEnderPearl.posY = Const.paddingLrg; 	
+		SlotCompass.posY = Const.paddingLrg + Const.SQ; 
+		SlotClock.posY = Const.paddingLrg + 2 * Const.SQ; 
+		SlotEnderChest.posY = Const.paddingLrg + 3 * Const.SQ;  
+
+		SlotEnderPearl.posX = xSlotColumn; 
+		SlotCompass.posX = xSlotColumn; 
+		SlotClock.posX = xSlotColumn;  
+		SlotEnderChest.posX = xSlotColumn; 
 		
 		//two slots on right column
 		

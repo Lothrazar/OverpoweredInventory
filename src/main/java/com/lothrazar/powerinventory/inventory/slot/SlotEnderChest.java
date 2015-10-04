@@ -9,11 +9,13 @@ import net.minecraft.item.ItemStack;
 public class SlotEnderChest extends Slot
 {
 	public static String background = "textures/items/empty_enderchest.png";
+	public static int posX;
+	public static int posY;
 	public int slotIndex;//overrides the private internal one
 	
-	public SlotEnderChest(IInventory inventoryIn, int index, int xPosition,int yPosition) 
+	public SlotEnderChest(IInventory inventoryIn, int index) 
 	{
-		super(inventoryIn, index, xPosition, yPosition);
+		super(inventoryIn, index, posX, posY);
  
 		slotIndex = index;
 		

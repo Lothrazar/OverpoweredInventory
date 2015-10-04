@@ -8,6 +8,7 @@ import com.lothrazar.powerinventory.UtilTextureRender;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonExp;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonUnc;
+import com.lothrazar.powerinventory.inventory.slot.*;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -56,8 +57,8 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	    }
 		
 		btnEnder = new GuiButtonOpenInventory(button_id++, 
-				this.guiLeft + Const.echestX + 19, 
-				this.guiTop + Const.echestY - 1,
+				this.guiLeft + SlotEnderChest.posX + 19, 
+				this.guiTop + SlotEnderChest.posY - 1,
 				12,height, "I",Const.INV_ENDER); 
 		this.buttonList.add(btnEnder); 
 		//btnEnder.enabled = false;// turn it on based on ender chest present or not
@@ -102,7 +103,7 @@ public class GuiCustomPlayerInventory extends GuiContainer
 			btnEnder.visible = btnEnder.enabled;
 
 			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple("textures/items/empty_enderchest.png",Const.echestX, Const.echestY,s,s); 
+				UtilTextureRender.drawTextureSimple(SlotEnderChest.background,SlotEnderChest.posX, SlotEnderChest.posY,s,s); 
 		}
 		else 
 		{ 
@@ -129,7 +130,7 @@ public class GuiCustomPlayerInventory extends GuiContainer
 				btnExp.visible = btnExp.enabled;
 
 				if(ModConfig.enableSlotOutlines)
-					UtilTextureRender.drawTextureSimple("textures/items/empty_bottle.png",Const.bottleX, Const.bottleY,s,s); 
+					UtilTextureRender.drawTextureSimple(SlotBottle.background,Const.bottleX, Const.bottleY,s,s); 
 			}
 			else 
 			{ 
@@ -140,19 +141,19 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		if(inventory.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
 			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple("textures/items/empty_enderpearl.png",Const.pearlX, Const.pearlY,s,s);
+				UtilTextureRender.drawTextureSimple(SlotEnderPearl.background,SlotEnderPearl.posX, SlotEnderPearl.posY,s,s);
 		}
 
 		if(inventory.getStackInSlot(Const.compassSlot) == null)
 		{ 
 			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple("textures/items/empty_compass.png",Const.compassX, Const.compassY,s,s);
+				UtilTextureRender.drawTextureSimple(SlotCompass.background,SlotCompass.posX, SlotCompass.posY,s,s);
 		}
 
 		if(inventory.getStackInSlot(Const.clockSlot) == null)
 		{  
 			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple("textures/items/empty_clock.png",Const.clockX, Const.clockY,s,s);
+				UtilTextureRender.drawTextureSimple(SlotClock.background,SlotClock.posX, SlotClock.posY,s,s);
 		}
 	}
 	 
@@ -173,10 +174,10 @@ public class GuiCustomPlayerInventory extends GuiContainer
         	drawSlotAt(Const.uncraftX, Const.uncraftY);
         
 
-    	drawSlotAt(Const.echestX, Const.echestY);
-    	drawSlotAt(Const.pearlX, Const.pearlY);
-    	drawSlotAt(Const.clockX, Const.clockY);
-    	drawSlotAt(Const.compassX, Const.compassY);
+    	drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);
+    	drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);
+    	drawSlotAt(SlotClock.posX, SlotClock.posY);
+    	drawSlotAt(SlotCompass.posX, SlotCompass.posY);
 	}
 
 	private void drawSlotAt(int x, int y)
