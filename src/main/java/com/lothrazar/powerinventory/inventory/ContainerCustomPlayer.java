@@ -68,7 +68,7 @@ public class ContainerCustomPlayer extends Container
 
         //hotbar
         S_BAR_START = this.inventorySlots.size();
-        for (i = 0; i < Const.hotbarSize; ++i)
+        for (i = 0; i < Const.HOTBAR_SIZE; ++i)
         {
             this.addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
         }

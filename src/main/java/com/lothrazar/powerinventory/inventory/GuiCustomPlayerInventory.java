@@ -183,6 +183,6 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	{
         this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, "textures/gui/inventory_slot.png"));
          
-        UtilTextureRender.drawTexturedQuadFit(this.guiLeft + x - 1, this.guiTop + y - 1,  Const.square, Const.square);
+        UtilTextureRender.drawTexturedQuadFit(this.guiLeft + x - 1, this.guiTop + y - 1,  Const.SQ, Const.SQ);
 	}
 }

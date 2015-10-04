@@ -24,6 +24,8 @@ import com.lothrazar.powerinventory.inventory.slot.*;
  */
 public class BigContainerPlayer extends ContainerPlayer
 {	
+	public static int ALL_COLS;
+	public static int ALL_ROWS;
 	private final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
     private final EntityPlayer thePlayer;
  
@@ -73,8 +75,8 @@ public class BigContainerPlayer extends ContainerPlayer
         { 
             for (j = 0; j < craftSize; ++j)
             {  
-    			cx = 114 + j * Const.square ; 
-    			cy = 20 + i * Const.square ;
+    			cx = 114 + j * Const.SQ ; 
+    			cy = 20 + i * Const.SQ ;
 
         		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * this.craftSize, cx , cy)); 
             }
@@ -82,10 +84,10 @@ public class BigContainerPlayer extends ContainerPlayer
         S_CRAFT_END = this.inventorySlots.size() - 1;
         S_ARMOR_START = this.inventorySlots.size();
  
-        for (i = 0; i < Const.armorSize; ++i)
+        for (i = 0; i < Const.ARMOR_SIZE; ++i)
         {
         	cx = 8;
-        	cy = 8 + i * Const.square;
+        	cy = 8 + i * Const.SQ;
             final int k = i;
  
             this.addSlotToContainer(new Slot(playerInventory,  playerInventory.getSizeInventory() - 1 - i, cx, cy)
@@ -108,25 +110,30 @@ public class BigContainerPlayer extends ContainerPlayer
         }
         S_ARMOR_END = this.inventorySlots.size() - 1;
         
+        //how many rows were added extra on top of vanilla
+        int moreRows = BigContainerPlayer.ALL_ROWS - Const.ROWS_VANILLA;
+        //int MORE_COLS = BigContainerPlayer.ALL_COLS - Const.COLS_VANILLA;
+		
+		
         S_BAR_START = this.inventorySlots.size();
-        for (i = 0; i < Const.hotbarSize; ++i)
+        for (i = 0; i < Const.HOTBAR_SIZE; ++i)
         { 
-        	cx = 8 + i * Const.square;
-        	cy = 142 + (Const.square * Const.MORE_ROWS);
+        	cx = 8 + i * Const.SQ;
+        	cy = 142 + (Const.SQ * moreRows);
  
             this.addSlotToContainer(new Slot(playerInventory, i, cx, cy));
         }
         S_BAR_END = this.inventorySlots.size() - 1;
         
         S_MAIN_START = this.inventorySlots.size();
-        int slotIndex = Const.hotbarSize;
+        int slotIndex = Const.HOTBAR_SIZE;
         
-        for( i = 0; i < Const.ALL_ROWS; i++)
+        for( i = 0; i < ALL_ROWS; i++)
 		{
-            for ( j = 0; j < Const.ALL_COLS; ++j)
+            for ( j = 0; j < ALL_COLS; ++j)
             { 
-            	cx = 8 + j * Const.square;
-            	cy = 84 + i * Const.square;
+            	cx = 8 + j * Const.SQ;
+            	cy = 84 + i * Const.SQ;
                 this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, cy));
             	slotIndex++;
             }

@@ -16,14 +16,12 @@ public class Const
 	public static final String NBT_INVENTORY = "Inventory";
 	public static final String NBT_INVOSIZE = "invoSize";
 
-	public static final int square = 18;
-	public static final int hotbarSize = 9;
-	public static final int armorSize = 4; 
+	public static final int SQ = 18;
+	public static final int HOTBAR_SIZE = 9;
+	public static final int ARMOR_SIZE = 4; 
+	public static final int ROWS_VANILLA = 3; 
+	public static final int COLS_VANILLA = 9; 
  
-	public static int MORE_ROWS;
-	public static int MORE_COLS;
-	public static int ALL_COLS;
-	public static int ALL_ROWS;
 	public static int INVOSIZE;
 
 	//these are slot indices. different than slot numbers (important)
@@ -59,13 +57,13 @@ public class Const
 	public static int pearlX = 80; 
 	public static int pearlY = 8; 
 	public static int compassX = pearlX;
-	public static int compassY = pearlY + Const.square;
+	public static int compassY = pearlY + Const.SQ;
 	public static int clockX = pearlX;
-	public static int clockY = pearlY + 2*Const.square;
+	public static int clockY = pearlY + 2*Const.SQ;
 	public static int echestX = pearlX;
-	public static int echestY = pearlY + 3*Const.square; 
+	public static int echestY = pearlY + 3*Const.SQ; 
 	public static int bottleX;// = Const.texture_width - Const.square - padding - 1;
-	public static int bottleY = 20 + 2 * Const.square; 
+	public static int bottleY = 20 + 2 * Const.SQ; 
 	public static int uncraftX;// = bottleX;
 	public static int uncraftY = bottleY - 24;
 	

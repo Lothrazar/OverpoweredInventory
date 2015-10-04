@@ -1,5 +1,6 @@
 package com.lothrazar.powerinventory;
 
+import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 import com.lothrazar.powerinventory.inventory.GuiBigInventory;
 
 import net.minecraftforge.common.config.Configuration;
@@ -130,29 +131,28 @@ public class ModConfig
 	{
 		if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
 		{
-			Const.MORE_ROWS = 12;//texture 15x25
-		 
-			Const.MORE_COLS = 16;
+			BigContainerPlayer.ALL_ROWS = 15;
+			BigContainerPlayer.ALL_COLS = 25;
 
 			GuiBigInventory.texture_width = 464;
 			GuiBigInventory.texture_height = 382;
-		    GuiBigInventory.backgroundTexture = "textures/gui/inventory_15x25.png";//375 total
+		    //GuiBigInventory.backgroundTexture = "textures/gui/inventory_15x25.png";//375 total
 		    
-		    Const.bottleX = GuiBigInventory.texture_width - Const.square - Const.padding - 1;
+		    Const.bottleX = GuiBigInventory.texture_width - Const.SQ - Const.padding - 1;
 		}
 		else if(ModConfig.smallMedLarge.equalsIgnoreCase("large"))
 		{
 			//might as well add more rows too. work in progress
-			Const.MORE_ROWS = 13; 
-			 
-			Const.MORE_COLS = 18;
+			
+			BigContainerPlayer.ALL_ROWS = 16;//3 + Const.MORE_ROWS;
+			BigContainerPlayer.ALL_COLS = 28;//9 + Const.MORE_COLS;
 
 			GuiBigInventory.texture_width = 500;
 			GuiBigInventory.texture_height = 400;
-			GuiBigInventory.backgroundTexture = "textures/gui/inventory_16x28.png";
+			//GuiBigInventory.backgroundTexture = "textures/gui/inventory_16x28.png";
 		    
 		    int offset = 18*2;
-		    Const.bottleX = GuiBigInventory.texture_width - Const.square - Const.padding - 1;
+		    Const.bottleX = GuiBigInventory.texture_width - Const.SQ - Const.padding - 1;
 		    Const.bottleX += offset; 
 			Const.uncraftX += offset; 
 		}
@@ -160,24 +160,24 @@ public class ModConfig
 		{
 			//config.setString("normal_small","small");
 			ModConfig.smallMedLarge = "small";
-			Const.MORE_ROWS = 3;
-		 
-			Const.MORE_COLS = 9;
+			
+			BigContainerPlayer.ALL_ROWS = 6;//3 + Const.MORE_ROWS;
+			BigContainerPlayer.ALL_COLS = 18;//9 + Const.MORE_COLS;
 
 			GuiBigInventory.texture_width = 338;
 			GuiBigInventory.texture_height = 221;
 
 		    int offset = 18*7;
-		    Const.bottleX = GuiBigInventory.texture_width - Const.square - Const.padding - 1;
+		    Const.bottleX = GuiBigInventory.texture_width - Const.SQ - Const.padding - 1;
 		    Const.bottleX -= offset; 
 			Const.uncraftX -= offset; 
 			
-			GuiBigInventory.backgroundTexture = "textures/gui/inventory_6x18.png";//6*18 is 108..so yeah?
+			//6*18 is 108..so yeah?
 		}
-
-		Const.ALL_COLS = 9 + Const.MORE_COLS;
-		Const.ALL_ROWS = 3 + Const.MORE_ROWS;
-		Const.INVOSIZE  = Const.ALL_COLS * Const.ALL_ROWS;
+		
+		GuiBigInventory.backgroundTexture = "textures/gui/inventory_" 
+						+ BigContainerPlayer.ALL_ROWS + "x" + BigContainerPlayer.ALL_COLS + ".png";
+		Const.INVOSIZE  = BigContainerPlayer.ALL_COLS * BigContainerPlayer.ALL_ROWS;
 		
 		if(ModConfig.enableCompatMode)
 		{
@@ -194,7 +194,7 @@ public class ModConfig
 			Const.pearlX -= charSpace;
 			Const.echestX -= charSpace;
 			
-			Const.bottleX = texture_width - Const.square - Const.padding - 1;
+			Const.bottleX = texture_width - Const.SQ - Const.padding - 1;
 			 
 		}
 		

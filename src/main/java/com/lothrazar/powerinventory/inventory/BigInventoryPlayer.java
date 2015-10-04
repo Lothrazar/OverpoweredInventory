@@ -35,7 +35,7 @@ public class BigInventoryPlayer extends InventoryPlayer
 	public BigInventoryPlayer(EntityPlayer player)
 	{
 		super(player);
-		this.mainInventory = new ItemStack[Const.INVOSIZE + Const.hotbarSize];
+		this.mainInventory = new ItemStack[Const.INVOSIZE + Const.HOTBAR_SIZE];
  
 		if(player.inventory != null)
 		{
@@ -118,7 +118,7 @@ public class BigInventoryPlayer extends InventoryPlayer
 	
 	public int getSlotsNotArmor()
 	{  
-		return this.getSizeInventory() - Const.armorSize; 
+		return this.getSizeInventory() - Const.ARMOR_SIZE; 
 	}
 	
     private int func_146029_c(Item stack)
