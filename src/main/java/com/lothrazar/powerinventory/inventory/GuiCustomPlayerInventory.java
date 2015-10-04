@@ -22,7 +22,7 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	GuiButton btnExp;
 	GuiButton btnUncraft;
 	
-	ResourceLocation res = new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE);
+	ResourceLocation res = new ResourceLocation(Const.MODID, "inventory.png");
 	private final InventoryCustomPlayer inventory;
 	//private final EntityPlayer thePlayer;
 	

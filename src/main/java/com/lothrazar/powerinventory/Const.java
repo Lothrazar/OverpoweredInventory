@@ -3,9 +3,9 @@ package com.lothrazar.powerinventory;
 public class Const
 { 
     public static final String MODID = "powerinventory";
-    public static String INVENTORY_TEXTURE = "textures/gui/inventory_gui.png";
-	public static int texture_width = 464;
-	public static int texture_height = 382;
+    //public static String INVENTORY_TEXTURE = "textures/gui/inventory_gui.png";
+	//public static int texture_width = 464;
+	//public static int texture_height = 382;
     
 	public static final String NBT_SLOT = "Slot";
 	public static final String NBT_PLAYER = "Player";
@@ -64,9 +64,9 @@ public class Const
 	public static int clockY = pearlY + 2*Const.square;
 	public static int echestX = pearlX;
 	public static int echestY = pearlY + 3*Const.square; 
-	public static int bottleX = Const.texture_width - Const.square - padding - 1;
+	public static int bottleX;// = Const.texture_width - Const.square - padding - 1;
 	public static int bottleY = 20 + 2 * Const.square; 
-	public static int uncraftX = bottleX;
+	public static int uncraftX;// = bottleX;
 	public static int uncraftY = bottleY - 24;
 	
 	

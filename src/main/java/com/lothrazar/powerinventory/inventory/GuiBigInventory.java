@@ -18,18 +18,24 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiBigInventory extends GuiInventory
 {
+	public static String backgroundTexture;
+
 	private BigContainerPlayer container;
 
 	private GuiButton btnEnder;
 	private GuiButton btnExp;
 	private GuiButton btnUncraft;
+
+	public static int texture_width;
+	public static int texture_height;
+	
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
 		
 		container = player.inventoryContainer instanceof BigContainerPlayer? (BigContainerPlayer)player.inventoryContainer : null;
-		this.xSize = Const.texture_width;
-		this.ySize = Const.texture_height;
+		this.xSize = texture_width;
+		this.ySize = texture_height;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -224,9 +230,9 @@ public class GuiBigInventory extends GuiInventory
 	{ 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
-        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, Const.INVENTORY_TEXTURE));
+        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, backgroundTexture));
 
-        UtilTextureRender.drawTexturedQuadFit(this.guiLeft, this.guiTop,Const.texture_width,Const.texture_height);
+        UtilTextureRender.drawTexturedQuadFit(this.guiLeft, this.guiTop,texture_width,texture_height);
  
         if(ModConfig.showCharacter)//drawEntityOnScreen
         	drawEntityOnScreen(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);

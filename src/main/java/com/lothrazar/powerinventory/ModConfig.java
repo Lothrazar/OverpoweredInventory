@@ -1,5 +1,7 @@
 package com.lothrazar.powerinventory;
 
+import com.lothrazar.powerinventory.inventory.GuiBigInventory;
+
 import net.minecraftforge.common.config.Configuration;
  
 public class ModConfig
@@ -105,22 +107,13 @@ public class ModConfig
 		
 		//4 more 64 stacking
 		
-		
-		
-		
-		
 		//turn onn/off the uncrafting and ehcnat bottling
 		
 		
 		//turn off version checker 
 		
-		
-		
 		// exp cost for uncrafting added (default zero)  
 		
-		
-
-
 		//?? enable/disable 3x3 crafting
 		// ???: make the left 9 columns actually go vertically down so it matches player invo
 
@@ -131,23 +124,21 @@ public class ModConfig
 		
 		setupGuiFromConfig();
 		
-		
-		
-		
 	}
 
 	private static void setupGuiFromConfig()
 	{
 		if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
 		{
-
 			Const.MORE_ROWS = 12;//texture 15x25
 		 
 			Const.MORE_COLS = 16;
 
-			Const.texture_width = 464;
-			Const.texture_height = 382;
-		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_15x25.png";//375 total
+			GuiBigInventory.texture_width = 464;
+			GuiBigInventory.texture_height = 382;
+		    GuiBigInventory.backgroundTexture = "textures/gui/inventory_15x25.png";//375 total
+		    
+		    Const.bottleX = GuiBigInventory.texture_width - Const.square - Const.padding - 1;
 		}
 		else if(ModConfig.smallMedLarge.equalsIgnoreCase("large"))
 		{
@@ -156,15 +147,15 @@ public class ModConfig
 			 
 			Const.MORE_COLS = 18;
 
-			Const.texture_width = 500;
-			Const.texture_height = 400;
-		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_16x28.png";
+			GuiBigInventory.texture_width = 500;
+			GuiBigInventory.texture_height = 400;
+			GuiBigInventory.backgroundTexture = "textures/gui/inventory_16x28.png";
 		    
 		    int offset = 18*2;
+		    Const.bottleX = GuiBigInventory.texture_width - Const.square - Const.padding - 1;
 		    Const.bottleX += offset; 
 			Const.uncraftX += offset; 
 		}
-
 		else//assume its small
 		{
 			//config.setString("normal_small","small");
@@ -173,37 +164,42 @@ public class ModConfig
 		 
 			Const.MORE_COLS = 9;
 
-			Const.texture_width = 338;
-			Const.texture_height = 221;
+			GuiBigInventory.texture_width = 338;
+			GuiBigInventory.texture_height = 221;
 
 		    int offset = 18*7;
+		    Const.bottleX = GuiBigInventory.texture_width - Const.square - Const.padding - 1;
 		    Const.bottleX -= offset; 
 			Const.uncraftX -= offset; 
 			
-		    Const.INVENTORY_TEXTURE = "textures/gui/inventory_6x18.png";//6*18 is 108..so yeah?
+			GuiBigInventory.backgroundTexture = "textures/gui/inventory_6x18.png";//6*18 is 108..so yeah?
 		}
 
 		Const.ALL_COLS = 9 + Const.MORE_COLS;
 		Const.ALL_ROWS = 3 + Const.MORE_ROWS;
 		Const.INVOSIZE  = Const.ALL_COLS * Const.ALL_ROWS;
 		
-		
 		if(ModConfig.enableCompatMode)
 		{
-			Const.texture_width = 176;
-			Const.texture_height = 166;
+			int texture_width = 176;//width of vanilla inventory.png same number as in source code
+			//int texture_height = 166;
 			
 			int charSpace = 54 + 18;// moving stuff left
 			
 			//TODO: these get set twice, or more, we should fix this whole setup but for now just get it working
+			
+			
 			Const.compassX -= charSpace;
 			Const.clockX -= charSpace;
 			Const.pearlX -= charSpace;
 			Const.echestX -= charSpace;
 			
-			Const.bottleX = Const.texture_width - Const.square - Const.padding - 1;
+			Const.bottleX = texture_width - Const.square - Const.padding - 1;
 			 
-			Const.uncraftX = Const.bottleX;
 		}
+		
+		
+		
+		Const.uncraftX = Const.bottleX;
 	}
 }
