@@ -7,7 +7,9 @@ import com.lothrazar.powerinventory.*;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
 //import net.minecraft.util.BlockPos;
@@ -44,18 +46,25 @@ public class DumpButtonPacket implements IMessage , IMessageHandler<DumpButtonPa
 	public IMessage onMessage(DumpButtonPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
+ 
+		//ArrayList<BlockPos> locations = UtilInventory.findBlocks(p, Blocks.chest, ModConfig.filterRange);
+		ArrayList<IInventory> locations = UtilInventory.findTileEntityInventories(p, ModConfig.filterRange);
+		
+		
+		//locations.addAll(UtilInventory.findBlocks(p, Blocks.trapped_chest, ModConfig.filterRange));
 
-		ArrayList<BlockPos> locations = UtilInventory.findBlocks(p, Blocks.chest, ModConfig.filterRange);
-		locations.addAll(UtilInventory.findBlocks(p, Blocks.trapped_chest, ModConfig.filterRange));
-
-		for(BlockPos pos : locations)
+		for(IInventory inventory : locations)
 		{
-			if(p.worldObj.getTileEntity(pos) instanceof TileEntityChest)
-			{
+			//TileEntity te = p.worldObj.getTileEntity(pos) ;
+		
+			//if(te instanceof TileEntityChest)
+			//{
 				//merge first then dump
 				//UtilInventory.sortFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos), p);
-				UtilInventory.dumpFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos), p);
-			}
+				UtilInventory.dumpFromPlayerToIInventory(p.worldObj, inventory, p);
+			
+			
+			//}
 		}
 		
 		return null; 

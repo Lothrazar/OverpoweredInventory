@@ -11,6 +11,7 @@ import java.util.Queue;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
  
@@ -45,6 +46,38 @@ public class UtilInventory
 					if(player.worldObj.getBlockState(posCurrent).getBlock().equals(blockHunt))
 					{ 
 						found.add(posCurrent);
+					} 
+				}
+			}
+		}
+		
+		return found; 
+	}
+	
+	public static ArrayList<IInventory> findTileEntityInventories(EntityPlayer player, int RADIUS ) 
+	{        
+		//function imported https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Commands/src/main/java/com/lothrazar/samscommands/ModCommands.java#L193
+		ArrayList<IInventory> found = new ArrayList<IInventory>();
+		int xMin = (int) player.posX - RADIUS;
+		int xMax = (int) player.posX + RADIUS;
+
+		int yMin = (int) player.posY - RADIUS;
+		int yMax = (int) player.posY + RADIUS;
+
+		int zMin = (int) player.posZ - RADIUS;
+		int zMax = (int) player.posZ + RADIUS;
+		 
+		BlockPos posCurrent = null; 
+		for (int xLoop = xMin; xLoop <= xMax; xLoop++)
+		{
+			for (int yLoop = yMin; yLoop <= yMax; yLoop++)
+			{
+				for (int zLoop = zMin; zLoop <= zMax; zLoop++)
+				{  
+					posCurrent = new BlockPos(xLoop, yLoop, zLoop);
+					if(player.worldObj.getTileEntity(posCurrent) instanceof IInventory)
+					{ 
+						found.add((IInventory)player.worldObj.getTileEntity(posCurrent));
 					} 
 				}
 			}
@@ -200,6 +233,36 @@ public class UtilInventory
 				if(invItem == null)  {continue;}//empty inventory slot
 				  
 				chest.setInventorySlotContents(islotChest, invItem);
+ 
+  				player.inventory.setInventorySlotContents(islotInv,null); 
+  				break;
+  			}//close loop on player inventory items 
+		}//close loop on chest items
+  	}
+	
+	public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer player)
+  	{ 
+		ItemStack chestItem;
+		ItemStack invItem;
+	 
+		int start = 0; 
+		int end =  inventory.getSizeInventory();//START_CHEST + 3*9; 
+		
+		
+		//inventory and chest has 9 rows by 3 columns, never changes. same as 64 max stack size
+		for(int slot = start; slot < end; slot++)
+		{ 
+			chestItem = inventory.getStackInSlot(slot);
+		
+			if(chestItem != null) {   continue; }//   slot not empty, skip over it
+	 
+			for(int islotInv = Const.HOTBAR_SIZE; islotInv < player.inventory.getSizeInventory() - Const.ARMOR_SIZE; islotInv++)
+			{
+				invItem = player.inventory.getStackInSlot(islotInv);
+				
+				if(invItem == null)  {continue;}//empty inventory slot
+				  
+				inventory.setInventorySlotContents(slot, invItem);
  
   				player.inventory.setInventorySlotContents(islotInv,null); 
   				break;
