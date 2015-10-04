@@ -3,7 +3,7 @@
   "modid": "powerinventory",
   "name": "Overpowered Inventory",
   "description": "Expands your inventory space; also adds four special slots to hold ender pearls, ender chest, clock, and compass.  A keybinding is added to use the ender pearl from this slot (regardless of what is in your hotbar).  You can store experience by filling Bottles o Enchanting by putting empty bottles in a special slot in the far right.  The two buttons on the top right deposit your items into nearby chests automatically.  Also includes a 3x3 crafting grid instead of 2x2.  Some bits of code are forked from the open source repository at https://github.com/Funwayguy/InfiniteInvo (Which is a completely different 1.7 mod not by me).  ",
-  "version": "1.0.9dev",
+  "version": "1.0.9",
   "mcversion": "1.8",
   "url": "",
   "updateUrl": "",

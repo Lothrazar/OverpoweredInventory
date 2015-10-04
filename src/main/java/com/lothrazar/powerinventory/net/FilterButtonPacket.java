@@ -6,19 +6,13 @@ import com.lothrazar.powerinventory.*;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntityChest;
- 
-import net.minecraft.util.BlockPos;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-/** 
- * @author Lothrazar at https://github.com/PrinceOfAmber
- */
+
 public class FilterButtonPacket implements IMessage , IMessageHandler<FilterButtonPacket, IMessage>
 {
 	public FilterButtonPacket() {}

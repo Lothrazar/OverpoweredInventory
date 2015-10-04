@@ -45,16 +45,10 @@ public class VersionChecker implements Runnable
             IOUtils.closeQuietly(in);
         }
         
-        String current = "1.0.8"; //TODO: get from mcinfo or something i guess
-       // System.out.println("Latest mod version = "+latestVersion);
-        isLatestVersion = current.equals(latestVersion);
-     //   System.out.println("Are you running latest version = "+isLatestVersion);
-        /*YES IT WORKS 
-         * 
-         * [18:46:08] [Version Check/INFO] [STDOUT]: [com.lothrazar.powerinventory.VersionChecker:run:50]: Latest mod version = 1.0.0
-[18:46:08] [Version Check/INFO] [STDOUT]: [com.lothrazar.powerinventory.VersionChecker:run:52]: Are you running latest version = false
+        String current = "1.0.9"; //TODO: get from mcinfo or something i guess
 
-*/
+        isLatestVersion = current.equals(latestVersion);
+
     }
     
     public boolean isLatestVersion()
