@@ -178,29 +178,44 @@ public class ModConfig
 						+ BigContainerPlayer.ALL_ROWS + "x" + BigContainerPlayer.ALL_COLS + ".png";
 		Const.INVOSIZE  = BigContainerPlayer.ALL_COLS * BigContainerPlayer.ALL_ROWS;
 
-	    Const.bottleX = GuiBigInventory.texture_width - Const.SQ - Const.padding - 1;
 	    
+		int xSlotColumn;
+		int xSlotRightSide;
+		
 		if(ModConfig.enableCompatMode)
 		{
 			int texture_width = 176;//width of vanilla inventory.png same number as in source code
-			//int texture_height = 166;
 			
-			int charSpace = 54 + 18;// moving stuff left
+			xSlotColumn = Const.paddingLrg;
 			
-			//TODO: these get set twice, or more, we should fix this whole setup but for now just get it working
-			
-			
-			Const.compassX -= charSpace;
-			Const.clockX -= charSpace;
-			Const.pearlX -= charSpace;
-			Const.echestX -= charSpace;
-			
-			Const.bottleX = texture_width - Const.SQ - Const.padding - 1;
-			 
+			xSlotRightSide = texture_width - Const.SQ - Const.padding - 1;
 		}
+		else
+		{
+		    xSlotColumn = Const.WIDTH_CHARARMOR + Const.paddingLrg; 
+
+		    xSlotRightSide = GuiBigInventory.texture_width - Const.SQ - Const.padding - 1;
+		}
+
+		//for each column we set the first slot, and then the rest relative to that one
 		
+		//four slots on left column
+		Const.pearlY = Const.paddingLrg; 	
+		Const.compassY = Const.pearlY + Const.SQ; 
+		Const.clockY = Const.pearlY + 2 * Const.SQ; 
+		Const.echestY = Const.pearlY + 3 * Const.SQ;  
 		
+		Const.compassX = xSlotColumn; 
+		Const.pearlX = xSlotColumn; 
+		Const.clockX = xSlotColumn;  
+		Const.echestX = xSlotColumn; 
+		
+		//two slots on right column
+		
+		Const.bottleX = xSlotRightSide;
+		Const.bottleY = 20 + 2 * Const.SQ; 
 		
 		Const.uncraftX = Const.bottleX;
+		Const.uncraftY = Const.bottleY - (Const.SQ + Const.padding); // 24 how much it moves down
 	}
 }
