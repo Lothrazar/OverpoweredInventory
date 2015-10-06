@@ -2,6 +2,7 @@ package com.lothrazar.powerinventory.inventory.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
@@ -11,7 +12,7 @@ public class GuiButtonClose extends GuiButton
 {
     public GuiButtonClose(int buttonId, int x, int y, int w,int h)
     {
-    	super(buttonId, x, y, w,h, "X");
+    	super(buttonId, x, y, w,h, StatCollector.translateToLocal("button.cornerclose"));
     }
 
     @SideOnly(Side.CLIENT)

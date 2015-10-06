@@ -39,6 +39,7 @@ public class ModConfig
 	public static boolean food64;
 	public static boolean bucket64;
 	public static boolean alwaysShowHungerbar;
+	public static boolean smallerMergeDep;
 	public static final String categoryHighlander = "can_change_ingame";
 
 	public static void loadConfig(Configuration c) 
@@ -59,6 +60,9 @@ public class ModConfig
 		ModConfig.showCornerButtons = config.getBoolean("show_corner_buttons",category,true,"Show or hide the corner inventory buttons in other GUI's");
 		
 		ModConfig.showMergeDeposit = config.getBoolean("merge_deposit_buttons", category, true, "Show or hide the merge deposit buttons in upper right corner.");
+		ModConfig.smallerMergeDep = config.getBoolean("smaller_merge_deposit", category, true, "Show the merge deposit buttons as squares with a single letter.");
+		
+		
 		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
 		
 		ModConfig.enableSlotOutlines = config.getBoolean("slot_outlines",category,true,"Normally the special slots have outlines to indicate the allowed items, but you can disable them here.  ");

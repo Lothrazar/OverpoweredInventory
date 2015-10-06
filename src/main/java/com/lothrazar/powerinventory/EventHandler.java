@@ -20,6 +20,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -149,7 +150,7 @@ public class EventHandler
 			{
 				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
 	
-				event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,"E",Const.INV_SOLO));
+				event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,StatCollector.translateToLocal("button.compat"),Const.INV_SOLO));
 				
 			}
 
@@ -170,7 +171,7 @@ public class EventHandler
 				event.buttonList.add(new GuiButtonClose(button_id++, x,y,w,h));
 				
 				x = x - padding - w;
-				event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,"E",Const.INV_PLAYER));
+				event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,StatCollector.translateToLocal("button.cornerinvo"),Const.INV_PLAYER));
 				
 				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
 				

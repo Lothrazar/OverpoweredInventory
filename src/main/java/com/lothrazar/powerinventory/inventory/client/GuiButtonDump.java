@@ -15,9 +15,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiButtonDump extends GuiButton 
 {
 	//imported from https://github.com/PrinceOfAmber/SamsPowerups , author Lothrazar aka Sam Bassett
-    public GuiButtonDump(int buttonId, int x, int y, int w,int h)
+    public GuiButtonDump(int buttonId, int x, int y, int w,int h, String t)
     {
-    	super(buttonId, x, y, w,h, StatCollector.translateToLocal("button.dump"));
+    	super(buttonId, x, y, w,h, t);
     }
 
     @SideOnly(Side.CLIENT)

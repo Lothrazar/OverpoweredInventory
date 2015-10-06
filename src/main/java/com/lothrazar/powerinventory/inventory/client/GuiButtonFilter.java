@@ -15,9 +15,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiButtonFilter extends GuiButton 
 {
 	//imported from https://github.com/PrinceOfAmber/SamsPowerups , author Lothrazar aka Sam Bassett
-    public GuiButtonFilter(int buttonId, int x, int y, int w,int h)
+    public GuiButtonFilter(int buttonId, int x, int y, int w,int h,String t)
     {
-    	super(buttonId, x, y, w,h, StatCollector.translateToLocal("button.filter"));
+    	super(buttonId, x, y, w,h,t);
     }
 
     @SideOnly(Side.CLIENT)

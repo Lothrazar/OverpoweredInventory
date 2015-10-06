@@ -1,8 +1,13 @@
 button.filter=Merge
 button.dump=Deposit All
+button.filter_s=M
+button.dump_s=D
 button.exp=Fill
 button.sort=S
 button.unc=Uncraft
+button.compat=E
+button.cornerinvo=E
+button.cornerclose=X
 key.enderpearl=Quick Pearl
 key.enderchest=Ender Inventory
 slot.enderchest=No Ender Chest equipped

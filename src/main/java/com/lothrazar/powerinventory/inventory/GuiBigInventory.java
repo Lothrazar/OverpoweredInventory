@@ -55,15 +55,31 @@ public class GuiBigInventory extends GuiInventory
 			 
 			if(ModConfig.showMergeDeposit)
 			{
-				this.buttonList.add(new GuiButtonDump(button_id++,
-						this.guiLeft + this.xSize - widthlrg - padding, 
-						this.guiTop + padding,
-						widthlrg,height));
-	
-				this.buttonList.add(new GuiButtonFilter(button_id++,
-						this.guiLeft + this.xSize - widthlrg - 2*padding - widthlrg, 
-						this.guiTop + padding,
-						widthlrg,height));
+				//we could refactor more, but this is good enough
+				if(ModConfig.smallerMergeDep)
+				{
+					this.buttonList.add(new GuiButtonDump(button_id++,
+							this.guiLeft + this.xSize - width - padding, 
+							this.guiTop + padding,
+							width,height,StatCollector.translateToLocal("button.dump_s")));
+		
+					this.buttonList.add(new GuiButtonFilter(button_id++,
+							this.guiLeft + this.xSize - 2*padding - 2*width, 
+							this.guiTop + padding,
+							width,height, StatCollector.translateToLocal("button.filter_s")));
+				}
+				else // full size
+				{
+					this.buttonList.add(new GuiButtonDump(button_id++,
+							this.guiLeft + this.xSize - widthlrg - padding, 
+							this.guiTop + padding,
+							widthlrg,height,StatCollector.translateToLocal("button.dump")));
+		
+					this.buttonList.add(new GuiButtonFilter(button_id++,
+							this.guiLeft + this.xSize - 2*padding - 2*widthlrg, 
+							this.guiTop + padding,
+							widthlrg,height, StatCollector.translateToLocal("button.filter")));
+				}
 			}
 
 			if(ModConfig.enableUncrafting)
