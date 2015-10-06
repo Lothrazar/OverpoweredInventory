@@ -52,6 +52,12 @@ public class GuiBigInventory extends GuiInventory
 			final int padding = 6;
 			//final int tiny = 12;
 			int button_id = 99;
+			
+			this.buttonList.add(new GuiButtonPotions(button_id++,
+					this.guiLeft  - width - padding, 
+					this.guiTop - height - padding,
+					width,height));
+
 			 
 			if(ModConfig.showMergeDeposit)
 			{
@@ -67,6 +73,7 @@ public class GuiBigInventory extends GuiInventory
 							this.guiLeft + this.xSize - 2*padding - 2*width, 
 							this.guiTop + padding,
 							width,height, StatCollector.translateToLocal("button.filter_s")));
+					
 				}
 				else // full size
 				{

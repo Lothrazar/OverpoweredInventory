@@ -1,6 +1,8 @@
 package com.lothrazar.powerinventory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.UUID;
 
 import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
@@ -11,6 +13,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
@@ -24,7 +27,10 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	
 	EntityPlayer player;
 	EntityPlayer prevPlayer;
-	
+
+	private static final int WATCHER_POTIONS = 22;
+	private static final String NBT_POTIONS = "samSpell"; 
+	private ArrayList<NBTTagCompound> potions;
 	/**
 	 * Keep inventory doesn't work with extended inventories so we store it here upon death to reload later
 	 */
@@ -54,9 +60,6 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 		this.prevPlayer = null;
 	}
 	
-	/**
-	 * JoinWorld event
-	 */
 	public void onJoinWorld()
 	{
 		if(ModConfig.enableCompatMode == false)
@@ -115,16 +118,43 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 		}
 	}
 
-	
 	public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
 	
-	
-	
-
 	@Override
 	public void saveNBTData(NBTTagCompound properties) 
 	{
 		this.inventory.writeToNBT(properties);
 		
+	}
+
+	public void savePotionEffects(EntityPlayer p)
+	{
+		// Collection collection = p.getActivePotionEffects();
+		//ArrayList<PotionEffect> active = (ArrayList<PotionEffect>)p.getActivePotionEffects();
+        PotionEffect potioneffect;
+        Iterator iterator = p.getActivePotionEffects().iterator();
+        
+       // ArrayList<String> encodedPotions = new ArrayList<String> ();
+        //String s;
+        
+        potions = new ArrayList<NBTTagCompound>();
+        NBTTagCompound tags;
+        
+        while (iterator.hasNext())
+        {
+            potioneffect = (PotionEffect)iterator.next();
+            
+            //s = potioneffect.getPotionID() +","+potioneffect.getAmplifier()+","+potioneffect.getDuration();
+
+            tags = new NBTTagCompound();
+            potioneffect.writeCustomPotionEffectToNBT(tags);
+            
+            //PotionEffect.readCustomPotionEffectFromNBT(nbt);
+            
+           // encodedPotions.add(s);
+            
+            
+            //System.out.println(s);
+        }
 	}
 }
