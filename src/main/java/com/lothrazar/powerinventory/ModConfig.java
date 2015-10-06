@@ -27,6 +27,16 @@ public class ModConfig
 
 	private static Configuration config;
 	public static boolean enableSlotOutlines;
+	
+	
+
+	public static boolean minecart64;
+	public static boolean boat64;
+	public static boolean doors64;
+	public static boolean snowballs64;
+	public static boolean food64;
+	public static boolean bucket64;
+	public static boolean alwaysShowHungerbar;
 
 	public static void loadConfig(Configuration c) 
 	{
@@ -39,7 +49,7 @@ public class ModConfig
 		ModConfig.showCharacter = config.getBoolean("show_character",category,true,"Show or hide the animated character text in the inventory");
 		ModConfig.showSortButtons = config.getBoolean("move_inventory_buttons",category,true,"Show or hide the inventory shifting buttons << >>");
 		ModConfig.showCornerButtons = config.getBoolean("show_corner_buttons",category,true,"Show or hide the corner inventory buttons in other GUI's");
-		ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
+		//ModConfig.enderPearl64 = config.getBoolean("ender_pearl_64", category, true, "Stack to 64 instead of 16");
 		
 		ModConfig.showMergeDeposit = config.getBoolean("merge_deposit_buttons", category, true, "Show or hide the merge deposit buttons in upper right corner.");
 		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
@@ -49,7 +59,16 @@ public class ModConfig
 		
 		ModConfig.enableSlotOutlines = config.getBoolean("slot_outlines",category,true,"Normally the special slots have outlines to indicate the allowed items, but you can disable them here.  ");
 
-		
+		category = "stack_to_64";
+
+		//these dont seem to work without restarting the game
+		ModConfig.enderPearl64 = config.get( category,"ender_pearl", true).getBoolean();
+		ModConfig.minecart64 = config.get(category,"minecarts",  true).getBoolean();
+		ModConfig.boat64 = config.get(category,"boats",  true).getBoolean();
+		ModConfig.doors64 = config.get(category,"doors",  true).getBoolean();
+		ModConfig.snowballs64 = config.get(category,"snowballs",  true).getBoolean();
+		ModConfig.food64 = config.get(category,"allfood_cake_eggs_stew",  true).getBoolean();//cookie, stews, cakes
+		ModConfig.bucket64 = config.get(category,"empty_bucket",  true).getBoolean();
 		
 		category = "warning_advanced";
 		

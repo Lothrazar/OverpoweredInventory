@@ -45,7 +45,7 @@ public class VersionChecker implements Runnable
             IOUtils.closeQuietly(in);
         }
         
-        String current = "1.0.7"; //TODO: get from mcinfo or something i guess
+        String current = "1.0.10"; //TODO: get from mcinfo or something i guess
        // System.out.println("Latest mod version = "+latestVersion);
         isLatestVersion = current.equals(latestVersion);
      //   System.out.println("Are you running latest version = "+isLatestVersion);

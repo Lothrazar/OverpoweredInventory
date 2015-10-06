@@ -24,6 +24,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
+import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
@@ -381,4 +382,19 @@ public class EventHandler
 		tessellator.addVertexWithUV((double)(x),          (double)(y),           0.0, (double)textureAtlasSprite.getMinU(), (double)textureAtlasSprite.getMinV());
 		tessellator.draw();
 	}
+	
+	
+	
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent//(priority = EventPriority.NORMAL)
+    public void onRenderOverlay(RenderGameOverlayEvent event)
+    {
+		//force it to always show food - otherwise its hidden when riding a horse
+		
+		if(ModConfig.alwaysShowHungerbar)
+		{
+			GuiIngameForge.renderFood = true;
+		}
+    } 
+	
 }

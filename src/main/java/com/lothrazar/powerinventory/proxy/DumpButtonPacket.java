@@ -7,6 +7,7 @@ import com.lothrazar.powerinventory.*;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityChest;
 //import net.minecraft.util.BlockPos;
@@ -44,17 +45,16 @@ public class DumpButtonPacket implements IMessage , IMessageHandler<DumpButtonPa
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		ArrayList<BlockPos> locations = UtilInventory.findBlocks(p, Blocks.chest, ModConfig.filterRange);
-		locations.addAll(UtilInventory.findBlocks(p, Blocks.trapped_chest, ModConfig.filterRange));
+		ArrayList<IInventory> locations = UtilInventory.findTileEntityInventories(p, ModConfig.filterRange);
+		
 
-		for(BlockPos pos : locations)
+		for(IInventory pos : locations)
 		{
-			if(p.worldObj.getTileEntity(pos.x,pos.y,pos.z) instanceof TileEntityChest)
-			{
+ 
 				//merge first then dump
 				//UtilInventory.sortFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos), p);
-				UtilInventory.dumpFromPlayerToChestEntity(p.worldObj, (TileEntityChest)p.worldObj.getTileEntity(pos.x,pos.y,pos.z), p);
-			}
+			UtilInventory.dumpFromPlayerToIInventory(p.worldObj, pos, p);
+	 
 		}
 		
 		return null; 
