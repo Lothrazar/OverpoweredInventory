@@ -127,8 +127,35 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 		
 	}
 
+	public void applySavedPotionEffects(EntityPlayer p)
+	{
+		System.out.println("applySavedPotionEffects");
+		PotionEffect pot;
+		for(NBTTagCompound tag : potions)
+		{
+			
+			pot = PotionEffect.readCustomPotionEffectFromNBT(tag);
+			
+			if(pot != null)
+			{
+				System.out.println("apply "+pot.getPotionID());
+				p.addPotionEffect(pot);
+			}
+			else System.out.println("ERROR null pot from tag");
+			
+		}
+		
+		 potions = new ArrayList<NBTTagCompound>();
+	}
+	
+	public int countPotionEffects()
+	{
+		return potions == null ? 0 : potions.size();
+	}
+	
 	public void savePotionEffects(EntityPlayer p)
 	{
+		System.out.println("savePotionEffects");
 		// Collection collection = p.getActivePotionEffects();
 		//ArrayList<PotionEffect> active = (ArrayList<PotionEffect>)p.getActivePotionEffects();
         PotionEffect potioneffect;
@@ -154,7 +181,7 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
            // encodedPotions.add(s);
             
             
-            //System.out.println(s);
+            System.out.println(tags.toString());
         }
 	}
 }
