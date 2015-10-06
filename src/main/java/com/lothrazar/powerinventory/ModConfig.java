@@ -149,7 +149,7 @@ public class ModConfig
 			//default to large BECAUSE< if they have a typo, we do not wan
 			// to make it super small and cause data loss
 			BigContainerPlayer.ALL_ROWS = 16; 
-			BigContainerPlayer.ALL_COLS = 28; 
+			BigContainerPlayer.ALL_COLS = 27; 
 
 			GuiBigInventory.texture_width = 500;
 			GuiBigInventory.texture_height = 400;
