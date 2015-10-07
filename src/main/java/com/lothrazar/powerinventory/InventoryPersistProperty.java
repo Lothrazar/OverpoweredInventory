@@ -111,7 +111,6 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 		{
 			NBTTagCompound tags = taglist.getCompoundTagAt(i);//tagAt
 		
-			System.out.println("loading potion "+i+" : "+tags.toString());
 			potions.add(tags);
 		}
 	}
@@ -142,7 +141,6 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 		int i = 0;
 		for(NBTTagCompound pot : potions)
 		{
-			System.out.println(i+" save a nbt potion : "+pot.toString());
 			nbttaglist.appendTag(pot);
 			i++;
 		}
@@ -157,7 +155,6 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 
 	public ArrayList<PotionEffect> getSavedPotionEffects()
 	{
-		System.out.println("applySavedPotionEffects : "+potions.size());
 		PotionEffect pot;
 		ArrayList<PotionEffect> pots = new ArrayList<PotionEffect>();
 		for(NBTTagCompound tag : potions)
@@ -168,9 +165,8 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 			if(pot != null)
 			{
 				pots.add(pot);
-				//this.player.addPotionEffect(pot);
 			}
-			else System.out.println("ERROR null pot from tag");
+			//else System.out.println("ERROR null pot from tag");
 			
 		}
 		
@@ -181,7 +177,6 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	
 	public void savePotionEffects()
 	{
-		System.out.println("savePotionEffects");
 		// Collection collection = p.getActivePotionEffects();
 		//ArrayList<PotionEffect> active = (ArrayList<PotionEffect>)p.getActivePotionEffects();
         PotionEffect potioneffect;
@@ -204,8 +199,6 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
             
 
             potions.add(tags);
-            System.out.println("add a potion " +s);
-            System.out.println("    into tag " +tags.toString());
         }
 	}
 	
