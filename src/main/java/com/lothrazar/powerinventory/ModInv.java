@@ -59,7 +59,6 @@ public class ModInv
     	 
     	ModConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
 
-    	
     	int packetID = 0;
     	network.registerMessage(OpenInventoryPacket.class,  OpenInventoryPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(SortButtonPacket.class,  SortButtonPacket.class,  packetID++, Side.SERVER);
@@ -68,8 +67,7 @@ public class ModInv
     	network.registerMessage(ExpButtonPacket.class,   ExpButtonPacket.class,   packetID++, Side.SERVER);
     	network.registerMessage(DumpButtonPacket.class,  DumpButtonPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(UncButtonPacket.class,   UncButtonPacket.class,  packetID++, Side.SERVER);
-    	network.registerMessage(PotionButtonPacket.class,PotionButtonPacket.class,  packetID++, Side.SERVER);
-    	
+    
     	proxy.registerHandlers();
     }
     

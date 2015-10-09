@@ -29,9 +29,6 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	EntityPlayer player;
 	EntityPlayer prevPlayer;
 
-	private static final int WATCHER_POTIONS = 22;
-	private static final String NBT_POTIONS = "samSpell"; 
-	private ArrayList<NBTTagCompound> potions;
 	/**
 	 * Keep inventory doesn't work with extended inventories so we store it here upon death to reload later
 	 */
@@ -105,14 +102,6 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 			}
 		
 		
-		NBTTagList taglist = compound.getTagList("potions",Constants.NBT.TAG_COMPOUND);
-		potions = new ArrayList<NBTTagCompound>();
-		for (int i = 0; i < taglist.tagCount(); ++i)
-		{
-			NBTTagCompound tags = taglist.getCompoundTagAt(i);//tagAt
-		
-			potions.add(tags);
-		}
 	}
 	
 	@Override
@@ -136,70 +125,8 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	{
 		this.inventory.writeToNBT(properties);
 
-		NBTTagList nbttaglist = new NBTTagList();
 		
-		int i = 0;
-		for(NBTTagCompound pot : potions)
-		{
-			nbttaglist.appendTag(pot);
-			i++;
-		}
-		properties.setTag("potions", nbttaglist);
 	}
 	
-
-	public int countPotionEffects()
-	{
-		return potions == null ? 0 : potions.size();
-	}
-
-	public ArrayList<PotionEffect> getSavedPotionEffects()
-	{
-		PotionEffect pot;
-		ArrayList<PotionEffect> pots = new ArrayList<PotionEffect>();
-		for(NBTTagCompound tag : potions)
-		{
-			
-			pot = PotionEffect.readCustomPotionEffectFromNBT(tag);
-			
-			if(pot != null)
-			{
-				pots.add(pot);
-			}
-			//else System.out.println("ERROR null pot from tag");
-			
-		}
-		
-		potions = new ArrayList<NBTTagCompound>();
-		return pots;
-	}
-	
-	
-	public void savePotionEffects()
-	{
-		// Collection collection = p.getActivePotionEffects();
-		//ArrayList<PotionEffect> active = (ArrayList<PotionEffect>)p.getActivePotionEffects();
-        PotionEffect potioneffect;
-        Iterator iterator = this.player.getActivePotionEffects().iterator();
-        
-       // ArrayList<String> encodedPotions = new ArrayList<String> ();
-        String s;
-        
-        potions = new ArrayList<NBTTagCompound>();
-        NBTTagCompound tags;
-        
-        while (iterator.hasNext())
-        {
-            potioneffect = (PotionEffect)iterator.next();
-            
-            s = potioneffect.getPotionID() +","+potioneffect.getAmplifier()+","+potioneffect.getDuration();
-
-            tags = new NBTTagCompound();
-            potioneffect.writeCustomPotionEffectToNBT(tags);
-            
-
-            potions.add(tags);
-        }
-	}
 	
 }

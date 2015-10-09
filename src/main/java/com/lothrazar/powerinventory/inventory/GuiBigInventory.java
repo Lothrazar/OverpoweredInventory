@@ -53,19 +53,26 @@ public class GuiBigInventory extends GuiInventory
 			//final int tiny = 12;
 			int button_id = 99;
 			
-			this.buttonList.add(new GuiButtonPotions(button_id++,
-					this.guiLeft  - width - padding, 
-					this.guiTop - height - padding,
-					width,height));
-
-			 
+			final EntityPlayer player = this.mc.thePlayer;
+			
+			int offset = 0;//player.getActivePotionEffects().isEmpty() ? 0 : 160/4;
+			/*   if (!thi0;;s.mc.thePlayer.getActivePotionEffects().isEmpty())
+        {
+            this.guiLeft = 160 + (this.width - this.xSize - 200) / 2;
+            this.hasActivePotionEffects = true;
+        }
+        else
+        {
+            this.guiLeft = (this.width - this.xSize) / 2;
+            this.hasActivePotionEffects = false;
+        }*/
 			if(ModConfig.showMergeDeposit)
 			{
 				//we could refactor more, but this is good enough
 				if(ModConfig.smallerMergeDep)
 				{
 					this.buttonList.add(new GuiButtonDump(button_id++,
-							this.guiLeft + this.xSize - width - padding, 
+							this.guiLeft + this.xSize - width - padding + offset, 
 							this.guiTop + padding,
 							width,height,StatCollector.translateToLocal("button.dump_s")));
 		
