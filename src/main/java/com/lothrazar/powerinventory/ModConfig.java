@@ -40,6 +40,8 @@ public class ModConfig
 	public static boolean bucket64;
 	public static boolean alwaysShowHungerbar;
 	public static boolean smallerMergeDep;
+	public static String[] blacklist_in;
+	public static String[] blacklist_out;
 	public static final String categoryHighlander = "can_change_ingame";
 
 	public static void loadConfig(Configuration c) 
@@ -102,6 +104,14 @@ public class ModConfig
 		category = Configuration.CATEGORY_GENERAL;//"warning_advanced";
 		ModConfig.blockVersionChecker = config.getBoolean("block_versionchecker",category,false,"By default, this checks once on game startup for a new mod update version.  Set as true to block this check and notice.  Config entry added for modpack creators.");
 
+		category = "uncrafting";
+		
+		ModConfig.blacklist_in = config.getString("blacklist_in", category, "", "You can block items from being uncrafted here.  Put a comma (,) between each item, and make sure you use the syntax with minecraft:item or modid:item.  For example:  minecraft:stone,minecraft:dirt")
+				.split(",");
+		ModConfig.blacklist_out = config.getString("blacklist_out", category, "minecraft:milk_bucket", "Items that cannot be given as output to uncrafted recipes.  However, items containing these recipes will still be uncrafted.  For example, milk is the default here so you can still uncraft cake to the other ingredients.")
+				.split(",");
+		
+		
 		
 		
 		category = "warning_compatibility";

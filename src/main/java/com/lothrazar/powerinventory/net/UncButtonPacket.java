@@ -72,14 +72,22 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 		in.add(Item.getByNameOrId("minecraft:chainmail_leggings"));
 		//chainmail_chestplate
  */
+		for(String s : ModConfig.blacklist_in)
+		{
+			in.add(Item.getByNameOrId(s));
+		}
 		setBlacklistInput(in);
 		
 		
 		
 		
 		ArrayList<Item> out = new ArrayList<Item>();
-		
-		out.add(Item.getByNameOrId("minecraft:milk_bucket"));
+
+		for(String s : ModConfig.blacklist_out)
+		{
+			out.add(Item.getByNameOrId(s));
+		}
+		//out.add(Item.getByNameOrId("minecraft:milk_bucket"));
  
 		setBlacklistOutput(out);
 	}
