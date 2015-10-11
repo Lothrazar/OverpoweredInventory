@@ -148,6 +148,13 @@ public class BigContainerPlayer extends ContainerPlayer
         for (i = Const.HOTBAR_SIZE; i < 2*Const.HOTBAR_SIZE; ++i)
         { 
         	cx = hotbarX + i * Const.SQ; 
+        	
+        	//TODO: stop using magic strings everywhere ya dufus
+        	//make it like ModConfig.isLarge(), etc
+        	if(ModConfig.smallMedLarge.equalsIgnoreCase("large") || ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
+        	{
+        		cx += Const.SQ;//left an empty gap eh
+        	}
  
             this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, hotbarY));
         	slotIndex++;

@@ -197,7 +197,7 @@ public class EventHandler
 			GuiBigInventory gui = (GuiBigInventory)event.gui;
  
 			int width = 18;
-			int x_spacing = width + padding/2;
+			int x_spacing = width + 3;
 			x = gui.getLeft() +  GuiBigInventory.texture_width - 5*x_spacing - padding+1
 					+6;
 			y = gui.getTop() + GuiBigInventory.texture_height - h - padding
@@ -205,7 +205,8 @@ public class EventHandler
 			
 			
 			//if size is small, move it over a touch because of dual hotbar
-			
+
+        	//TODO: stop using magic strings everywhere ya dufus
 			if(ModConfig.smallMedLarge.equalsIgnoreCase("small"))
 			{
 				y += 28;
