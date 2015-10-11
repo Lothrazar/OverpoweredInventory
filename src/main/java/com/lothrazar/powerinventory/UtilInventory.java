@@ -609,7 +609,7 @@ final static int SORT_ALPHI = 1;
 		if(ModConfig.enableCompatMode)
 			return p.inventory.getSizeInventory() - Const.ARMOR_SIZE;
 		else //because of second hotbar
-			return BigInventoryPlayer.INVOSIZE - Const.HOTBAR_SIZE;
+			return p.inventory.getSizeInventory() - Const.ARMOR_SIZE - Const.HOTBAR_SIZE;
 	}
 
 	public static void doSort(EntityPlayer p,int sortType)
