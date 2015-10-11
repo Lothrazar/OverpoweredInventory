@@ -122,7 +122,6 @@ public class ModConfig
 		
 		
 		setupGuiFromConfig();
-		
 	}
 
 	private static void setupGuiFromConfig()

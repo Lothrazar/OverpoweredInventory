@@ -52,14 +52,44 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 	
 	//todo: put in a blacklist from config file
 	private ArrayList<EntityItem> drops;
+
+	public static void setBlacklistInput(ArrayList<Item> list)
+	{
+		blacklistInput = list;
+	}
+	public static void setBlacklistOutput(ArrayList<Item> list)
+	{
+		blacklistOutput = list;
+	}
+	
+	private static void setupListsFromConfig()
+	{
+		//TODO: csv of strings from config - eventually
+		setBlacklistInput(new ArrayList<Item>(){{
+			add(Items.chainmail_boots);
+			add(Items.chainmail_chestplate);
+			add(Items.chainmail_helmet);
+			add(Items.chainmail_leggings);
+		}});
+
+		setBlacklistOutput(new ArrayList<Item>(){{
+			add(Items.milk_bucket);
+		}});
+	}
+	
+	private static ArrayList<Item> blacklistInput = null;
+
+	//also, when crafting cake you get the empty bucket back.
+	//so dont refund full buckets or else thats free infinite iron
+	private static ArrayList<Item> blacklistOutput = null;
+	
+	
 	private void addDrop(EntityPlayer player, ItemStack s)
 	{ 
 		//this fn is null safe, it gets nulls all the time
-		if(s == null || s.getItem() == Items.milk_bucket){return;}
-		//also, when crafting cake you get the empty bucket back.
-		//so dont refund full buckets or else thats free infinite iron
+		if(s == null){return;}
 		
-
+		if(blacklistOutput.contains(s.getItem())){return;}
 		
 		ItemStack stack = s.copy();
 		stack.stackSize = 1;
@@ -91,18 +121,18 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 	//such as: currently Crafting Table et all do nothing
 	//but we could allow a config file to say "crafting table -> 8 sticks or whatever?
 	
-	private static final ArrayList<Item> blacklist = new ArrayList<Item>(){{
-		add(Items.chainmail_boots);
-		add(Items.chainmail_chestplate);
-		add(Items.chainmail_helmet);
-		add(Items.chainmail_leggings);
-	}};
-	
 	@Override
 	public IMessage onMessage(UncButtonPacket message, MessageContext ctx)
 	{
 		EntityPlayer player = ctx.getServerHandler().playerEntity;
 		 
+		//first things first
+		if(blacklistInput == null || blacklistOutput == null)
+		{
+			//must set this at runtime, in case modded items were added through config
+			setupListsFromConfig();
+		}
+		
 		IInventory invo;
 		
 		if(player.openContainer instanceof ContainerCustomPlayer)
@@ -119,7 +149,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 		
 		if(toUncraft == null){return null;}
 		
-		if(blacklist.contains(toUncraft.getItem())){return null;}
+		if(blacklistInput.contains(toUncraft.getItem())){return null;}
 		
 		drops = new ArrayList<EntityItem>();
 		int i;
