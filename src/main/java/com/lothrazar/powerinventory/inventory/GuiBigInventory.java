@@ -29,6 +29,7 @@ public class GuiBigInventory extends GuiInventory
 	public static int texture_width;
 	public static int texture_height;
 	
+	
 	public GuiBigInventory(EntityPlayer player)
 	{
 		super(player);
@@ -127,40 +128,6 @@ public class GuiBigInventory extends GuiInventory
 				btnExp.visible = btnExp.enabled;
 		    }
 		 
-			if(ModConfig.showSortButtons)
-			{  
-				//TODO: hmm these dont fire when off the screen
-				width = 18;
-				int x_spacing = width + padding/2;
-				int x = guiLeft + this.xSize - 5*x_spacing - padding+1;
-				int y = guiTop + this.ySize - height - padding
-						;
-				 
-				GuiButton btn;
-				 
-				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_LEFTALL,"<<",false);
-				this.buttonList.add(btn);
-
-				x += x_spacing;
-			 
-				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_LEFT,"<",false);
-				this.buttonList.add(btn);
-
-				x += x_spacing;
-			 
-				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_SMART,StatCollector.translateToLocal("button.sort"),false);
-				this.buttonList.add(btn);
-				
-				x += x_spacing;
-
-				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_RIGHT,">",false);
-				this.buttonList.add(btn);
-				  
-				x += x_spacing;
-				
-				btn = new GuiButtonSort(this.mc.thePlayer,button_id++, x, y ,width,height, Const.SORT_RIGHTALL,">>",false);
-				this.buttonList.add(btn);
-			}
 		}
     }
 	
@@ -306,6 +273,16 @@ public class GuiBigInventory extends GuiInventory
 			this.drawString(this.fontRendererObj, "" + show, s.xDisplayPosition, s.yDisplayPosition +  4, 16777120);
 		}*/
 
+	}
+	
+	
+	public int getLeft()
+	{
+		return this.guiLeft;
+	}
+	public int getTop()
+	{
+		return this.guiTop;
 	}
 	
 	

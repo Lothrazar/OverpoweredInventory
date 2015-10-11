@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
@@ -140,6 +141,7 @@ public class EventHandler
 	{
 		if(event.gui == null){return;}//probably doesnt ever happen
 		
+		EntityPlayer p = Minecraft.getMinecraft().thePlayer;
 		int button_id = 256;
 		//trapped, regular chests, minecart chests, and enderchest all use this class
 		//which extends  GuiContainer
@@ -181,11 +183,50 @@ public class EventHandler
 				
 				y += h + padding;
 				
-				event.buttonList.add(new GuiButtonSort(Minecraft.getMinecraft().thePlayer,button_id++, x, y ,w,h, Const.SORT_RIGHT,">",true));
+				event.buttonList.add(new GuiButtonSort(p,button_id++, x, y ,w,h, Const.SORT_RIGHT,">",true));
 				x = x - padding - w;
 				
-				event.buttonList.add(new GuiButtonSort(Minecraft.getMinecraft().thePlayer,button_id++, x, y ,w,h, Const.SORT_LEFT,"<",true));
+				event.buttonList.add(new GuiButtonSort(p,button_id++, x, y ,w,h, Const.SORT_LEFT,"<",true));
+			 
+			
 			}
+		}
+		 
+		if(ModConfig.showSortButtons && event.gui instanceof GuiBigInventory )
+		{  
+			GuiBigInventory gui = (GuiBigInventory)event.gui;
+ 
+			int width = 18;
+			int x_spacing = width + padding/2;
+			x = gui.getLeft() +  GuiBigInventory.texture_width - 5*x_spacing - padding+1
+					+4;
+			y = gui.getTop() + GuiBigInventory.texture_height - h - padding
+					+26;
+			 
+			GuiButton btn;
+			 
+			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_LEFTALL,"<<",true);
+			event.buttonList.add(btn);
+
+			x += x_spacing;
+		 
+			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_LEFT,"<",true);
+			event.buttonList.add(btn);
+
+			x += x_spacing;
+		 
+			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_SMART,StatCollector.translateToLocal("button.sort"),true);
+			event.buttonList.add(btn);
+			
+			x += x_spacing;
+
+			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_RIGHT,">",true);
+			event.buttonList.add(btn);
+			  
+			x += x_spacing;
+			
+			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_RIGHTALL,">>",true);
+			event.buttonList.add(btn);
 		}
 	}
 	
