@@ -1,6 +1,8 @@
 package com.lothrazar.powerinventory.net;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import com.lothrazar.powerinventory.*;
 import com.lothrazar.powerinventory.inventory.ContainerCustomPlayer;
@@ -146,11 +148,13 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 						for(i = 0; i < r.getInput().length; i++) 
 						{
 							maybeOres = r.getInput()[i];
+							if(maybeOres == null){continue;}
+							//thanks http://stackoverflow.com/questions/20462819/java-util-collectionsunmodifiablerandomaccesslist-to-collections-singletonlist
 
-							if(maybeOres instanceof ArrayList && (ArrayList<ItemStack>)maybeOres != null)//<ItemStack>
+							if((List<ItemStack>)maybeOres != null)//<ItemStack>
 							{ 
-								ArrayList<ItemStack> ores = (ArrayList<ItemStack>)maybeOres;
-						
+								List<ItemStack> ores = (List<ItemStack>)maybeOres;
+
 								if(ores.size() == 1)
 								{
 									//sticks,iron,and so on
@@ -159,7 +163,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 								//else size is > 1 , so its something like wooden planks
 								//TODO:maybe with a config file or something, but not for now
 							}
-							if(maybeOres instanceof ItemStack)//<ItemStack>
+							else if(maybeOres instanceof ItemStack)//<ItemStack>
 							{
 								addDrop(player, (ItemStack)maybeOres); 
 							} 
@@ -182,10 +186,10 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 						{
 							maybeOres = r.getInput().get(i);
 
-							if(maybeOres instanceof ArrayList && (ArrayList<ItemStack>)maybeOres != null)//<ItemStack>
+							if((List<ItemStack>)maybeOres != null)//<ItemStack>
 							{ 
-								ArrayList<ItemStack> ores = (ArrayList<ItemStack>)maybeOres;
-							
+								List<ItemStack> ores = (List<ItemStack>)maybeOres;
+
 								if(ores.size() == 1)
 								{
 									addDrop(player, ores.get(0)); 
