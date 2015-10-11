@@ -199,9 +199,17 @@ public class EventHandler
 			int width = 18;
 			int x_spacing = width + padding/2;
 			x = gui.getLeft() +  GuiBigInventory.texture_width - 5*x_spacing - padding+1
-					+4;
+					+6;
 			y = gui.getTop() + GuiBigInventory.texture_height - h - padding
-					+26;
+					+3;
+			
+			
+			//if size is small, move it over a touch because of dual hotbar
+			
+			if(ModConfig.smallMedLarge.equalsIgnoreCase("small"))
+			{
+				y += 28;
+			}
 			 
 			GuiButton btn;
 			 

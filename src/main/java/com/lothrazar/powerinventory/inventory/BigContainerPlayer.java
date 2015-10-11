@@ -144,13 +144,11 @@ public class BigContainerPlayer extends ContainerPlayer
         S_MAIN_END = this.inventorySlots.size() - 1;
         
         //second hotbar
-    	System.out.println("S_BAROTHER_START");
         S_BAROTHER_START = this.inventorySlots.size();
         for (i = Const.HOTBAR_SIZE; i < 2*Const.HOTBAR_SIZE; ++i)
         { 
         	cx = hotbarX + i * Const.SQ; 
  
-        	System.out.println(slotIndex);
             this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, hotbarY));
         	slotIndex++;
         }
