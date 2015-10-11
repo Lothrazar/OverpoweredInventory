@@ -8,6 +8,7 @@ import com.lothrazar.powerinventory.*;
 import com.lothrazar.powerinventory.inventory.ContainerCustomPlayer;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -63,18 +64,24 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 	}
 	
 	private static void setupListsFromConfig()
-	{
-		//TODO: csv of strings from config - eventually
-		setBlacklistInput(new ArrayList<Item>(){{
-			add(Items.chainmail_boots);
-			add(Items.chainmail_chestplate);
-			add(Items.chainmail_helmet);
-			add(Items.chainmail_leggings);
-		}});
-
-		setBlacklistOutput(new ArrayList<Item>(){{
-			add(Items.milk_bucket);
-		}});
+	{ 
+		ArrayList<Item> in = new ArrayList<Item>();
+		/*
+		in.add(Item.getByNameOrId("minecraft:chainmail_helmet"));
+		in.add(Item.getByNameOrId("minecraft:chainmail_boots"));
+		in.add(Item.getByNameOrId("minecraft:chainmail_leggings"));
+		//chainmail_chestplate
+ */
+		setBlacklistInput(in);
+		
+		
+		
+		
+		ArrayList<Item> out = new ArrayList<Item>();
+		
+		out.add(Item.getByNameOrId("minecraft:milk_bucket"));
+ 
+		setBlacklistOutput(out);
 	}
 	
 	private static ArrayList<Item> blacklistInput = null;
@@ -155,9 +162,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 		int i;
 		Object maybeOres;
 		int outsize = 0;
-		
-		//TODO: need a blacklist. for example: chain armor
-
+		 
 		//outsize is 3 means the recipe makes three items total. so MINUS three
 		//from the toUncraft for EACH LOOP
 		
