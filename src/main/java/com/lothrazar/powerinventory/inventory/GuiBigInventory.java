@@ -129,10 +129,12 @@ public class GuiBigInventory extends GuiInventory
 		 
 			if(ModConfig.showSortButtons)
 			{  
+				//TODO: hmm these dont fire when off the screen
 				width = 18;
 				int x_spacing = width + padding/2;
 				int x = guiLeft + this.xSize - 5*x_spacing - padding+1;
-				int y = guiTop + this.ySize - height - padding;
+				int y = guiTop + this.ySize - height - padding
+						;
 				 
 				GuiButton btn;
 				 

@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
+import com.lothrazar.powerinventory.inventory.BigInventoryPlayer;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -226,7 +228,7 @@ public class UtilInventory
 		
 			if(chestItem != null) {   continue; }//  chest slot not empty, skip over it
 	 
-			for(int islotInv = Const.HOTBAR_SIZE; islotInv < player.inventory.getSizeInventory() - Const.ARMOR_SIZE; islotInv++)
+			for(int islotInv = Const.HOTBAR_SIZE; islotInv < getInvoEnd(player); islotInv++)
 			{
 				invItem = player.inventory.getStackInSlot(islotInv);
 				
@@ -246,17 +248,16 @@ public class UtilInventory
 		ItemStack invItem;
 	 
 		int start = 0; 
-		int end =  inventory.getSizeInventory();//START_CHEST + 3*9; 
-		
-		
+		 
+		//
 		//inventory and chest has 9 rows by 3 columns, never changes. same as 64 max stack size
-		for(int slot = start; slot < end; slot++)
+		for(int slot = start; slot < inventory.getSizeInventory(); slot++)
 		{ 
 			chestItem = inventory.getStackInSlot(slot);
 		
 			if(chestItem != null) {   continue; }//   slot not empty, skip over it
 	 
-			for(int islotInv = Const.HOTBAR_SIZE; islotInv < player.inventory.getSizeInventory() - Const.ARMOR_SIZE; islotInv++)
+			for(int islotInv = Const.HOTBAR_SIZE; islotInv < getInvoEnd(player); islotInv++)
 			{
 				invItem = player.inventory.getStackInSlot(islotInv);
 				
@@ -292,7 +293,7 @@ public class UtilInventory
 		
 			if(chestItem == null) {   continue; }//  empty chest slot
 			 
-			for(int islotInv = Const.HOTBAR_SIZE; islotInv < player.inventory.getSizeInventory() - Const.ARMOR_SIZE; islotInv++)
+			for(int islotInv = Const.HOTBAR_SIZE; islotInv < getInvoEnd(player); islotInv++)
 			{
 			 
 				invItem = player.inventory.getStackInSlot(islotInv);
@@ -339,7 +340,7 @@ public class UtilInventory
 
 		ItemStack item;
 		
-		for(int i = invo.getSizeInventory() - (Const.ARMOR_SIZE + 1); i >= Const.HOTBAR_SIZE;i--)
+		for(int i = getInvoEnd(invo.player) - 1; i >= Const.HOTBAR_SIZE;i--)
 		{
 			item = invo.getStackInSlot(i);
 			
@@ -366,7 +367,10 @@ public class UtilInventory
 
 		ItemStack item;
 		
-		for(int i = Const.HOTBAR_SIZE; i < invo.getSizeInventory() - Const.ARMOR_SIZE;i++)
+		int max;
+		
+		
+		for(int i = Const.HOTBAR_SIZE; i < getInvoEnd(invo.player);i++)
 		{
 			item = invo.getStackInSlot(i);
 			
@@ -426,7 +430,7 @@ public class UtilInventory
 		
 		int iNew;
  
-		int END = invo.getSizeInventory() - Const.ARMOR_SIZE;
+		int END = getInvoEnd(invo.player);
 		for(int i = Const.HOTBAR_SIZE; i < END;i++)
 		{ 
 			 
@@ -453,10 +457,9 @@ public class UtilInventory
 		
 		int iNew;
  
-		int END = invo.getSizeInventory() - Const.ARMOR_SIZE;
+		int END = getInvoEnd(invo.player);
 		for(int i = Const.HOTBAR_SIZE; i < END;i++)
 		{ 
-			 
 			if(i == Const.HOTBAR_SIZE) iNew = END-1;
 			else iNew = i - 1;
 			
@@ -508,7 +511,7 @@ final static int SORT_ALPHI = 1;
 	{
 		int sortType = getNextSort(invo.player);
 
-		int iSize =  invo.getSizeInventory() - Const.ARMOR_SIZE;
+		int iSize = getInvoEnd(invo.player);
 
 		Map<String,SortGroup> unames = new HashMap<String,SortGroup>();
 
@@ -599,6 +602,14 @@ final static int SORT_ALPHI = 1;
 		
 		
 		
+	}
+	
+	private static int getInvoEnd(EntityPlayer p)
+	{
+		if(ModConfig.enableCompatMode)
+			return p.inventory.getSizeInventory() - Const.ARMOR_SIZE;
+		else //because of second hotbar
+			return BigInventoryPlayer.INVOSIZE - Const.HOTBAR_SIZE;
 	}
 
 	public static void doSort(EntityPlayer p,int sortType)
