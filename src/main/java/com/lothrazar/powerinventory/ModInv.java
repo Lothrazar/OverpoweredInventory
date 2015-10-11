@@ -66,8 +66,9 @@ public class ModInv
     	network.registerMessage(EnderPearlPacket.class,  EnderPearlPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(ExpButtonPacket.class,   ExpButtonPacket.class,   packetID++, Side.SERVER);
     	network.registerMessage(DumpButtonPacket.class,  DumpButtonPacket.class,  packetID++, Side.SERVER);
-    	network.registerMessage(UncButtonPacket.class,   UncButtonPacket.class,  packetID++, Side.SERVER);
-    
+    	network.registerMessage(UncButtonPacket.class,   UncButtonPacket.class,   packetID++, Side.SERVER);
+    	network.registerMessage(HotbarSwapPacket.class,  HotbarSwapPacket.class,  packetID++, Side.SERVER);
+        
     	proxy.registerHandlers();
     }
     

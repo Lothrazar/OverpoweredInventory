@@ -26,11 +26,13 @@ public class BigContainerPlayer extends ContainerPlayer
 {	
 	public static int ALL_COLS;
 	public static int ALL_ROWS;
-	private final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
+	public static final int craftSize = 3;//did not exist before, was magic'd as 2 everywhere
     private final EntityPlayer thePlayer;
  
 	public BigInventoryPlayer invo;
     public boolean isLocalWorld;
+    public static int S_BAROTHER_START;
+    public static int S_BAROTHER_END;
 
 	//these get used here for actual slot, and in GUI for texture
     //ender pearl is in the far bottom right corner, and the others move left relative to this
@@ -113,18 +115,19 @@ public class BigContainerPlayer extends ContainerPlayer
         //how many rows were added extra on top of vanilla
         int moreRows = BigContainerPlayer.ALL_ROWS - Const.ROWS_VANILLA;
         //int MORE_COLS = BigContainerPlayer.ALL_COLS - Const.COLS_VANILLA;
-		
+         
+        int hotbarX = Const.paddingLrg;
+        int hotbarY = 142 + (Const.SQ * moreRows);
 		
         S_BAR_START = this.inventorySlots.size();
         for (i = 0; i < Const.HOTBAR_SIZE; ++i)
         { 
-        	cx = 8 + i * Const.SQ;
-        	cy = 142 + (Const.SQ * moreRows);
+        	cx = hotbarX + i * Const.SQ; 
  
-            this.addSlotToContainer(new Slot(playerInventory, i, cx, cy));
+            this.addSlotToContainer(new Slot(playerInventory, i, cx, hotbarY));
         }
         S_BAR_END = this.inventorySlots.size() - 1;
-        
+ 
         S_MAIN_START = this.inventorySlots.size();
         int slotIndex = Const.HOTBAR_SIZE;
         
@@ -138,8 +141,20 @@ public class BigContainerPlayer extends ContainerPlayer
             	slotIndex++;
             }
         }
-        
         S_MAIN_END = this.inventorySlots.size() - 1;
+        
+        //second hotbar
+    	System.out.println("S_BAROTHER_START");
+        S_BAROTHER_START = this.inventorySlots.size();
+        for (i = Const.HOTBAR_SIZE; i < 2*Const.HOTBAR_SIZE; ++i)
+        { 
+        	cx = hotbarX + i * Const.SQ; 
+ 
+        	System.out.println(slotIndex);
+            this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, hotbarY));
+        	slotIndex++;
+        }
+        S_BAROTHER_END = this.inventorySlots.size() - 1;
         
         S_PEARL =  this.inventorySlots.size() ;
         this.addSlotToContainer(new SlotEnderPearl(playerInventory, Const.enderPearlSlot));
@@ -164,6 +179,10 @@ public class BigContainerPlayer extends ContainerPlayer
 	        S_UNCRAFT =  this.inventorySlots.size() ; 
 	        this.addSlotToContainer(new Slot(playerInventory, Const.uncraftSlot, Const.uncraftX, Const.uncraftY)); 
         }
+        
+        
+        
+ 
         
         this.onCraftMatrixChanged(this.craftMatrix);
 		this.invo = playerInventory; 

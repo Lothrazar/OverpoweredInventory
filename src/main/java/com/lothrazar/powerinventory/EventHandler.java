@@ -37,6 +37,7 @@ import com.lothrazar.powerinventory.inventory.client.GuiButtonClose;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
 import com.lothrazar.powerinventory.net.EnderPearlPacket;
+import com.lothrazar.powerinventory.net.HotbarSwapPacket;
 import com.lothrazar.powerinventory.net.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
 
@@ -66,9 +67,12 @@ public class EventHandler
         	 ModInv.instance.network.sendToServer( new EnderPearlPacket());   
         }  
         if(ClientProxy.keyEnderchest.isPressed())
-        { 	     
-        	
+        { 	      
         	 ModInv.instance.network.sendToServer( new OpenInventoryPacket());   
+        }  
+        if(ClientProxy.keyHotbar.isPressed())
+        { 	      
+        	 ModInv.instance.network.sendToServer( new HotbarSwapPacket());   
         }  
     }
 	
