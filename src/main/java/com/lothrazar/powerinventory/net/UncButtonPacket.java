@@ -194,7 +194,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 							if(maybeOres == null){continue;}
 							//thanks http://stackoverflow.com/questions/20462819/java-util-collectionsunmodifiablerandomaccesslist-to-collections-singletonlist
 
-							if((List<ItemStack>)maybeOres != null)//<ItemStack>
+							if(maybeOres instanceof List<?> && (List<ItemStack>)maybeOres != null)//<ItemStack>
 							{ 
 								List<ItemStack> ores = (List<ItemStack>)maybeOres;
 
@@ -229,7 +229,7 @@ public class UncButtonPacket implements IMessage , IMessageHandler<UncButtonPack
 						{
 							maybeOres = r.getInput().get(i);
 
-							if((List<ItemStack>)maybeOres != null)//<ItemStack>
+							if(maybeOres instanceof List<?> && (List<ItemStack>)maybeOres != null)//<ItemStack>
 							{ 
 								List<ItemStack> ores = (List<ItemStack>)maybeOres;
 

@@ -45,8 +45,22 @@ public class VersionChecker implements Runnable
             IOUtils.closeQuietly(in);
         }
         
-        String current = "1.0.11"; //TODO: get from mcinfo or something i guess
+        String current = "1.0.13"; //TODO: get from mcinfo or something i guess
 
+        
+        
+        //it was rejected as a duplicate of an existing file
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //why is that?
         isLatestVersion = current.equals(latestVersion);
 
     }

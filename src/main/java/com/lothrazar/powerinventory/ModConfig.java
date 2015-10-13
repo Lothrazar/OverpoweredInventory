@@ -15,7 +15,6 @@ public class ModConfig
 	public static boolean showMergeDeposit;
 	public static boolean enderPearl64;
 	
-
 	public static String smallMedLarge;
 
 	

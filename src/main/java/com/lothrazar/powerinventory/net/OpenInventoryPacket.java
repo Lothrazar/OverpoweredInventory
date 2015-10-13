@@ -17,9 +17,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-/** 
- * @author Lothrazar at https://github.com/PrinceOfAmber
- */
+
 public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInventoryPacket, IMessage>
 {
 	public OpenInventoryPacket() {}
@@ -77,21 +75,6 @@ public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInven
 				p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));
 		}		
 		
-		
-		/*
-		int invType = message.tags.getInteger("i");
-
-		switch(invType)
-		{
-		case Const.INV_ENDER:
-			p.displayGUIChest(p.getInventoryEnderChest());
-		break;
-		case Const.INV_PLAYER:
-
-			//this packet should not have been sent. but keep empty branch so i remember it
-			break;
-		}*/
-
 		return null;
 	}
 }
