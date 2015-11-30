@@ -18,18 +18,14 @@ public class ModConfig
 	
 	public static String smallMedLarge;
 
-	
 	public static int filterRange; 
 	public static int expPerBottle;
 	
-
 	public static boolean enableUncrafting;
 	public static boolean enableEnchantBottles;
 	
 	public static boolean enableCompatMode;
-	public static boolean blockVersionChecker;
 	
-
 	public static Configuration config;
 	public static boolean enableSlotOutlines;
 	public static boolean minecart64;
@@ -101,9 +97,8 @@ public class ModConfig
 		
 		
 		
-		category = Configuration.CATEGORY_GENERAL;//"warning_advanced";
-		ModConfig.blockVersionChecker = config.getBoolean("block_versionchecker",category,false,"By default, this checks once on game startup for a new mod update version.  Set as true to block this check and notice.  Config entry added for modpack creators.");
-
+		//category = Configuration.CATEGORY_GENERAL;//"warning_advanced";
+ 
 		category = "uncrafting";
 		
 		ModConfig.blacklist_in = config.getString("blacklist_in", category, "", "You can block items from being uncrafted here.  Put a comma (,) between each item, and make sure you use the syntax with minecraft:item or modid:item.  For example:  minecraft:stone,minecraft:dirt")

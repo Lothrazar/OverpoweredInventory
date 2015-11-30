@@ -12,15 +12,12 @@ import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ChatStyle;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -43,10 +40,8 @@ import com.lothrazar.powerinventory.net.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
 
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /**
@@ -336,27 +331,6 @@ public class EventHandler
 		}
 	}
 	
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-    public void onEvent(PlayerTickEvent event)
-    {
-		if(ModInv.versionChecker == null || ModConfig.blockVersionChecker == true)
-		{
-			return;//blocked by config file
-		}
-        if (!ModInv.sentVersionMessage && event.player.worldObj.isRemote 
-              && !ModInv.versionChecker.isLatestVersion()
-              && ModInv.versionChecker.getLatestVersion() != "")
-        {
-            ClickEvent url = new ClickEvent(ClickEvent.Action.OPEN_URL, 
-                  "http://www.curse.com/mc-mods/Minecraft/233168-overpowered-inventory-375-inventory-slots-and-more");
-            ChatStyle clickableChatStyle = new ChatStyle().setChatClickEvent(url);
-            ChatComponentText text = new ChatComponentText("Overpowered Inventory has a new update out!  Click here to open the webpage and check out version "+ModInv.versionChecker.getLatestVersion());
-            text.setChatStyle(clickableChatStyle);
-            event.player.addChatMessage(text);
-            ModInv.sentVersionMessage = true;
-        } 
-    }
-
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) 	//below was imported from my PowerApples mod

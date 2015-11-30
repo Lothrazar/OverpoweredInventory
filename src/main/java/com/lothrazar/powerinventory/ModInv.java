@@ -15,8 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent; 
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -70,22 +69,7 @@ public class ModInv
     	network.registerMessage(HotbarSwapPacket.class,  HotbarSwapPacket.class,  packetID++, Side.SERVER);
         
     	proxy.registerHandlers();
-    }
-    
-    static boolean sentVersionMessage = false;//only send it once
-    static VersionChecker versionChecker ;
-    
-
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent  event)
-    {
-    	if(ModConfig.blockVersionChecker == false)
-    	{
-	    	versionChecker = new VersionChecker();
-	    	Thread versionCheckThread = new Thread(versionChecker, "Version Check");
-	    	versionCheckThread.start();
-    	}
-    }
+    } 
     
     @EventHandler
     public void init(FMLInitializationEvent event)
