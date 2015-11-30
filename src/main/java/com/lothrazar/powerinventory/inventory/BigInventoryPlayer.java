@@ -324,7 +324,7 @@ public class BigInventoryPlayer extends InventoryPlayer
     /**
      * Adds the item stack to the inventory, returns false if it is impossible.
      */
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public boolean addItemStackToInventory(final ItemStack stack)
     {

@@ -1,8 +1,6 @@
 package com.lothrazar.powerinventory.net;
 
 import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.GuiHandler;
-import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
 import com.lothrazar.powerinventory.inventory.BigInventoryPlayer;
 
@@ -42,21 +40,15 @@ public class HotbarSwapPacket implements IMessage , IMessageHandler<HotbarSwapPa
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
   
-		 
- 
 		for(int bar = 0; bar < Const.HOTBAR_SIZE; bar++)
 		{
 			ItemStack barStack = p.inventory.getStackInSlot(bar);
-			//if(barStack!=null)System.out.println(bar+","+barStack.getDisplayName());
  
 			int second = bar+  BigInventoryPlayer.INVOSIZE + BigContainerPlayer.craftSize*BigContainerPlayer.craftSize ;
 			ItemStack secondStack = p.inventory.getStackInSlot(second);
-			//if(secondStack!=null)System.out.println("m,"+second+","+secondStack.getDisplayName());
-			
-			
+		
 			p.inventory.setInventorySlotContents(bar, secondStack);
 			p.inventory.setInventorySlotContents(second, barStack);
- 
 		}
  
 		return null;

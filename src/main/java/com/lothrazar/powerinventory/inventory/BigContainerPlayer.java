@@ -80,7 +80,7 @@ public class BigContainerPlayer extends ContainerPlayer
     			cx = 114 + j * Const.SQ ; 
     			cy = 20 + i * Const.SQ ;
 
-        		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * this.craftSize, cx , cy)); 
+        		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * craftSize, cx , cy)); 
             }
         }
         S_CRAFT_END = this.inventorySlots.size() - 1;

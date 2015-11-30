@@ -1,8 +1,6 @@
 package com.lothrazar.powerinventory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.UUID;
 
 import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
@@ -13,10 +11,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
-import net.minecraftforge.common.util.Constants;
 
 /**
  * @author https://github.com/Funwayguy/InfiniteInvo

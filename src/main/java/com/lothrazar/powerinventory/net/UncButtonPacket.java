@@ -1,17 +1,14 @@
 package com.lothrazar.powerinventory.net;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.lothrazar.powerinventory.*;
 import com.lothrazar.powerinventory.inventory.ContainerCustomPlayer;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

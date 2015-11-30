@@ -8,8 +8,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-import com.lothrazar.powerinventory.inventory.BigInventoryPlayer;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -366,10 +364,7 @@ public class UtilInventory
 		Queue<Integer> empty = new LinkedList<Integer>();
 
 		ItemStack item;
-		
-		int max;
-		
-		
+		 
 		for(int i = Const.HOTBAR_SIZE; i < getInvoEnd(invo.player);i++)
 		{
 			item = invo.getStackInSlot(i);

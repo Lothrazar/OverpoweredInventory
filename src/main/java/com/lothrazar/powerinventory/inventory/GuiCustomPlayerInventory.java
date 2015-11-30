@@ -1,7 +1,5 @@
 package com.lothrazar.powerinventory.inventory;
 
-import org.lwjgl.opengl.GL11;
-
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.UtilTextureRender;
@@ -35,7 +33,6 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		//thePlayer = player;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public void initGui()
     { 

@@ -5,8 +5,6 @@ import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.UtilTextureRender;
 import com.lothrazar.powerinventory.inventory.client.*;
 import com.lothrazar.powerinventory.inventory.slot.*; 
-
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
  
@@ -275,7 +273,6 @@ public class GuiBigInventory extends GuiInventory
 
 	}
 	
-	
 	public int getLeft()
 	{
 		return this.guiLeft;
@@ -284,6 +281,4 @@ public class GuiBigInventory extends GuiInventory
 	{
 		return this.guiTop;
 	}
-	
-	
 }
