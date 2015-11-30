@@ -169,8 +169,7 @@ public class GuiBigInventory extends GuiInventory
 				btnExp.visible = btnExp.enabled;
 
 				if(ModConfig.enableSlotOutlines)
-					Gui.drawModalRectWithCustomSizedTexture(SlotEnderChest.posX, SlotEnderChest.posY,0,0,  s,s,  s,s);
-					//UtilTextureRender.drawTextureSimple(SlotBottle.background,Const.bottleX, Const.bottleY,s,s); 
+					UtilTextureRender.drawTextureSimple(SlotBottle.background,Const.bottleX, Const.bottleY,s,s);
 			}
 			else 
 			{ 

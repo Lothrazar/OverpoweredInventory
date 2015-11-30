@@ -7,10 +7,10 @@ public class Const
     public static final String MODID = "powerinventory";
     public static final ResourceLocation emptyBoots = new ResourceLocation("textures/items/empty_armor_slot_boots.png");
     public static final ResourceLocation emptyLegs = new ResourceLocation("textures/items/empty_armor_slot_leggings.png");  
-    public static final ResourceLocation emptyChest = new ResourceLocation("textures/empty_armor_slot_chestplate/empty_armor_slot_boots.png");
+    public static final ResourceLocation emptyChest = new ResourceLocation("textures/items/empty_armor_slot_chestplate.png");
     public static final ResourceLocation emptyHelmet = new ResourceLocation("textures/items/empty_armor_slot_helmet.png");
 
-	public static ResourceLocation slot = new ResourceLocation("textures/gui/inventory_slot.png");
+	public static ResourceLocation slot = new ResourceLocation(Const.MODID,"textures/gui/inventory_slot.png");
     
     
     //public static String INVENTORY_TEXTURE = "textures/gui/inventory_gui.png";

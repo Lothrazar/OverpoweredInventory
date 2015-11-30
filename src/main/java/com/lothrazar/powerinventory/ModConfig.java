@@ -169,7 +169,7 @@ public class ModConfig
 
 		}
 		
-		GuiBigInventory.backgroundTexture = new ResourceLocation("textures/gui/inventory_" 
+		GuiBigInventory.backgroundTexture = new ResourceLocation(Const.MODID,"textures/gui/inventory_" 
 						+ BigContainerPlayer.ALL_ROWS + "x" + BigContainerPlayer.ALL_COLS + ".png");
 		BigInventoryPlayer.INVOSIZE  = BigContainerPlayer.ALL_COLS * BigContainerPlayer.ALL_ROWS;
 
