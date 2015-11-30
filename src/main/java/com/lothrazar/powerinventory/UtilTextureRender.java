@@ -1,6 +1,11 @@
 package com.lothrazar.powerinventory;
 
+import org.lwjgl.opengl.GL11;
+
+import com.lothrazar.powerinventory.inventory.slot.SlotEnderChest;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -11,11 +16,32 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-@SuppressWarnings("deprecation")
+ 
 public class UtilTextureRender
 {
-
+	@SideOnly(Side.CLIENT)
+	public static void renderItemAt(ItemStack stack, int x, int y, int dim)
+	{
+		//first get texture from item stack
+		IBakedModel iBakedModel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack);
+		TextureAtlasSprite textureAtlasSprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(iBakedModel.getTexture().getIconName());
+	  
+		Minecraft.getMinecraft().getTextureManager().bindTexture(TextureMap.locationBlocksTexture);
+       
+        if(Minecraft.getMinecraft().currentScreen != null)
+        	Minecraft.getMinecraft().currentScreen.drawTexturedModalRect(x,y,textureAtlasSprite, dim,dim);    
+	}
+	
+	public static void drawTextureSimple(ResourceLocation res,int x, int y, int w, int h)
+	{
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        //GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
+		//wrapper for drawTexturedQuadFit
+		Minecraft.getMinecraft().getTextureManager().bindTexture(res); 
+		//drawTexturedQuadFit(x,y,width,height);
+		Gui.drawModalRectWithCustomSizedTexture(x,y,0F,0F, w,h,w,h);
+	}
+/*
 	@SideOnly(Side.CLIENT)
 	public static void renderItemAt(ItemStack stack, int x, int y, int dim)
 	{
@@ -43,12 +69,6 @@ public class UtilTextureRender
 		tessellator.draw();
 	}
 	
-	public static void drawTextureSimple(String texture,double x, double y, double width, double height)
-	{
-		//wrapper for drawTexturedQuadFit
-		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Const.MODID, texture)); 
-		drawTexturedQuadFit(x,y,width,height);
-	}
 	
 	public static void drawTextureSimple(TextureManager tm, String texture,double x, double y, double width, double height)
 	{
@@ -80,6 +100,6 @@ public class UtilTextureRender
         worldrenderer.addVertexWithUV(x + 0, y + 0, zLevel, 0, 0);
         tessellator.draw();
 	}
-
+*/
 	
 }

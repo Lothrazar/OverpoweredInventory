@@ -408,11 +408,6 @@ public class InventoryCustomPlayer implements IInventory
 	}
 
 	@Override
-	public String getName() {
-		return "";
-	}
-
-	@Override
 	public boolean hasCustomName() 
 	{
 		return false;
@@ -458,4 +453,9 @@ public class InventoryCustomPlayer implements IInventory
 		
 	}
 
+	@Override
+	public String getCommandSenderName()
+	{
+		return null;
+	}
 }

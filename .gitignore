@@ -9,18 +9,13 @@ config/
 saves/
 .gradle/
 .settings/
-gradlew
-gradlew.bat
 server.properties 
-gradle/
-*.properties 
-.gradle/
+*.properties
 screenshots/
 .metadata/
 .settings/
 .classpath
 .project
-gradlew
 options.txt
 usernamecache.json
 crash-reports/
@@ -29,3 +24,4 @@ crash-reports/
 *.tis
 .recommenders/
 .gitattributes
+*.launch

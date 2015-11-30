@@ -5,6 +5,7 @@ import com.lothrazar.powerinventory.inventory.BigInventoryPlayer;
 import com.lothrazar.powerinventory.inventory.GuiBigInventory;
 import com.lothrazar.powerinventory.inventory.slot.*;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
  
 public class ModConfig
@@ -168,8 +169,8 @@ public class ModConfig
 
 		}
 		
-		GuiBigInventory.backgroundTexture = "textures/gui/inventory_" 
-						+ BigContainerPlayer.ALL_ROWS + "x" + BigContainerPlayer.ALL_COLS + ".png";
+		GuiBigInventory.backgroundTexture = new ResourceLocation("textures/gui/inventory_" 
+						+ BigContainerPlayer.ALL_ROWS + "x" + BigContainerPlayer.ALL_COLS + ".png");
 		BigInventoryPlayer.INVOSIZE  = BigContainerPlayer.ALL_COLS * BigContainerPlayer.ALL_ROWS;
 
 		int xSlotColumn;

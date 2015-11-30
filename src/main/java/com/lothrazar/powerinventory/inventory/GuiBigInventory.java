@@ -4,8 +4,9 @@ import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.UtilTextureRender;
 import com.lothrazar.powerinventory.inventory.client.*;
-import com.lothrazar.powerinventory.inventory.slot.*;
+import com.lothrazar.powerinventory.inventory.slot.*; 
 
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiInventory;
  
@@ -18,8 +19,8 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiBigInventory extends GuiInventory
 {
-	public static String backgroundTexture;
-
+	//private static String _backgroundTexture; 
+	public static ResourceLocation backgroundTexture;
 	private BigContainerPlayer container;
 
 	private GuiButton btnEnder;
@@ -38,8 +39,7 @@ public class GuiBigInventory extends GuiInventory
 		this.xSize = texture_width;
 		this.ySize = texture_height;
 	}
-
-	@SuppressWarnings("unchecked")
+ 
 	@Override
 	public void initGui()
     { 
@@ -54,7 +54,7 @@ public class GuiBigInventory extends GuiInventory
 			//final int tiny = 12;
 			int button_id = 99;
 			
-			final EntityPlayer player = this.mc.thePlayer;
+			//final EntityPlayer player = this.mc.thePlayer;
 			
 			int offset = 0;//player.getActivePotionEffects().isEmpty() ? 0 : 160/4;
 			/*   if (!thi0;;s.mc.thePlayer.getActivePotionEffects().isEmpty())
@@ -169,7 +169,8 @@ public class GuiBigInventory extends GuiInventory
 				btnExp.visible = btnExp.enabled;
 
 				if(ModConfig.enableSlotOutlines)
-					UtilTextureRender.drawTextureSimple(SlotBottle.background,Const.bottleX, Const.bottleY,s,s); 
+					Gui.drawModalRectWithCustomSizedTexture(SlotEnderChest.posX, SlotEnderChest.posY,0,0,  s,s,  s,s);
+					//UtilTextureRender.drawTextureSimple(SlotBottle.background,Const.bottleX, Const.bottleY,s,s); 
 			}
 			else 
 			{ 
@@ -207,31 +208,34 @@ public class GuiBigInventory extends GuiInventory
 			
 			if(container.invo.armorInventory[0] == null)
 			{
-				UtilTextureRender.drawTextureSimple("textures/items/empty_armor_slot_boots.png",armorLeft, armorTop+3*sq,s,s);
+				UtilTextureRender.drawTextureSimple(Const.emptyBoots,armorLeft, armorTop+3*sq,s,s);
 			}
 			if(container.invo.armorInventory[1] == null)
 			{
-				UtilTextureRender.drawTextureSimple("textures/items/empty_armor_slot_leggings.png",armorLeft, armorTop+2*sq,s,s);
+				UtilTextureRender.drawTextureSimple(Const.emptyLegs,armorLeft, armorTop+2*sq,s,s);
 			}
 			if(container.invo.armorInventory[2] == null)
 			{
-				UtilTextureRender.drawTextureSimple("textures/items/empty_armor_slot_chestplate.png",armorLeft, armorTop+1*sq,s,s);
+				UtilTextureRender.drawTextureSimple(Const.emptyChest,armorLeft, armorTop+1*sq,s,s);
 			}
 			if(container.invo.armorInventory[3] == null)
 			{
-				UtilTextureRender.drawTextureSimple("textures/items/empty_armor_slot_helmet.png",armorLeft, armorTop+0*sq,s,s);				
+				UtilTextureRender.drawTextureSimple(Const.emptyHelmet,armorLeft, armorTop+0*sq,s,s);				
 			}
 		}
 	}
-	 
+	
+	
+	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{ 
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
-        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, backgroundTexture));
+        //GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
+       // this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, backgroundTexture));
 
-        UtilTextureRender.drawTexturedQuadFit(this.guiLeft, this.guiTop,texture_width,texture_height);
+        //UtilTextureRender.drawTexturedQuadFit(this.guiLeft, this.guiTop,texture_width,texture_height);
+        UtilTextureRender.drawTextureSimple(backgroundTexture, this.guiLeft, this.guiTop,texture_width,texture_height);
  
         if(ModConfig.showCharacter)//drawEntityOnScreen
         	drawEntityOnScreen(this.guiLeft + 51, this.guiTop + 75, 30, (float)(this.guiLeft + 51) - (float)mouseX, (float)(this.guiTop + 75 - 50) - (float)mouseY, this.mc.thePlayer);
@@ -246,10 +250,7 @@ public class GuiBigInventory extends GuiInventory
 
 	private void drawSlotAt(int x, int y)
 	{
-        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, "textures/gui/inventory_slot.png"));
-         
-        //was this.drawTexturedModalRect
-        UtilTextureRender.drawTexturedQuadFit(this.guiLeft+ x -1, this.guiTop+ y -1,  Const.SQ, Const.SQ);
+        UtilTextureRender.drawTextureSimple(Const.slot,this.guiLeft+ x -1, this.guiTop+ y -1,  Const.SQ, Const.SQ);
 	}
 	
 	@Override

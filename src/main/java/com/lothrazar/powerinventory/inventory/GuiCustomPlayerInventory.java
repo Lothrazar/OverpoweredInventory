@@ -156,16 +156,17 @@ public class GuiCustomPlayerInventory extends GuiContainer
 				UtilTextureRender.drawTextureSimple(SlotClock.background,SlotClock.posX, SlotClock.posY,s,s);
 		}
 	}
-	 
+	private ResourceLocation bkg = new ResourceLocation(Const.MODID,  "textures/gui/inventory.png");
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float p_146976_1_,	int p_146976_2_, int p_146976_3_)
 	{ 
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
-		this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID,  "textures/gui/inventory.png"));
+		//GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+		//GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
+		//this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID,  "textures/gui/inventory.png"));
 		
-		UtilTextureRender.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize);//,0
- 
+		//UtilTextureRender.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize);//,0
+		UtilTextureRender.drawTextureSimple(bkg, this.guiLeft, this.guiTop,this.xSize,this.ySize);
+		 
         //if feature is enabled, draw these
         if(ModConfig.enableEnchantBottles)
         	drawSlotAt(Const.bottleX, Const.bottleY);
@@ -174,16 +175,13 @@ public class GuiCustomPlayerInventory extends GuiContainer
         	drawSlotAt(Const.uncraftX, Const.uncraftY);
         
 
-    	drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);
+        drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);
     	drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);
     	drawSlotAt(SlotClock.posX, SlotClock.posY);
     	drawSlotAt(SlotCompass.posX, SlotCompass.posY);
 	}
-
 	private void drawSlotAt(int x, int y)
 	{
-        this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID, "textures/gui/inventory_slot.png"));
-         
-        UtilTextureRender.drawTexturedQuadFit(this.guiLeft + x - 1, this.guiTop + y - 1,  Const.SQ, Const.SQ);
+        UtilTextureRender.drawTextureSimple(Const.slot,this.guiLeft+ x -1, this.guiTop+ y -1,  Const.SQ, Const.SQ);
 	}
 }

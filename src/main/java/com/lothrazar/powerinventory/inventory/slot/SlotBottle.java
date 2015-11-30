@@ -1,13 +1,17 @@
 package com.lothrazar.powerinventory.inventory.slot;
 
+import com.lothrazar.powerinventory.Const;
+
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 public class SlotBottle extends Slot
 {
-	public static String background = "textures/items/empty_bottle.png";
+	private final static String _background = "textures/items/empty_bottle.png";
+	public final static ResourceLocation background = new ResourceLocation(Const.MODID,_background);
 	public int slotIndex;//overrides the private internal one
 	
 	public SlotBottle(IInventory inventoryIn, int index, int xPosition,int yPosition) 
