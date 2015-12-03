@@ -25,6 +25,9 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		super(new ContainerCustomPlayer(player, inventoryPlayer, inventoryCustom));
 		inventory = inventoryCustom;
 		//thePlayer = player;
+		
+		this.xSize = 338;
+		this.ySize = 221;
 	}
 	
 	@Override

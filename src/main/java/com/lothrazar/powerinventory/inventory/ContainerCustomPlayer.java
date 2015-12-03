@@ -22,28 +22,43 @@ public class ContainerCustomPlayer extends Container
 	static final int OFFSCREEN = 600;
 	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
-		int i,j,ix,x,y;
+		int i,j,ix,x=0,y=0;
 
         S_MAIN_START = this.inventorySlots.size();
         
         //TODO: swap what is hidden based on features/buttons/powerups etc . for now, test
-        boolean isHidden = Math.random() > 0.5;
+       // boolean isHidden = Math.random() > 0.5;
 
-        for (i = 0; i < 3*2; ++i)
+        //the player inventory mirror
+        for (i = 0; i < Const.ROWS_VANILLA; ++i)
         {
-            for (j = 0; j < 9; ++j)
+            for (j = 0; j < Const.COLS_VANILLA; ++j)
             {
             	ix = j + (i + 1) * 9;
-            	x = 8 + j * 18;
-            	y = 84 + i * 18;
-            	if(ix < 36)
-            		this.addSlotToContainer(new Slot(inventoryPlayer, ix, x,y));
-            	else{
-            		if(isHidden){x += OFFSCREEN;}//off the screen
-            		this.addSlotToContainer(new Slot(inventoryCustom, ix, x,y));
-            	}
+          
+            	x = Const.paddingLrg + j * Const.SQ;
+            	y = 84 + i * Const.SQ;
+        		this.addSlotToContainer(new Slot(inventoryPlayer, ix, x,y));
+            	
             }
         }
+        
+        //the extra storage
+        int oldx = x + Const.SQ;
+        for (i = 0; i < Const.ROWS_VANILLA; ++i)
+        {
+            for (j = 0; j < Const.COLS_VANILLA; ++j)
+            {
+            	ix = Const.VSIZE + j + (i + 1) * 9;
+       
+            	x = oldx + (j) * Const.SQ;
+            	y = 84 + (i) * Const.SQ;
+        		
+        		this.addSlotToContainer(new Slot(inventoryCustom, ix, x,y));
+        	
+            }
+        }
+        
         S_MAIN_END = this.inventorySlots.size() - 1;
 
 		S_PEARL =  this.inventorySlots.size() ;

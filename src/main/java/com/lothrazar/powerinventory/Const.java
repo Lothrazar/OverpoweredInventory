@@ -31,6 +31,7 @@ public class Const
 	public static final int ARMOR_SIZE = 4; 
 	public static final int ROWS_VANILLA = 3; 
 	public static final int COLS_VANILLA = 9; 
+	public static final int VSIZE = ROWS_VANILLA*COLS_VANILLA; //36
 	
 	//width of the black box with the character in it (with the armor slots and stuff too)
 	public static final int WIDTH_CHARARMOR = 72; 
