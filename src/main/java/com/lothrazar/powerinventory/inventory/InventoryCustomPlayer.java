@@ -18,42 +18,24 @@ public class InventoryCustomPlayer implements IInventory
 	private final String tagName = "opinvtags";
 	private final String tagSlot = "Slot";
 	
-
     private ItemStack enderPearlStack;
     private ItemStack enderChestStack;
-    private ItemStack clockStack;
-    private ItemStack compassStack;
-    private ItemStack bottleStack;
-    private ItemStack uncraftStack;
+    
     
 	@Override
 	public int getSizeInventory()
 	{
-
 		return INV_SIZE;
 	}
 
 	@Override
 	public ItemStack getStackInSlot(int slot)
 	{
-        if(slot == Const.bottleSlot){return bottleStack;} 
-        if(slot == Const.uncraftSlot){return uncraftStack;} 
         if(slot == Const.enderPearlSlot){return enderPearlStack;}
         if(slot == Const.enderChestSlot){return enderChestStack;} 
-        if(slot == Const.clockSlot){return clockStack;}
-        if(slot == Const.compassSlot){return compassStack;} 
-        /*
-        if (index >= aitemstack.length)
-        {
-            index -= aitemstack.length;
-            aitemstack = this.armorInventory;
-        }
-        if(index>=aitemstack.length){return null;}//TODO: is this only from swapping configsizes???
-*/
-        
+      
 		return inventory[slot];
 	}
-
 
     @Override
     public ItemStack decrStackSize(int index, int count)
@@ -86,120 +68,38 @@ public class InventoryCustomPlayer implements IInventory
                  return itemstack;
              }
     	}	
-    	else if(index == Const.clockSlot)
-    	{
-    		 if (this.clockStack.stackSize <= count)
-             {
-                 itemstack = this.clockStack;
-                 this.clockStack = null;
-                 return itemstack;
-             }
-    		 else
-             {
-                 itemstack = this.clockStack.splitStack(count);
-
-                 if (this.clockStack.stackSize == 0)
-                 {
-                	 this.clockStack = null;
-                 }
-
-                 return itemstack;
-             }
-    	}
-    	else if(index == Const.compassSlot)
-    	{
-    		 if (this.compassStack.stackSize <= count)
-             {
-                 itemstack = this.compassStack;
-                 this.compassStack = null;
-                 return itemstack;
-             }
-    		 else
-             {
-                 itemstack = this.compassStack.splitStack(count);
-
-                 if (this.compassStack.stackSize == 0)
-                 {
-                	 this.compassStack = null;
-                 }
-
-                 return itemstack;
-             }
-    	}
-    	else if(index == Const.bottleSlot)
-    	{
-    		 if (this.bottleStack.stackSize <= count)
-             {
-                 itemstack = this.bottleStack;
-                 this.bottleStack = null;
-                 return itemstack;
-             }
-    		 else
-             {
-                 itemstack = this.bottleStack.splitStack(count);
-
-                 if (this.bottleStack.stackSize == 0)
-                 {
-                	 this.bottleStack = null;
-                 }
-
-                 return itemstack;
-             }
-    	}
-    	else if(index == Const.uncraftSlot)
-    	{
-    		 if (this.uncraftStack.stackSize <= count)
-             {
-                 itemstack = this.uncraftStack;
-                 this.uncraftStack = null;
-                 return itemstack;
-             }
-    		 else
-             {
-                 itemstack = this.uncraftStack.splitStack(count);
-
-                 if (this.uncraftStack.stackSize == 0)
-                 {
-                	 this.uncraftStack = null;
-                 }
-
-                 return itemstack;
-             }
-    	}
     	else 
     	{
-    		//copied from SUPER player
-    		 
-    			int p_70298_1_ = index;
-    			int p_70298_2_ = count;
-    	  
-    	        ItemStack[] aitemstack = this.inventory;
- 
-    	        if (aitemstack[p_70298_1_] != null)
-    	        {
-    	       
-    	            if (aitemstack[p_70298_1_].stackSize <= p_70298_2_)
-    	            {
-    	                itemstack = aitemstack[p_70298_1_];
-    	                aitemstack[p_70298_1_] = null;
-    	                return itemstack;
-    	            }
-    	            else
-    	            {
-    	                itemstack = aitemstack[p_70298_1_].splitStack(p_70298_2_);
-
-    	                if (aitemstack[p_70298_1_].stackSize == 0)
-    	                {
-    	                    aitemstack[p_70298_1_] = null;
-    	                }
-
-    	                return itemstack;
-    	            }
-    	        }
-    	        else
-    	        {
-    	            return null;
-    	        }
+			int p_70298_1_ = index;
+			int p_70298_2_ = count;
+			
+			ItemStack[] aitemstack = this.inventory;
+			
+			if (aitemstack[p_70298_1_] != null)
+			{
+			
+			    if (aitemstack[p_70298_1_].stackSize <= p_70298_2_)
+			    {
+			        itemstack = aitemstack[p_70298_1_];
+			        aitemstack[p_70298_1_] = null;
+			        return itemstack;
+			    }
+			    else
+			    {
+			        itemstack = aitemstack[p_70298_1_].splitStack(p_70298_2_);
+			
+			        if (aitemstack[p_70298_1_].stackSize == 0)
+			        {
+			            aitemstack[p_70298_1_] = null;
+			        }
+			
+			        return itemstack;
+			    }
+			}
+			else
+			{
+			    return null;
+			}
     	}
     }
 
@@ -237,26 +137,9 @@ public class InventoryCustomPlayer implements IInventory
 		{
 			enderChestStack = stack;  
 		}
-		else if(slot == Const.clockSlot)
-		{
-			clockStack = stack;  
-		}
-		else if(slot == Const.compassSlot)
-		{
-			compassStack = stack;  
-		}
-		else if(slot == Const.bottleSlot)
-		{
-			bottleStack = stack;  
-		}
-		else if(slot == Const.uncraftSlot)
-		{
-			this.uncraftStack = stack;  
-		}
 		else
 			this.inventory[slot] = stack;
-// 
-		
+	
 		if (stack != null && stack.stackSize > this.getInventoryStackLimit())
 		{
 			stack.stackSize = this.getInventoryStackLimit();
@@ -275,8 +158,6 @@ public class InventoryCustomPlayer implements IInventory
 	@Override
 	public void markDirty()
 	{
-
-		
 	}
 
 	@Override
@@ -309,7 +190,6 @@ public class InventoryCustomPlayer implements IInventory
 			}
 		}
 
-		//TODO: array or share code with InventoryCustomPlayer !!!
         if(this.enderChestStack != null)
         {
         	tagcompound = new NBTTagCompound();
@@ -320,47 +200,16 @@ public class InventoryCustomPlayer implements IInventory
         }
         if(this.enderPearlStack != null)
         {
-        	//System.out.println("write nbg EnderPearl slot = "+Const.enderPearlSlot);
         	tagcompound = new NBTTagCompound();
         	tagcompound.setInteger(tagSlot,  Const.enderPearlSlot);  
             this.enderPearlStack.writeToNBT(tagcompound);
             nbttaglist.appendTag(tagcompound);
         }
-        if(this.clockStack != null)
-        {
-        	tagcompound = new NBTTagCompound();
-        	tagcompound.setInteger(tagSlot,  Const.clockSlot);  
-            this.clockStack.writeToNBT(tagcompound);
-            nbttaglist.appendTag(tagcompound);
-        }
-        if(this.compassStack != null)
-        {
-        	tagcompound = new NBTTagCompound();
-        	tagcompound.setInteger(tagSlot,  Const.compassSlot);  
-            this.compassStack.writeToNBT(tagcompound);
-            nbttaglist.appendTag(tagcompound);
-        }
-        if(this.bottleStack != null)
-        {
-        	tagcompound = new NBTTagCompound();
-        	tagcompound.setInteger(tagSlot,  Const.bottleSlot);  
-            this.bottleStack.writeToNBT(tagcompound);
-            nbttaglist.appendTag(tagcompound);
-        }
-        if(this.uncraftStack != null)
-        {
-        	tagcompound = new NBTTagCompound();
-        	tagcompound.setInteger(tagSlot,  Const.uncraftSlot);  
-            this.uncraftStack.writeToNBT(tagcompound);
-            nbttaglist.appendTag(tagcompound);
-        }
-        
 		tags.setTag(tagName, nbttaglist);
 	}
 
 	public void readFromNBT(NBTTagCompound tagcompound)
 	{
-		//TODO: share / do code reuse with BigInvo
 		NBTTagList nbttaglist = tagcompound.getTagList(tagName,Constants.NBT.TAG_COMPOUND);
 		ItemStack itemstack;
     	//System.out.println("READ  COUNT = "+nbttaglist.tagCount());
@@ -386,22 +235,6 @@ public class InventoryCustomPlayer implements IInventory
             	if(b == Const.enderChestSlot)
                 {
                 	enderChestStack = itemstack;
-                }
-            	if(b == Const.clockSlot)
-                {
-                	clockStack = itemstack;
-                }
-            	if(b == Const.compassSlot)
-                {
-            		compassStack = itemstack;
-                }
-            	if(b == Const.bottleSlot)
-                {
-            		bottleStack = itemstack;
-                }
-            	if(b == Const.uncraftSlot)
-                {
-            		this.uncraftStack = itemstack;
                 }
             }
 		}
@@ -438,7 +271,6 @@ public class InventoryCustomPlayer implements IInventory
 	@Override
 	public void setField(int id, int value) 
 	{
-		
 	}
 
 	@Override
@@ -450,7 +282,6 @@ public class InventoryCustomPlayer implements IInventory
 	@Override
 	public void clear() 
 	{
-		
 	}
 
 	@Override

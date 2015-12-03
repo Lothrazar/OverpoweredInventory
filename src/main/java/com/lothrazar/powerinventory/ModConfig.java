@@ -1,8 +1,5 @@
 package com.lothrazar.powerinventory;
-
-import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
-import com.lothrazar.powerinventory.inventory.BigInventoryPlayer;
-import com.lothrazar.powerinventory.inventory.GuiBigInventory;
+ 
 import com.lothrazar.powerinventory.inventory.slot.*;
 
 import net.minecraft.util.ResourceLocation;
@@ -20,10 +17,7 @@ public class ModConfig
 
 	public static int filterRange; 
 	public static int expPerBottle;
-	
-	public static boolean enableUncrafting;
-	public static boolean enableEnchantBottles;
-	
+	  
 	public static boolean enableCompatMode;
 	
 	public static Configuration config;
@@ -64,9 +58,7 @@ public class ModConfig
 		ModConfig.expPerBottle = config.getInt("exp_per_bottle", category, 10, 1, 11, "The exp cost of filling a single bottle.  Remember, the Bottle 'o Enchanting gives 3-11 experience when used, so it is never an exact two-way conversion.  ");
 		
 		ModConfig.enableSlotOutlines = config.getBoolean("slot_outlines",category,true,"Normally the special slots have outlines to indicate the allowed items, but you can disable them here.  ");
-		ModConfig.enableUncrafting = config.getBoolean("enable_uncrafting",category,true,"Lets you disable the uncrafting slot and button");
-		ModConfig.enableEnchantBottles =  config.getBoolean("enable_enchantbottles",category,true,"Lets you disable the enchanting bottle filling slot and button");
-		
+
 		ModConfig.alwaysShowHungerbar = config.getBoolean("always_show_hunger",category,true,"Always show hunger bar - even while mounted.  Horse health will show above the hunger bar.");
 
 		
@@ -119,7 +111,7 @@ public class ModConfig
 	 
 	 
 		
-		
+		enableCompatMode = true;
 
 		if(config.hasChanged()){config.save();}
 		
@@ -131,6 +123,7 @@ public class ModConfig
 
 	private static void setupGuiFromConfig()
 	{
+		/*
 		if(ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
 		{
 			BigContainerPlayer.ALL_ROWS = 15;
@@ -167,24 +160,24 @@ public class ModConfig
 		GuiBigInventory.backgroundTexture = new ResourceLocation(Const.MODID,"textures/gui/inventory_" 
 						+ BigContainerPlayer.ALL_ROWS + "x" + BigContainerPlayer.ALL_COLS + ".png");
 		BigInventoryPlayer.INVOSIZE  = BigContainerPlayer.ALL_COLS * BigContainerPlayer.ALL_ROWS;
-
+*/
 		int xSlotColumn;
 		int xSlotRightSide;
 		
-		if(ModConfig.enableCompatMode)
-		{
+	
 			int texture_width = 176;//width of vanilla inventory.png same number as in source code
 			
 			xSlotColumn = Const.paddingLrg;
 			
 			xSlotRightSide = texture_width - Const.SQ - Const.padding - 1;
-		}
+	
+		/*
 		else
 		{
 		    xSlotColumn = Const.WIDTH_CHARARMOR + Const.paddingLrg; 
 
 		    xSlotRightSide = GuiBigInventory.texture_width - Const.SQ - Const.padding - 1;
-		}
+		}*/
 
 		//for each column we set the first slot, and then the rest relative to that one
 		
@@ -193,21 +186,10 @@ public class ModConfig
 		
 		//four slots on left column
 		SlotEnderPearl.posY = Const.paddingLrg; 	
-		SlotCompass.posY = Const.paddingLrg + Const.SQ; 
-		SlotClock.posY = Const.paddingLrg + 2 * Const.SQ; 
 		SlotEnderChest.posY = Const.paddingLrg + 3 * Const.SQ;  
 
 		SlotEnderPearl.posX = xSlotColumn; 
-		SlotCompass.posX = xSlotColumn; 
-		SlotClock.posX = xSlotColumn;  
 		SlotEnderChest.posX = xSlotColumn; 
-		
-		//two slots on right column
-		
-		Const.bottleX = xSlotRightSide;
-		Const.bottleY = 20 + 2 * Const.SQ; 
-		
-		Const.uncraftX = Const.bottleX;
-		Const.uncraftY = Const.bottleY - (Const.SQ + Const.padding); // 24 how much it moves down
+		 
 	}
 }

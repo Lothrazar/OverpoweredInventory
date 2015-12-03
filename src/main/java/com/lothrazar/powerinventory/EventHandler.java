@@ -9,8 +9,6 @@ import java.util.HashMap;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
@@ -20,7 +18,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.GuiIngameForge;
-import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
@@ -30,12 +27,10 @@ import net.minecraftforge.event.world.WorldEvent;
 
 import org.apache.logging.log4j.Level;
 
-import com.lothrazar.powerinventory.inventory.GuiBigInventory;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
 import com.lothrazar.powerinventory.net.EnderPearlPacket;
-import com.lothrazar.powerinventory.net.HotbarSwapPacket;
 import com.lothrazar.powerinventory.net.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
 
@@ -65,10 +60,6 @@ public class EventHandler
         if(ClientProxy.keyEnderchest.isPressed())
         { 	      
         	 ModInv.instance.network.sendToServer( new OpenInventoryPacket());   
-        }  
-        if(ClientProxy.keyHotbar.isPressed())
-        { 	      
-        	 ModInv.instance.network.sendToServer( new HotbarSwapPacket());   
         }  
     }
 	
@@ -117,18 +108,7 @@ public class EventHandler
 			}
 		}
 	}
-	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void onGuiOpen(GuiOpenEvent event)
-	{
-		if(ModConfig.enableCompatMode == false)
-			if(event.gui != null && event.gui.getClass() == GuiInventory.class && !(event.gui instanceof GuiBigInventory))
-			{
-				event.gui = new GuiBigInventory(Minecraft.getMinecraft().thePlayer);
-			}
-	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onGuiPostInit(InitGuiEvent.Post event)
@@ -184,52 +164,6 @@ public class EventHandler
 			 
 			
 			}
-		}
-		 
-		if(ModConfig.showSortButtons && event.gui instanceof GuiBigInventory )
-		{  
-			GuiBigInventory gui = (GuiBigInventory)event.gui;
- 
-			int width = 18;
-			int x_spacing = width + 3;
-			x = gui.getLeft() +  GuiBigInventory.texture_width - 5*x_spacing - padding+1
-					+6;
-			y = gui.getTop() + GuiBigInventory.texture_height - h - padding
-					+3;
-			
-			
-			//if size is small, move it over a touch because of dual hotbar
-
-        	//TODO: stop using magic strings everywhere ya dufus
-			if(ModConfig.smallMedLarge.equalsIgnoreCase("small"))
-			{
-				y += 28;
-			}
-			 
-			GuiButton btn;
-			 
-			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_LEFTALL,"<<",true);
-			event.buttonList.add(btn);
-
-			x += x_spacing;
-		 
-			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_LEFT,"<",true);
-			event.buttonList.add(btn);
-
-			x += x_spacing;
-		 
-			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_SMART,StatCollector.translateToLocal("button.sort"),true);
-			event.buttonList.add(btn);
-			
-			x += x_spacing;
-
-			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_RIGHT,">",true);
-			event.buttonList.add(btn);
-			  
-			x += x_spacing;
-			
-			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_RIGHTALL,">>",true);
-			event.buttonList.add(btn);
 		}
 	}
 	
@@ -358,12 +292,6 @@ public class EventHandler
 			{			
 				invo = player.inventory;
 			}
-			
-			if(invo != null && invo.getStackInSlot(Const.clockSlot) != null)
-				UtilTextureRender.renderItemAt(new ItemStack(Items.clock),xLeft,yBottom,size);
-			
-			if(invo != null && invo.getStackInSlot(Const.compassSlot) != null)
-				UtilTextureRender.renderItemAt(new ItemStack(Items.compass),xRight,yBottom,size);	
 		}
 	}
 	

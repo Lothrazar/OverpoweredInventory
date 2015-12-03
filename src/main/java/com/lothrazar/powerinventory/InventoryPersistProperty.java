@@ -2,9 +2,7 @@ package com.lothrazar.powerinventory;
 
 import java.util.HashMap;
 import java.util.UUID;
-
-import com.lothrazar.powerinventory.inventory.BigContainerPlayer;
-import com.lothrazar.powerinventory.inventory.BigInventoryPlayer;
+ 
 import com.lothrazar.powerinventory.inventory.InventoryCustomPlayer;
 
 import net.minecraft.entity.Entity;
@@ -56,13 +54,14 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	
 	public void onJoinWorld()
 	{
+		/*
 		if(ModConfig.enableCompatMode == false)
 			if(!(player.inventory instanceof BigInventoryPlayer))
 			{
 				player.inventory = new BigInventoryPlayer(player);
 				player.inventoryContainer = new BigContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
 				player.openContainer = player.inventoryContainer;
-			}
+			}*/
 		
 		if(prevPlayer != null)
 		{
@@ -88,6 +87,7 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	{
 		this.inventory.readFromNBT(compound);
 		
+		/*
 		if(ModConfig.enableCompatMode == false)
 			if(!(player.inventory instanceof BigInventoryPlayer))
 			{
@@ -97,7 +97,7 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 				((BigInventoryPlayer)player.inventory).readFromNBT(compound.getTagList(Const.NBT_INVENTORY, 10));
 			}
 		
-		
+		*/
 	}
 	
 	@Override

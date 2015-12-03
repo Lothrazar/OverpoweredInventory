@@ -40,10 +40,6 @@ public class Const
 	//these are slot indices. different than slot numbers (important)
     public static final int enderPearlSlot = 77777; 
     public static final int enderChestSlot = enderPearlSlot+1;
-    public static final int clockSlot = enderPearlSlot+2;
-    public static final int compassSlot = enderPearlSlot+3;
-    public static final int bottleSlot = enderPearlSlot+4;
-    public static final int uncraftSlot = enderPearlSlot+5;
     
      
 	public final static int INV_ENDER = 1;
@@ -64,12 +60,5 @@ public class Const
 	
 
 	public final static int padding = 6;
-	public final static int paddingLrg = 8;
-	 
-	public static int bottleX;// = Const.texture_width - Const.square - padding - 1;
-	public static int bottleY = 20 + 2 * Const.SQ; 
-	public static int uncraftX;// = bottleX;
-	public static int uncraftY;// = bottleY - 24;
-	
-	
+	public final static int paddingLrg = 8; 
 }
