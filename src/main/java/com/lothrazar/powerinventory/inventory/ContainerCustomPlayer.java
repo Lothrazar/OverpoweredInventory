@@ -39,11 +39,17 @@ public class ContainerCustomPlayer extends Container
         
 		//vanilla invo slots
         S_MAIN_START = this.inventorySlots.size();
-        for (i = 0; i < 3; ++i)
+        int ix;
+        for (i = 0; i < 3*2; ++i)
         {
             for (int j = 0; j < 9; ++j)
             {
-                this.addSlotToContainer(new Slot(inventoryPlayer, j + (i + 1) * 9, 8 + j * 18, 84 + i * 18));
+            	ix = j + (i + 1) * 9;
+            	
+            	if(ix < 36)
+            		this.addSlotToContainer(new Slot(inventoryPlayer, ix, 8 + j * 18, 84 + i * 18));
+            	else
+            		this.addSlotToContainer(new Slot(inventoryCustom, ix, 8 + j * 18, 84 + i * 18));
             }
         }
         S_MAIN_END = this.inventorySlots.size() - 1;
