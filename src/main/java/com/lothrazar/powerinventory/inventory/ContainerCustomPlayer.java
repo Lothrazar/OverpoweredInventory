@@ -19,23 +19,29 @@ public class ContainerCustomPlayer extends Container
 	public InventoryCustomPlayer invo;
 	static int S_ECHEST;
 	static int S_PEARL;
-	static final int storageRows=3, storageCols=9, HIDEOFFSET=-10;
+	static final int OFFSCREEN = 600;
 	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
-		int i,j,ix;
+		int i,j,ix,x,y;
 
         S_MAIN_START = this.inventorySlots.size();
+        
+        //TODO: swap what is hidden based on features/buttons/powerups etc . for now, test
+        boolean isHidden = Math.random() > 0.5;
 
         for (i = 0; i < 3*2; ++i)
         {
             for (j = 0; j < 9; ++j)
             {
             	ix = j + (i + 1) * 9;
-            	
+            	x = 8 + j * 18;
+            	y = 84 + i * 18;
             	if(ix < 36)
-            		this.addSlotToContainer(new Slot(inventoryPlayer, ix, 8 + j * 18, 84 + i * 18));
-            	else
-            		this.addSlotToContainer(new Slot(inventoryCustom, ix, 8 + j * 18, 84 + i * 18));
+            		this.addSlotToContainer(new Slot(inventoryPlayer, ix, x,y));
+            	else{
+            		if(isHidden){x += OFFSCREEN;}//off the screen
+            		this.addSlotToContainer(new Slot(inventoryCustom, ix, x,y));
+            	}
             }
         }
         S_MAIN_END = this.inventorySlots.size() - 1;
