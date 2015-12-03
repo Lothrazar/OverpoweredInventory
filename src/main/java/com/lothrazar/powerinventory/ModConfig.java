@@ -6,8 +6,6 @@ import net.minecraftforge.common.config.Configuration;
  
 public class ModConfig
 {  
-	
-	public static boolean enableSlotOutlines;
 	public static boolean alwaysShowHungerbar;
 	public static boolean enderPearl64;
 	public static boolean minecart64;

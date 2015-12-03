@@ -14,10 +14,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiCustomPlayerInventory extends GuiContainer
 {
-	GuiButton btnEnder;
-	GuiButton btnExp;
-	GuiButton btnUncraft;
-	
 	ResourceLocation res = new ResourceLocation(Const.MODID, "inventory.png");
 	private final InventoryCustomPlayer inventory;
 	//private final EntityPlayer thePlayer;
@@ -35,11 +31,11 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	public void initGui()
     { 
 		super.initGui();
-
+		 /*
 		int button_id = 199;
 		int width = 26;
 		final int height = 20;
- 
+
 		
 		btnEnder = new GuiButtonOpenInventory(button_id++, 
 				this.guiLeft + SlotEnderChest.posX + 19, 
@@ -49,7 +45,7 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		//btnEnder.enabled = false;// turn it on based on ender chest present or not
 		//btnEnder.visible = btnEnder.enabled;
 		
- 
+ */
     }
 	
 	public void drawScreen(int par1, int par2, float par3)
@@ -67,32 +63,17 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	
 	private void checkSlotsEmpty()
 	{
-		//TODO: interface-ey stuff to share code more
-		
-		//!!!
 		final int s = 16;
- 
-		if(inventory.getStackInSlot(Const.enderChestSlot) == null)
-		{
-			btnEnder.enabled = false;
-			btnEnder.visible = btnEnder.enabled;
-
-			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple(SlotEnderChest.background,SlotEnderChest.posX, SlotEnderChest.posY,s,s); 
-		}
-		else 
-		{ 
-			btnEnder.enabled = true; 
-			btnEnder.visible = btnEnder.enabled;
-		}
-
 
 		if(inventory.getStackInSlot(Const.enderPearlSlot) == null)
 		{  
-			if(ModConfig.enableSlotOutlines)
-				UtilTextureRender.drawTextureSimple(SlotEnderPearl.background,SlotEnderPearl.posX, SlotEnderPearl.posY,s,s);
+			UtilTextureRender.drawTextureSimple(SlotEnderPearl.background,SlotEnderPearl.posX, SlotEnderPearl.posY,s,s);
 		}
 
+		if(inventory.getStackInSlot(Const.enderChestSlot) == null)
+		{  
+			UtilTextureRender.drawTextureSimple(SlotEnderChest.background,SlotEnderChest.posX, SlotEnderChest.posY,s,s);
+		}
 	}
 	private ResourceLocation bkg = new ResourceLocation(Const.MODID,  "textures/gui/inventory.png");
 	@Override

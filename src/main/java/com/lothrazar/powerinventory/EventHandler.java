@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Level;
 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
+import com.lothrazar.powerinventory.net.EnderChestPacket;
 import com.lothrazar.powerinventory.net.EnderPearlPacket;
 import com.lothrazar.powerinventory.net.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
@@ -53,7 +54,7 @@ public class EventHandler
         }  
         if(ClientProxy.keyEnderchest.isPressed())
         { 	      
-        	 ModInv.instance.network.sendToServer( new OpenInventoryPacket());   
+        	 ModInv.instance.network.sendToServer( new EnderChestPacket());   
         }  
     }
 	

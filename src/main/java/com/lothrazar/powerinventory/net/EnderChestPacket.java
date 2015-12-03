@@ -18,12 +18,12 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInventoryPacket, IMessage>
+public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPacket, IMessage>
 {
-	public OpenInventoryPacket() {}
+	public EnderChestPacket() {}
 	NBTTagCompound tags = new NBTTagCompound(); 
 	
-	public OpenInventoryPacket(NBTTagCompound ptags)
+	public EnderChestPacket(NBTTagCompound ptags)
 	{
 		tags = ptags;
 	}
@@ -41,13 +41,25 @@ public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInven
 	}
 
 	@Override
-	public IMessage onMessage(OpenInventoryPacket message, MessageContext ctx)
+	public IMessage onMessage(EnderChestPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
+
+		IInventory invo;
+	
+		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
 		
-		 
-		p.openGui(ModInv.instance, GuiHandler.GUI_CUSTOM_INV, p.worldObj, (int) p.posX, (int) p.posY, (int) p.posZ);
-	 
+		invo = prop.inventory;
+
+	
+		
+ 		ItemStack chest = invo.getStackInSlot(Const.enderChestSlot);
+		
+		if( chest != null)
+			p.displayGUIChest(p.getInventoryEnderChest());
+		else 
+			p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));
+
 		return null;
 	}
 }
