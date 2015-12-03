@@ -14,35 +14,21 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerCustomPlayer extends Container
 { 
-	static int S_BAR_START;
-	static int S_BAR_END;
 	static int S_MAIN_START;
 	static int S_MAIN_END;
 	public InventoryCustomPlayer invo;
-	//static int S_STORAGE_START;
-	//static int S_STORAGE_END;
 	static int S_ECHEST;
 	static int S_PEARL;
 	static final int storageRows=3, storageCols=9, HIDEOFFSET=-10;
 	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
-		int i;
- 
+		int i,j,ix;
 
-        //hotbar
-        S_BAR_START = this.inventorySlots.size();
-        for (i = 0; i < Const.HOTBAR_SIZE; ++i)
-        {
-            this.addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
-        }
-        S_BAR_END = this.inventorySlots.size() - 1;
-        
-		//vanilla invo slots
         S_MAIN_START = this.inventorySlots.size();
-        int ix;
+
         for (i = 0; i < 3*2; ++i)
         {
-            for (int j = 0; j < 9; ++j)
+            for (j = 0; j < 9; ++j)
             {
             	ix = j + (i + 1) * 9;
             	
@@ -60,18 +46,6 @@ public class ContainerCustomPlayer extends Container
         S_ECHEST =  this.inventorySlots.size() ;
         this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.enderChestSlot)); 
 
-        /*
-        S_STORAGE_START = this.inventorySlots.size();
-        for (i = 0; i < storageRows; ++i)
-        {
-            for (int j = 0; j < storageCols; ++j)
-            {
-                this.addSlotToContainer(new Slot(inventoryPlayer, j + (i + 1) * 9, 8 + j * 18+HIDEOFFSET, 84 + i * 18+HIDEOFFSET));
-            }
-        }
-        S_STORAGE_END = this.inventorySlots.size() - 1;
-        */
-        
 		invo = inventoryCustom;
 	}
 	
@@ -120,17 +94,6 @@ public class ContainerCustomPlayer extends Container
                         return null;
                     }  
         		}
-            	else if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END+1, false)            			)
-            	{
-                    return null;
-                }
-            }///===
-            else if (slotNumber >= S_BAR_START && slotNumber <= S_BAR_END) // Hotbar
-            { 
-            	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
-            	{
-                    return null;
-                }
             }
             else if(slotNumber == S_PEARL || slotNumber == S_ECHEST)
             { 
