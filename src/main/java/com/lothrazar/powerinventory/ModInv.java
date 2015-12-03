@@ -60,10 +60,7 @@ public class ModInv
 
     	int packetID = 0;
     	network.registerMessage(OpenInventoryPacket.class,  OpenInventoryPacket.class,  packetID++, Side.SERVER);
-    	network.registerMessage(SortButtonPacket.class,  SortButtonPacket.class,  packetID++, Side.SERVER);
-    	network.registerMessage(FilterButtonPacket.class,FilterButtonPacket.class,packetID++, Side.SERVER);
     	network.registerMessage(EnderPearlPacket.class,  EnderPearlPacket.class,  packetID++, Side.SERVER);
-    	network.registerMessage(DumpButtonPacket.class,  DumpButtonPacket.class,  packetID++, Side.SERVER);
         
     	proxy.registerHandlers();
     } 
@@ -71,10 +68,10 @@ public class ModInv
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-    	if(ModConfig.enableCompatMode)
-    	{
-   	 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
-    	}
+
+ 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+    
+ 		//TODO: move to a class that handles stacksizes
 		ArrayList<Item> to64 = new ArrayList<Item>();
     	if(ModConfig.enderPearl64)
     	{

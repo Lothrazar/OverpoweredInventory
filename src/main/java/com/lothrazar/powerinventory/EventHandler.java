@@ -8,12 +8,8 @@ import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.StatCollector;
@@ -29,7 +25,6 @@ import org.apache.logging.log4j.Level;
 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
-import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
 import com.lothrazar.powerinventory.net.EnderPearlPacket;
 import com.lothrazar.powerinventory.net.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
@@ -52,7 +47,6 @@ public class EventHandler
 	@SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) 
     {   
-	
         if(ClientProxy.keyEnderpearl.isPressed() )
         { 	     
         	 ModInv.instance.network.sendToServer( new EnderPearlPacket());   
@@ -114,8 +108,7 @@ public class EventHandler
 	public void onGuiPostInit(InitGuiEvent.Post event)
 	{
 		if(event.gui == null){return;}//probably doesnt ever happen
-		
-		EntityPlayer p = Minecraft.getMinecraft().thePlayer;
+		 
 		int button_id = 256;
 		//trapped, regular chests, minecart chests, and enderchest all use this class
 		//which extends  GuiContainer
@@ -124,46 +117,13 @@ public class EventHandler
 		
 		int x,y = padding,w = 20,h = w;
 
-		if(ModConfig.enableCompatMode)
-		{
-			if(event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory)
-			{
-				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
 	
-				event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,StatCollector.translateToLocal("button.compat"),Const.INV_SOLO));
-				
-			}
-
-		}
-		else if(ModConfig.showCornerButtons)
+		if(event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory)
 		{
-			if(event.gui instanceof net.minecraft.client.gui.inventory.GuiChest || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiDispenser || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiBrewingStand || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiBeacon || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiCrafting || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiFurnace || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiScreenHorseInventory
-			   )
-			{
-				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
-				
-				event.buttonList.add(new GuiButtonClose(button_id++, x,y,w,h));
-				
-				x = x - padding - w;
-				event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,StatCollector.translateToLocal("button.cornerinvo"),Const.INV_PLAYER));
-				
-				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
-				
-				y += h + padding;
-				
-				event.buttonList.add(new GuiButtonSort(p,button_id++, x, y ,w,h, Const.SORT_RIGHT,">",true));
-				x = x - padding - w;
-				
-				event.buttonList.add(new GuiButtonSort(p,button_id++, x, y ,w,h, Const.SORT_LEFT,"<",true));
-			 
+			x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
+
+			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,StatCollector.translateToLocal("button.compat"),Const.INV_SOLO));
 			
-			}
 		}
 	}
 	
@@ -264,38 +224,7 @@ public class EventHandler
 			ModInv.logger.log(Level.ERROR, "Failed to load slot unlock cache", e);
 		}
 	}
-	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) 	//below was imported from my PowerApples mod
-	{
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;  
-	
-		if(player.isSneaking() && 
-			player.worldObj.isRemote == true)//client side only -> possibly redundant because of SideOnly
-		{
-			int size = 16;
-			
-			int xLeft = 20;
-			int xRight = Minecraft.getMinecraft().displayWidth/2 - size*2;
-			int yBottom = Minecraft.getMinecraft().displayHeight/2 - size*2;
-			
-			IInventory invo = null;
-			
-			if(ModConfig.enableCompatMode)
-			{
-				InventoryPersistProperty prop = InventoryPersistProperty.get(player);
-				
-				invo = prop.inventory;
-			}
-			else
-			{			
-				invo = player.inventory;
-			}
-		}
-	}
-	
-	
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent//(priority = EventPriority.NORMAL)
     public void onRenderOverlay(RenderGameOverlayEvent event)

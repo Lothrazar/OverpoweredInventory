@@ -54,17 +54,11 @@ public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInven
 		{
 			//wait what? no?
 			IInventory invo;
-			
-			if(ModConfig.enableCompatMode)
-			{
+		
 				InventoryPersistProperty prop = InventoryPersistProperty.get(p);
 				
 				invo = prop.inventory;
-			}
-			else
-			{			
-				invo = p.inventory;
-			}
+		
 			
 			
 	 		ItemStack chest = invo.getStackInSlot(Const.enderChestSlot);
