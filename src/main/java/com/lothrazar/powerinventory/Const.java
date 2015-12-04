@@ -42,10 +42,6 @@ public class Const
     public static final int enderPearlSlot = 77777; 
     public static final int enderChestSlot = enderPearlSlot+1;
     
-     
-	public final static int INV_ENDER = 1;
-	public final static int INV_PLAYER = 2;
-	public final static int INV_SOLO = 3;
 	
 	public final static int SORT_LEFT = 1;
 	public final static int SORT_RIGHT = 2;

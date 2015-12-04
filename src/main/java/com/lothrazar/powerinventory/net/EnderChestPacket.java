@@ -1,11 +1,7 @@
 package com.lothrazar.powerinventory.net;
 
 import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.GuiHandler;
 import com.lothrazar.powerinventory.InventoryPersistProperty;
-import com.lothrazar.powerinventory.ModConfig;
-import com.lothrazar.powerinventory.ModInv;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

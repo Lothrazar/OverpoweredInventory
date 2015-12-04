@@ -1,12 +1,9 @@
 package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.UtilTextureRender;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory;
 import com.lothrazar.powerinventory.inventory.slot.*;
 
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer; 
@@ -15,12 +12,10 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiCustomPlayerInventory extends GuiContainer
 {
-	ResourceLocation res = new ResourceLocation(Const.MODID, "inventory.png");
+	private ResourceLocation bkg = new ResourceLocation(Const.MODID,  "textures/gui/inventory.png");
 	public static boolean SHOW_DEBUG_NUMS = true;
 	private final InventoryCustomPlayer inventory;
 	private ContainerCustomPlayer container;
-	private final EntityPlayer thePlayer;
-	
 	
 	public GuiCustomPlayerInventory(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
@@ -28,8 +23,8 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		super(new ContainerCustomPlayer(player, inventoryPlayer, inventoryCustom));
 		container = (ContainerCustomPlayer)this.inventorySlots;
 		inventory = inventoryCustom;
-		thePlayer = player;
 		
+		//fixed numbers from the .png resource size
 		this.xSize = 338;
 		this.ySize = 221;
 	}
@@ -38,21 +33,6 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	public void initGui()
     { 
 		super.initGui();
-		 /*
-		int button_id = 199;
-		int width = 26;
-		final int height = 20;
-
-		
-		btnEnder = new GuiButtonOpenInventory(button_id++, 
-				this.guiLeft + SlotEnderChest.posX + 19, 
-				this.guiTop + SlotEnderChest.posY - 1,
-				12,height, "I",Const.INV_ENDER); 
-		this.buttonList.add(btnEnder); 
-		//btnEnder.enabled = false;// turn it on based on ender chest present or not
-		//btnEnder.visible = btnEnder.enabled;
-		
- */
     }
 	
 	public void drawScreen(int par1, int par2, float par3)
@@ -70,13 +50,12 @@ public class GuiCustomPlayerInventory extends GuiContainer
 			}
 		}
 	}
+	
 	@Override
-	protected void drawGuiContainerForegroundLayer(	int p_146976_2_, int p_146976_3_)
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{ 
-		//drawing text and such on screen
-		
-		
 		this.checkSlotsEmpty();
+		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 	}
 	
 	private void checkSlotsEmpty()
@@ -93,23 +72,18 @@ public class GuiCustomPlayerInventory extends GuiContainer
 			UtilTextureRender.drawTextureSimple(SlotEnderChest.background,SlotEnderChest.posX, SlotEnderChest.posY,s,s);
 		}
 	}
-	private ResourceLocation bkg = new ResourceLocation(Const.MODID,  "textures/gui/inventory.png");
+	
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float p_146976_1_,	int p_146976_2_, int p_146976_3_)
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{ 
-		//GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		//GL11.glScalef(1.0F, 1.0F, 1.0F);//so it does not change scale
-		//this.mc.getTextureManager().bindTexture(new ResourceLocation(Const.MODID,  "textures/gui/inventory.png"));
-		
-		//UtilTextureRender.drawTexturedQuadFit(this.guiLeft, this.guiTop,this.xSize,this.ySize);//,0
 		UtilTextureRender.drawTextureSimple(bkg, this.guiLeft, this.guiTop,this.xSize,this.ySize);
 	 
-
         drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);
     	drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);
 	}
+	
 	private void drawSlotAt(int x, int y)
 	{
-        UtilTextureRender.drawTextureSimple(Const.slot,this.guiLeft+ x -1, this.guiTop+ y -1,  Const.SQ, Const.SQ);
+        UtilTextureRender.drawTextureSimple(Const.slot,this.guiLeft + x - 1, this.guiTop + y - 1, Const.SQ, Const.SQ);
 	}
 }

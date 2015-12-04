@@ -1,7 +1,6 @@
 package com.lothrazar.powerinventory.inventory.client;
 
 import com.lothrazar.powerinventory.net.OpenInventoryPacket;
-import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
 
 import net.minecraft.client.Minecraft;
@@ -14,11 +13,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class GuiButtonOpenInventory extends GuiButton 
 {
-	private int invType;
-    public GuiButtonOpenInventory(int buttonId, int x, int y, int w,int h, String text,int type)
+    public GuiButtonOpenInventory(int buttonId, int x, int y, int w,int h, String text)
     {
     	super(buttonId, x, y, w,h, text);
-    	invType = type;
     }
 
     @SideOnly(Side.CLIENT)
@@ -29,12 +26,8 @@ public class GuiButtonOpenInventory extends GuiButton
     	
     	if(pressed)
     	{
-    	
-
-        		NBTTagCompound tags = new NBTTagCompound();
-        		tags.setInteger("i", invType);//TODO: use const.nbt flag
-    			ModInv.instance.network.sendToServer(new OpenInventoryPacket(tags));
-    	
+    		NBTTagCompound tags = new NBTTagCompound();
+			ModInv.instance.network.sendToServer(new OpenInventoryPacket(tags));
     	}
     	
     	return pressed;

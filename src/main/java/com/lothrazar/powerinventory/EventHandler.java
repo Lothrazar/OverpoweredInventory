@@ -23,11 +23,9 @@ import net.minecraftforge.event.world.WorldEvent;
 
 import org.apache.logging.log4j.Level;
 
-import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
 import com.lothrazar.powerinventory.net.EnderChestPacket;
 import com.lothrazar.powerinventory.net.EnderPearlPacket;
-import com.lothrazar.powerinventory.net.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
 
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -118,13 +116,11 @@ public class EventHandler
 		
 		int x,y = padding,w = 20,h = w;
 
-	
 		if(event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory)
 		{
 			x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
 
-			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,StatCollector.translateToLocal("button.compat"),Const.INV_SOLO));
-			
+			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,StatCollector.translateToLocal("button.compat")));
 		}
 	}
 	

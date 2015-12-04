@@ -1,18 +1,11 @@
 package com.lothrazar.powerinventory.net;
 
-import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.GuiHandler;
-import com.lothrazar.powerinventory.InventoryPersistProperty;
-import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.ModInv;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -45,7 +38,6 @@ public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInven
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 		
-		 
 		p.openGui(ModInv.instance, GuiHandler.GUI_CUSTOM_INV, p.worldObj, (int) p.posX, (int) p.posY, (int) p.posZ);
 	 
 		return null;
