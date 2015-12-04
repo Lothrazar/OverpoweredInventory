@@ -35,6 +35,8 @@ public class ContainerCustomPlayer extends Container
 
 	static int S_BAR_START;
 	static int S_BAR_END;
+    static int S_BAROTHER_START;
+    static int S_BAROTHER_END;
 
     int hotbarX = Const.paddingLrg;
     int hotbarY = 142 + (Const.SQ * 9);
@@ -44,7 +46,7 @@ public class ContainerCustomPlayer extends Container
 	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
 		thePlayer = player;
-		int i,j,slotNum,x=0,y=0,yStart = 84;
+		int i,j,slotNum=0,x=0,y=0,yStart = 84;
 
 		if(craftingEnabled){
 			craftMatrix = new InventoryCrafting(this, CRAFTSIZE, CRAFTSIZE);
@@ -134,28 +136,17 @@ public class ContainerCustomPlayer extends Container
         		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
             }
         }
-        
         S_MAIN_END = this.inventorySlots.size() - 1;
 
-        
-        /* //second hotbar
         S_BAROTHER_START = this.inventorySlots.size();
         for (i = Const.HOTBAR_SIZE; i < 2*Const.HOTBAR_SIZE; ++i)
         { 
-        	cx = hotbarX + i * Const.SQ; 
-        	
-        	//TODO: stop using magic strings everywhere ya dufus
-        	//make it like ModConfig.isLarge(), etc
-        	if(ModConfig.smallMedLarge.equalsIgnoreCase("large") || ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
-        	{
-        		cx += Const.SQ;//left an empty gap eh
-        	}
- 
-            this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, hotbarY));
-        	slotIndex++;
+        	x = hotbarX + i * Const.SQ; 
+     
+            slotNum++;
+            this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x, hotbarY));
         }
-        S_BAROTHER_END = this.inventorySlots.size() - 1;*/
-        
+        S_BAROTHER_END = this.inventorySlots.size() - 1;
         
 		S_PEARL =  this.inventorySlots.size() ;
         this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.enderPearlSlot));
