@@ -58,16 +58,16 @@ public class ContainerCustomPlayer extends Container
 			
 			S_RESULT = this.inventorySlots.size();
 	        this.addSlotToContainer(new SlotCrafting(player, this.craftMatrix, this.craftResult, 0, 
-	        		200,  
-	        		40));
+	        		3+yStart + GuiCustomPlayerInventory.craftX, //  +111
+	        		3+3+17 + GuiCustomPlayerInventory.craftY)); //+17
 	
 	        S_CRAFT_START = this.inventorySlots.size();
 	        for (i = 0; i < CRAFTSIZE; ++i)
 	        { 
 	            for (j = 0; j < CRAFTSIZE; ++j)
 	            {  
-	    			x = 114 + j * Const.SQ ; 
-	    			y = 20 + i * Const.SQ ;
+	    			x = 3+ GuiCustomPlayerInventory.craftX + j * Const.SQ ; 
+	    			y = 3+ GuiCustomPlayerInventory.craftY + i * Const.SQ ;
 	
 	        		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * CRAFTSIZE, x , y)); 
 	            }
