@@ -1,11 +1,14 @@
 package com.lothrazar.powerinventory.net;
 
 import com.lothrazar.powerinventory.InventoryPersistProperty;
+import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.util.UtilExperience;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -40,14 +43,20 @@ public class UnlockCraftPacket implements IMessage , IMessageHandler<UnlockCraft
 
 		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
 		
-		//TODO: drain exp  in order to cause this
-		double current = UtilExperience.getExpTotal(p);
-		
-		//System.out.println(current);
-		
-		prop.setInvoCrafting( true  );
-		
-		p.closeScreen();
+		if(UtilExperience.getExpTotal(p) >= ModConfig.expCostCrafting){
+			
+			UtilExperience.drainExp(p, ModConfig.expCostCrafting);
+			
+			prop.setInvoCrafting( true  );
+			
+			p.closeScreen();
+			
+			p.worldObj.playSoundAtEntity(p,"mob.zombie.unfect", 1.4F, 1F);
+		}
+		else{
+
+			p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("gui.craftexp")));
+		}
 		
 		return null;
 	}
