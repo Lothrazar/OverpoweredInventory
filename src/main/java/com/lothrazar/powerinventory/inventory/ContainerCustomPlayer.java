@@ -14,48 +14,72 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerCustomPlayer extends Container
 { 
+	public InventoryCustomPlayer invo;
 	static int S_MAIN_START;
 	static int S_MAIN_END;
-	public InventoryCustomPlayer invo;
 	static int S_ECHEST;
 	static int S_PEARL;
 	static final int OFFSCREEN = 600;
 	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
-		int i,j,ix,x=0,y=0;
+		int i,j,slotNum,x=0,y=0,yStart = 84;
 
         S_MAIN_START = this.inventorySlots.size();
         
         //TODO: swap what is hidden based on features/buttons/powerups etc . for now, test
        // boolean isHidden = Math.random() > 0.5;
 
-        //the player inventory mirror
+        // TOP LEFT: the player inventory mirror
+        
         for (i = 0; i < Const.ROWS_VANILLA; ++i)
         {
             for (j = 0; j < Const.COLS_VANILLA; ++j)
             {
-            	ix = j + (i + 1) * 9;
+            	slotNum = j + (i + 1) * 9;
           
             	x = Const.paddingLrg + j * Const.SQ;
-            	y = 84 + i * Const.SQ;
-        		this.addSlotToContainer(new Slot(inventoryPlayer, ix, x,y));
-            	
+            	y = yStart + i * Const.SQ;
+        		this.addSlotToContainer(new Slot(inventoryPlayer, slotNum, x,y));
+            }
+        }
+
+        int oldx = x + Const.SQ;
+        int oldy = y + Const.SQ;
+        // TOP RIGHT
+        for (i = 0; i < Const.ROWS_VANILLA; ++i)
+        {
+            for (j = 0; j < Const.COLS_VANILLA; ++j)
+            {
+            	slotNum = Const.VSIZE + j + (i + 1) * 9;
+       
+            	x = oldx + j * Const.SQ;
+            	y = yStart + i * Const.SQ;
+        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
             }
         }
         
-        //the extra storage
-        int oldx = x + Const.SQ;
+        // BOTTOM LEFT:
         for (i = 0; i < Const.ROWS_VANILLA; ++i)
         {
             for (j = 0; j < Const.COLS_VANILLA; ++j)
             {
-            	ix = Const.VSIZE + j + (i + 1) * 9;
+            	slotNum = Const.VSIZE*2 + j + (i + 1) * 9;
        
-            	x = oldx + (j) * Const.SQ;
-            	y = 84 + (i) * Const.SQ;
-        		
-        		this.addSlotToContainer(new Slot(inventoryCustom, ix, x,y));
-        	
+            	x = Const.paddingLrg + j * Const.SQ;
+            	y = oldy + i * Const.SQ;
+        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
+            }
+        }
+        // BOTTOM RIGHT
+        for (i = 0; i < Const.ROWS_VANILLA; ++i)
+        {
+            for (j = 0; j < Const.COLS_VANILLA; ++j)
+            {
+            	slotNum = Const.VSIZE*3 + j + (i + 1) * 9;
+       
+            	x = oldx + j * Const.SQ;
+            	y = oldy + i * Const.SQ;
+        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
             }
         }
         
@@ -73,7 +97,6 @@ public class ContainerCustomPlayer extends Container
 	@Override
 	public boolean canInteractWith(EntityPlayer player)
 	{
-
 		return true;
 	}
 	
