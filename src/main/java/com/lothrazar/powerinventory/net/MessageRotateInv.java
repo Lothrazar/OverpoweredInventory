@@ -42,8 +42,11 @@ public class MessageRotateInv implements IMessage, IMessageHandler<MessageRotate
 		
 		IInventory invo = prop.inventory;
 
+		//top left is 9-35
 		
-
+		//top right is 36 - 62
+		
+		
 		
 		
 		return null;

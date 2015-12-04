@@ -32,7 +32,14 @@ public class ContainerCustomPlayer extends Container
 	static int S_MAIN_END;
 	static int S_ECHEST;
 	static int S_PEARL;
-	static final int OFFSCREEN = 600;
+
+	static int S_BAR_START;
+	static int S_BAR_END;
+
+    int hotbarX = Const.paddingLrg;
+    int hotbarY = 142 + (Const.SQ * 9);
+	
+	//static final int OFFSCREEN = 600;
     private final EntityPlayer thePlayer;
 	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
@@ -60,13 +67,22 @@ public class ContainerCustomPlayer extends Container
 	        }
 	        S_CRAFT_END = this.inventorySlots.size() - 1;
 		}
+		
+		
+	  	int rowsMoreThanV = 3;
+        int hotbarY = 142 + (Const.SQ * rowsMoreThanV);
+		
+        S_BAR_START = this.inventorySlots.size();
+        for (i = 0; i < Const.HOTBAR_SIZE; ++i)
+        { 
+        	x = hotbarX + i * Const.SQ; 
+ 
+            this.addSlotToContainer(new Slot(inventoryPlayer, i, x, hotbarY));
+        }
+        S_BAR_END = this.inventorySlots.size() - 1;
+		
         S_MAIN_START = this.inventorySlots.size();
-        
-        //TODO: swap what is hidden based on features/buttons/powerups etc . for now, test
-       // boolean isHidden = Math.random() > 0.5;
-
         // TOP LEFT: the player inventory mirror
-        
         for (i = 0; i < Const.ROWS_VANILLA; ++i)
         {
             for (j = 0; j < Const.COLS_VANILLA; ++j)
@@ -121,6 +137,26 @@ public class ContainerCustomPlayer extends Container
         
         S_MAIN_END = this.inventorySlots.size() - 1;
 
+        
+        /* //second hotbar
+        S_BAROTHER_START = this.inventorySlots.size();
+        for (i = Const.HOTBAR_SIZE; i < 2*Const.HOTBAR_SIZE; ++i)
+        { 
+        	cx = hotbarX + i * Const.SQ; 
+        	
+        	//TODO: stop using magic strings everywhere ya dufus
+        	//make it like ModConfig.isLarge(), etc
+        	if(ModConfig.smallMedLarge.equalsIgnoreCase("large") || ModConfig.smallMedLarge.equalsIgnoreCase("normal"))
+        	{
+        		cx += Const.SQ;//left an empty gap eh
+        	}
+ 
+            this.addSlotToContainer(new Slot(playerInventory, slotIndex, cx, hotbarY));
+        	slotIndex++;
+        }
+        S_BAROTHER_END = this.inventorySlots.size() - 1;*/
+        
+        
 		S_PEARL =  this.inventorySlots.size() ;
         this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.enderPearlSlot));
 
