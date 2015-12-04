@@ -13,9 +13,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class GuiButtonRotate extends GuiButton 
 {
-    public GuiButtonRotate(int buttonId, int x, int y, int w,int h, String text)
+	final static int height = 20;
+	final static int width = 20;
+	private int invoGroup;
+    public GuiButtonRotate(int buttonId, int x, int y, int ig)
     {
-    	super(buttonId, x, y, w,h, text);
+    	super(buttonId, x, y, width,height, "");
+    	invoGroup = ig;
     }
 
     @SideOnly(Side.CLIENT)
@@ -27,6 +31,7 @@ public class GuiButtonRotate extends GuiButton
     	if(pressed)
     	{
     		NBTTagCompound tags = new NBTTagCompound();
+    		tags.setInteger("i", invoGroup);
 			ModInv.instance.network.sendToServer(new MessageRotateInv(tags));
     	}
     	

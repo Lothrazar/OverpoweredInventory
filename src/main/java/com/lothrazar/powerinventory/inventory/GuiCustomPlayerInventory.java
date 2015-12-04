@@ -10,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer; 
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 
 public class GuiCustomPlayerInventory extends GuiContainer
 {
@@ -43,8 +42,15 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 				this.guiLeft + this.xSize - width - padding + offset, 
-				this.guiTop + padding,
-				width,height,StatCollector.translateToLocal("button.rotate")));
+				this.guiTop + padding, 1));
+		
+		this.buttonList.add(new GuiButtonRotate(button_id++,
+				this.guiLeft + this.xSize - width - padding + offset, 
+				this.guiTop + padding+height, 2));
+		
+		this.buttonList.add(new GuiButtonRotate(button_id++,
+				this.guiLeft + this.xSize - width - padding + offset, 
+				this.guiTop + 2*(padding+height), 3));
     }
 	
 	public void drawScreen(int par1, int par2, float par3)

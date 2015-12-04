@@ -12,7 +12,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
@@ -125,7 +124,7 @@ public class EventHandler
 		{
 			x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
 
-			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,StatCollector.translateToLocal("button.compat")));
+			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h));
 		}
 	}
 	

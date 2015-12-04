@@ -6,6 +6,7 @@ import com.lothrazar.powerinventory.ModInv;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
@@ -13,9 +14,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class GuiButtonOpenInventory extends GuiButton 
 {
-    public GuiButtonOpenInventory(int buttonId, int x, int y, int w,int h, String text)
+    public GuiButtonOpenInventory(int buttonId, int x, int y, int w,int h)
     {
-    	super(buttonId, x, y, w,h, text);
+    	super(buttonId, x, y, w,h, StatCollector.translateToLocal("button.compat"));
     }
 
     @SideOnly(Side.CLIENT)
