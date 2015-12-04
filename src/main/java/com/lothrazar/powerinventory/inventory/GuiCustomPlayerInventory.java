@@ -3,6 +3,7 @@ package com.lothrazar.powerinventory.inventory;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.UtilTextureRender;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonRotate;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonUnlockCraft;
 import com.lothrazar.powerinventory.inventory.slot.*;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -27,6 +28,8 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		super(new ContainerCustomPlayer(player, inventoryPlayer, inventoryCustom));
 		container = (ContainerCustomPlayer)this.inventorySlots;
 		inventory = inventoryCustom;
+		
+		
 		
 		//fixed numbers from the .png resource size
 		this.xSize = 338;
@@ -56,6 +59,15 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 				xstart, //bottom right
 				ystart+padding+height, 3));
+		
+		
+		if(container.craftingEnabled == false){
+
+			this.buttonList.add(new GuiButtonUnlockCraft(button_id++,
+					this.guiLeft+craftX, 
+					this.guiTop+craftY));
+		}
+		
     }
 	
 	public void drawScreen(int par1, int par2, float par3)

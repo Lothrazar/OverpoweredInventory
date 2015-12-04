@@ -20,7 +20,7 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 {
 	// TODO: fix client server syng https://github.com/coolAlias/Tutorial-Demo/blob/eee34169652aaace077b6bf0348f44cbb3ddbd9b/src/main/java/tutorial/entity/ExtendedPlayer.java
 	public static final String ID = "II_BIG_INVO";
-	private int craftingOpen = 1;
+	private int craftingOpen = 0;
 	public static final int CRAFTING_WATCHER = 20;
 	private EntityPlayer player;
 	private EntityPlayer prevPlayer;

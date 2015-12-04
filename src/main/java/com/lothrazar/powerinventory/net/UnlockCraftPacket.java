@@ -1,8 +1,6 @@
 package com.lothrazar.powerinventory.net;
 
-import com.lothrazar.powerinventory.GuiHandler;
-import com.lothrazar.powerinventory.ModInv;
-
+import com.lothrazar.powerinventory.InventoryPersistProperty;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,13 +8,13 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-
-public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInventoryPacket, IMessage>
+ 
+public class UnlockCraftPacket implements IMessage , IMessageHandler<UnlockCraftPacket, IMessage>
 {
-	public OpenInventoryPacket() {}
+	public UnlockCraftPacket() {}
 	NBTTagCompound tags = new NBTTagCompound(); 
 	
-	public OpenInventoryPacket(NBTTagCompound ptags)
+	public UnlockCraftPacket(NBTTagCompound ptags)
 	{
 		tags = ptags;
 	}
@@ -34,12 +32,17 @@ public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInven
 	}
 
 	@Override
-	public IMessage onMessage(OpenInventoryPacket message, MessageContext ctx)
+	public IMessage onMessage(UnlockCraftPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		p.openGui(ModInv.instance, GuiHandler.GUI_CUSTOM_INV, p.worldObj, (int) p.posX, (int) p.posY, (int) p.posZ);
-	 
+		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
+		
+		//TESTING ONLY: TODO drain exp or some other cost
+		prop.setInvoCrafting( true  );
+		
+		p.closeScreen();
+		
 		return null;
 	}
 }

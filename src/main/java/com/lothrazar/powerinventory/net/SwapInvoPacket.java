@@ -11,11 +11,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class MessageRotateInv implements IMessage, IMessageHandler<MessageRotateInv, IMessage>
+public class SwapInvoPacket implements IMessage, IMessageHandler<SwapInvoPacket, IMessage>
 {
 	NBTTagCompound tags = new NBTTagCompound(); 
-	public MessageRotateInv()	{ 	}
-	public MessageRotateInv(NBTTagCompound ptags)	
+	public SwapInvoPacket()	{ 	}
+	public SwapInvoPacket(NBTTagCompound ptags)	
 	{
 		tags = ptags; 	
 	}
@@ -33,7 +33,7 @@ public class MessageRotateInv implements IMessage, IMessageHandler<MessageRotate
 	}
 	
 	@Override
-	public IMessage onMessage(MessageRotateInv message, MessageContext ctx)
+	public IMessage onMessage(SwapInvoPacket message, MessageContext ctx)
 	{  
 		EntityPlayer p = ctx.getServerHandler().playerEntity; 
 		
