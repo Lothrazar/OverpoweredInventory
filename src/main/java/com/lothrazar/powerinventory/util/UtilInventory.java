@@ -1,8 +1,8 @@
 package com.lothrazar.powerinventory.util;
 
 import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.InventoryPersistProperty;
-import com.lothrazar.powerinventory.inventory.InventoryCustomPlayer;
+import com.lothrazar.powerinventory.PlayerPersistProperty;
+import com.lothrazar.powerinventory.inventory.InventoryOverpowered;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -13,11 +13,11 @@ public class UtilInventory
 {
 	public static void swapHotbars(EntityPlayer p)
 	{
-		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
+		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 		
 		for(int bar = 0; bar < Const.HOTBAR_SIZE; bar++)
 		{
-			int second = bar +  InventoryCustomPlayer.INV_SIZE - Const.HOTBAR_SIZE;
+			int second = bar +  InventoryOverpowered.INV_SIZE - Const.HOTBAR_SIZE;
 			//System.out.println("bar:"+ bar+" -> "+second);
 			
 			ItemStack barStack = p.inventory.getStackInSlot(bar);
@@ -33,7 +33,7 @@ public class UtilInventory
 
 	public static void swapInventoryGroup(EntityPlayer p, int invoGroup)
 	{
-		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
+		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 		//if ivg == 1; we go from 9 to 27+9
 		// ivg == 2 means .. wel the first block is still 9 to 27+9 but we SWAP it with range a full blocku p
 		for(int i = Const.HOTBAR_SIZE; i < Const.HOTBAR_SIZE + Const.VSIZE; i++)

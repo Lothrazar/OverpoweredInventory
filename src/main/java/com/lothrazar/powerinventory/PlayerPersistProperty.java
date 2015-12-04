@@ -3,7 +3,7 @@ package com.lothrazar.powerinventory;
 import java.util.HashMap;
 import java.util.UUID;
  
-import com.lothrazar.powerinventory.inventory.InventoryCustomPlayer;
+import com.lothrazar.powerinventory.inventory.InventoryOverpowered;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,15 +16,16 @@ import net.minecraftforge.common.IExtendedEntityProperties;
  * @author https://github.com/Funwayguy/InfiniteInvo
  * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
  */
-public class InventoryPersistProperty implements IExtendedEntityProperties
+public class PlayerPersistProperty implements IExtendedEntityProperties
 {
-	// TODO: fix client server syng https://github.com/coolAlias/Tutorial-Demo/blob/eee34169652aaace077b6bf0348f44cbb3ddbd9b/src/main/java/tutorial/entity/ExtendedPlayer.java
-	public static final String ID = "II_BIG_INVO";
-	private int craftingOpen = 0;
+	// ref: https://github.com/coolAlias/Tutorial-Demo/blob/eee34169652aaace077b6bf0348f44cbb3ddbd9b/src/main/java/tutorial/entity/ExtendedPlayer.java
+	public static final String ID = "OPI";
+	public static final String NBT_CRAFT = "crafting";
 	public static final int CRAFTING_WATCHER = 20;
+	private int craftingOpen = 0;
 	private EntityPlayer player;
 	private EntityPlayer prevPlayer;
-	public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
+	public final InventoryOverpowered inventory = new InventoryOverpowered();
 
 	/**
 	 * Keep inventory doesn't work with extended inventories so we store it here upon death to reload later
@@ -33,23 +34,23 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	
 	public static void register(EntityPlayer player)
 	{
-		player.registerExtendedProperties(ID, new InventoryPersistProperty(player));
+		player.registerExtendedProperties(ID, new PlayerPersistProperty(player));
 	}
 	
-	public static InventoryPersistProperty get(EntityPlayer player)
+	public static PlayerPersistProperty get(EntityPlayer player)
 	{
 		IExtendedEntityProperties property = player.getExtendedProperties(ID);
 		
-		if(property != null && property instanceof InventoryPersistProperty)
+		if(property != null && property instanceof PlayerPersistProperty)
 		{
-			return (InventoryPersistProperty)property;
+			return (PlayerPersistProperty)property;
 		} else
 		{
 			return null;
 		}
 	}
 	
-	public InventoryPersistProperty(EntityPlayer player)
+	public PlayerPersistProperty(EntityPlayer player)
 	{
 		this.player = player;
 		this.prevPlayer = null;
@@ -104,13 +105,13 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	{
 		this.inventory.readFromNBT(compound);
 		//craftingOpen = compound.getBoolean("crafting");
-		player.getDataWatcher().updateObject(CRAFTING_WATCHER, compound.getInteger("crafting"));
+		player.getDataWatcher().updateObject(CRAFTING_WATCHER, compound.getInteger(NBT_CRAFT));
 	}
 	
 	@Override
 	public void saveNBTData(NBTTagCompound compound) 
 	{
 		this.inventory.writeToNBT(compound);
-		compound.setInteger("crafting",  player.getDataWatcher().getWatchableObjectInt(CRAFTING_WATCHER));
+		compound.setInteger(NBT_CRAFT,  player.getDataWatcher().getWatchableObjectInt(CRAFTING_WATCHER));
 	}
 }

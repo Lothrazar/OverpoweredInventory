@@ -1,6 +1,6 @@
 package com.lothrazar.powerinventory.net;
 
-import com.lothrazar.powerinventory.InventoryPersistProperty;
+import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.util.UtilExperience;
 
@@ -41,7 +41,7 @@ public class UnlockCraftPacket implements IMessage , IMessageHandler<UnlockCraft
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
+		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 		
 		if(UtilExperience.getExpTotal(p) >= ModConfig.expCostCrafting){
 			

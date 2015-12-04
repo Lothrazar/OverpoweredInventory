@@ -74,9 +74,9 @@ public class EventHandler
 		{
 			EntityPlayer player = (EntityPlayer)event.entity;
 			
-			if(InventoryPersistProperty.get(player) == null)
+			if(PlayerPersistProperty.get(player) == null)
 			{
-				InventoryPersistProperty.register(player);
+				PlayerPersistProperty.register(player);
 			}
 		}
 	}
@@ -88,9 +88,9 @@ public class EventHandler
 		{
 			EntityPlayer player = (EntityPlayer)event.entity;
 			
-			if(InventoryPersistProperty.get(player) != null)
+			if(PlayerPersistProperty.get(player) != null)
 			{
-				InventoryPersistProperty.get(player).onJoinWorld();
+				PlayerPersistProperty.get(player).onJoinWorld();
 			} 
 		}
 	}
@@ -102,7 +102,7 @@ public class EventHandler
 		{
 			if(!event.entityLiving.worldObj.isRemote && event.entityLiving.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory"))
 			{
-				InventoryPersistProperty.keepInvoCache.put(event.entityLiving.getUniqueID(), ((EntityPlayer)event.entityLiving).inventory.writeToNBT(new NBTTagList()));
+				PlayerPersistProperty.keepInvoCache.put(event.entityLiving.getUniqueID(), ((EntityPlayer)event.entityLiving).inventory.writeToNBT(new NBTTagList()));
 			}
 		}
 	}
@@ -170,7 +170,7 @@ public class EventHandler
 			
 			worldDir = null;
 			unlockCache.clear();
-			InventoryPersistProperty.keepInvoCache.clear();
+			PlayerPersistProperty.keepInvoCache.clear();
 		}
 	}
 	

@@ -1,7 +1,7 @@
 package com.lothrazar.powerinventory.net;
 
 import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.InventoryPersistProperty;
+import com.lothrazar.powerinventory.PlayerPersistProperty;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -39,7 +39,7 @@ public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPa
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
  
-		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
+		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 		 
  		ItemStack chest = prop.inventory.getStackInSlot(Const.enderChestSlot);
 		

@@ -1,7 +1,7 @@
 package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.InventoryPersistProperty;
+import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.inventory.slot.*;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,9 +18,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 
-public class ContainerCustomPlayer extends Container
+public class ContainerOverpowered extends Container
 { 
-	public InventoryCustomPlayer invo;
+	public InventoryOverpowered invo;
 	public InventoryCrafting craftMatrix;
     public IInventory craftResult = new InventoryCraftResult();
     public boolean craftingEnabled = true;//TODO: toggle this somehow from somewhere?
@@ -43,11 +43,11 @@ public class ContainerCustomPlayer extends Container
 	
 	//static final int OFFSCREEN = 600;
     private final EntityPlayer thePlayer;
-	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
+	public ContainerOverpowered(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryOverpowered inventoryCustom)
 	{
 		thePlayer = player;
 		
-		InventoryPersistProperty prop = InventoryPersistProperty.get(player);
+		PlayerPersistProperty prop = PlayerPersistProperty.get(player);
 		
 		craftingEnabled = prop.hasInvoCrafting();
 		
@@ -58,16 +58,16 @@ public class ContainerCustomPlayer extends Container
 			
 			S_RESULT = this.inventorySlots.size();
 	        this.addSlotToContainer(new SlotCrafting(player, this.craftMatrix, this.craftResult, 0, 
-	        		3+yStart + GuiCustomPlayerInventory.craftX, //  +111
-	        		3+3+17 + GuiCustomPlayerInventory.craftY)); //+17
+	        		3+yStart + GuiOverpowered.craftX, //  +111
+	        		3+3+17 + GuiOverpowered.craftY)); //+17
 	
 	        S_CRAFT_START = this.inventorySlots.size();
 	        for (i = 0; i < CRAFTSIZE; ++i)
 	        { 
 	            for (j = 0; j < CRAFTSIZE; ++j)
 	            {  
-	    			x = 3+ GuiCustomPlayerInventory.craftX + j * Const.SQ ; 
-	    			y = 3+ GuiCustomPlayerInventory.craftY + i * Const.SQ ;
+	    			x = 3+ GuiOverpowered.craftX + j * Const.SQ ; 
+	    			y = 3+ GuiOverpowered.craftY + i * Const.SQ ;
 	
 	        		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * CRAFTSIZE, x , y)); 
 	            }

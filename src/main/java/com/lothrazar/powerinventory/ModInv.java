@@ -1,9 +1,5 @@
 package com.lothrazar.powerinventory;
 
-import java.util.ArrayList;
-
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraftforge.common.config.Configuration;
 
 import org.apache.logging.log4j.Logger;
@@ -30,20 +26,6 @@ import net.minecraftforge.fml.relauncher.Side;
 		,  guiFactory ="com.lothrazar."+Const.MODID+".IngameConfigHandler")
 public class ModInv
 {
-	//??POSSIBLE additions? 
-	
-	//a back button in inventory. shows only IF we use I, then back goes back into where we were??
-	
-	// on item pickup (pearl/chest) put it in the special slot by default-if possible
-	//shift click out of hotbar should go directly to special slots, work same way as armor
-	// left/right buttons could merge stacks ? OR add a middle button that does some sort of merge/sort?
-
-	 
-	//idea: liquid//potion storage? bucket slot, fillButton, drainButton, and a # showing whats stored (leaves empty behind)
-		//but only one type of lq at a time, and have a max /64
-	
-	//Display exact exp numbers? such as  450/5200 = for next level (90453= total)  
- 
 	@Instance(Const.MODID)
 	public static ModInv instance;
 	
@@ -73,58 +55,8 @@ public class ModInv
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-
  		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
     
- 		//TODO: move to a class that handles stacksizes
-		ArrayList<Item> to64 = new ArrayList<Item>();
-    	if(ModConfig.enderPearl64)
-    	{
-    		to64.add(Items.ender_pearl);
-    	}
-    	if(ModConfig.minecart64)
-    	{
-    		to64.add(Items.minecart);
-    		to64.add(Items.tnt_minecart);
-    		to64.add(Items.chest_minecart);
-    		to64.add(Items.furnace_minecart);
-    		to64.add(Items.hopper_minecart);
-    		to64.add(Items.command_block_minecart);
-    	}
-    	if(ModConfig.boat64)
-    	{
-    		to64.add(Items.boat);
-    	}
-    	if(ModConfig.doors64)
-    	{
-    		to64.add(Items.iron_door);
-    		to64.add(Items.spruce_door);
-    		to64.add(Items.birch_door);
-    		to64.add(Items.jungle_door);
-    		to64.add(Items.oak_door);
-    		to64.add(Items.dark_oak_door);
-    		to64.add(Items.acacia_door);
-    	}
-    	if(ModConfig.snowballs64)
-    	{
-    		to64.add(Items.snowball);
-    	}
-    	if(ModConfig.bucket64)
-    	{
-    		to64.add(Items.bucket);
-    	}
-    	if(ModConfig.food64)
-    	{
-    		to64.add(Items.egg);
-    		to64.add(Items.cake);
-    		to64.add(Items.cookie);
-    		to64.add(Items.mushroom_stew);
-    		to64.add(Items.rabbit_stew);
-    	} 
-    	
-		for(Item item : to64)
-		{
-			item.setMaxStackSize(64);
-		}
+ 		StacksizeRegistry.registerChanges();
     }
 }

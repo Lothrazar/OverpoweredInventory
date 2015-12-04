@@ -12,21 +12,21 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiCustomPlayerInventory extends GuiContainer
+public class GuiOverpowered extends GuiContainer
 {
 	private ResourceLocation bkg = new ResourceLocation(Const.MODID,  "textures/gui/inventory.png");
 	private ResourceLocation bkg_craft = new ResourceLocation(Const.MODID,  "textures/gui/crafting.png");
 	public static final int craftX = 111;
 	public static final int craftY = 17;
 	public static boolean SHOW_DEBUG_NUMS = true;
-	private final InventoryCustomPlayer inventory;
-	private ContainerCustomPlayer container;
+	private final InventoryOverpowered inventory;
+	private ContainerOverpowered container;
 	
-	public GuiCustomPlayerInventory(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
+	public GuiOverpowered(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryOverpowered inventoryCustom)
 	{
 		//the player.inventory gets passed in here
-		super(new ContainerCustomPlayer(player, inventoryPlayer, inventoryCustom));
-		container = (ContainerCustomPlayer)this.inventorySlots;
+		super(new ContainerOverpowered(player, inventoryPlayer, inventoryCustom));
+		container = (ContainerOverpowered)this.inventorySlots;
 		inventory = inventoryCustom;
 		
 		

@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.util.Constants;
 
-public class InventoryCustomPlayer implements IInventory
+public class InventoryOverpowered implements IInventory
 {
 	
 	// inventory blocks of 3x9 columns, and  hotbarsConst.HOTBAR_SIZE
