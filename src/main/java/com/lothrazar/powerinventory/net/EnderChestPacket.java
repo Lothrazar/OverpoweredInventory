@@ -16,9 +16,8 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPacket, IMessage>
 {
-	public EnderChestPacket() {}
 	NBTTagCompound tags = new NBTTagCompound(); 
-	
+	public EnderChestPacket() {}
 	public EnderChestPacket(NBTTagCompound ptags)
 	{
 		tags = ptags;

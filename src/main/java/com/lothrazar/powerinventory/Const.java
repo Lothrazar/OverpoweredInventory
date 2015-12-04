@@ -11,20 +11,7 @@ public class Const
     public static final ResourceLocation emptyHelmet = new ResourceLocation("textures/items/empty_armor_slot_helmet.png");
 
 	public static ResourceLocation slot = new ResourceLocation(Const.MODID,"textures/gui/inventory_slot.png");
-    
-    
-    //public static String INVENTORY_TEXTURE = "textures/gui/inventory_gui.png";
-	//public static int texture_width = 464;
-	//public static int texture_height = 382;
-    
-	public static final String NBT_SLOT = "Slot";
-	public static final String NBT_PLAYER = "Player";
-	public static final String NBT_WORLD = "World";
-	public static final String NBT_ID = "ID";
-	public static final String NBT_Settings = "Settings";
-	public static final String NBT_Unlocked = "Unlocked";
-	public static final String NBT_INVENTORY = "Inventory";
-	public static final String NBT_INVOSIZE = "invoSize";
+
 
 	public static final int SQ = 18;
 	public static final int HOTBAR_SIZE = 9;
@@ -42,16 +29,6 @@ public class Const
     public static final int enderPearlSlot = 77777; 
     public static final int enderChestSlot = enderPearlSlot+1;
     
-	
-	public final static int SORT_LEFT = 1;
-	public final static int SORT_RIGHT = 2;
-	public final static int SORT_SMART = 7;
-	public final static int SORT_LEFTALL = -1;
-	public final static int SORT_RIGHTALL = -2;
-	
-	
-	
-	
 	
 	
 	

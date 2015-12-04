@@ -8,22 +8,58 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ContainerPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCraftResult;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 
 public class ContainerCustomPlayer extends Container
 { 
 	public InventoryCustomPlayer invo;
+	public InventoryCrafting craftMatrix;
+    public IInventory craftResult = new InventoryCraftResult();
+    public boolean craftingEnabled = true;//TODO: toggle this somehow from somewhere?
+	public static final int CRAFTSIZE = 3;//did not exist before, was magic'd as 2 everywhere
+	static int S_RESULT;
+	static int S_CRAFT_START;
+	static int S_CRAFT_END;
 	static int S_MAIN_START;
 	static int S_MAIN_END;
 	static int S_ECHEST;
 	static int S_PEARL;
 	static final int OFFSCREEN = 600;
+    private final EntityPlayer thePlayer;
 	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
+		thePlayer = player;
 		int i,j,slotNum,x=0,y=0,yStart = 84;
 
+		if(craftingEnabled){
+			craftMatrix = new InventoryCrafting(this, CRAFTSIZE, CRAFTSIZE);
+			
+			S_RESULT = this.inventorySlots.size();
+	        this.addSlotToContainer(new SlotCrafting(player, this.craftMatrix, this.craftResult, 0, 
+	        		200,  
+	        		40));
+	
+	        S_CRAFT_START = this.inventorySlots.size();
+	        for (i = 0; i < CRAFTSIZE; ++i)
+	        { 
+	            for (j = 0; j < CRAFTSIZE; ++j)
+	            {  
+	    			x = 114 + j * Const.SQ ; 
+	    			y = 20 + i * Const.SQ ;
+	
+	        		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * CRAFTSIZE, x , y)); 
+	            }
+	        }
+	        S_CRAFT_END = this.inventorySlots.size() - 1;
+		}
         S_MAIN_START = this.inventorySlots.size();
         
         //TODO: swap what is hidden based on features/buttons/powerups etc . for now, test
@@ -91,8 +127,38 @@ public class ContainerCustomPlayer extends Container
         S_ECHEST =  this.inventorySlots.size() ;
         this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.enderChestSlot)); 
 
+		if(craftingEnabled){
+			this.onCraftMatrixChanged(this.craftMatrix);
+		}
 		invo = inventoryCustom;
 	}
+	@Override
+	public void onCraftMatrixChanged(IInventory inventoryIn)
+    {
+		if(craftingEnabled){
+			this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.thePlayer.worldObj));
+		}
+        super.onCraftMatrixChanged(inventoryIn);
+    }
+	@Override
+    public void onContainerClosed(EntityPlayer playerIn)
+    {
+        super.onContainerClosed(playerIn);
+		if(craftingEnabled){
+	
+	        for (int i = 0; i < CRAFTSIZE * CRAFTSIZE; ++i)  
+	        {
+	            ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
+	
+	            if (itemstack != null)
+	            {
+	                playerIn.dropPlayerItemWithRandomChoice(itemstack, false);
+	            }
+	        }
+	
+	        this.craftResult.setInventorySlotContents(0, (ItemStack)null);
+		}
+    }
 	
 	@Override
 	public boolean canInteractWith(EntityPlayer player)

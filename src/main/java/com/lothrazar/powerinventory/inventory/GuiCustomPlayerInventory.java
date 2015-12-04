@@ -2,6 +2,7 @@ package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.UtilTextureRender;
+import com.lothrazar.powerinventory.inventory.client.GuiButtonRotate;
 import com.lothrazar.powerinventory.inventory.slot.*;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -9,6 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer; 
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
 
 public class GuiCustomPlayerInventory extends GuiContainer
 {
@@ -33,6 +35,16 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	public void initGui()
     { 
 		super.initGui();
+		int button_id = 99;
+		final int height = 20;
+		int width = 26;
+		final int padding = 6;
+		int offset = 0;
+		
+		this.buttonList.add(new GuiButtonRotate(button_id++,
+				this.guiLeft + this.xSize - width - padding + offset, 
+				this.guiTop + padding,
+				width,height,StatCollector.translateToLocal("button.rotate")));
     }
 	
 	public void drawScreen(int par1, int par2, float par3)

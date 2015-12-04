@@ -41,12 +41,10 @@ public class EnderPearlPacket implements IMessage , IMessageHandler<EnderPearlPa
 	public IMessage onMessage(EnderPearlPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
-
-		IInventory invo;
-	 
+ 
 		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
 		
-		invo = prop.inventory;
+		IInventory invo = prop.inventory;
  
 		ItemStack pearls = invo.getStackInSlot(Const.enderPearlSlot);
  
