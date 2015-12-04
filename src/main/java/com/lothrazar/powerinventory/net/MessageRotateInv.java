@@ -1,7 +1,6 @@
 package com.lothrazar.powerinventory.net;
  
 import com.lothrazar.powerinventory.InventoryPersistProperty;
-import com.lothrazar.powerinventory.UtilInventory;
 
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

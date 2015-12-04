@@ -1,24 +1,24 @@
 package com.lothrazar.powerinventory.net;
 
-import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.Const; 
 import com.lothrazar.powerinventory.InventoryPersistProperty;
+import com.lothrazar.powerinventory.inventory.InventoryCustomPlayer;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-
-public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPacket, IMessage>
+ 
+public class HotbarSwapPacket implements IMessage , IMessageHandler<HotbarSwapPacket, IMessage>
 {
+	public HotbarSwapPacket() {}
 	NBTTagCompound tags = new NBTTagCompound(); 
-	public EnderChestPacket() {}
-	public EnderChestPacket(NBTTagCompound ptags)
+	
+	public HotbarSwapPacket(NBTTagCompound ptags)
 	{
 		tags = ptags;
 	}
@@ -36,19 +36,26 @@ public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPa
 	}
 
 	@Override
-	public IMessage onMessage(EnderChestPacket message, MessageContext ctx)
+	public IMessage onMessage(HotbarSwapPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
- 
-		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
-		 
- 		ItemStack chest = prop.inventory.getStackInSlot(Const.enderChestSlot);
-		
-		if( chest != null)
-			p.displayGUIChest(p.getInventoryEnderChest());
-		else 
-			p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));
 
+		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
+		
+		for(int bar = 0; bar < Const.HOTBAR_SIZE; bar++)
+		{
+			int second = bar +  InventoryCustomPlayer.INV_SIZE - Const.HOTBAR_SIZE;
+			
+			ItemStack barStack = p.inventory.getStackInSlot(bar);
+			ItemStack secondStack = prop.inventory.getStackInSlot(second);
+		
+			//the players real hotbar
+			p.inventory.setInventorySlotContents(bar, secondStack);
+			
+			//that other invo 
+			prop.inventory.setInventorySlotContents(second, barStack);
+		}
+ 
 		return null;
 	}
 }

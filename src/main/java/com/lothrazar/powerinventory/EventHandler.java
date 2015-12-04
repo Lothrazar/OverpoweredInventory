@@ -26,6 +26,7 @@ import org.apache.logging.log4j.Level;
 import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
 import com.lothrazar.powerinventory.net.EnderChestPacket;
 import com.lothrazar.powerinventory.net.EnderPearlPacket;
+import com.lothrazar.powerinventory.net.HotbarSwapPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
 
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -54,6 +55,10 @@ public class EventHandler
         { 	      
         	 ModInv.instance.network.sendToServer( new EnderChestPacket());   
         }  
+        if(ClientProxy.keyHotbar.isPressed())
+        { 	      
+        	 ModInv.instance.network.sendToServer( new HotbarSwapPacket());   
+        }   
     }
 	
 	@SubscribeEvent
