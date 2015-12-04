@@ -14,9 +14,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class GuiButtonOpenInventory extends GuiButton 
 {
-    public GuiButtonOpenInventory(int buttonId, int x, int y, int w,int h)
+    public GuiButtonOpenInventory(int buttonId, int x, int y)
     {
-    	super(buttonId, x, y, w,h, StatCollector.translateToLocal("button.cornerinvo"));
+    	super(buttonId, x, y, 20,20, StatCollector.translateToLocal("button.cornerinvo"));
     }
 
     @SideOnly(Side.CLIENT)

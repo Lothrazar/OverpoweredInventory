@@ -50,16 +50,15 @@ public class GuiOverpowered extends GuiContainer
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 				xstart, //top right
-				ystart, 1));
+				ystart, GuiButtonRotate.TOPRIGHT));
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 				xstart - width - padding, //bottom left
-				ystart + padding+height, 2));
+				ystart + padding+height, GuiButtonRotate.BOTLEFT));
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 				xstart, //bottom right
-				ystart+padding+height, 3));
-		
+				ystart+padding+height, GuiButtonRotate.BOTRIGHT));
 		
 		if(container.craftingEnabled == false){
 
@@ -67,7 +66,6 @@ public class GuiOverpowered extends GuiContainer
 					this.guiLeft+craftX, 
 					this.guiTop+craftY));
 		}
-		
     }
 	
 	public void drawScreen(int par1, int par2, float par3)

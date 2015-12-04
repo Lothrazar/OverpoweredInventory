@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Level;
 
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonOpenInventory;
+import com.lothrazar.powerinventory.inventory.button.GuiButtonRotate;
 import com.lothrazar.powerinventory.net.EnderChestPacket;
 import com.lothrazar.powerinventory.net.EnderPearlPacket;
 import com.lothrazar.powerinventory.net.HotbarSwapPacket;
@@ -114,18 +115,38 @@ public class EventHandler
 		if(event.gui == null){return;}//probably doesnt ever happen
 		 
 		int button_id = 256;
-		//trapped, regular chests, minecart chests, and enderchest all use this class
-		//which extends  GuiContainer
 
-		int padding = 10;
+		final int padding = 10, width = 20;
 		
-		int x,y = padding,w = 20,h = w;
-
 		if(event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory)
 		{
-			x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
+			int x = Minecraft.getMinecraft().displayWidth/2 - width - padding;//align to right side
+			int y = padding;
+			
+			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y));
 
-			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h));
+			//y += 20 + padding;//move down
+			
+			//protected vars from GuiInventory
+		    int xSize = 176;
+		    int ySize = 166;
+
+		    //position them exactly on players inventory
+			x = Minecraft.getMinecraft().displayWidth/4  + xSize/2 - width;
+			y = Minecraft.getMinecraft().displayHeight/4 - ySize/2;
+			
+			//test with just one first //TODO: put all three up here
+			
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, GuiButtonRotate.TOPRIGHT));
+
+			x -= 2*width - padding;//move left
+			
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, GuiButtonRotate.BOTLEFT));
+
+			x -= 2*width - padding;//move left
+			
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, GuiButtonRotate.BOTRIGHT));
+			
 		}
 	}
 	
