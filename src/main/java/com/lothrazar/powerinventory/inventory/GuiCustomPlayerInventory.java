@@ -36,21 +36,23 @@ public class GuiCustomPlayerInventory extends GuiContainer
 		super.initGui();
 		int button_id = 99;
 		final int height = 20;
-		int width = 26;
+		int width = 20;
 		final int padding = 6;
-		int offset = 0;
+		
+		int xstart = this.guiLeft + this.xSize - width - padding;
+		int ystart = this.guiTop + padding;
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
-				this.guiLeft + this.xSize - width - padding + offset, 
-				this.guiTop + padding, 1));
+				xstart, //top right
+				ystart, 1));
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
-				this.guiLeft + this.xSize - width - padding + offset, 
-				this.guiTop + padding+height, 2));
+				xstart - width - padding, //bottom left
+				ystart + padding+height, 2));
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
-				this.guiLeft + this.xSize - width - padding + offset, 
-				this.guiTop + 2*(padding+height), 3));
+				xstart, //bottom right
+				ystart+padding+height, 3));
     }
 	
 	public void drawScreen(int par1, int par2, float par3)
