@@ -18,10 +18,13 @@ import net.minecraftforge.common.IExtendedEntityProperties;
  */
 public class InventoryPersistProperty implements IExtendedEntityProperties
 {
+	// TODO: fix client server syng https://github.com/coolAlias/Tutorial-Demo/blob/eee34169652aaace077b6bf0348f44cbb3ddbd9b/src/main/java/tutorial/entity/ExtendedPlayer.java
 	public static final String ID = "II_BIG_INVO";
-	
-	EntityPlayer player;
-	EntityPlayer prevPlayer;
+	private int craftingOpen = 1;
+	public static final int CRAFTING_WATCHER = 20;
+	private EntityPlayer player;
+	private EntityPlayer prevPlayer;
+	public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
 
 	/**
 	 * Keep inventory doesn't work with extended inventories so we store it here upon death to reload later
@@ -50,19 +53,11 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	{
 		this.player = player;
 		this.prevPlayer = null;
+		this.player.getDataWatcher().addObject(CRAFTING_WATCHER, this.craftingOpen);
 	}
 	
 	public void onJoinWorld()
 	{
-		/*
-		if(ModConfig.enableCompatMode == false)
-			if(!(player.inventory instanceof BigInventoryPlayer))
-			{
-				player.inventory = new BigInventoryPlayer(player);
-				player.inventoryContainer = new BigContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
-				player.openContainer = player.inventoryContainer;
-			}*/
-		
 		if(prevPlayer != null)
 		{
 			player.inventory.readFromNBT(prevPlayer.inventory.writeToNBT(new NBTTagList()));
@@ -83,24 +78,6 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 	}
 	
 	@Override
-	public void loadNBTData(NBTTagCompound compound)
-	{
-		this.inventory.readFromNBT(compound);
-		
-		/*
-		if(ModConfig.enableCompatMode == false)
-			if(!(player.inventory instanceof BigInventoryPlayer))
-			{
-				player.inventory = new BigInventoryPlayer(player);
-				player.inventoryContainer = new BigContainerPlayer((BigInventoryPlayer)player.inventory, !player.worldObj.isRemote, player);
-				player.openContainer = player.inventoryContainer;
-				((BigInventoryPlayer)player.inventory).readFromNBT(compound.getTagList(Const.NBT_INVENTORY, 10));
-			}
-		
-		*/
-	}
-	
-	@Override
 	public void init(Entity entity, World world)
 	{
 		if(entity instanceof EntityPlayer)
@@ -114,15 +91,26 @@ public class InventoryPersistProperty implements IExtendedEntityProperties
 		}
 	}
 
-	public final InventoryCustomPlayer inventory = new InventoryCustomPlayer();
-	
-	@Override
-	public void saveNBTData(NBTTagCompound properties) 
-	{
-		this.inventory.writeToNBT(properties);
-
-		
+	public void setInvoCrafting(boolean c){
+		int val = c?1:0;
+		player.getDataWatcher().updateObject(CRAFTING_WATCHER,val);
+	}
+	public boolean hasInvoCrafting(){
+		return player.getDataWatcher().getWatchableObjectInt(CRAFTING_WATCHER)==1;
 	}
 	
+	@Override
+	public void loadNBTData(NBTTagCompound compound)
+	{
+		this.inventory.readFromNBT(compound);
+		//craftingOpen = compound.getBoolean("crafting");
+		player.getDataWatcher().updateObject(CRAFTING_WATCHER, compound.getInteger("crafting"));
+	}
 	
+	@Override
+	public void saveNBTData(NBTTagCompound compound) 
+	{
+		this.inventory.writeToNBT(compound);
+		compound.setInteger("crafting",  player.getDataWatcher().getWatchableObjectInt(CRAFTING_WATCHER));
+	}
 }

@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.net;
 
 import com.lothrazar.powerinventory.GuiHandler;
+import com.lothrazar.powerinventory.InventoryPersistProperty;
 import com.lothrazar.powerinventory.ModInv;
 
 import io.netty.buffer.ByteBuf;
@@ -37,7 +38,7 @@ public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInven
 	public IMessage onMessage(OpenInventoryPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
-		
+
 		p.openGui(ModInv.instance, GuiHandler.GUI_CUSTOM_INV, p.worldObj, (int) p.posX, (int) p.posY, (int) p.posZ);
 	 
 		return null;

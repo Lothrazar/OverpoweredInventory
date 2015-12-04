@@ -42,6 +42,9 @@ public class HotbarSwapPacket implements IMessage , IMessageHandler<HotbarSwapPa
 
 		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
 		
+		//TESTING ONLY: TODO A REAL SEP PACKET
+		prop.setInvoCrafting(  !  prop.hasInvoCrafting()  );
+		
 		for(int bar = 0; bar < Const.HOTBAR_SIZE; bar++)
 		{
 			int second = bar +  InventoryCustomPlayer.INV_SIZE - Const.HOTBAR_SIZE;

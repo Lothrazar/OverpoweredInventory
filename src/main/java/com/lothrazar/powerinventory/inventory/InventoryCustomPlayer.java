@@ -12,6 +12,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryCustomPlayer implements IInventory
 {
+	
 	// inventory blocks of 3x9 columns, and  hotbarsConst.HOTBAR_SIZE
 	public static final int INV_SIZE = Const.COLS_VANILLA*Const.ROWS_VANILLA*4 + Const.HOTBAR_SIZE*2;
 	ItemStack[] inventory = new ItemStack[INV_SIZE];

@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.InventoryPersistProperty;
 import com.lothrazar.powerinventory.inventory.slot.*;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,6 +46,12 @@ public class ContainerCustomPlayer extends Container
 	public ContainerCustomPlayer(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
 		thePlayer = player;
+		
+		InventoryPersistProperty prop = InventoryPersistProperty.get(player);
+		
+		craftingEnabled = prop.hasInvoCrafting();
+		System.out.println("craftingEnabled ="+craftingEnabled);
+		
 		int i,j,slotNum=0,x=0,y=0,yStart = 84;
 
 		if(craftingEnabled){
