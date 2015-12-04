@@ -48,6 +48,7 @@ public class HotbarSwapPacket implements IMessage , IMessageHandler<HotbarSwapPa
 		for(int bar = 0; bar < Const.HOTBAR_SIZE; bar++)
 		{
 			int second = bar +  InventoryCustomPlayer.INV_SIZE - Const.HOTBAR_SIZE;
+			//System.out.println("bar:"+ bar+" -> "+second);
 			
 			ItemStack barStack = p.inventory.getStackInSlot(bar);
 			ItemStack secondStack = prop.inventory.getStackInSlot(second);

@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 public class GuiCustomPlayerInventory extends GuiContainer
 {
 	private ResourceLocation bkg = new ResourceLocation(Const.MODID,  "textures/gui/inventory.png");
+	private ResourceLocation bkg_craft = new ResourceLocation(Const.MODID,  "textures/gui/crafting.png");
 	public static boolean SHOW_DEBUG_NUMS = true;
 	private final InventoryCustomPlayer inventory;
 	private ContainerCustomPlayer container;
@@ -97,6 +98,14 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{ 
 		UtilTextureRender.drawTextureSimple(bkg, this.guiLeft, this.guiTop,this.xSize,this.ySize);
+		
+		if( container.craftingEnabled ){
+
+			UtilTextureRender.drawTextureSimple(bkg_craft, 
+					this.guiLeft+20, 
+					this.guiTop+60,
+					111,57);
+		}
 	 
         drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);
     	drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);

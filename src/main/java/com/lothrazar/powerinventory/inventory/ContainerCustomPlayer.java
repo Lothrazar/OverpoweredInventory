@@ -50,7 +50,6 @@ public class ContainerCustomPlayer extends Container
 		InventoryPersistProperty prop = InventoryPersistProperty.get(player);
 		
 		craftingEnabled = prop.hasInvoCrafting();
-		System.out.println("craftingEnabled ="+craftingEnabled);
 		
 		int i,j,slotNum=0,x=0,y=0,yStart = 84;
 
