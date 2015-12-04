@@ -10,21 +10,25 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer; 
+import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiCustomPlayerInventory extends GuiContainer
 {
 	ResourceLocation res = new ResourceLocation(Const.MODID, "inventory.png");
+	public static boolean SHOW_DEBUG_NUMS = true;
 	private final InventoryCustomPlayer inventory;
-	//private final EntityPlayer thePlayer;
+	private ContainerCustomPlayer container;
+	private final EntityPlayer thePlayer;
 	
 	
 	public GuiCustomPlayerInventory(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryCustomPlayer inventoryCustom)
 	{
 		//the player.inventory gets passed in here
 		super(new ContainerCustomPlayer(player, inventoryPlayer, inventoryCustom));
+		container = (ContainerCustomPlayer)this.inventorySlots;
 		inventory = inventoryCustom;
-		//thePlayer = player;
+		thePlayer = player;
 		
 		this.xSize = 338;
 		this.ySize = 221;
@@ -54,14 +58,25 @@ public class GuiCustomPlayerInventory extends GuiContainer
 	public void drawScreen(int par1, int par2, float par3)
 	{
 		super.drawScreen(par1, par2, par3);
-	
+		
+		if(SHOW_DEBUG_NUMS){ 
+			for(Slot s : this.container.inventorySlots)
+			{
+				//each slot has two different numbers. the slotNumber is UNIQUE, the index is not
+				this.drawString(this.fontRendererObj, "" + s.getSlotIndex(), 
+						this.guiLeft + s.xDisplayPosition,
+						this.guiTop + s.yDisplayPosition +  4, 
+						16777120);//font color
+			}
+		}
 	}
 	@Override
 	protected void drawGuiContainerForegroundLayer(	int p_146976_2_, int p_146976_3_)
 	{ 
 		//drawing text and such on screen
-		this.checkSlotsEmpty();
 		
+		
+		this.checkSlotsEmpty();
 	}
 	
 	private void checkSlotsEmpty()
