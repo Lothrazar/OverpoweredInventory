@@ -137,12 +137,12 @@ public class EventHandler
 		    int ySize = 166;
 
 		    //position them exactly on players inventory
-			x = Minecraft.getMinecraft().displayWidth/4  + xSize/2 - w;
-			y = Minecraft.getMinecraft().displayHeight/4 - ySize/2;
+			x = Minecraft.getMinecraft().displayWidth/4  + xSize/2 - w*6;
+			y = Minecraft.getMinecraft().displayHeight/4 - ySize/2 + padding;
 			
 			//test with just one first //TODO: put all three up here
 			
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,GuiButtonRotate.TOPRIGHT));
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,GuiButtonRotate.BOTRIGHT));
 
 			x -= 2*w - padding;//move left
 			
@@ -150,7 +150,7 @@ public class EventHandler
 
 			x -= 2*w - padding;//move left
 			
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,GuiButtonRotate.BOTRIGHT));
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,GuiButtonRotate.TOPRIGHT));
 			
 		}
 	}
