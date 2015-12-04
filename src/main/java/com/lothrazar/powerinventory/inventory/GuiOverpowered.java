@@ -41,24 +41,24 @@ public class GuiOverpowered extends GuiContainer
     { 
 		super.initGui();
 		int button_id = 99;
-		final int height = 20;
-		int width = 20;
+		final int h = 20;
+		final int w = 20;
 		final int padding = 6;
 		
-		int xstart = this.guiLeft + this.xSize - width - padding;
+		int xstart = this.guiLeft + this.xSize - w - padding;
 		int ystart = this.guiTop + padding;
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 				xstart, //top right
-				ystart, GuiButtonRotate.TOPRIGHT));
+				ystart,w,h, GuiButtonRotate.TOPRIGHT));
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
-				xstart - width - padding, //bottom left
-				ystart + padding+height, GuiButtonRotate.BOTLEFT));
+				xstart - w - padding, //bottom left
+				ystart + padding+h, w,h,GuiButtonRotate.BOTLEFT));
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 				xstart, //bottom right
-				ystart+padding+height, GuiButtonRotate.BOTRIGHT));
+				ystart+padding+h, w,h,GuiButtonRotate.BOTRIGHT));
 		
 		if(container.craftingEnabled == false){
 

@@ -114,17 +114,22 @@ public class EventHandler
 	{
 		if(event.gui == null){return;}//probably doesnt ever happen
 		 
-		int button_id = 256;
-
-		final int padding = 10, width = 20;
 		
 		if(event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory)
 		{
-			int x = Minecraft.getMinecraft().displayWidth/2 - width - padding;//align to right side
+			int button_id = 256;
+			int padding = 10;
+			int h = 10;
+			int w = 20;
+			
+			int x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
 			int y = padding;
 			
 			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y));
 
+			padding = 5;
+			h = 10;
+			w = 10;
 			//y += 20 + padding;//move down
 			
 			//protected vars from GuiInventory
@@ -132,20 +137,20 @@ public class EventHandler
 		    int ySize = 166;
 
 		    //position them exactly on players inventory
-			x = Minecraft.getMinecraft().displayWidth/4  + xSize/2 - width;
+			x = Minecraft.getMinecraft().displayWidth/4  + xSize/2 - w;
 			y = Minecraft.getMinecraft().displayHeight/4 - ySize/2;
 			
 			//test with just one first //TODO: put all three up here
 			
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, GuiButtonRotate.TOPRIGHT));
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,GuiButtonRotate.TOPRIGHT));
 
-			x -= 2*width - padding;//move left
+			x -= 2*w - padding;//move left
 			
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, GuiButtonRotate.BOTLEFT));
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,GuiButtonRotate.BOTLEFT));
 
-			x -= 2*width - padding;//move left
+			x -= 2*w - padding;//move left
 			
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, GuiButtonRotate.BOTRIGHT));
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,GuiButtonRotate.BOTRIGHT));
 			
 		}
 	}

@@ -16,10 +16,8 @@ public class GuiButtonRotate extends GuiButton
 	public final static int TOPRIGHT = 1;
 	public final static int BOTLEFT = 2;
 	public final static int BOTRIGHT = 3;
-	final static int height = 20;
-	final static int width = 20;
 	private int invoGroup;
-    public GuiButtonRotate(int buttonId, int x, int y, int ig)
+    public GuiButtonRotate(int buttonId, int x, int y, int width, int height,int ig)
     {
     	super(buttonId, x, y, width,height, ""+ig);//ig for test
     	invoGroup = ig;
