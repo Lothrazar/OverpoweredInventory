@@ -16,7 +16,7 @@ public class GuiButtonOpenInventory extends GuiButton
 {
     public GuiButtonOpenInventory(int buttonId, int x, int y, int w,int h)
     {
-    	super(buttonId, x, y, w,h, StatCollector.translateToLocal("button.compat"));
+    	super(buttonId, x, y, w,h, StatCollector.translateToLocal("button.cornerinvo"));
     }
 
     @SideOnly(Side.CLIENT)
