@@ -9,6 +9,7 @@ import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Logger;
 
 import com.lothrazar.powerinventory.proxy.CommonProxy; 
+import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.net.*;
 
 import net.minecraftforge.fml.common.Mod;

@@ -1,22 +1,23 @@
-package com.lothrazar.powerinventory.inventory.client;
+package com.lothrazar.powerinventory.inventory.button;
 
-import com.lothrazar.powerinventory.net.OpenInventoryPacket;
+import com.lothrazar.powerinventory.net.UnlockCraftPacket;
 import com.lothrazar.powerinventory.ModInv;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class GuiButtonOpenInventory extends GuiButton 
+public class GuiButtonUnlockCraft extends GuiButton 
 {
-    public GuiButtonOpenInventory(int buttonId, int x, int y, int w,int h)
+	final static int height = 20;
+	final static int width = 20;
+    public GuiButtonUnlockCraft(int buttonId, int x, int y)
     {
-    	super(buttonId, x, y, w,h, StatCollector.translateToLocal("button.compat"));
+    	super(buttonId, x, y, width,height, "button.unlock");
     }
 
     @SideOnly(Side.CLIENT)
@@ -28,7 +29,7 @@ public class GuiButtonOpenInventory extends GuiButton
     	if(pressed)
     	{
     		NBTTagCompound tags = new NBTTagCompound();
-			ModInv.instance.network.sendToServer(new OpenInventoryPacket(tags));
+			ModInv.instance.network.sendToServer(new UnlockCraftPacket(tags));
     	}
     	
     	return pressed;

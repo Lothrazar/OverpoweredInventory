@@ -1,4 +1,4 @@
-package com.lothrazar.powerinventory;
+package com.lothrazar.powerinventory.util;
 
 import org.lwjgl.opengl.GL11;
 

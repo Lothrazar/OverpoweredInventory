@@ -1,12 +1,9 @@
 package com.lothrazar.powerinventory.net;
 
-import com.lothrazar.powerinventory.Const; 
-import com.lothrazar.powerinventory.InventoryPersistProperty;
-import com.lothrazar.powerinventory.inventory.InventoryCustomPlayer;
+import com.lothrazar.powerinventory.util.UtilInventory;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -40,23 +37,8 @@ public class HotbarSwapPacket implements IMessage , IMessageHandler<HotbarSwapPa
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
+		UtilInventory.swapHotbars(p);
 		
-		for(int bar = 0; bar < Const.HOTBAR_SIZE; bar++)
-		{
-			int second = bar +  InventoryCustomPlayer.INV_SIZE - Const.HOTBAR_SIZE;
-			//System.out.println("bar:"+ bar+" -> "+second);
-			
-			ItemStack barStack = p.inventory.getStackInSlot(bar);
-			ItemStack secondStack = prop.inventory.getStackInSlot(second);
-		
-			//the players real hotbar
-			p.inventory.setInventorySlotContents(bar, secondStack);
-			
-			//that other invo 
-			prop.inventory.setInventorySlotContents(second, barStack);
-		}
- 
 		return null;
 	}
 }

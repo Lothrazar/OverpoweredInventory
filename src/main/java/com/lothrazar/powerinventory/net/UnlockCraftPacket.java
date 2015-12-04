@@ -1,6 +1,8 @@
 package com.lothrazar.powerinventory.net;
 
 import com.lothrazar.powerinventory.InventoryPersistProperty;
+import com.lothrazar.powerinventory.util.UtilExperience;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -38,7 +40,11 @@ public class UnlockCraftPacket implements IMessage , IMessageHandler<UnlockCraft
 
 		InventoryPersistProperty prop = InventoryPersistProperty.get(p);
 		
-		//TESTING ONLY: TODO drain exp or some other cost
+		//TODO: drain exp  in order to cause this
+		double current = UtilExperience.getExpTotal(p);
+		
+		//System.out.println(current);
+		
 		prop.setInvoCrafting( true  );
 		
 		p.closeScreen();

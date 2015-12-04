@@ -1,10 +1,10 @@
 package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.UtilTextureRender;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonRotate;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonUnlockCraft;
+import com.lothrazar.powerinventory.inventory.button.GuiButtonRotate;
+import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockCraft;
 import com.lothrazar.powerinventory.inventory.slot.*;
+import com.lothrazar.powerinventory.util.UtilTextureRender;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;

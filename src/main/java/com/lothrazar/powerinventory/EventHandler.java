@@ -22,7 +22,8 @@ import net.minecraftforge.event.world.WorldEvent;
 
 import org.apache.logging.log4j.Level;
 
-import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
+import com.lothrazar.powerinventory.config.ModConfig;
+import com.lothrazar.powerinventory.inventory.button.GuiButtonOpenInventory;
 import com.lothrazar.powerinventory.net.EnderChestPacket;
 import com.lothrazar.powerinventory.net.EnderPearlPacket;
 import com.lothrazar.powerinventory.net.HotbarSwapPacket;

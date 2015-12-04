@@ -1,6 +1,6 @@
-package com.lothrazar.powerinventory.inventory.client;
+package com.lothrazar.powerinventory.inventory.button;
 
-import com.lothrazar.powerinventory.net.UnlockCraftPacket;
+import com.lothrazar.powerinventory.net.SwapInvoPacket;
 import com.lothrazar.powerinventory.ModInv;
 
 import net.minecraft.client.Minecraft;
@@ -11,13 +11,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class GuiButtonUnlockCraft extends GuiButton 
+public class GuiButtonRotate extends GuiButton 
 {
 	final static int height = 20;
 	final static int width = 20;
-    public GuiButtonUnlockCraft(int buttonId, int x, int y)
+	private int invoGroup;
+    public GuiButtonRotate(int buttonId, int x, int y, int ig)
     {
-    	super(buttonId, x, y, width,height, "button.unlock");
+    	super(buttonId, x, y, width,height, "");//ig for test
+    	invoGroup = ig;
     }
 
     @SideOnly(Side.CLIENT)
@@ -29,7 +31,8 @@ public class GuiButtonUnlockCraft extends GuiButton
     	if(pressed)
     	{
     		NBTTagCompound tags = new NBTTagCompound();
-			ModInv.instance.network.sendToServer(new UnlockCraftPacket(tags));
+    		tags.setInteger("i", invoGroup);
+			ModInv.instance.network.sendToServer(new SwapInvoPacket(tags));
     	}
     	
     	return pressed;
