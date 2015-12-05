@@ -12,8 +12,8 @@ public class SlotEnderPearl extends Slot
 {
 	private final static String _background = "textures/items/empty_enderpearl.png";
 	public final static ResourceLocation background = new ResourceLocation(Const.MODID,_background);
-	public static int posX;
-	public static int posY;
+	public static final int posX = 8;
+	public static final int posY = 8;
 	public int slotIndex;//overrides the private internal one
 	
 	public SlotEnderPearl(IInventory inventoryIn, int index) 

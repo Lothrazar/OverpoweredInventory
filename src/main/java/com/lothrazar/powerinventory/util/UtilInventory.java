@@ -36,9 +36,9 @@ public class UtilInventory
 		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 		//if ivg == 1; we go from 9 to 27+9
 		// ivg == 2 means .. wel the first block is still 9 to 27+9 but we SWAP it with range a full blocku p
-		for(int i = Const.HOTBAR_SIZE; i < Const.HOTBAR_SIZE + Const.VSIZE; i++)
+		for(int i = Const.HOTBAR_SIZE; i < Const.HOTBAR_SIZE + Const.V_INVO_SIZE; i++)
 		{
-			int second = i + invoGroup*Const.VSIZE;
+			int second = i + invoGroup*Const.V_INVO_SIZE;
 			
 			ItemStack barStack = p.inventory.getStackInSlot(i);//oob 4??
 			ItemStack secondStack = prop.inventory.getStackInSlot(second);

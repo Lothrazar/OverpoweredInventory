@@ -16,6 +16,7 @@ public class GuiOverpowered extends GuiContainer
 {
 	private ResourceLocation bkg = new ResourceLocation(Const.MODID,  "textures/gui/inventory.png");
 	private ResourceLocation bkg_craft = new ResourceLocation(Const.MODID,  "textures/gui/crafting.png");
+	public static ResourceLocation slot = new ResourceLocation(Const.MODID,"textures/gui/inventory_slot.png");
 	public static final int craftX = 111;
 	public static final int craftY = 17;
 	public static boolean SHOW_DEBUG_NUMS = false;
@@ -125,6 +126,6 @@ public class GuiOverpowered extends GuiContainer
 	
 	private void drawSlotAt(int x, int y)
 	{
-        UtilTextureRender.drawTextureSimple(Const.slot,this.guiLeft + x - 1, this.guiTop + y - 1, Const.SQ, Const.SQ);
+        UtilTextureRender.drawTextureSimple(slot,this.guiLeft + x - 1, this.guiTop + y - 1, Const.SQ, Const.SQ);
 	}
 }

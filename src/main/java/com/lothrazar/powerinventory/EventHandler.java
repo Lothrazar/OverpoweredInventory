@@ -130,17 +130,10 @@ public class EventHandler
 			padding = 5;
 			h = 10;
 			w = 10;
-			//y += 20 + padding;//move down
-			
-			//protected vars from GuiInventory
-		    int xSize = 176;
-		    int ySize = 166;
 
 		    //position them exactly on players inventory
-			x = Minecraft.getMinecraft().displayWidth/4  + xSize/2 - w*6;
-			y = Minecraft.getMinecraft().displayHeight/4 - ySize/2 + padding;
-			
-			//test with just one first //TODO: put all three up here
+			x = Minecraft.getMinecraft().displayWidth/4  + Const.VWIDTH/2 - w*6;
+			y = Minecraft.getMinecraft().displayHeight/4 - Const.VHEIGHT/2 + padding;
 			
 			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,GuiButtonRotate.BOTRIGHT));
 

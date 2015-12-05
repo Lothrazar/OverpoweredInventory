@@ -38,7 +38,7 @@ public class ContainerOverpowered extends Container
     static int S_BAROTHER_START;
     static int S_BAROTHER_END;
 
-    int hotbarX = Const.paddingLrg;
+    int hotbarX = 8;
     int hotbarY = 142 + (Const.SQ * 9);
 	
 	//static final int OFFSCREEN = 600;
@@ -51,7 +51,7 @@ public class ContainerOverpowered extends Container
 		
 		craftingEnabled = prop.hasInvoCrafting();
 		
-		int i,j,slotNum=0,x=0,y=0,yStart = 84;
+		int i,j,slotNum=0,x=0,y=0,yStart = 84, paddingLrg=8;
 
 		if(craftingEnabled){
 			craftMatrix = new InventoryCrafting(this, CRAFTSIZE, CRAFTSIZE);
@@ -96,7 +96,7 @@ public class ContainerOverpowered extends Container
             {
             	slotNum = j + (i + 1) * 9;
           
-            	x = Const.paddingLrg + j * Const.SQ;
+            	x = paddingLrg + j * Const.SQ;
             	y = yStart + i * Const.SQ;
         		this.addSlotToContainer(new Slot(inventoryPlayer, slotNum, x,y));
             }
@@ -109,7 +109,7 @@ public class ContainerOverpowered extends Container
         {
             for (j = 0; j < Const.COLS_VANILLA; ++j)
             {
-            	slotNum = Const.VSIZE + j + (i + 1) * 9;
+            	slotNum = Const.V_INVO_SIZE + j + (i + 1) * 9;
        
             	x = oldx + j * Const.SQ;
             	y = yStart + i * Const.SQ;
@@ -122,9 +122,9 @@ public class ContainerOverpowered extends Container
         {
             for (j = 0; j < Const.COLS_VANILLA; ++j)
             {
-            	slotNum = Const.VSIZE*2 + j + (i + 1) * 9;
+            	slotNum = Const.V_INVO_SIZE*2 + j + (i + 1) * 9;
        
-            	x = Const.paddingLrg + j * Const.SQ;
+            	x = paddingLrg + j * Const.SQ;
             	y = oldy + i * Const.SQ;
         		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
             }
@@ -134,7 +134,7 @@ public class ContainerOverpowered extends Container
         {
             for (j = 0; j < Const.COLS_VANILLA; ++j)
             {
-            	slotNum = Const.VSIZE*3 + j + (i + 1) * 9;
+            	slotNum = Const.V_INVO_SIZE*3 + j + (i + 1) * 9;
        
             	x = oldx + j * Const.SQ;
             	y = oldy + i * Const.SQ;
