@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagList;
@@ -117,23 +117,30 @@ public class EventHandler
 		
 		if(event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory)
 		{
+			//omg thanks so much to this guy
+			//http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/mods-discussion/1390983-making-guis-scale-to-screen-width-height
+			ScaledResolution res = new ScaledResolution( event.gui.mc);
+	        
+		   	int screenWidth = res.getScaledWidth();
+		   	int screenHeight = res.getScaledHeight();
+		   	 
 			int button_id = 256;
 			int padding = 10;
 			int h = 10;
 			int w = 20;
 			
-			int x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
+			int x = screenWidth - w - padding;//align to right side
 			int y = padding;
 			
 			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y));
-
+	
 			padding = 5;
 			h = 10;
 			w = 10;
 
 		    //position them exactly on players inventory
-			x = Minecraft.getMinecraft().displayWidth/4  + Const.VWIDTH/2 - w*6;
-			y = Minecraft.getMinecraft().displayHeight/4 - Const.VHEIGHT/2 + padding;
+			x = screenWidth/2  + Const.VWIDTH/2 - w*6;
+			y = screenHeight/2 - Const.VHEIGHT/2 + padding;
 			
 			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,GuiButtonRotate.BOTRIGHT));
 
