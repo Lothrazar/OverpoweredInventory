@@ -12,8 +12,6 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryOverpowered implements IInventory
 {
-	
-	// inventory blocks of 3x9 columns, and  hotbarsConst.HOTBAR_SIZE
 	public static final int INV_SIZE = Const.COLS_VANILLA*Const.ROWS_VANILLA*4 + Const.HOTBAR_SIZE*2;
 	ItemStack[] inventory = new ItemStack[INV_SIZE];
 //thanks for http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571597-forge-1-6-4-1-8-custom-inventories-in-items-and

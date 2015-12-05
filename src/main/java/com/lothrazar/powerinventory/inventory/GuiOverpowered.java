@@ -6,7 +6,7 @@ import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonRotate;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockChest;
-import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockCraft;
+import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlock3x3Crafting;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockPearl;
 import com.lothrazar.powerinventory.inventory.button.IGuiTooltip;
 import com.lothrazar.powerinventory.inventory.slot.*;
@@ -26,7 +26,7 @@ public class GuiOverpowered extends GuiContainer
 	private ResourceLocation bkg_craft = new ResourceLocation(Const.MODID,  "textures/gui/crafting.png");
 	private ResourceLocation bkg_3x9 = new ResourceLocation(Const.MODID,  "textures/gui/slots3x9.png");
 	public static ResourceLocation slot = new ResourceLocation(Const.MODID,"textures/gui/inventory_slot.png");
-	public static final int craftX = 36;//was 111,17
+	public static final int craftX = 56;//was 111,17
 	public static final int craftY = 14;
 	final int SLOTS_WIDTH = 162;
 	final int SLOTS_HEIGHT = 54;// the 3x9 size
@@ -58,10 +58,10 @@ public class GuiOverpowered extends GuiContainer
 		super.initGui();
 		
 		int button_id = 99;
-		
+		String label;
 		int xstart = this.guiLeft + this.xSize - w - padding;
 		int ystart = this.guiTop + padding;
-		
+		GuiButton b;
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 				xstart, //top right
 				ystart,w,h, GuiButtonRotate.TOPRIGHT));
@@ -76,24 +76,35 @@ public class GuiOverpowered extends GuiContainer
 
 		if(container.epearlSlotEnabled == false){
 
-			this.buttonList.add(new GuiButtonUnlockPearl(button_id++,
-				SlotEnderPearl.posX,  
-				SlotEnderPearl.posY,""));
+			int current = (int)UtilExperience.getExpTotal(thePlayer);
+			label = current + "/" + ModConfig.expCostPearl;
+			
+			b = new GuiButtonUnlockPearl(button_id++,
+				SlotEnderPearl.posX+40,  
+				SlotEnderPearl.posY+4,label);
+			this.buttonList.add(b);
+			
+			b.enabled = (current >= ModConfig.expCostPearl);
 		}
 		if(container.echestSlotEnabled == false){
 
-			this.buttonList.add(new GuiButtonUnlockChest(button_id++,
-				SlotEnderChest.posX,  
-				SlotEnderChest.posY,""));
+			int current = (int)UtilExperience.getExpTotal(thePlayer);
+			label = current + "/" + ModConfig.expCostEChest;
+			
+			b = new GuiButtonUnlockChest(button_id++,
+				SlotEnderChest.posX+40,  
+				SlotEnderChest.posY,label);
+			this.buttonList.add(b);
+			
+			b.enabled = (current >= ModConfig.expCostEChest);
 		}
 		
 		if(container.craftingEnabled == false)
 		{
 			int current = (int)UtilExperience.getExpTotal(thePlayer);
+			label = current + "/" + ModConfig.expCostCrafting + " XP";
 			
-			String label = current + "/" + ModConfig.expCostCrafting + " XP";
-			
-			GuiButtonUnlockCraft b = new GuiButtonUnlockCraft(button_id++,
+			b = new GuiButtonUnlock3x3Crafting(button_id++,
 					this.guiLeft + craftX + 24,  // put this not in top left of where crafting image goes, but more centered
 					this.guiTop  + craftY + 10, label);
 			

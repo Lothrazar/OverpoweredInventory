@@ -1,6 +1,8 @@
 button.cornerinvo=E
 button.cornerclose=X
 tooltip.craftexp=Unlock 3x3 crafting grid
+tooltip.ender_chest=Unlock Ender Chest slot
+tooltip.ender_pearl=Unlock Ender Pearl slot
 key.enderpearl=Quick Pearl
 key.enderchest=Ender Inventory
 key.hotbar=Swap Hotbars

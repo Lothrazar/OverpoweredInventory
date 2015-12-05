@@ -43,9 +43,9 @@ public class UnlockPearlPacket implements IMessage , IMessageHandler<UnlockPearl
 
 		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 		
-		if(UtilExperience.getExpTotal(p) >= ModConfig.expCostCrafting){
+		if(UtilExperience.getExpTotal(p) >= ModConfig.expCostPearl){
 			
-			UtilExperience.drainExp(p, ModConfig.expCostCrafting);
+			UtilExperience.drainExp(p, ModConfig.expCostPearl);
 			
 			prop.setInvoEPearl( true  );
 			

@@ -12,12 +12,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class GuiButtonUnlockCraft extends GuiButton implements IGuiTooltip 
+public class GuiButtonUnlock3x3Crafting extends GuiButton implements IGuiTooltip 
 {
 	final static int height = 20;
 	final static int width = 70;
 	private String tooltip;
-    public GuiButtonUnlockCraft(int buttonId, int x, int y, String label)
+    public GuiButtonUnlock3x3Crafting(int buttonId, int x, int y, String label)
     {
     	super(buttonId, x, y, width,height, label);
     	this.setTooltip(StatCollector.translateToLocal("tooltip.craftexp"));
