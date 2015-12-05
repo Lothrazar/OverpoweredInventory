@@ -220,7 +220,7 @@ public class ContainerOverpowered extends Container
         			invo.getStackInSlot(Const.enderPearlSlot).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))
         			)
         		{
-            		if (!this.mergeItemStack(stackOrig, S_PEARL, S_PEARL+1, false))
+            		if (!this.mergeItemStack(stackOrig, S_PEARL, S_PEARL + 1, false))
                 	{ 
                         return null;
                     }  
@@ -236,6 +236,18 @@ public class ContainerOverpowered extends Container
                         return null;
                     }  
         		}
+            	else if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END + 1, false)            			)
+            	{
+                    return null;
+                }
+            }
+            else if (slotNumber >= S_BAR_START && slotNumber <= S_BAR_END || 
+            		 slotNumber >= S_BAROTHER_START && slotNumber <= S_BAROTHER_END) // Hotbars
+            { 
+            	if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false))
+            	{
+                    return null;
+                }
             }
             else if(slotNumber == S_PEARL || slotNumber == S_ECHEST)
             { 
