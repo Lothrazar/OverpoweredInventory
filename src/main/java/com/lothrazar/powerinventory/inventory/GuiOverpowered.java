@@ -63,16 +63,16 @@ public class GuiOverpowered extends GuiContainer
 		int ystart = this.guiTop + padding;
 		GuiButton b;
 		this.buttonList.add(new GuiButtonRotate(button_id++,
-				xstart, //top right
-				ystart,w,h, GuiButtonRotate.TOPRIGHT));
+					xstart, //top right
+					ystart,w,h, GuiButtonRotate.TOPRIGHT));
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
-				xstart - w - padding, //bottom left
-				ystart + padding+h, w,h,GuiButtonRotate.BOTLEFT));
+					xstart - w - padding, //bottom left
+					ystart + padding+h, w,h,GuiButtonRotate.BOTLEFT));
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
-				xstart, //bottom right
-				ystart+padding+h, w,h,GuiButtonRotate.BOTRIGHT));
+					xstart, //bottom right
+					ystart+padding+h, w,h,GuiButtonRotate.BOTRIGHT));
 
 		if(container.epearlSlotEnabled == false){
 
@@ -80,8 +80,8 @@ public class GuiOverpowered extends GuiContainer
 			label = current + "/" + ModConfig.expCostPearl;
 			
 			b = new GuiButtonUnlockPearl(button_id++,
-				SlotEnderPearl.posX+40,  
-				SlotEnderPearl.posY+4,label);
+					this.guiLeft+padding,  
+					this.guiTop+padding,label);
 			this.buttonList.add(b);
 			
 			b.enabled = (current >= ModConfig.expCostPearl);
@@ -92,8 +92,8 @@ public class GuiOverpowered extends GuiContainer
 			label = current + "/" + ModConfig.expCostEChest;
 			
 			b = new GuiButtonUnlockChest(button_id++,
-				SlotEnderChest.posX+40,  
-				SlotEnderChest.posY,label);
+					this.guiLeft+padding,  
+					this.guiTop+padding + 3*Const.SQ,label);
 			this.buttonList.add(b);
 			
 			b.enabled = (current >= ModConfig.expCostEChest);
@@ -114,6 +114,7 @@ public class GuiOverpowered extends GuiContainer
 		}
     }
 	
+	@Override
 	public void drawScreen(int x, int y, float par3)
 	{
 		super.drawScreen(x, y, par3);
@@ -159,15 +160,9 @@ public class GuiOverpowered extends GuiContainer
 		if(container.epearlSlotEnabled && inventory.getStackInSlot(Const.SLOT_EPEARL) == null){
 			UtilTextureRender.drawTextureSimple(SlotEnderPearl.background,SlotEnderPearl.posX, SlotEnderPearl.posY,s,s);
 		}
-		else{
-			
-		}
 
 		if(container.echestSlotEnabled && inventory.getStackInSlot(Const.SLOT_ECHEST) == null){  
 			UtilTextureRender.drawTextureSimple(SlotEnderChest.background,SlotEnderChest.posX, SlotEnderChest.posY,s,s);
-		}
-		else{
-			
 		}
 	}
 	
@@ -183,7 +178,21 @@ public class GuiOverpowered extends GuiContainer
 					this.guiTop+craftY,
 					111,57);
 		}
-	 
+		//TODO: these will be exp unlocks also
+		int left=7,pad=4,topspace=83;
+		//topright
+		UtilTextureRender.drawTextureSimple(bkg_3x9, 
+				this.guiLeft+pad+left+SLOTS_WIDTH, 
+				this.guiTop+topspace, SLOTS_WIDTH, SLOTS_HEIGHT);
+		//lower left
+		UtilTextureRender.drawTextureSimple(bkg_3x9, 
+				this.guiLeft+left, 
+				this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
+		//lower right
+		UtilTextureRender.drawTextureSimple(bkg_3x9, 
+				this.guiLeft+pad+left+SLOTS_WIDTH, 
+				this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
+		
         if(container.echestSlotEnabled){drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);}
     	if(container.epearlSlotEnabled){drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);}
 	}
