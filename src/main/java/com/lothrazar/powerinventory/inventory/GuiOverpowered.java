@@ -17,8 +17,8 @@ public class GuiOverpowered extends GuiContainer
 	private ResourceLocation bkg = new ResourceLocation(Const.MODID,  "textures/gui/inventory.png");
 	private ResourceLocation bkg_craft = new ResourceLocation(Const.MODID,  "textures/gui/crafting.png");
 	public static ResourceLocation slot = new ResourceLocation(Const.MODID,"textures/gui/inventory_slot.png");
-	public static final int craftX = 111;
-	public static final int craftY = 17;
+	public static final int craftX = 36;//was 111,17
+	public static final int craftY = 14;
 	public static boolean SHOW_DEBUG_NUMS = false;
 	private final InventoryOverpowered inventory;
 	private ContainerOverpowered container;
