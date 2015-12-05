@@ -6,19 +6,21 @@ import com.lothrazar.powerinventory.ModInv;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class GuiButtonUnlockCraft extends GuiButton 
+public class GuiButtonUnlockCraft extends GuiButton implements IGuiTooltip 
 {
 	final static int height = 20;
 	final static int width = 70;
-	public final static String tooltip = "button.craftexp";
+	private String tooltip;
     public GuiButtonUnlockCraft(int buttonId, int x, int y, String label)
     {
     	super(buttonId, x, y, width,height, label);
+    	this.setTooltip(StatCollector.translateToLocal("tooltip.craftexp"));
     }
 
     @SideOnly(Side.CLIENT)
@@ -35,5 +37,17 @@ public class GuiButtonUnlockCraft extends GuiButton
     	
     	return pressed;
     }
+
+	@Override
+	public String getTooltip()
+	{
+		return tooltip;
+	}
+
+	@Override
+	public void setTooltip(String s)
+	{
+		tooltip = s;
+	}
 }
 

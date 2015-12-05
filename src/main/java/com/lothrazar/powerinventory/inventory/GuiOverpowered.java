@@ -1,13 +1,17 @@
 package com.lothrazar.powerinventory.inventory;
 
+import java.util.Arrays;
+
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonRotate;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockCraft;
+import com.lothrazar.powerinventory.inventory.button.IGuiTooltip;
 import com.lothrazar.powerinventory.inventory.slot.*;
 import com.lothrazar.powerinventory.util.UtilExperience;
 import com.lothrazar.powerinventory.util.UtilTextureRender;
 
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer; 
@@ -84,9 +88,24 @@ public class GuiOverpowered extends GuiContainer
 		}
     }
 	
-	public void drawScreen(int par1, int par2, float par3)
+	public void drawScreen(int x, int y, float par3)
 	{
-		super.drawScreen(par1, par2, par3);
+		super.drawScreen(x, y, par3);
+
+		GuiButton btn;
+		for (int i = 0; i < buttonList.size(); i++) 
+		{
+			btn = buttonList.get(i);
+			if (btn instanceof IGuiTooltip && btn.isMouseOver() ) 
+			{
+				String tooltip = ((IGuiTooltip)btn).getTooltip();
+				if (tooltip != null) 
+				{
+					//it takes a list, one on each line. but we use single line tooltips
+					drawHoveringText(Arrays.asList(new String[]{ tooltip}), x, y, fontRendererObj);
+				}
+			}
+		}
 		
 		if(SHOW_DEBUG_NUMS){ 
 			for(Slot s : this.container.inventorySlots)
