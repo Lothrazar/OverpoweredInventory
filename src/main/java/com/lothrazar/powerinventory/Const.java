@@ -16,7 +16,8 @@ public class Const
 	public static final int VHEIGHT = 166;
  
 	//these are slot indices. different than slot numbers (important)
-    public static final int enderPearlSlot = 77777; 
-    public static final int enderChestSlot = enderPearlSlot+1;
+    public static final int SLOT_EPEARL = 77777; 
+    public static final int SLOT_ECHEST = SLOT_EPEARL+1;
+    
     
 }

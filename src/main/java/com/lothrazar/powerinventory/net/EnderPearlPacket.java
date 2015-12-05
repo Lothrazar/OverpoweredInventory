@@ -43,7 +43,7 @@ public class EnderPearlPacket implements IMessage , IMessageHandler<EnderPearlPa
 		
 		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 		 
-		ItemStack pearls = prop.inventory.getStackInSlot(Const.enderPearlSlot);
+		ItemStack pearls = prop.inventory.getStackInSlot(Const.SLOT_EPEARL);
  
  		if(pearls != null)
  		{
@@ -52,7 +52,7 @@ public class EnderPearlPacket implements IMessage , IMessageHandler<EnderPearlPa
  	 		p.worldObj.playSoundAtEntity(p, "random.bow", 1.0F, 1.0F);   // ref http://minecraft.gamepedia.com/Sounds.json
  	 		
  	 		if(p.capabilities.isCreativeMode == false)
- 	 			prop.inventory.decrStackSize(Const.enderPearlSlot, 1);
+ 	 			prop.inventory.decrStackSize(Const.SLOT_EPEARL, 1);
  		}
  	
 		return null;

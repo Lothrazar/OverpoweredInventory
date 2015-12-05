@@ -155,10 +155,10 @@ public class ContainerOverpowered extends Container
         S_BAROTHER_END = this.inventorySlots.size() - 1;
         
 		S_PEARL =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.enderPearlSlot));
+        this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.SLOT_EPEARL));
 
         S_ECHEST =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.enderChestSlot)); 
+        this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.SLOT_ECHEST)); 
 
 		if(craftingEnabled){
 			this.onCraftMatrixChanged(this.craftMatrix);
@@ -218,8 +218,8 @@ public class ContainerOverpowered extends Container
 			{ 
             	if(stackCopy.getItem() == Items.ender_pearl && 
             		(	
-        			invo.getStackInSlot(Const.enderPearlSlot) == null || 
-        			invo.getStackInSlot(Const.enderPearlSlot).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))
+        			invo.getStackInSlot(Const.SLOT_EPEARL) == null || 
+        			invo.getStackInSlot(Const.SLOT_EPEARL).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))
         			)
         		{
             		if (!this.mergeItemStack(stackOrig, S_PEARL, S_PEARL + 1, false))
@@ -229,8 +229,8 @@ public class ContainerOverpowered extends Container
         		}
             	else if(stackCopy.getItem() == Item.getItemFromBlock(Blocks.ender_chest) && 
             		(
-        			invo.getStackInSlot(Const.enderChestSlot) == null || 
-        			invo.getStackInSlot(Const.enderChestSlot).stackSize < 1)
+        			invo.getStackInSlot(Const.SLOT_ECHEST) == null || 
+        			invo.getStackInSlot(Const.SLOT_ECHEST).stackSize < 1)
         			)
         		{ 
             		if (!this.mergeItemStack(stackOrig, S_ECHEST, S_ECHEST+1, false))

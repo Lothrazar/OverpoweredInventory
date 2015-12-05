@@ -14,10 +14,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiButtonUnlockCraft extends GuiButton 
 {
 	final static int height = 20;
-	final static int width = 20;
-    public GuiButtonUnlockCraft(int buttonId, int x, int y)
+	final static int width = 70;
+	public final static String tooltip = "button.craftexp";
+    public GuiButtonUnlockCraft(int buttonId, int x, int y, String label)
     {
-    	super(buttonId, x, y, width,height, "button.unlock");
+    	super(buttonId, x, y, width,height, label);
     }
 
     @SideOnly(Side.CLIENT)

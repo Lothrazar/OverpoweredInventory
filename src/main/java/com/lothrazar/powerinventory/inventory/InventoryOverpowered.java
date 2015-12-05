@@ -32,8 +32,8 @@ public class InventoryOverpowered implements IInventory
 	@Override
 	public ItemStack getStackInSlot(int slot)
 	{
-        if(slot == Const.enderPearlSlot){return enderPearlStack;}
-        if(slot == Const.enderChestSlot){return enderChestStack;} 
+        if(slot == Const.SLOT_EPEARL){return enderPearlStack;}
+        if(slot == Const.SLOT_ECHEST){return enderChestStack;} 
       
 		return inventory[slot];
 	}
@@ -53,13 +53,13 @@ public class InventoryOverpowered implements IInventory
     {
         ItemStack itemstack;
 //TODO: these ifelse brnaches are almost all identical. find a way to share code? make function?
-    	if(index == Const.enderChestSlot)
+    	if(index == Const.SLOT_ECHEST)
     	{ 
             itemstack = this.enderChestStack;
             this.enderChestStack = null;
             return itemstack;
     	}    	
-    	else if(index == Const.enderPearlSlot)
+    	else if(index == Const.SLOT_EPEARL)
     	{
     		 if (this.enderPearlStack.stackSize <= count)
              {
@@ -140,11 +140,11 @@ public class InventoryOverpowered implements IInventory
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack)
 	{
-		if(slot == Const.enderPearlSlot)
+		if(slot == Const.SLOT_EPEARL)
 		{
 			enderPearlStack = stack;  
 		}
-		else if(slot == Const.enderChestSlot)
+		else if(slot == Const.SLOT_ECHEST)
 		{
 			enderChestStack = stack;  
 		}
@@ -204,7 +204,7 @@ public class InventoryOverpowered implements IInventory
         if(this.enderChestStack != null)
         {
         	tagcompound = new NBTTagCompound();
-			tagcompound.setInteger(tagSlot,  Const.enderChestSlot);
+			tagcompound.setInteger(tagSlot,  Const.SLOT_ECHEST);
        
             this.enderChestStack.writeToNBT(tagcompound);
             nbttaglist.appendTag(tagcompound);
@@ -212,7 +212,7 @@ public class InventoryOverpowered implements IInventory
         if(this.enderPearlStack != null)
         {
         	tagcompound = new NBTTagCompound();
-        	tagcompound.setInteger(tagSlot,  Const.enderPearlSlot);  
+        	tagcompound.setInteger(tagSlot,  Const.SLOT_EPEARL);  
             this.enderPearlStack.writeToNBT(tagcompound);
             nbttaglist.appendTag(tagcompound);
         }
@@ -239,11 +239,11 @@ public class InventoryOverpowered implements IInventory
 
 			else if (itemstack != null)
             {
-            	if(b == Const.enderPearlSlot)
+            	if(b == Const.SLOT_EPEARL)
             	{
             		enderPearlStack = itemstack;
             	}
-            	if(b == Const.enderChestSlot)
+            	if(b == Const.SLOT_ECHEST)
                 {
                 	enderChestStack = itemstack;
                 }

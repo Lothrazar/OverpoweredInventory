@@ -93,8 +93,8 @@ public class EventHandler
 				prop.inventory.dropStackInSlot(p, i);
 	        }
 
-			prop.inventory.dropStackInSlot(p, Const.enderChestSlot);
-			prop.inventory.dropStackInSlot(p, Const.enderPearlSlot);
+			prop.inventory.dropStackInSlot(p, Const.SLOT_ECHEST);
+			prop.inventory.dropStackInSlot(p, Const.SLOT_EPEARL);
 		}
 	}
 

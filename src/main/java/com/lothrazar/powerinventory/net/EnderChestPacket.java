@@ -41,7 +41,7 @@ public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPa
  
 		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 		 
- 		ItemStack chest = prop.inventory.getStackInSlot(Const.enderChestSlot);
+ 		ItemStack chest = prop.inventory.getStackInSlot(Const.SLOT_ECHEST);
 		
 		if( chest != null)
 			p.displayGUIChest(p.getInventoryEnderChest());
