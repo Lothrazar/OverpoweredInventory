@@ -38,8 +38,9 @@ public class ContainerOverpowered extends Container
     static int S_BAROTHER_START;
     static int S_BAROTHER_END;
 
-    int hotbarX = 8;
-    int hotbarY = 142 + (Const.SQ * 9);
+    final int hotbarX = 8;
+    final int hotbarY = 142 + (Const.SQ * 9);
+	final int offset = 4;//size of grey space between the sections
 	
 	//static final int OFFSCREEN = 600;
     private final EntityPlayer thePlayer;
@@ -77,7 +78,7 @@ public class ContainerOverpowered extends Container
 		
 		
 	  	int rowsMoreThanV = 3;
-        int hotbarY = 142 + (Const.SQ * rowsMoreThanV);
+        int hotbarY = 142 + (Const.SQ * rowsMoreThanV) + offset;
 		
         S_BAR_START = this.inventorySlots.size();
         for (i = 0; i < Const.HOTBAR_SIZE; ++i)
@@ -111,7 +112,7 @@ public class ContainerOverpowered extends Container
             {
             	slotNum = Const.V_INVO_SIZE + j + (i + 1) * 9;
        
-            	x = oldx + j * Const.SQ;
+            	x = oldx + j * Const.SQ + offset;
             	y = yStart + i * Const.SQ;
         		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
             }
@@ -125,7 +126,7 @@ public class ContainerOverpowered extends Container
             	slotNum = Const.V_INVO_SIZE*2 + j + (i + 1) * 9;
        
             	x = paddingLrg + j * Const.SQ;
-            	y = oldy + i * Const.SQ;
+            	y = oldy + i * Const.SQ + offset;
         		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
             }
         }
@@ -136,8 +137,8 @@ public class ContainerOverpowered extends Container
             {
             	slotNum = Const.V_INVO_SIZE*3 + j + (i + 1) * 9;
        
-            	x = oldx + j * Const.SQ;
-            	y = oldy + i * Const.SQ;
+            	x = oldx + j * Const.SQ + offset;
+            	y = oldy + i * Const.SQ + offset;
         		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
             }
         }
@@ -146,7 +147,7 @@ public class ContainerOverpowered extends Container
         S_BAROTHER_START = this.inventorySlots.size();
         for (i = Const.HOTBAR_SIZE; i < 2*Const.HOTBAR_SIZE; ++i)
         { 
-        	x = hotbarX + i * Const.SQ; 
+        	x = hotbarX + i * Const.SQ + offset; 
      
             slotNum++;
             this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x, hotbarY));

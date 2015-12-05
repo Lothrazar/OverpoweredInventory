@@ -22,6 +22,9 @@ public class GuiOverpowered extends GuiContainer
 	public static boolean SHOW_DEBUG_NUMS = false;
 	private final InventoryOverpowered inventory;
 	private ContainerOverpowered container;
+	final int h = 20;
+	final int w = 20;
+	final int padding = 6;//on the far outer sizes
 	
 	public GuiOverpowered(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryOverpowered inventoryCustom)
 	{
@@ -33,18 +36,16 @@ public class GuiOverpowered extends GuiContainer
 		
 		
 		//fixed numbers from the .png resource size
-		this.xSize = 338;
-		this.ySize = 221;
+		this.xSize = 342;
+		this.ySize = 225;
 	}
-	
+
 	@Override
 	public void initGui()
     { 
 		super.initGui();
+		
 		int button_id = 99;
-		final int h = 20;
-		final int w = 20;
-		final int padding = 6;
 		
 		int xstart = this.guiLeft + this.xSize - w - padding;
 		int ystart = this.guiTop + padding;
