@@ -1,26 +1,13 @@
 package com.lothrazar.powerinventory;
  
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.world.WorldEvent;
-
-import org.apache.logging.log4j.Level;
 
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonOpenInventory;
@@ -35,16 +22,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-/**
- * @author https://github.com/Funwayguy/InfiniteInvo
- * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
- */
+
 public class EventHandler
 {
-	public static File worldDir;
-	public static HashMap<String, Integer> unlockCache = new HashMap<String, Integer>();
-	public static HashMap<String, Container> lastOpened = new HashMap<String, Container>();
-	
 	@SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) 
     {   
@@ -99,12 +79,22 @@ public class EventHandler
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent event)
 	{
-		if(event.entityLiving instanceof EntityPlayer)
+		if(event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote)
 		{
-			if(!event.entityLiving.worldObj.isRemote && event.entityLiving.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory"))
-			{
-				PlayerPersistProperty.keepInvoCache.put(event.entityLiving.getUniqueID(), ((EntityPlayer)event.entityLiving).inventory.writeToNBT(new NBTTagList()));
-			}
+				//we ignore this currently
+// && event.entityLiving.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")
+			
+			EntityPlayer p = (EntityPlayer)event.entityLiving;
+
+			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+			//the vanilla inventory stuff (incl hotbar hotbar) already drops by default
+			for (int i = Const.V_INVO_SIZE+Const.HOTBAR_SIZE; i < prop.inventory.getSizeInventory(); ++i)  
+	        {
+				prop.inventory.dropStackInSlot(p, i);
+	        }
+
+			prop.inventory.dropStackInSlot(p, Const.enderChestSlot);
+			prop.inventory.dropStackInSlot(p, Const.enderPearlSlot);
 		}
 	}
 
@@ -155,104 +145,6 @@ public class EventHandler
 		}
 	}
 	
-	@SubscribeEvent
-	public void onWorldLoad(WorldEvent.Load event)
-	{
-		if(!event.world.isRemote && worldDir == null && MinecraftServer.getServer().isServerRunning())
-		{
-			MinecraftServer server = MinecraftServer.getServer();
-			
-			if(ModInv.proxy.isClient())
-			{
-				worldDir = server.getFile("saves/" + server.getFolderName());
-			} 
-			else
-			{
-				worldDir = server.getFile(server.getFolderName());
-			}
-
-			new File(worldDir, "data/").mkdirs();
-			LoadCache(new File(worldDir, "data/SlotUnlockCache"));
-		}
-	}
-	
-	@SubscribeEvent
-	public void onWorldSave(WorldEvent.Save event)
-	{
-		if(!event.world.isRemote && worldDir != null && MinecraftServer.getServer().isServerRunning())
-		{
-			new File(worldDir, "data/").mkdirs();
-			SaveCache(new File(worldDir, "data/SlotUnlockCache"));
-		}
-	}
-	
-	@SubscribeEvent
-	public void onWorldUnload(WorldEvent.Unload event)
-	{
-		if(!event.world.isRemote && worldDir != null && !MinecraftServer.getServer().isServerRunning())
-		{
-			new File(worldDir, "data/").mkdirs();
-			SaveCache(new File(worldDir, "data/SlotUnlockCache"));
-			
-			worldDir = null;
-			unlockCache.clear();
-			PlayerPersistProperty.keepInvoCache.clear();
-		}
-	}
-	
-	public static void SaveCache(File file)
-	{
-		try
-		{
-			if(!file.exists())
-			{
-				file.createNewFile();
-			}
-			
-			FileOutputStream fos = new FileOutputStream(file);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			
-			oos.writeObject(unlockCache);
-			
-			oos.close();
-			fos.close();
-		} 
-		catch(Exception e)
-		{
-			ModInv.logger.log(Level.ERROR, "Failed to save slot unlock cache", e);
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static void LoadCache(File file)
-	{
-		try
-		{
-			if(!file.exists())
-			{
-				file.createNewFile();
-			}
-			
-			FileInputStream fis = new FileInputStream(file);
-			
-			if(fis.available() <= 0)
-			{
-				fis.close();
-				return;
-			}
-			
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			
-			unlockCache = (HashMap<String,Integer>)ois.readObject();
-			
-			ois.close();
-			fis.close();
-		} catch(Exception e)
-		{
-			ModInv.logger.log(Level.ERROR, "Failed to load slot unlock cache", e);
-		}
-	}
-
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent//(priority = EventPriority.NORMAL)
     public void onRenderOverlay(RenderGameOverlayEvent event)
@@ -264,5 +156,4 @@ public class EventHandler
 			GuiIngameForge.renderFood = true;
 		}
     } 
-	
 }

@@ -177,11 +177,12 @@ public class ContainerOverpowered extends Container
     public void onContainerClosed(EntityPlayer playerIn)
     {
         super.onContainerClosed(playerIn);
-		if(craftingEnabled){
-	
+		if(craftingEnabled)
+		{
+			ItemStack itemstack;
 	        for (int i = 0; i < CRAFTSIZE * CRAFTSIZE; ++i)  
 	        {
-	            ItemStack itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
+	            itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
 	
 	            if (itemstack != null)
 	            {

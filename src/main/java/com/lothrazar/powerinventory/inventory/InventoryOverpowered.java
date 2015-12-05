@@ -37,6 +37,16 @@ public class InventoryOverpowered implements IInventory
       
 		return inventory[slot];
 	}
+	
+	public void dropStackInSlot(EntityPlayer p,int slot)
+	{
+		ItemStack itemstack = getStackInSlot(slot);
+		
+		if (itemstack != null)
+        {
+            p.dropPlayerItemWithRandomChoice(itemstack, false);
+        }
+	}
 
     @Override
     public ItemStack decrStackSize(int index, int count)
