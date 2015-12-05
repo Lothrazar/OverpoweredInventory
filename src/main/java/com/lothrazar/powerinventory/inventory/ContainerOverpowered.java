@@ -50,7 +50,7 @@ public class ContainerOverpowered extends Container
 		
 		PlayerPersistProperty prop = PlayerPersistProperty.get(player);
 		
-		craftingEnabled = prop.hasInvoCrafting();
+		craftingEnabled = prop.getInvoCrafting();
 		
 		int i,j,slotNum=0,x=0,y=0,yStart = 84, paddingLrg=8;
 

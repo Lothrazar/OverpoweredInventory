@@ -8,6 +8,7 @@ import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonOpenInventory;
@@ -63,19 +64,30 @@ public class EventHandler
 	}
 	
 	@SubscribeEvent
+	public void onPlayerClone(PlayerEvent.Clone event)
+	{
+		if(event.wasDeath == false || //changing dimensions -> so always do it
+				(ModConfig.persistUnlocksOnDeath && event.wasDeath))//or it was a death => maybe do it
+		{
+			PlayerPersistProperty.clonePlayerData(event.original, event.entityPlayer);
+		}
+		
+	}
+	
+	@SubscribeEvent
 	public void onEntityJoinWorld(EntityJoinWorldEvent event)
 	{
 		if(event.entity instanceof EntityPlayer)
 		{
 			EntityPlayer player = (EntityPlayer)event.entity;
-			
 			if(PlayerPersistProperty.get(player) != null)
 			{
 				PlayerPersistProperty.get(player).onJoinWorld();
+				System.out.println("onJoinWorld");
 			} 
 		}
 	}
- 
+	
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent event)
 	{

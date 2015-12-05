@@ -45,7 +45,7 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 	public PlayerPersistProperty(EntityPlayer player)
 	{
 		this.player = player;
-		this.prevPlayer = null;
+		this.prevPlayer = null;//TODO: can we just delete this prevPalyer foreveri s it even used
 		this.player.getDataWatcher().addObject(CRAFTING_WATCHER, this.craftingOpen);
 	}
 	
@@ -54,6 +54,7 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 		if(prevPlayer != null)
 		{
 			player.inventory.readFromNBT(prevPlayer.inventory.writeToNBT(new NBTTagList()));
+			
 			this.prevPlayer = null;
 		}
 	}
@@ -76,7 +77,7 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 		int val = c?1:0;
 		player.getDataWatcher().updateObject(CRAFTING_WATCHER,val);
 	}
-	public boolean hasInvoCrafting(){
+	public boolean getInvoCrafting(){
 		return player.getDataWatcher().getWatchableObjectInt(CRAFTING_WATCHER)==1;
 	}
 	
@@ -93,5 +94,10 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 	{
 		this.inventory.writeToNBT(compound);
 		compound.setInteger(NBT_CRAFT,  player.getDataWatcher().getWatchableObjectInt(CRAFTING_WATCHER));
+	}
+
+	public static void clonePlayerData(EntityPlayer original, EntityPlayer newPlayer)
+	{
+		PlayerPersistProperty.get(newPlayer).setInvoCrafting(PlayerPersistProperty.get(original).getInvoCrafting());
 	}
 }
