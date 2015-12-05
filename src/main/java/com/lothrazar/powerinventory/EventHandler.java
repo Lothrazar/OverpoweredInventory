@@ -6,7 +6,6 @@ import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
@@ -71,21 +70,6 @@ public class EventHandler
 		{
 			PlayerPersistProperty.clonePlayerData(event.original, event.entityPlayer);
 		}
-		
-	}
-	
-	@SubscribeEvent
-	public void onEntityJoinWorld(EntityJoinWorldEvent event)
-	{
-		if(event.entity instanceof EntityPlayer)
-		{
-			EntityPlayer player = (EntityPlayer)event.entity;
-			if(PlayerPersistProperty.get(player) != null)
-			{
-				PlayerPersistProperty.get(player).onJoinWorld();
-				System.out.println("onJoinWorld");
-			} 
-		}
 	}
 	
 	@SubscribeEvent
@@ -93,9 +77,6 @@ public class EventHandler
 	{
 		if(event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote)
 		{
-				//we ignore this currently
-// && event.entityLiving.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory")
-			
 			EntityPlayer p = (EntityPlayer)event.entityLiving;
 
 			PlayerPersistProperty prop = PlayerPersistProperty.get(p);

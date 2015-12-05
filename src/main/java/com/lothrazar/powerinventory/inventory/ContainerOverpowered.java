@@ -23,8 +23,7 @@ public class ContainerOverpowered extends Container
 	public InventoryOverpowered invo;
 	public InventoryCrafting craftMatrix;
     public IInventory craftResult = new InventoryCraftResult();
-    public boolean craftingEnabled = true;//TODO: toggle this somehow from somewhere?
-	public static final int CRAFTSIZE = 3;//did not exist before, was magic'd as 2 everywhere
+    public boolean craftingEnabled = true;
 	static int S_RESULT;
 	static int S_CRAFT_START;
 	static int S_CRAFT_END;
@@ -55,7 +54,7 @@ public class ContainerOverpowered extends Container
 		int i,j,slotNum=0,x=0,y=0,yStart = 84, paddingLrg=8;
 
 		if(craftingEnabled){
-			craftMatrix = new InventoryCrafting(this, CRAFTSIZE, CRAFTSIZE);
+			craftMatrix = new InventoryCrafting(this, Const.CRAFTSIZE, Const.CRAFTSIZE);
 			
 			S_RESULT = this.inventorySlots.size();
 	        this.addSlotToContainer(new SlotCrafting(player, this.craftMatrix, this.craftResult, 0, 
@@ -63,14 +62,14 @@ public class ContainerOverpowered extends Container
 	        		3+3+17 + GuiOverpowered.craftY)); //+17
 	
 	        S_CRAFT_START = this.inventorySlots.size();
-	        for (i = 0; i < CRAFTSIZE; ++i)
+	        for (i = 0; i < Const.CRAFTSIZE; ++i)
 	        { 
-	            for (j = 0; j < CRAFTSIZE; ++j)
+	            for (j = 0; j < Const.CRAFTSIZE; ++j)
 	            {  
 	    			x = 3+ GuiOverpowered.craftX + j * Const.SQ ; 
 	    			y = 3+ GuiOverpowered.craftY + i * Const.SQ ;
 	
-	        		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * CRAFTSIZE, x , y)); 
+	        		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * Const.CRAFTSIZE, x , y)); 
 	            }
 	        }
 	        S_CRAFT_END = this.inventorySlots.size() - 1;
@@ -180,7 +179,7 @@ public class ContainerOverpowered extends Container
 		if(craftingEnabled)
 		{
 			ItemStack itemstack;
-	        for (int i = 0; i < CRAFTSIZE * CRAFTSIZE; ++i)  
+	        for (int i = 0; i < Const.CRAFTSIZE * Const.CRAFTSIZE; ++i)  
 	        {
 	            itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
 	

@@ -5,7 +5,6 @@ import com.lothrazar.powerinventory.inventory.InventoryOverpowered;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
@@ -21,7 +20,6 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 	public static final int CRAFTING_WATCHER = 20;
 	private int craftingOpen = 0;
 	private EntityPlayer player;
-	private EntityPlayer prevPlayer;
 	public final InventoryOverpowered inventory = new InventoryOverpowered();
 
 	public static void register(EntityPlayer player)
@@ -36,7 +34,8 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 		if(property != null && property instanceof PlayerPersistProperty)
 		{
 			return (PlayerPersistProperty)property;
-		} else
+		} 
+		else
 		{
 			return null;
 		}
@@ -45,18 +44,7 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 	public PlayerPersistProperty(EntityPlayer player)
 	{
 		this.player = player;
-		this.prevPlayer = null;//TODO: can we just delete this prevPalyer foreveri s it even used
 		this.player.getDataWatcher().addObject(CRAFTING_WATCHER, this.craftingOpen);
-	}
-	
-	public void onJoinWorld()
-	{
-		if(prevPlayer != null)
-		{
-			player.inventory.readFromNBT(prevPlayer.inventory.writeToNBT(new NBTTagList()));
-			
-			this.prevPlayer = null;
-		}
 	}
 	
 	@Override
@@ -64,11 +52,6 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 	{
 		if(entity instanceof EntityPlayer)
 		{
-			if(player != null && player != entity) // This will return true if the entity is being cloned
-			{
-				prevPlayer = player; // Store the previous player for later when the new one is spawned in the world
-			}
-			
 			this.player = (EntityPlayer)entity;
 		}
 	}
