@@ -5,7 +5,9 @@ import java.util.Arrays;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonRotate;
+import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockChest;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockCraft;
+import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockPearl;
 import com.lothrazar.powerinventory.inventory.button.IGuiTooltip;
 import com.lothrazar.powerinventory.inventory.slot.*;
 import com.lothrazar.powerinventory.util.UtilExperience;
@@ -71,6 +73,19 @@ public class GuiOverpowered extends GuiContainer
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 				xstart, //bottom right
 				ystart+padding+h, w,h,GuiButtonRotate.BOTRIGHT));
+
+		if(container.epearlSlotEnabled == false){
+
+			this.buttonList.add(new GuiButtonUnlockPearl(button_id++,
+				SlotEnderPearl.posX,  
+				SlotEnderPearl.posY,""));
+		}
+		if(container.echestSlotEnabled == false){
+
+			this.buttonList.add(new GuiButtonUnlockChest(button_id++,
+				SlotEnderChest.posX,  
+				SlotEnderChest.posY,""));
+		}
 		
 		if(container.craftingEnabled == false)
 		{
@@ -79,8 +94,8 @@ public class GuiOverpowered extends GuiContainer
 			String label = current + "/" + ModConfig.expCostCrafting + " XP";
 			
 			GuiButtonUnlockCraft b = new GuiButtonUnlockCraft(button_id++,
-					this.guiLeft+craftX + 24,  // put this not in top left of where crafting image goes, but more centered
-					this.guiTop+craftY + 10, label);
+					this.guiLeft + craftX + 24,  // put this not in top left of where crafting image goes, but more centered
+					this.guiTop  + craftY + 10, label);
 			
 			this.buttonList.add(b);
 			
@@ -130,14 +145,18 @@ public class GuiOverpowered extends GuiContainer
 	{
 		final int s = 16;
 
-		if(inventory.getStackInSlot(Const.SLOT_EPEARL) == null)
-		{  
+		if(container.epearlSlotEnabled && inventory.getStackInSlot(Const.SLOT_EPEARL) == null){
 			UtilTextureRender.drawTextureSimple(SlotEnderPearl.background,SlotEnderPearl.posX, SlotEnderPearl.posY,s,s);
 		}
+		else{
+			
+		}
 
-		if(inventory.getStackInSlot(Const.SLOT_ECHEST) == null)
-		{  
+		if(container.echestSlotEnabled && inventory.getStackInSlot(Const.SLOT_ECHEST) == null){  
 			UtilTextureRender.drawTextureSimple(SlotEnderChest.background,SlotEnderChest.posX, SlotEnderChest.posY,s,s);
+		}
+		else{
+			
 		}
 	}
 	
@@ -154,8 +173,8 @@ public class GuiOverpowered extends GuiContainer
 					111,57);
 		}
 	 
-        drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);
-    	drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);
+        if(container.echestSlotEnabled){drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);}
+    	if(container.epearlSlotEnabled){drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);}
 	}
 	
 	private void drawSlotAt(int x, int y)

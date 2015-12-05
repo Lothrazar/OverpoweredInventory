@@ -23,7 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
  * before later being merged into my main project
  */
 @Mod(modid = Const.MODID, useMetadata=true, canBeDeactivated=false , updateJSON = "https://raw.githubusercontent.com/LothrazarMinecraftMods/OverpoweredInventory/master-18/update.json"
-		,  guiFactory ="com.lothrazar."+Const.MODID+".IngameConfigHandler")
+		,  guiFactory ="com.lothrazar."+Const.MODID+".config.IngameConfigHandler")
 public class ModInv
 {
 	@Instance(Const.MODID)
@@ -48,6 +48,8 @@ public class ModInv
     	network.registerMessage(SwapInvoPacket.class,  SwapInvoPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(HotbarSwapPacket.class,  HotbarSwapPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(UnlockCraftPacket.class,  UnlockCraftPacket.class,  packetID++, Side.SERVER);
+    	network.registerMessage(UnlockPearlPacket.class,  UnlockPearlPacket.class,  packetID++, Side.SERVER);
+    	network.registerMessage(UnlockChestPacket.class,  UnlockChestPacket.class,  packetID++, Side.SERVER);
     	
     	proxy.registerHandlers();
     } 

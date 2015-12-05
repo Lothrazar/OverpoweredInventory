@@ -23,14 +23,17 @@ public class ContainerOverpowered extends Container
 	public InventoryOverpowered invo;
 	public InventoryCrafting craftMatrix;
     public IInventory craftResult = new InventoryCraftResult();
-    public boolean craftingEnabled = true;
+    public boolean craftingEnabled;
+    public boolean epearlSlotEnabled;
+    public boolean echestSlotEnabled;
+    final static int DISABLED=-1;//since they cant be null in Java
 	static int S_RESULT;
 	static int S_CRAFT_START;
 	static int S_CRAFT_END;
 	static int S_MAIN_START;
 	static int S_MAIN_END;
-	static int S_ECHEST;
-	static int S_PEARL;
+	static int S_ECHEST=DISABLED;
+	static int S_PEARL=DISABLED;
 
 	static int S_BAR_START;
 	static int S_BAR_END;
@@ -50,6 +53,8 @@ public class ContainerOverpowered extends Container
 		PlayerPersistProperty prop = PlayerPersistProperty.get(player);
 		
 		craftingEnabled = prop.getInvoCrafting();
+		epearlSlotEnabled = prop.getInvoEPearl();
+		echestSlotEnabled = prop.getInvoEChest();
 		
 		int i,j,slotNum=0,x=0,y=0,yStart = 84, paddingLrg=8;
 
@@ -153,11 +158,15 @@ public class ContainerOverpowered extends Container
         }
         S_BAROTHER_END = this.inventorySlots.size() - 1;
         
-		S_PEARL =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.SLOT_EPEARL));
-
-        S_ECHEST =  this.inventorySlots.size() ;
-        this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.SLOT_ECHEST)); 
+        if(epearlSlotEnabled){
+			S_PEARL =  this.inventorySlots.size() ;
+	        this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.SLOT_EPEARL));
+        }
+        
+        if(echestSlotEnabled){
+	        S_ECHEST =  this.inventorySlots.size() ;
+	        this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.SLOT_ECHEST)); 
+        }
 
 		if(craftingEnabled){
 			this.onCraftMatrixChanged(this.craftMatrix);
@@ -215,7 +224,7 @@ public class ContainerOverpowered extends Container
 	
 			if (slotNumber >= S_MAIN_START && slotNumber <= S_MAIN_END) // main inv grid
 			{ 
-            	if(stackCopy.getItem() == Items.ender_pearl && 
+            	if(this.epearlSlotEnabled && stackCopy.getItem() == Items.ender_pearl && 
             		(	
         			invo.getStackInSlot(Const.SLOT_EPEARL) == null || 
         			invo.getStackInSlot(Const.SLOT_EPEARL).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))
@@ -226,7 +235,7 @@ public class ContainerOverpowered extends Container
                         return null;
                     }  
         		}
-            	else if(stackCopy.getItem() == Item.getItemFromBlock(Blocks.ender_chest) && 
+            	else if(this.echestSlotEnabled && stackCopy.getItem() == Item.getItemFromBlock(Blocks.ender_chest) && 
             		(
         			invo.getStackInSlot(Const.SLOT_ECHEST) == null || 
         			invo.getStackInSlot(Const.SLOT_ECHEST).stackSize < 1)
