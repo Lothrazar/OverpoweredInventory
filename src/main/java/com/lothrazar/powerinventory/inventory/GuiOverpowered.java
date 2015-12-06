@@ -35,7 +35,8 @@ public class GuiOverpowered extends GuiContainer
 	private final InventoryOverpowered inventory;
 	private ContainerOverpowered container;
 	final int h = 20;
-	final int w = 20;
+	final int w = 20;//default button dims
+	final int topspace=83;//space used by top half not including slots
 	final int padding = 6;//on the far outer sizes
 	final EntityPlayer thePlayer;
 	
@@ -114,15 +115,17 @@ public class GuiOverpowered extends GuiContainer
 			b.enabled = (current >= ModConfig.expCostCrafting);
 		}
 		
-		int topspace=83;
+		int centerHorizCol = SLOTS_WIDTH/2 - GuiButtonUnlockStorage.width/2;
+		int centerVert = topspace - SLOTS_HEIGHT/2 - GuiButtonUnlockStorage.height/2;
+		
 		if(container.storageEnabled[Const.STORAGE_1TOPRIGHT] == false)
 		{
 			int current = (int)UtilExperience.getExpTotal(thePlayer);
 			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft + SLOTS_WIDTH + SLOTS_WIDTH/2, 
-					this.guiTop+ topspace + SLOTS_HEIGHT/2, label,Const.STORAGE_1TOPRIGHT);
+					this.guiLeft + SLOTS_WIDTH + centerHorizCol, 
+					this.guiTop+ SLOTS_HEIGHT+centerVert, label,Const.STORAGE_1TOPRIGHT);
 			
 			this.buttonList.add(b);
 			
@@ -134,8 +137,8 @@ public class GuiOverpowered extends GuiContainer
 			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft+ SLOTS_WIDTH/2, 
-					this.guiTop+ topspace + SLOTS_HEIGHT +SLOTS_HEIGHT/2, label,Const.STORAGE_2BOTLEFT);
+					this.guiLeft+ centerHorizCol, 
+					this.guiTop+ 2*SLOTS_HEIGHT + centerVert, label,Const.STORAGE_2BOTLEFT);
 			
 			this.buttonList.add(b);
 			
@@ -147,8 +150,8 @@ public class GuiOverpowered extends GuiContainer
 			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft + SLOTS_WIDTH + SLOTS_WIDTH/2, 
-					this.guiTop+ topspace + SLOTS_HEIGHT +SLOTS_HEIGHT/2, label,Const.STORAGE_3BOTRIGHT);
+					this.guiLeft + SLOTS_WIDTH + centerHorizCol, 
+					this.guiTop+ 2*SLOTS_HEIGHT + centerVert, label,Const.STORAGE_3BOTRIGHT);
 			
 			this.buttonList.add(b);
 			
@@ -221,7 +224,7 @@ public class GuiOverpowered extends GuiContainer
 					111,57);
 		}
 		//TODO: these will be exp unlocks also
-		int left=7,pad=4,topspace=83;
+		int left=7,pad=4;
 		//topright is 1
 		if(container.storageEnabled[Const.STORAGE_1TOPRIGHT])
 			UtilTextureRender.drawTextureSimple(bkg_3x9, 

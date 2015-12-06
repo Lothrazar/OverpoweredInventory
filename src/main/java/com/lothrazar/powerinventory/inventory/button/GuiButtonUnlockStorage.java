@@ -13,8 +13,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class GuiButtonUnlockStorage extends GuiButton implements IGuiTooltip
 {
-	final static int height = 20;
-	final static int width = 70;
+	public final static int height = 20;
+	public final static int width = 70;
 	private int invoGroup;
 	private String tooltip;
     public GuiButtonUnlockStorage(int buttonId, int x, int y,String txt,int ig)
