@@ -129,14 +129,14 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 		}
 		
 		return player.getDataWatcher().getWatchableObjectInt(w)==1;
-	}
+	}/*
 	public int getStorageCount(){
 
 		//todo: a loop or data struct somehow?
 		return player.getDataWatcher().getWatchableObjectInt(STORAGE_1_WATCHER) 
 				+ player.getDataWatcher().getWatchableObjectInt(STORAGE_2_WATCHER) 
 				+ player.getDataWatcher().getWatchableObjectInt(STORAGE_3_WATCHER);
-	}
+	}*/
 	public boolean getDualHotbarUnlocked(){
 		return true;//TODO! THIS
 	}
