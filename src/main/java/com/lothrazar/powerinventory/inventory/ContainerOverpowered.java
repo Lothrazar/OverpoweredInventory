@@ -48,7 +48,7 @@ public class ContainerOverpowered extends Container
 		
 		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
 
-		int i,j,slotNum=0,x=0,y=0,yStart = 13+Const.SQ, paddingLrg=8;
+		int i,j,slotNum=0,x=0,y=0, paddingLrg=8;
  
 	  	int rowsMoreThanV = 3;
         int hotbarY = 142 + (Const.SQ * rowsMoreThanV) + offset;
@@ -64,24 +64,23 @@ public class ContainerOverpowered extends Container
 		
         S_MAIN_START = this.inventorySlots.size();
         // TOP LEFT: the player inventory mirror
+        
+        int xStart = paddingLrg;
+        int yStart = 13+Const.SQ;
+        
         for (i = 0; i < Const.ROWS_VANILLA; ++i)
         {
             for (j = 0; j < Const.COLS_VANILLA; ++j)
             {
             	slotNum = j + (i + 1) * 9;
           
-            	x = paddingLrg + j * Const.SQ;
+            	x = xStart + j * Const.SQ;
             	y = yStart + i * Const.SQ;
         		this.addSlotToContainer(new Slot(inventoryPlayer, slotNum, x,y));
             }
         }
 
-        int oldx = x + Const.SQ;
-        int oldy = y + Const.SQ;
-        
-        
-        
-        
+        xStart += Const.SLOTS_WIDTH + offset;
         // TOP RIGHT
         if (prop.getStorage(Const.STORAGE_1))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
@@ -90,12 +89,14 @@ public class ContainerOverpowered extends Container
 	            {
 	            	slotNum = Const.V_INVO_SIZE + j + (i + 1) * 9;
 	       
-	            	x = oldx + j * Const.SQ + offset;
+	            	x = xStart + j * Const.SQ;
 	            	y = yStart + i * Const.SQ;
 	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
 	            }
 	        }
         
+        xStart = paddingLrg;
+        yStart += Const.SLOTS_HEIGHT + offset;
         // BOTTOM LEFT:
         if (prop.getStorage(Const.STORAGE_2))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
@@ -104,11 +105,13 @@ public class ContainerOverpowered extends Container
 	            {
 	            	slotNum = Const.V_INVO_SIZE*2 + j + (i + 1) * 9;
 	       
-	            	x = paddingLrg + j * Const.SQ;
-	            	y = oldy + i * Const.SQ + offset;
+	            	x = xStart + j * Const.SQ;
+	            	y = yStart + i * Const.SQ;
 	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
 	            }
 	        }
+
+        xStart += Const.SLOTS_WIDTH + offset;//move right
         // BOTTOM RIGHT
         if (prop.getStorage(Const.STORAGE_3))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
@@ -117,13 +120,15 @@ public class ContainerOverpowered extends Container
 	            {
 	            	slotNum = Const.V_INVO_SIZE*3 + j + (i + 1) * 9;
 	       
-	            	x = oldx + j * Const.SQ + offset;
-	            	y = oldy + i * Const.SQ + offset;
+	            	x = xStart + j * Const.SQ;
+	            	y = yStart + i * Const.SQ;
 	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
 	            }
 	        }
-        oldx = x + Const.SQ;
-        oldy = y + Const.SQ;
+
+        xStart = paddingLrg;
+        yStart += Const.SLOTS_HEIGHT + offset;
+        
         //another row down
         if (prop.getStorage(Const.STORAGE_4))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
@@ -132,11 +137,14 @@ public class ContainerOverpowered extends Container
 	            {
 	            	slotNum = Const.V_INVO_SIZE*4 + j + (i + 1) * 9;
 	       
-	            	x = paddingLrg + j * Const.SQ;
-	            	y = oldy + i * Const.SQ + offset;
+	            	x = xStart + j * Const.SQ;
+	            	y = yStart + i * Const.SQ;
 	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
 	            }
 	        }
+
+        xStart += Const.SLOTS_WIDTH + offset;//move right
+        
         if (prop.getStorage(Const.STORAGE_5))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
@@ -144,8 +152,8 @@ public class ContainerOverpowered extends Container
 	            {
 	            	slotNum = Const.V_INVO_SIZE*5 + j + (i + 1) * 9;
 	       
-	            	x = oldx + j * Const.SQ + offset;
-	            	y = oldy + i * Const.SQ + offset;
+	            	x = xStart + j * Const.SQ;
+	            	y = yStart + i * Const.SQ;
 	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
 	            }
 	        }

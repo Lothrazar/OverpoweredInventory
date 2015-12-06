@@ -254,6 +254,16 @@ public class GuiOverpowered extends GuiContainer
 			UtilTextureRender.drawTextureSimple(bkg_3x9, 
 					this.guiLeft+pad+left+SLOTS_WIDTH, 
 					this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
+
+		if(prop.getStorage(Const.STORAGE_4))
+			UtilTextureRender.drawTextureSimple(bkg_3x9, 
+					this.guiLeft+left, 
+					this.guiTop+topspace+2*(pad+SLOTS_HEIGHT), SLOTS_WIDTH, SLOTS_HEIGHT);
+		
+		if(prop.getStorage(Const.STORAGE_5))
+			UtilTextureRender.drawTextureSimple(bkg_3x9, 
+					this.guiLeft+pad+left+SLOTS_WIDTH, 
+					this.guiTop+topspace+2*(pad+SLOTS_HEIGHT), SLOTS_WIDTH, SLOTS_HEIGHT);
 		
         if(container.echestSlotEnabled){drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);}
     	if(container.epearlSlotEnabled){drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);}
