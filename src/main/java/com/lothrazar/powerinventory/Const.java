@@ -11,6 +11,9 @@ public class Const
 	public static final int COLS_VANILLA = 9; 
 	public static final int V_INVO_SIZE = ROWS_VANILLA*COLS_VANILLA; //36
 	public static final int CRAFTSIZE = 3;
+	public final static int STORAGE_1TOPRIGHT = 1;
+	public final static int STORAGE_2BOTLEFT = 2;
+	public final static int STORAGE_3BOTRIGHT = 3;
 	
 	//pixel size of vanilla invo
 	public static final int VWIDTH = 176;

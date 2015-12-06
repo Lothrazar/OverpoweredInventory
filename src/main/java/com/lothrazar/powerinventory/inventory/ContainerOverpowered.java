@@ -63,16 +63,16 @@ public class ContainerOverpowered extends Container
 			
 			S_RESULT = this.inventorySlots.size();
 	        this.addSlotToContainer(new SlotCrafting(player, this.craftMatrix, this.craftResult, 0, 
-	        		3+yStart + GuiOverpowered.craftX, //  +111
-	        		3+3+17 + GuiOverpowered.craftY)); //+17
+	        		5 + yStart + GuiOverpowered.craftX, //  +111
+	        		23 + GuiOverpowered.craftY)); //+17
 	
 	        S_CRAFT_START = this.inventorySlots.size();
 	        for (i = 0; i < Const.CRAFTSIZE; ++i)
 	        { 
 	            for (j = 0; j < Const.CRAFTSIZE; ++j)
 	            {  
-	    			x = 3+ GuiOverpowered.craftX + j * Const.SQ ; 
-	    			y = 3+ GuiOverpowered.craftY + i * Const.SQ ;
+	    			x = 3 + GuiOverpowered.craftX + j * Const.SQ ; 
+	    			y = 3 + GuiOverpowered.craftY + i * Const.SQ ;
 	
 	        		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * Const.CRAFTSIZE, x , y)); 
 	            }

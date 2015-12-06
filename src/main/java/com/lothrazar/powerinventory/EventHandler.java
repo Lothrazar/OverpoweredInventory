@@ -125,15 +125,15 @@ public class EventHandler
 			x = screenWidth/2  + Const.VWIDTH/2 - w*6;
 			y = screenHeight/2 - Const.VHEIGHT/2 + padding;
 			
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,GuiButtonRotate.BOTRIGHT));
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_3BOTRIGHT));
 
 			x -= 2*w - padding;//move left
 			
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,GuiButtonRotate.BOTLEFT));
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_2BOTLEFT));
 
 			x -= 2*w - padding;//move left
 			
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,GuiButtonRotate.TOPRIGHT));
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_1TOPRIGHT));
 			
 		}
 	}

@@ -64,15 +64,15 @@ public class GuiOverpowered extends GuiContainer
 		GuiButton b;
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 					xstart, //top right
-					ystart,w,h, GuiButtonRotate.TOPRIGHT));
+					ystart,w,h, Const.STORAGE_1TOPRIGHT));
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 					xstart - w - padding, //bottom left
-					ystart + padding+h, w,h,GuiButtonRotate.BOTLEFT));
+					ystart + padding+h, w,h,Const.STORAGE_2BOTLEFT));
 		
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 					xstart, //bottom right
-					ystart+padding+h, w,h,GuiButtonRotate.BOTRIGHT));
+					ystart+padding+h, w,h,Const.STORAGE_3BOTRIGHT));
 
 		if(container.epearlSlotEnabled == false){
 
@@ -180,15 +180,15 @@ public class GuiOverpowered extends GuiContainer
 		}
 		//TODO: these will be exp unlocks also
 		int left=7,pad=4,topspace=83;
-		//topright
+		//topright is 1
 		UtilTextureRender.drawTextureSimple(bkg_3x9, 
 				this.guiLeft+pad+left+SLOTS_WIDTH, 
 				this.guiTop+topspace, SLOTS_WIDTH, SLOTS_HEIGHT);
-		//lower left
+		//lower left is 2
 		UtilTextureRender.drawTextureSimple(bkg_3x9, 
 				this.guiLeft+left, 
 				this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
-		//lower right
+		//lower right is 3
 		UtilTextureRender.drawTextureSimple(bkg_3x9, 
 				this.guiLeft+pad+left+SLOTS_WIDTH, 
 				this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
