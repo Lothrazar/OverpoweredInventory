@@ -47,7 +47,6 @@ public class ModInv
     	network.registerMessage(EnderChestPacket.class,  EnderChestPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(SwapInvoPacket.class,  SwapInvoPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(HotbarSwapPacket.class,  HotbarSwapPacket.class,  packetID++, Side.SERVER);
-    	network.registerMessage(UnlockCraftPacket.class,  UnlockCraftPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(UnlockPearlPacket.class,  UnlockPearlPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(UnlockChestPacket.class,  UnlockChestPacket.class,  packetID++, Side.SERVER);
     	network.registerMessage(UnlockStoragePacket.class,  UnlockStoragePacket.class,  packetID++, Side.SERVER);

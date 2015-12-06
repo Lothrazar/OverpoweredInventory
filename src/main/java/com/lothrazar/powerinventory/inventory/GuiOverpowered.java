@@ -6,7 +6,6 @@ import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonRotate;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockChest;
-import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlock3x3Crafting;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockPearl;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockStorage;
 import com.lothrazar.powerinventory.inventory.button.IGuiTooltip;
@@ -24,19 +23,19 @@ import net.minecraft.util.ResourceLocation;
 public class GuiOverpowered extends GuiContainer
 {
 	private ResourceLocation bkg = new ResourceLocation(Const.MODID,  "textures/gui/inventory.png");
-	private ResourceLocation bkg_craft = new ResourceLocation(Const.MODID,  "textures/gui/crafting.png");
+	//private ResourceLocation bkg_craft = new ResourceLocation(Const.MODID,  "textures/gui/crafting.png");
 	private ResourceLocation bkg_3x9 = new ResourceLocation(Const.MODID,  "textures/gui/slots3x9.png");
 	public static ResourceLocation slot = new ResourceLocation(Const.MODID,"textures/gui/inventory_slot.png");
-	public static final int craftX = 56; 
-	public static final int craftY = 10;//was 14
-	final int SLOTS_WIDTH = 162;
-	final int SLOTS_HEIGHT = 54;// the 3x9 size
+	//public static final int craftX = 56; 
+	//public static final int craftY = 10;//was 14
+	final int SLOTS_WIDTH = Const.SLOTS_WIDTH;
+	final int SLOTS_HEIGHT = Const.SLOTS_HEIGHT;// the 3x9 size
 	public static boolean SHOW_DEBUG_NUMS = false;
 	private final InventoryOverpowered inventory;
 	private ContainerOverpowered container;
 	final int h = 20;
 	final int w = 20;//default button dims
-	final int topspace=83;//space used by top half not including slots
+	final int topspace=12+Const.SQ;//space used by top half not including slots
 	final int padding = 6;//on the far outer sizes
 	final EntityPlayer thePlayer;
 	
@@ -102,19 +101,6 @@ public class GuiOverpowered extends GuiContainer
 			b.enabled = (current >= ModConfig.expCostEChest);
 		}
 		
-		if(container.craftingEnabled == false)
-		{
-			int current = (int)UtilExperience.getExpTotal(thePlayer);
-			label = current + "/" + ModConfig.expCostCrafting + " XP";
-			
-			b = new GuiButtonUnlock3x3Crafting(button_id++,
-					this.guiLeft + craftX + 24,  // put this not in top left of where crafting image goes, but more centered
-					this.guiTop  + craftY + 10, label);
-			
-			this.buttonList.add(b);
-			
-			b.enabled = (current >= ModConfig.expCostCrafting);
-		}
 		
 		int centerHorizCol = SLOTS_WIDTH/2 - GuiButtonUnlockStorage.width/2;
 		int centerVert = topspace - SLOTS_HEIGHT/2 - GuiButtonUnlockStorage.height/2;
@@ -216,16 +202,13 @@ public class GuiOverpowered extends GuiContainer
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{ 
 		UtilTextureRender.drawTextureSimple(bkg, this.guiLeft, this.guiTop,this.xSize,this.ySize);
-		
-		if( container.craftingEnabled ){
 
-			UtilTextureRender.drawTextureSimple(bkg_craft, 
-					this.guiLeft+craftX, 
-					this.guiTop+craftY,
-					111,57);
-		}
-		//TODO: these will be exp unlocks also
-		int left=7,pad=4;
+		int left=7,pad=4;//pad is middle padding. left is left edge padding
+		
+		//always render this one
+		UtilTextureRender.drawTextureSimple(bkg_3x9, 
+				this.guiLeft+left, 
+				this.guiTop+topspace, SLOTS_WIDTH, SLOTS_HEIGHT);
 		//topright is 1
 		if(container.storageEnabled[Const.STORAGE_1TOPRIGHT])
 			UtilTextureRender.drawTextureSimple(bkg_3x9, 

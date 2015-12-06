@@ -23,15 +23,11 @@ public class ContainerOverpowered extends Container
 	public InventoryOverpowered invo;
 	public InventoryCrafting craftMatrix;
     public IInventory craftResult = new InventoryCraftResult();
-    public boolean craftingEnabled;
     public boolean epearlSlotEnabled;
     public boolean echestSlotEnabled;
-    public boolean bottleEnabled;
     public boolean[] storageEnabled = new boolean[4];//slot zero not used
     final static int DISABLED=-1;//since they cant be null in Java
 	static int S_RESULT;
-	static int S_CRAFT_START;
-	static int S_CRAFT_END;
 	static int S_MAIN_START;
 	static int S_MAIN_END;
 	static int S_ECHEST=DISABLED;
@@ -53,40 +49,15 @@ public class ContainerOverpowered extends Container
 		thePlayer = player;
 		
 		PlayerPersistProperty prop = PlayerPersistProperty.get(player);
-		//vars to avoid hitting the properties every time
-		craftingEnabled = prop.getInvoCrafting();
+		//vars to avoid hitting the properties every time 
 		epearlSlotEnabled = prop.getInvoEPearl();
-		echestSlotEnabled = prop.getInvoEChest();
-		bottleEnabled = prop.getInvoBottling();
+		echestSlotEnabled = prop.getInvoEChest(); 
 		storageEnabled[Const.STORAGE_1TOPRIGHT] = prop.getStorage(Const.STORAGE_1TOPRIGHT);
 		storageEnabled[Const.STORAGE_2BOTLEFT]  = prop.getStorage(Const.STORAGE_2BOTLEFT);
 		storageEnabled[Const.STORAGE_3BOTRIGHT] = prop.getStorage(Const.STORAGE_3BOTRIGHT);
 		
-		int i,j,slotNum=0,x=0,y=0,yStart = 84, paddingLrg=8;
-
-		if(craftingEnabled){
-			craftMatrix = new InventoryCrafting(this, Const.CRAFTSIZE, Const.CRAFTSIZE);
-			
-			S_RESULT = this.inventorySlots.size();
-	        this.addSlotToContainer(new SlotCrafting(player, this.craftMatrix, this.craftResult, 0, 
-	        		5 + yStart + GuiOverpowered.craftX, //  +111
-	        		23 + GuiOverpowered.craftY)); //+17
-	
-	        S_CRAFT_START = this.inventorySlots.size();
-	        for (i = 0; i < Const.CRAFTSIZE; ++i)
-	        { 
-	            for (j = 0; j < Const.CRAFTSIZE; ++j)
-	            {  
-	    			x = 3 + GuiOverpowered.craftX + j * Const.SQ ; 
-	    			y = 3 + GuiOverpowered.craftY + i * Const.SQ ;
-	
-	        		this.addSlotToContainer(new Slot(this.craftMatrix, j + i * Const.CRAFTSIZE, x , y)); 
-	            }
-	        }
-	        S_CRAFT_END = this.inventorySlots.size() - 1;
-		}
-		
-		
+		int i,j,slotNum=0,x=0,y=0,yStart = 13+Const.SQ, paddingLrg=8;
+ 
 	  	int rowsMoreThanV = 3;
         int hotbarY = 142 + (Const.SQ * rowsMoreThanV) + offset;
 		
@@ -115,6 +86,10 @@ public class ContainerOverpowered extends Container
 
         int oldx = x + Const.SQ;
         int oldy = y + Const.SQ;
+        
+        
+        
+        
         // TOP RIGHT
         if (storageEnabled[Const.STORAGE_1TOPRIGHT])
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
@@ -176,39 +151,13 @@ public class ContainerOverpowered extends Container
 	        S_ECHEST =  this.inventorySlots.size() ;
 	        this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.SLOT_ECHEST)); 
         }
-
-		if(craftingEnabled){
-			this.onCraftMatrixChanged(this.craftMatrix);
-		}
+ 
 		invo = inventoryCustom;
-	}
-	@Override
-	public void onCraftMatrixChanged(IInventory inventoryIn)
-    {
-		if(craftingEnabled){
-			this.craftResult.setInventorySlotContents(0, CraftingManager.getInstance().findMatchingRecipe(this.craftMatrix, this.thePlayer.worldObj));
-		}
-        super.onCraftMatrixChanged(inventoryIn);
-    }
+	} 
 	@Override
     public void onContainerClosed(EntityPlayer playerIn)
     {
-        super.onContainerClosed(playerIn);
-		if(craftingEnabled)
-		{
-			ItemStack itemstack;
-	        for (int i = 0; i < Const.CRAFTSIZE * Const.CRAFTSIZE; ++i)  
-	        {
-	            itemstack = this.craftMatrix.getStackInSlotOnClosing(i);
-	
-	            if (itemstack != null)
-	            {
-	                playerIn.dropPlayerItemWithRandomChoice(itemstack, false);
-	            }
-	        }
-	
-	        this.craftResult.setInventorySlotContents(0, (ItemStack)null);
-		}
+        super.onContainerClosed(playerIn); 
     }
 	
 	@Override

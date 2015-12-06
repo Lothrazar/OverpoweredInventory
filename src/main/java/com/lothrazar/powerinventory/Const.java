@@ -11,9 +11,9 @@ public class Const
 	public static final int COLS_VANILLA = 9; 
 	public static final int V_INVO_SIZE = ROWS_VANILLA*COLS_VANILLA; //36
 	public static final int CRAFTSIZE = 3;
-	public final static int STORAGE_1TOPRIGHT = 1;
-	public final static int STORAGE_2BOTLEFT = 2;
-	public final static int STORAGE_3BOTRIGHT = 3;
+	public static final int STORAGE_1TOPRIGHT = 1;
+	public static final int STORAGE_2BOTLEFT = 2;
+	public static final int STORAGE_3BOTRIGHT = 3;
 	
 	//pixel size of vanilla invo
 	public static final int VWIDTH = 176;
@@ -26,4 +26,6 @@ public class Const
 
     public static final int TEXTURE_WIDTH = 342;
     public static final int TEXTURE_HEIGHT = 225;
+    public static final int SLOTS_WIDTH = 162;
+    public static final int SLOTS_HEIGHT = 54;// the 3x9 size
 }
