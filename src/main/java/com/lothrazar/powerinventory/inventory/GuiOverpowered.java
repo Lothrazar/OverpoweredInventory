@@ -176,19 +176,7 @@ public class GuiOverpowered extends GuiContainer
 
 		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
 		//always render this one
-		
-		//TODO: loop on ModConfig.getMaxSections()
-		//tricky since small means 2 columns and 3 rows totalling 6
-		//but large means 3 columns and 5 rows-> 15
-		// so need a getRowCol setup so its like
-		// 1 2 11
-		// 3 4 12
-		// 5 6 13
-		// 7 8 14
-		// 9 10 15
-		//OR.. they just unlock which ever one they click on again? no we cant go back to that. can we?
-		//it is only 8 bits...
-		
+
 		//top left
 		if(prop.hasStorage(1))
 			drawSlotSectionAt(

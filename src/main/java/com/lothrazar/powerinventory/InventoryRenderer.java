@@ -1,5 +1,8 @@
 package com.lothrazar.powerinventory;
 
+import net.minecraft.util.MathHelper;
+
+import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockStorage;
 
 public class InventoryRenderer
@@ -11,36 +14,51 @@ public class InventoryRenderer
 	//small: segments are [1,6]
 	//large: segments are [1,15]
 	
+	private static int numColumns(){
+		return ModConfig.isLargeScreen() ? 3 : 2;
+	}
+	private static int numRows(){
+		return ModConfig.isLargeScreen() ? 5 : 3;
+	}
+	
+	//TODO: loop on ModConfig.getMaxSections()
+	//tricky since small means 2 columns and 3 rows totalling 6
+	//but large means 3 columns and 5 rows-> 15
+	// so need a getRowCol setup so its like
+	// 1 2 11
+	// 3 4 12
+	// 5 6 13
+	// 7 8 14
+	// 9 10 15
+	//OR.. they just unlock which ever one they click on again? no we cant go back to that. can we?
+	//it is only 8 bits...
+	
 	public static int xPosBtn(int segment){
-		//TODO: switch statements are temporary, to ensure copy paste accuracy. finding algo later
-		//TODO: also this is ignoring 7+ FOR NOW
-		switch(segment){//it alternates left to right column
-		case 1:	
-		case 3:
-		case 5:
-			return centerHoriz;
-		case 2: 
-		case 4:
-		case 6:
-			return Const.SLOTS_WIDTH + centerHoriz;
-		default:
-			return 0;
+
+		if(segment <= 8){//stay in the first two columns, both small and large screens
+			if(segment % 2 == 0) //is even so 2,4,6
+				return Const.SLOTS_WIDTH + centerHoriz;
+			else  // is odd so 1,3,5
+				return centerHoriz;
+		}
+		else{
+			return 2*Const.SLOTS_WIDTH + centerHoriz;//always third column
 		}
 	}
+	
 	public static int yPosBtn(int segment){
 
-		//TODO: switch statements are temporary, to ensure copy paste accuracy. finding algo later
-		switch(segment){
-		case 1: return 1*Const.SLOTS_HEIGHT + centerVert;//row 1
-		case 2: return 1*Const.SLOTS_HEIGHT + centerVert;
-		case 3: return 2*Const.SLOTS_HEIGHT + centerVert;//row 2
-		case 4: return 2*Const.SLOTS_HEIGHT + centerVert;
-		case 5: return 3*Const.SLOTS_HEIGHT + centerVert;
-		case 6: return 3*Const.SLOTS_HEIGHT + centerVert;
-		default:
-			return 0;
+		int segsLeft = 10;
+		if(segment <= segsLeft){//small or large, we move down 2 by 2 with the rows
+			
+			int row = (int)Math.ceil(((double)segment)/2);//integer division -> rounds off so both 3,4 become 2
+			
+			return row*Const.SLOTS_HEIGHT + centerVert;
 		}
-		//if segment == 1
+		else{
+			//iterate down the third column, one by one
+			return (segment - segsLeft) * Const.SLOTS_HEIGHT + centerVert; 
+		}
 	}
 	
 	public static int xPosSlots(int segment){
