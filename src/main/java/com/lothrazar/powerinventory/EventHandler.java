@@ -108,13 +108,11 @@ public class EventHandler
 		   	int screenHeight = res.getScaledHeight();
 		   	 
 			int button_id = 256;
-			int padding = 10;
-			int h = 10;
-			int w = 20;
+			int padding = 10, h = 10, w = 20,x,y;
+		 
 			
-			int x = screenWidth - w - padding;//align to right side
-			int y = padding;
-			
+			x = screenWidth/2  + Const.VWIDTH/2 - w;//align tight to top of inventory
+			y = screenHeight/2 - Const.VHEIGHT/2 - 2*h - 1;
 			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y));
 	
 			padding = 5;
