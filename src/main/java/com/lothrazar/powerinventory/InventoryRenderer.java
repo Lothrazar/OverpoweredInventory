@@ -1,25 +1,25 @@
 package com.lothrazar.powerinventory;
 
-import net.minecraft.util.MathHelper;
-
-import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockStorage;
 
 public class InventoryRenderer
 {
 
 	public static final int topspace=12+Const.SQ;//space used by top half not including slots
-	static final int centerHoriz = Const.SLOTS_WIDTH/2 - GuiButtonUnlockStorage.width/2;
-	static final int centerVert = topspace - Const.SLOTS_HEIGHT/2 - GuiButtonUnlockStorage.height/2;
+	private static final int centerHoriz = Const.SLOTS_WIDTH/2 - GuiButtonUnlockStorage.width/2;
+	private static final int centerVert = topspace - Const.SLOTS_HEIGHT/2 - GuiButtonUnlockStorage.height/2;
+	
+	private static final int left=7,pad=4;//pad is middle padding. left is left edge padding. for slot areas
+	
 	//small: segments are [1,6]
 	//large: segments are [1,15]
-	
+	/*
 	private static int numColumns(){
 		return ModConfig.isLargeScreen() ? 3 : 2;
 	}
 	private static int numRows(){
 		return ModConfig.isLargeScreen() ? 5 : 3;
-	}
+	}*/
 	
 	//TODO: loop on ModConfig.getMaxSections()
 	//tricky since small means 2 columns and 3 rows totalling 6
@@ -62,12 +62,43 @@ public class InventoryRenderer
 	}
 	
 	public static int xPosSlots(int segment){
-
-		return 0;//TODO
+		//TODO switch is for temp
+		
+		switch(segment){
+		case 1:
+			return left;
+		case 2:
+			return pad+left+Const.SLOTS_WIDTH;
+		case 3:
+			return left;
+		case 4:
+			return pad+left+Const.SLOTS_WIDTH;
+		case 5:
+			return left;
+		case 6:
+			return pad+left+Const.SLOTS_WIDTH;
+		}
+		
+		return 0;
 	}
 	
 	public static int yPosSlots(int segment){
-		
+		//TODO switch is for temp
+
+		switch(segment){
+		case 1:
+			return topspace;
+		case 2:
+			return topspace;
+		case 3:
+			return topspace+pad+Const.SLOTS_HEIGHT;
+		case 4:
+			return topspace+pad+Const.SLOTS_HEIGHT;
+		case 5:
+			return topspace+2*(pad+Const.SLOTS_HEIGHT);
+		case 6:
+			return topspace+2*(pad+Const.SLOTS_HEIGHT);
+		}
 		return 0;//TODO
 	}
 }
