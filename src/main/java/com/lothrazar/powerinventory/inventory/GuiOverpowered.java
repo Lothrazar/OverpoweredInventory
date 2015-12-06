@@ -176,35 +176,12 @@ public class GuiOverpowered extends GuiContainer
 		//always render this one
 
 		//top left
-		if(prop.hasStorage(1))
-			drawSlotSectionAt(
-					this.guiLeft+ InventoryRenderer.xPosSlots(1), 
-					this.guiTop + InventoryRenderer.yPosSlots(1));
-		//topright is 
-		if(prop.hasStorage(2))
-			drawSlotSectionAt(
-					this.guiLeft+ InventoryRenderer.xPosSlots(2), 
-					this.guiTop + InventoryRenderer.yPosSlots(2));
-		//lower left is 
-		if(prop.hasStorage(3))
-			drawSlotSectionAt(
-					this.guiLeft+ InventoryRenderer.xPosSlots(3), 
-					this.guiTop + InventoryRenderer.yPosSlots(3));
-		//lower right is 
-		if(prop.hasStorage(4))
-			drawSlotSectionAt(
-					this.guiLeft+ InventoryRenderer.xPosSlots(4), 
-					this.guiTop + InventoryRenderer.yPosSlots(4));
-
-		if(prop.hasStorage(5))
-			drawSlotSectionAt( 
-					this.guiLeft+ InventoryRenderer.xPosSlots(5), 
-					this.guiTop + InventoryRenderer.yPosSlots(5));
-		
-		if(prop.hasStorage(6))
-			drawSlotSectionAt(
-					this.guiLeft+ InventoryRenderer.xPosSlots(6), 
-					this.guiTop + InventoryRenderer.yPosSlots(6));
+		for(int i = 1; i <= ModConfig.getMaxSections(); i++){
+			if(prop.hasStorage(i))
+				drawSlotSectionAt(
+						this.guiLeft+ InventoryRenderer.xPosSlots(i), 
+						this.guiTop + InventoryRenderer.yPosSlots(i));
+		}
 		
         if(container.echestSlotEnabled){drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);}
     	if(container.epearlSlotEnabled){drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);}
