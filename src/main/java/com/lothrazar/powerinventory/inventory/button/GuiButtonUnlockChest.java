@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiButtonUnlockChest extends GuiButton implements IGuiTooltip 
 {
 	final static int height = 20;
-	final static int width = 40;
+	public final static int width = 40;
 	private String tooltip;
     public GuiButtonUnlockChest(int buttonId, int x, int y, String label)
     {

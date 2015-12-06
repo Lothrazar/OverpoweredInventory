@@ -13,8 +13,8 @@ public class SlotEnderChest extends Slot
 {
 	private final static String _background = "textures/items/empty_enderchest.png";
 	public final static ResourceLocation background = new ResourceLocation(Const.MODID,_background);
-	public static final int posX = 8;
-	public static final int posY = 8 + 3 * Const.SQ;
+	public static final int posX = Const.TEXTURE_WIDTH - 6 - Const.SQ;
+	public static final int posY = 8;
 	
 	public int slotIndex;//overrides the private internal one
 	

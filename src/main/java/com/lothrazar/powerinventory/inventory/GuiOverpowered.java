@@ -27,8 +27,8 @@ public class GuiOverpowered extends GuiContainer
 	private ResourceLocation bkg_craft = new ResourceLocation(Const.MODID,  "textures/gui/crafting.png");
 	private ResourceLocation bkg_3x9 = new ResourceLocation(Const.MODID,  "textures/gui/slots3x9.png");
 	public static ResourceLocation slot = new ResourceLocation(Const.MODID,"textures/gui/inventory_slot.png");
-	public static final int craftX = 56;//was 111,17
-	public static final int craftY = 14;
+	public static final int craftX = 56; 
+	public static final int craftY = 10;//was 14
 	final int SLOTS_WIDTH = 162;
 	final int SLOTS_HEIGHT = 54;// the 3x9 size
 	public static boolean SHOW_DEBUG_NUMS = false;
@@ -50,8 +50,8 @@ public class GuiOverpowered extends GuiContainer
 		
 		
 		//fixed numbers from the .png resource size
-		this.xSize = 342;
-		this.ySize = 225;
+		this.xSize = Const.TEXTURE_WIDTH;
+		this.ySize = Const.TEXTURE_HEIGHT;
 	}
 
 	@Override
@@ -64,6 +64,7 @@ public class GuiOverpowered extends GuiContainer
 		int xstart = this.guiLeft + this.xSize - w - padding;
 		int ystart = this.guiTop + padding;
 		GuiButton b;
+		/*
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 					xstart, //top right
 					ystart,w,h, Const.STORAGE_1TOPRIGHT));
@@ -75,15 +76,15 @@ public class GuiOverpowered extends GuiContainer
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 					xstart, //bottom right
 					ystart+padding+h, w,h,Const.STORAGE_3BOTRIGHT));
-
+*/
 		if(container.epearlSlotEnabled == false){
 
 			int current = (int)UtilExperience.getExpTotal(thePlayer);
 			label = current + "/" + ModConfig.expCostPearl;
 			
 			b = new GuiButtonUnlockPearl(button_id++,
-					this.guiLeft+padding,  
-					this.guiTop+padding,label);
+					this.guiLeft + padding,  
+					this.guiTop + padding,label);
 			this.buttonList.add(b);
 			
 			b.enabled = (current >= ModConfig.expCostPearl);
@@ -94,8 +95,8 @@ public class GuiOverpowered extends GuiContainer
 			label = current + "/" + ModConfig.expCostEChest;
 			
 			b = new GuiButtonUnlockChest(button_id++,
-					this.guiLeft+padding,  
-					this.guiTop+padding + 3*Const.SQ,label);
+					this.guiLeft + Const.TEXTURE_WIDTH - padding - GuiButtonUnlockChest.width,  
+					this.guiTop + padding,label);
 			this.buttonList.add(b);
 			
 			b.enabled = (current >= ModConfig.expCostEChest);

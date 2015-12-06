@@ -23,5 +23,7 @@ public class Const
     public static final int SLOT_EPEARL = 77777; 
     public static final int SLOT_ECHEST = SLOT_EPEARL+1;
     
-    
+
+    public static final int TEXTURE_WIDTH = 342;
+    public static final int TEXTURE_HEIGHT = 225;
 }
