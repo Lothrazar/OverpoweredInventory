@@ -37,8 +37,9 @@ public class ContainerOverpowered extends Container
     static int S_BAROTHER_END;
 
     final int hotbarX = 8;
-    final int hotbarY = 142 + (Const.SQ * 9);
+  	final int rowsMoreThanV = 3;
 	final int offset = 4;//size of grey space between the sections
+    final int hotbarY = 147 + (Const.SQ * rowsMoreThanV) + offset;
 	
 	//static final int OFFSCREEN = 600;
     private final EntityPlayer thePlayer;
@@ -50,9 +51,6 @@ public class ContainerOverpowered extends Container
 
 		int i,j,slotNum=0,x=0,y=0, paddingLrg=8;
  
-	  	int rowsMoreThanV = 3;
-        int hotbarY = 142 + (Const.SQ * rowsMoreThanV) + offset;
-		
         S_BAR_START = this.inventorySlots.size();
         for (i = 0; i < Const.HOTBAR_SIZE; ++i)
         { 

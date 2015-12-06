@@ -27,7 +27,8 @@ public class Const
     
 
     public static final int TEXTURE_WIDTH = 342;
-    public static final int TEXTURE_HEIGHT = 225;
+    public static final int TEXTURE_HEIGHT = 230;
+    
     public static final int SLOTS_WIDTH = 162;
     public static final int SLOTS_HEIGHT = 54;// the 3x9 size
 }
