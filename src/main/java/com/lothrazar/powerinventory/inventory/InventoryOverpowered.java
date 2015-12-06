@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class InventoryOverpowered implements IInventory
 {
-	public static int INV_SIZE;// = Const.COLS_VANILLA*Const.ROWS_VANILLA*4 + Const.HOTBAR_SIZE*2;
+	public static int INV_SIZE;
 	ItemStack[] inventory;
 //thanks for http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571597-forge-1-6-4-1-8-custom-inventories-in-items-and
 	private final String tagName = "opinvtags";
@@ -22,9 +22,7 @@ public class InventoryOverpowered implements IInventory
     private ItemStack enderChestStack;
     
     public InventoryOverpowered(EntityPlayer player){
-    	//PlayerPersistProperty props = PlayerPersistProperty.get(player);
-    	//no problem if this is too big
-    	int storageMax = 4;// = (props==null)?0 : props.getStorageCount();
+    	int storageMax = 5;//todo from const?
     	INV_SIZE = 2*Const.HOTBAR_SIZE + Const.V_INVO_SIZE + Const.V_INVO_SIZE * storageMax;
     	inventory = new ItemStack[INV_SIZE];
     }

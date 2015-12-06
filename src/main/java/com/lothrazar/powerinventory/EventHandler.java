@@ -97,7 +97,6 @@ public class EventHandler
 	{
 		if(event.gui == null){return;}//probably doesnt ever happen
 		 
-		
 		if(event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory)
 		{
 			//omg thanks so much to this guy
@@ -120,19 +119,22 @@ public class EventHandler
 			w = 10;
 
 		    //position them exactly on players inventory
-			x = screenWidth/2  + Const.VWIDTH/2 - w*6;
+			x = screenWidth/2  + Const.VWIDTH/2 - w*3;
 			y = screenHeight/2 - Const.VHEIGHT/2 + padding;
-			
+
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_5));
+
+			x -= 2*w - padding;//move left
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_4));
+
+			x -= 2*w - padding;//move left
 			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_3));
 
 			x -= 2*w - padding;//move left
-			
 			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_2));
 
 			x -= 2*w - padding;//move left
-			
 			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_1));
-			
 		}
 	}
 	
