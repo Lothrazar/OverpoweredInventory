@@ -46,7 +46,7 @@ public class UnlockStoragePacket implements IMessage, IMessageHandler<UnlockStor
 			
 			UtilExperience.drainExp(p, ModConfig.expCostStorage);
 
-			prop.setStorage(true, message.tags.getInteger("i"));
+			prop.incrementStorage();//(true, message.tags.getInteger("i"));
 			
 			p.closeScreen();
 			

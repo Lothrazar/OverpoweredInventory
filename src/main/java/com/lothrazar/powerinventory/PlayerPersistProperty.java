@@ -1,8 +1,5 @@
 package com.lothrazar.powerinventory;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.lothrazar.powerinventory.inventory.InventoryOverpowered;
 
 import net.minecraft.entity.Entity;
@@ -21,23 +18,13 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 	public static final String ID = "OPI";
 	public static final int EPEARL_WATCHER = 20;
 	public static final int ECHEST_WATCHER = 21;
-	private static final int offset = 21;
 	//dang max is 31
 	//TODO: use bitwise operations to save space
-	public static final int STORAGE_1_WATCHER = offset + Const.STORAGE_1;
-	public static final int STORAGE_2_WATCHER = offset + Const.STORAGE_2;
-	public static final int STORAGE_3_WATCHER = offset + Const.STORAGE_3;
-	public static final int STORAGE_4_WATCHER = offset + Const.STORAGE_4;
-	public static final int STORAGE_5_WATCHER = offset + Const.STORAGE_5;
-	public static List<Integer> allWatchers = Arrays.asList(EPEARL_WATCHER,ECHEST_WATCHER,STORAGE_1_WATCHER,STORAGE_2_WATCHER,STORAGE_3_WATCHER,STORAGE_4_WATCHER,STORAGE_5_WATCHER);
+	public static final int STORAGE_COUNT = 22;
 	private int epearlOpen = 0;
 	private int echestOpen = 0;
 	//todo we could array these
-	private int storage1 = 0;
-	private int storage2 = 0;
-	private int storage3 = 0;
-	private int storage4 = 0;
-	private int storage5 = 0;
+	private int storageCount = 0;
 	private EntityPlayer player;
 	public final InventoryOverpowered inventory;
 	
@@ -47,11 +34,7 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 		inventory = new InventoryOverpowered(this.player);
 		this.player.getDataWatcher().addObject(EPEARL_WATCHER, this.epearlOpen);
 		this.player.getDataWatcher().addObject(ECHEST_WATCHER, this.echestOpen);
-		this.player.getDataWatcher().addObject(STORAGE_1_WATCHER, this.storage1);
-		this.player.getDataWatcher().addObject(STORAGE_2_WATCHER, this.storage2);
-		this.player.getDataWatcher().addObject(STORAGE_3_WATCHER, this.storage3);
-		this.player.getDataWatcher().addObject(STORAGE_4_WATCHER, this.storage4);
-		this.player.getDataWatcher().addObject(STORAGE_5_WATCHER, this.storage5);
+		this.player.getDataWatcher().addObject(STORAGE_COUNT, this.storageCount);                         
 	}
 
 	public static void register(EntityPlayer player)
@@ -96,14 +79,17 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 	public boolean getInvoEChest(){
 		return player.getDataWatcher().getWatchableObjectInt(ECHEST_WATCHER)==1;
 	}
-	public void setStorage(boolean c, int type){
-		int val = c?1:0;
-		int w = (type < offset) ? offset+type : type;
-		player.getDataWatcher().updateObject(w,val);
+	public void incrementStorage(){
+		player.getDataWatcher().updateObject(STORAGE_COUNT,this.getStorageCount() + 1);
 	}
-	public boolean getStorage(int type){
-		int w = (type < offset) ? offset+type : type;
-		return player.getDataWatcher().getWatchableObjectInt(w)==1;
+	public void setStorageCount(int c){
+		player.getDataWatcher().updateObject(STORAGE_COUNT,c);
+	}
+	public int getStorageCount(){
+		return player.getDataWatcher().getWatchableObjectInt(STORAGE_COUNT);
+	}
+	public boolean getStorage(int count){
+		return player.getDataWatcher().getWatchableObjectInt(STORAGE_COUNT) >= count;
 	}
 	@Override
 	public void loadNBTData(NBTTagCompound compound)
@@ -111,11 +97,7 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 		this.inventory.readFromNBT(compound);
 		player.getDataWatcher().updateObject(EPEARL_WATCHER,    compound.getInteger(ID+EPEARL_WATCHER));
 		player.getDataWatcher().updateObject(ECHEST_WATCHER,    compound.getInteger(ID+ECHEST_WATCHER));
-		player.getDataWatcher().updateObject(STORAGE_1_WATCHER, compound.getInteger(ID+STORAGE_1_WATCHER));
-		player.getDataWatcher().updateObject(STORAGE_2_WATCHER, compound.getInteger(ID+STORAGE_2_WATCHER));
-		player.getDataWatcher().updateObject(STORAGE_3_WATCHER, compound.getInteger(ID+STORAGE_3_WATCHER));
-		player.getDataWatcher().updateObject(STORAGE_4_WATCHER, compound.getInteger(ID+STORAGE_4_WATCHER));
-		player.getDataWatcher().updateObject(STORAGE_5_WATCHER, compound.getInteger(ID+STORAGE_5_WATCHER));
+		player.getDataWatcher().updateObject(STORAGE_COUNT, compound.getInteger(ID+STORAGE_COUNT));
 	}
 	
 	@Override
@@ -124,11 +106,7 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 		this.inventory.writeToNBT(compound);
 		compound.setInteger(ID+EPEARL_WATCHER,     player.getDataWatcher().getWatchableObjectInt(EPEARL_WATCHER));
 		compound.setInteger(ID+ECHEST_WATCHER,     player.getDataWatcher().getWatchableObjectInt(ECHEST_WATCHER));
-		compound.setInteger(ID+STORAGE_1_WATCHER,  player.getDataWatcher().getWatchableObjectInt(STORAGE_1_WATCHER));
-		compound.setInteger(ID+STORAGE_2_WATCHER,  player.getDataWatcher().getWatchableObjectInt(STORAGE_2_WATCHER));
-		compound.setInteger(ID+STORAGE_3_WATCHER,  player.getDataWatcher().getWatchableObjectInt(STORAGE_3_WATCHER));
-		compound.setInteger(ID+STORAGE_4_WATCHER,  player.getDataWatcher().getWatchableObjectInt(STORAGE_4_WATCHER));
-		compound.setInteger(ID+STORAGE_5_WATCHER,  player.getDataWatcher().getWatchableObjectInt(STORAGE_5_WATCHER));
+		compound.setInteger(ID+STORAGE_COUNT,  player.getDataWatcher().getWatchableObjectInt(STORAGE_COUNT));                                      
 	}
 
 	public static void clonePlayerData(EntityPlayer original, EntityPlayer newPlayer)
@@ -136,10 +114,6 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 		PlayerPersistProperty.get(newPlayer).setInvoEChest(PlayerPersistProperty.get(original).getInvoEChest());
 		PlayerPersistProperty.get(newPlayer).setInvoEPearl(PlayerPersistProperty.get(original).getInvoEPearl());
 
-		PlayerPersistProperty.get(newPlayer).setStorage(PlayerPersistProperty.get(original).getStorage(Const.STORAGE_1),Const.STORAGE_1);
-		PlayerPersistProperty.get(newPlayer).setStorage(PlayerPersistProperty.get(original).getStorage(Const.STORAGE_2),Const.STORAGE_2);
-		PlayerPersistProperty.get(newPlayer).setStorage(PlayerPersistProperty.get(original).getStorage(Const.STORAGE_3),Const.STORAGE_3);
-		PlayerPersistProperty.get(newPlayer).setStorage(PlayerPersistProperty.get(original).getStorage(Const.STORAGE_4),Const.STORAGE_4);
-		PlayerPersistProperty.get(newPlayer).setStorage(PlayerPersistProperty.get(original).getStorage(Const.STORAGE_5),Const.STORAGE_5);
+		PlayerPersistProperty.get(newPlayer).setStorageCount(PlayerPersistProperty.get(original).getStorageCount());
 	}
 }

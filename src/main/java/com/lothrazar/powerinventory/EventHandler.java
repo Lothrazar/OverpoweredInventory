@@ -123,6 +123,8 @@ public class EventHandler
 			y = screenHeight/2 - Const.VHEIGHT/2 + padding;
 			
 			PlayerPersistProperty prop = PlayerPersistProperty.get(event.gui.mc.thePlayer);
+			
+			//int storage = prop.getStorageCount();
 
 			if(prop.getStorage(Const.STORAGE_5))
 				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_5));
