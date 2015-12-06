@@ -2,6 +2,7 @@ package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.PlayerPersistProperty;
+import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.slot.*;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,9 +38,8 @@ public class ContainerOverpowered extends Container
     static int S_BAROTHER_END;
 
     final int hotbarX = 8;
-  	final int rowsMoreThanV = 3;
 	final int offset = 4;//size of grey space between the sections
-    final int hotbarY = 147 + (Const.SQ * rowsMoreThanV) + offset;
+    final int hotbarY = ModConfig.getInvoHeight() - Const.SQ - 7;
 	
 	//static final int OFFSCREEN = 600;
     private final EntityPlayer thePlayer;

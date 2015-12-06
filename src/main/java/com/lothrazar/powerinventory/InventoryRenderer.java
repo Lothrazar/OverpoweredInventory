@@ -56,6 +56,7 @@ public class InventoryRenderer
 			return row*Const.SLOTS_HEIGHT + centerVert;
 		}
 		else{
+			//so at 11 it should be the upper right
 			//iterate down the third column, one by one
 			return (segment - segsLeft) * Const.SLOTS_HEIGHT + centerVert; 
 		}
