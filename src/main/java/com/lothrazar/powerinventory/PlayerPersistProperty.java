@@ -147,10 +147,10 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 		player.getDataWatcher().updateObject(CRAFTING_WATCHER, compound.getInteger(NBT_CRAFT));
 		player.getDataWatcher().updateObject(EPEARL_WATCHER, compound.getInteger(NBT_PEARL));
 		player.getDataWatcher().updateObject(ECHEST_WATCHER, compound.getInteger(NBT_CHEST));
-		player.getDataWatcher().updateObject(BOTTLING_WATCHER, compound.getInteger(NBT_CHEST));
-		player.getDataWatcher().updateObject(STORAGE_1_WATCHER, compound.getInteger(NBT_CHEST));
-		player.getDataWatcher().updateObject(STORAGE_2_WATCHER, compound.getInteger(NBT_CHEST));
-		player.getDataWatcher().updateObject(STORAGE_3_WATCHER, compound.getInteger(NBT_CHEST));
+		player.getDataWatcher().updateObject(BOTTLING_WATCHER, compound.getInteger(NBT_BOTTLING));
+		player.getDataWatcher().updateObject(STORAGE_1_WATCHER, compound.getInteger(NBT_STORAGE1));
+		player.getDataWatcher().updateObject(STORAGE_2_WATCHER, compound.getInteger(NBT_STORAGE2));
+		player.getDataWatcher().updateObject(STORAGE_3_WATCHER, compound.getInteger(NBT_STORAGE3));
 	}
 	
 	@Override
