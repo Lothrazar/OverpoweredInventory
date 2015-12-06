@@ -38,7 +38,20 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 	private int storage2 = 0;
 	private int storage3 = 0;
 	private EntityPlayer player;
-	public final InventoryOverpowered inventory = new InventoryOverpowered();
+	public final InventoryOverpowered inventory;
+	
+	public PlayerPersistProperty(EntityPlayer p)
+	{
+		this.player = p;
+		inventory = new InventoryOverpowered(this.player);
+		this.player.getDataWatcher().addObject(CRAFTING_WATCHER, this.craftingOpen);
+		this.player.getDataWatcher().addObject(EPEARL_WATCHER, this.epearlOpen);
+		this.player.getDataWatcher().addObject(ECHEST_WATCHER, this.echestOpen);
+		this.player.getDataWatcher().addObject(BOTTLING_WATCHER, this.bottlingOpen);
+		this.player.getDataWatcher().addObject(STORAGE_1_WATCHER, this.storage1);
+		this.player.getDataWatcher().addObject(STORAGE_2_WATCHER, this.storage2);
+		this.player.getDataWatcher().addObject(STORAGE_3_WATCHER, this.storage3);
+	}
 
 	public static void register(EntityPlayer player)
 	{
@@ -57,18 +70,6 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 		{
 			return null;
 		}
-	}
-	
-	public PlayerPersistProperty(EntityPlayer player)
-	{
-		this.player = player;
-		this.player.getDataWatcher().addObject(CRAFTING_WATCHER, this.craftingOpen);
-		this.player.getDataWatcher().addObject(EPEARL_WATCHER, this.epearlOpen);
-		this.player.getDataWatcher().addObject(ECHEST_WATCHER, this.echestOpen);
-		this.player.getDataWatcher().addObject(BOTTLING_WATCHER, this.bottlingOpen);
-		this.player.getDataWatcher().addObject(STORAGE_1_WATCHER, this.storage1);
-		this.player.getDataWatcher().addObject(STORAGE_2_WATCHER, this.storage2);
-		this.player.getDataWatcher().addObject(STORAGE_3_WATCHER, this.storage3);
 	}
 	
 	@Override
@@ -129,7 +130,16 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 		
 		return player.getDataWatcher().getWatchableObjectInt(w)==1;
 	}
-	
+	public int getStorageCount(){
+
+		//todo: a loop or data struct somehow?
+		return player.getDataWatcher().getWatchableObjectInt(STORAGE_1_WATCHER) 
+				+ player.getDataWatcher().getWatchableObjectInt(STORAGE_2_WATCHER) 
+				+ player.getDataWatcher().getWatchableObjectInt(STORAGE_3_WATCHER);
+	}
+	public boolean getDualHotbarUnlocked(){
+		return true;//TODO! THIS
+	}
 	@Override
 	public void loadNBTData(NBTTagCompound compound)
 	{
