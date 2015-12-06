@@ -114,44 +114,45 @@ public class GuiOverpowered extends GuiContainer
 			b.enabled = (current >= ModConfig.expCostCrafting);
 		}
 		
+		int topspace=83;
 		if(container.storageEnabled[Const.STORAGE_1TOPRIGHT] == false)
 		{
 			int current = (int)UtilExperience.getExpTotal(thePlayer);
-			label = current + "/" + ModConfig.expStorageCrafting + " XP";
+			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft+20+SLOTS_WIDTH, 
-					this.guiTop+100, label,Const.STORAGE_1TOPRIGHT);
+					this.guiLeft + SLOTS_WIDTH + SLOTS_WIDTH/2, 
+					this.guiTop+ topspace + SLOTS_HEIGHT/2, label,Const.STORAGE_1TOPRIGHT);
 			
 			this.buttonList.add(b);
 			
-			b.enabled = (current >= ModConfig.expCostCrafting);
+			b.enabled = (current >= ModConfig.expCostStorage);
 		}
 		if(container.storageEnabled[Const.STORAGE_2BOTLEFT] == false)
 		{
 			int current = (int)UtilExperience.getExpTotal(thePlayer);
-			label = current + "/" + ModConfig.expStorageCrafting + " XP";
+			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft+20, 
-					this.guiTop+100+SLOTS_HEIGHT, label,Const.STORAGE_2BOTLEFT);
+					this.guiLeft+ SLOTS_WIDTH/2, 
+					this.guiTop+ topspace + SLOTS_HEIGHT +SLOTS_HEIGHT/2, label,Const.STORAGE_2BOTLEFT);
 			
 			this.buttonList.add(b);
 			
-			b.enabled = (current >= ModConfig.expCostCrafting);
+			b.enabled = (current >= ModConfig.expCostStorage);
 		}
 		if(container.storageEnabled[Const.STORAGE_3BOTRIGHT] == false)
 		{
 			int current = (int)UtilExperience.getExpTotal(thePlayer);
-			label = current + "/" + ModConfig.expStorageCrafting + " XP";
+			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft+20+SLOTS_WIDTH, 
-					this.guiTop+100+SLOTS_HEIGHT, label,Const.STORAGE_3BOTRIGHT);
+					this.guiLeft + SLOTS_WIDTH + SLOTS_WIDTH/2, 
+					this.guiTop+ topspace + SLOTS_HEIGHT +SLOTS_HEIGHT/2, label,Const.STORAGE_3BOTRIGHT);
 			
 			this.buttonList.add(b);
 			
-			b.enabled = (current >= ModConfig.expCostCrafting);
+			b.enabled = (current >= ModConfig.expCostStorage);
 		}
     }
 	

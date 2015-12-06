@@ -40,11 +40,11 @@ public class UnlockStoragePacket implements IMessage, IMessageHandler<UnlockStor
 	{  
 		EntityPlayer p = ctx.getServerHandler().playerEntity; 
 		
-		if(UtilExperience.getExpTotal(p) >= ModConfig.expStorageCrafting){
+		if(UtilExperience.getExpTotal(p) >= ModConfig.expCostStorage){
 
 			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 			
-			UtilExperience.drainExp(p, ModConfig.expStorageCrafting);
+			UtilExperience.drainExp(p, ModConfig.expCostStorage);
 
 			prop.setStorage(true, message.tags.getInteger("i"));
 			
