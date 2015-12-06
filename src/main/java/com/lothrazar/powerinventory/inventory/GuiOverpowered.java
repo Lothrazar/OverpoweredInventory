@@ -92,76 +92,23 @@ public class GuiOverpowered extends GuiContainer
 
 		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
 		
-		if(prop.hasStorage(1) == false)
-		{
-			int current = (int)UtilExperience.getExpTotal(thePlayer);
-			label = current + "/" + ModConfig.expCostStorage + " XP";
-			
-			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft + InventoryRenderer.xPosBtn(1),//SLOTS_WIDTH + centerHorizCol, 
-					this.guiTop  + InventoryRenderer.yPosBtn(1),//
-					 label,1);
-			
-			this.buttonList.add(b);
-			
-			b.enabled = (current >= ModConfig.expCostStorage);
-		}
-		if(prop.hasStorage(2) == false)
-		{
-			int current = (int)UtilExperience.getExpTotal(thePlayer);
-			label = current + "/" + ModConfig.expCostStorage + " XP";
-			
-			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft + InventoryRenderer.xPosBtn(2),//+ centerHorizCol, 
-					this.guiTop  + InventoryRenderer.yPosBtn(2),//2*SLOTS_HEIGHT + centerVert
-					 label,2);
-			
-			this.buttonList.add(b);
-			
-			b.enabled = (current >= ModConfig.expCostStorage);
-		}
-		if(prop.hasStorage(3) == false)
-		{
-			int current = (int)UtilExperience.getExpTotal(thePlayer);
-			label = current + "/" + ModConfig.expCostStorage + " XP";
-			
-			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft + InventoryRenderer.xPosBtn(3),//+ SLOTS_WIDTH + centerHorizCol, 
-					this.guiTop+ InventoryRenderer.yPosBtn(3),//+ 2*SLOTS_HEIGHT + centerVert, 
-					label,3);
-			
-			this.buttonList.add(b);
-			
-			b.enabled = (current >= ModConfig.expCostStorage);
-		}
-		//4 is down and left again
-		if(prop.hasStorage(4) == false)
-		{
-			int current = (int)UtilExperience.getExpTotal(thePlayer);
-			label = current + "/" + ModConfig.expCostStorage + " XP";
-			
-			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft+ InventoryRenderer.xPosBtn(4),//+ centerHorizCol, 
-					this.guiTop+ InventoryRenderer.yPosBtn(4),//+, 
-					label,4);
-			
-			this.buttonList.add(b);
-			
-			b.enabled = (current >= ModConfig.expCostStorage);
-		}
-		if(prop.hasStorage(5) == false)
-		{
-			int current = (int)UtilExperience.getExpTotal(thePlayer);
-			label = current + "/" + ModConfig.expCostStorage + " XP";
-			
-			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft + InventoryRenderer.xPosBtn(5),//, 
-					this.guiTop+ InventoryRenderer.yPosBtn(5),//3*SLOTS_HEIGHT + centerVert, 
-					label,5);
-			
-			this.buttonList.add(b);
-			
-			b.enabled = (current >= ModConfig.expCostStorage);
+		int current = (int)UtilExperience.getExpTotal(thePlayer);
+		//draw only one single button then stop
+		for(int i = 1; i <= ModConfig.getMaxSections(); i++){
+			if(prop.hasStorage(i) == false){
+					
+				label = current + "/" + ModConfig.expCostStorage + " XP";
+				
+				b = new GuiButtonUnlockStorage(button_id++,
+						this.guiLeft + InventoryRenderer.xPosBtn(i),
+						this.guiTop  + InventoryRenderer.yPosBtn(i),
+						 label,1);
+				
+				this.buttonList.add(b);
+				
+				b.enabled = (current >= ModConfig.expCostStorage);
+				break;
+			}
 		}
     }
 	
@@ -220,8 +167,10 @@ public class GuiOverpowered extends GuiContainer
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{ 
-		UtilTextureRender.drawTextureSimple(bkg, this.guiLeft, this.guiTop,this.xSize,this.ySize);
-		UtilTextureRender.drawTextureSimple(bkg_large, this.guiLeft, this.guiTop,this.xSize,this.ySize);
+		if(ModConfig.isLargeScreen())
+			UtilTextureRender.drawTextureSimple(bkg_large, this.guiLeft, this.guiTop,this.xSize,this.ySize);
+		else
+			UtilTextureRender.drawTextureSimple(bkg, this.guiLeft, this.guiTop,this.xSize,this.ySize);
 
 		int left=7,pad=4;//pad is middle padding. left is left edge padding
 
