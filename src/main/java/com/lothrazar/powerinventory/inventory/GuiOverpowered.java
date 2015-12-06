@@ -3,6 +3,7 @@ package com.lothrazar.powerinventory.inventory;
 import java.util.Arrays;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.InventoryRenderer;
 import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockChest;
@@ -28,15 +29,12 @@ public class GuiOverpowered extends GuiContainer
 	private ResourceLocation bkg_3x9 = new ResourceLocation(Const.MODID,  "textures/gui/slots3x9.png");
 	public static ResourceLocation slot = new ResourceLocation(Const.MODID,"textures/gui/inventory_slot.png");
 	//public static final int craftX = 56; 
-	//public static final int craftY = 10;//was 14
-	final int SLOTS_WIDTH = Const.SLOTS_WIDTH;
-	final int SLOTS_HEIGHT = Const.SLOTS_HEIGHT;// the 3x9 size
+	//public static final int craftY = 10;//was 14 
 	public static boolean SHOW_DEBUG_NUMS = false;
 	private final InventoryOverpowered inventory;
 	private ContainerOverpowered container;
 	final int h = 20;
 	final int w = 20;//default button dims
-	final int topspace=12+Const.SQ;//space used by top half not including slots
 	final int padding = 6;//on the far outer sizes
 	final EntityPlayer thePlayer;
 	
@@ -89,8 +87,8 @@ public class GuiOverpowered extends GuiContainer
 		}
 		
 		
-		int centerHorizCol = SLOTS_WIDTH/2 - GuiButtonUnlockStorage.width/2;
-		int centerVert = topspace - SLOTS_HEIGHT/2 - GuiButtonUnlockStorage.height/2;
+		//int centerHorizCol = Const.SLOTS_WIDTH/2 - GuiButtonUnlockStorage.width/2;
+		//int centerVert = topspace - Const.SLOTS_HEIGHT/2 - GuiButtonUnlockStorage.height/2;
 
 		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
 		
@@ -100,8 +98,9 @@ public class GuiOverpowered extends GuiContainer
 			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft + SLOTS_WIDTH + centerHorizCol, 
-					this.guiTop+ SLOTS_HEIGHT+centerVert, label,1);
+					this.guiLeft + InventoryRenderer.xPosBtn(1),//SLOTS_WIDTH + centerHorizCol, 
+					this.guiTop  + InventoryRenderer.yPosBtn(1),//
+					 label,1);
 			
 			this.buttonList.add(b);
 			
@@ -113,8 +112,9 @@ public class GuiOverpowered extends GuiContainer
 			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft+ centerHorizCol, 
-					this.guiTop+ 2*SLOTS_HEIGHT + centerVert, label,2);
+					this.guiLeft + InventoryRenderer.xPosBtn(2),//+ centerHorizCol, 
+					this.guiTop  + InventoryRenderer.yPosBtn(2),//2*SLOTS_HEIGHT + centerVert
+					 label,2);
 			
 			this.buttonList.add(b);
 			
@@ -126,8 +126,9 @@ public class GuiOverpowered extends GuiContainer
 			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft + SLOTS_WIDTH + centerHorizCol, 
-					this.guiTop+ 2*SLOTS_HEIGHT + centerVert, label,3);
+					this.guiLeft + InventoryRenderer.xPosBtn(3),//+ SLOTS_WIDTH + centerHorizCol, 
+					this.guiTop+ InventoryRenderer.yPosBtn(3),//+ 2*SLOTS_HEIGHT + centerVert, 
+					label,3);
 			
 			this.buttonList.add(b);
 			
@@ -140,8 +141,9 @@ public class GuiOverpowered extends GuiContainer
 			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft+ centerHorizCol, 
-					this.guiTop+ 3*SLOTS_HEIGHT + centerVert, label,4);
+					this.guiLeft+ InventoryRenderer.xPosBtn(4),//+ centerHorizCol, 
+					this.guiTop+ InventoryRenderer.yPosBtn(4),//+, 
+					label,4);
 			
 			this.buttonList.add(b);
 			
@@ -153,8 +155,9 @@ public class GuiOverpowered extends GuiContainer
 			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
-					this.guiLeft + SLOTS_WIDTH + centerHorizCol, 
-					this.guiTop+ 3*SLOTS_HEIGHT + centerVert, label,5);
+					this.guiLeft + InventoryRenderer.xPosBtn(5),//, 
+					this.guiTop+ InventoryRenderer.yPosBtn(5),//3*SLOTS_HEIGHT + centerVert, 
+					label,5);
 			
 			this.buttonList.add(b);
 			
@@ -236,37 +239,44 @@ public class GuiOverpowered extends GuiContainer
 		// 9 10 15
 		//OR.. they just unlock which ever one they click on again? no we cant go back to that. can we?
 		//it is only 8 bits...
-		UtilTextureRender.drawTextureSimple(bkg_3x9, 
-				this.guiLeft+left, 
-				this.guiTop+topspace, SLOTS_WIDTH, SLOTS_HEIGHT);
-		//topright is 1
-		if(prop.hasStorage(1))
-			UtilTextureRender.drawTextureSimple(bkg_3x9, 
-					this.guiLeft+pad+left+SLOTS_WIDTH, 
-					this.guiTop+topspace, SLOTS_WIDTH, SLOTS_HEIGHT);
-		//lower left is 2
-		if(prop.hasStorage(2))
-			UtilTextureRender.drawTextureSimple(bkg_3x9, 
-					this.guiLeft+left, 
-					this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
-		//lower right is 3
-		if(prop.hasStorage(3))
-			UtilTextureRender.drawTextureSimple(bkg_3x9, 
-					this.guiLeft+pad+left+SLOTS_WIDTH, 
-					this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
-
-		if(prop.hasStorage(4))
-			UtilTextureRender.drawTextureSimple(bkg_3x9, 
-					this.guiLeft+left, 
-					this.guiTop+topspace+2*(pad+SLOTS_HEIGHT), SLOTS_WIDTH, SLOTS_HEIGHT);
 		
+		//top left
+		if(prop.hasStorage(1))
+			drawSlotSectionAt(
+					this.guiLeft+left, 
+					this.guiTop+InventoryRenderer.topspace);
+		//topright is 
+		if(prop.hasStorage(2))
+			drawSlotSectionAt(
+					this.guiLeft+pad+left+Const.SLOTS_WIDTH, 
+					this.guiTop+InventoryRenderer.topspace);
+		//lower left is 
+		if(prop.hasStorage(3))
+			drawSlotSectionAt(
+					this.guiLeft+left, 
+					this.guiTop+InventoryRenderer.topspace+pad+Const.SLOTS_HEIGHT);
+		//lower right is 
+		if(prop.hasStorage(4))
+			drawSlotSectionAt(
+					this.guiLeft+pad+left+Const.SLOTS_WIDTH, 
+					this.guiTop+InventoryRenderer.topspace+pad+Const.SLOTS_HEIGHT);
+
 		if(prop.hasStorage(5))
-			UtilTextureRender.drawTextureSimple(bkg_3x9, 
-					this.guiLeft+pad+left+SLOTS_WIDTH, 
-					this.guiTop+topspace+2*(pad+SLOTS_HEIGHT), SLOTS_WIDTH, SLOTS_HEIGHT);
+			drawSlotSectionAt( 
+					this.guiLeft+left, 
+					this.guiTop+InventoryRenderer.topspace+2*(pad+Const.SLOTS_HEIGHT));
+		
+		if(prop.hasStorage(6))
+			drawSlotSectionAt(
+					this.guiLeft+pad+left+Const.SLOTS_WIDTH, 
+					this.guiTop+InventoryRenderer.topspace+2*(pad+Const.SLOTS_HEIGHT));
 		
         if(container.echestSlotEnabled){drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);}
     	if(container.epearlSlotEnabled){drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);}
+	}
+	
+	private void drawSlotSectionAt(int x, int y){
+		UtilTextureRender.drawTextureSimple(bkg_3x9, x, y, Const.SLOTS_WIDTH, Const.SLOTS_HEIGHT);
 	}
 	
 	private void drawSlotAt(int x, int y)
