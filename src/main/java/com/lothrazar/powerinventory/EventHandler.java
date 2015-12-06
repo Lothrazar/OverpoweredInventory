@@ -121,20 +121,27 @@ public class EventHandler
 		    //position them exactly on players inventory
 			x = screenWidth/2  + Const.VWIDTH/2 - w*3;
 			y = screenHeight/2 - Const.VHEIGHT/2 + padding;
+			
+			PlayerPersistProperty prop = PlayerPersistProperty.get(event.gui.mc.thePlayer);
 
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_5));
-
-			x -= 2*w - padding;//move left
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_4));
-
-			x -= 2*w - padding;//move left
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_3));
+			if(prop.getStorage(Const.STORAGE_5))
+				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_5));
 
 			x -= 2*w - padding;//move left
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_2));
+			if(prop.getStorage(Const.STORAGE_4))
+				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_4));
 
 			x -= 2*w - padding;//move left
-			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_1));
+			if(prop.getStorage(Const.STORAGE_3))
+				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_3));
+
+			x -= 2*w - padding;//move left
+			if(prop.getStorage(Const.STORAGE_2))
+				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_2));
+
+			x -= 2*w - padding;//move left
+			if(prop.getStorage(Const.STORAGE_1))
+				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_1));
 		}
 	}
 	
