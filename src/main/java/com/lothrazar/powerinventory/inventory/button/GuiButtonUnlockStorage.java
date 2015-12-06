@@ -6,6 +6,7 @@ import com.lothrazar.powerinventory.ModInv;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
@@ -21,7 +22,7 @@ public class GuiButtonUnlockStorage extends GuiButton implements IGuiTooltip
     {
     	super(buttonId, x, y, width,height, txt);
     	invoGroup = ig;
-    	this.setTooltip("tooltip.storage");
+    	this.setTooltip(StatCollector.translateToLocal("tooltip.storage"));
     }
 
     @SideOnly(Side.CLIENT)
