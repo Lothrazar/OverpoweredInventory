@@ -13,10 +13,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 
 public class ContainerOverpowered extends Container
 { 
@@ -25,7 +23,7 @@ public class ContainerOverpowered extends Container
     public IInventory craftResult = new InventoryCraftResult();
     public boolean epearlSlotEnabled;
     public boolean echestSlotEnabled;
-    public boolean[] storageEnabled = new boolean[4];//slot zero not used
+   // public boolean[] storageEnabled = new boolean[4];//slot zero not used
     final static int DISABLED=-1;//since they cant be null in Java
 	static int S_RESULT;
 	static int S_MAIN_START;
@@ -48,14 +46,8 @@ public class ContainerOverpowered extends Container
 	{
 		thePlayer = player;
 		
-		PlayerPersistProperty prop = PlayerPersistProperty.get(player);
-		//vars to avoid hitting the properties every time 
-		epearlSlotEnabled = prop.getInvoEPearl();
-		echestSlotEnabled = prop.getInvoEChest(); 
-		storageEnabled[Const.STORAGE_1TOPRIGHT] = prop.getStorage(Const.STORAGE_1TOPRIGHT);
-		storageEnabled[Const.STORAGE_2BOTLEFT]  = prop.getStorage(Const.STORAGE_2BOTLEFT);
-		storageEnabled[Const.STORAGE_3BOTRIGHT] = prop.getStorage(Const.STORAGE_3BOTRIGHT);
-		
+		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
+
 		int i,j,slotNum=0,x=0,y=0,yStart = 13+Const.SQ, paddingLrg=8;
  
 	  	int rowsMoreThanV = 3;
@@ -91,7 +83,7 @@ public class ContainerOverpowered extends Container
         
         
         // TOP RIGHT
-        if (storageEnabled[Const.STORAGE_1TOPRIGHT])
+        if (prop.getStorage(Const.STORAGE_1))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)
@@ -105,7 +97,7 @@ public class ContainerOverpowered extends Container
 	        }
         
         // BOTTOM LEFT:
-        if (storageEnabled[Const.STORAGE_2BOTLEFT])
+        if (prop.getStorage(Const.STORAGE_2))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)
@@ -118,12 +110,39 @@ public class ContainerOverpowered extends Container
 	            }
 	        }
         // BOTTOM RIGHT
-        if (storageEnabled[Const.STORAGE_3BOTRIGHT])
+        if (prop.getStorage(Const.STORAGE_3))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)
 	            {
 	            	slotNum = Const.V_INVO_SIZE*3 + j + (i + 1) * 9;
+	       
+	            	x = oldx + j * Const.SQ + offset;
+	            	y = oldy + i * Const.SQ + offset;
+	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
+	            }
+	        }
+        oldx = x + Const.SQ;
+        oldy = y + Const.SQ;
+        //another row down
+        if (prop.getStorage(Const.STORAGE_4))
+	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
+	        {
+	            for (j = 0; j < Const.COLS_VANILLA; ++j)
+	            {
+	            	slotNum = Const.V_INVO_SIZE*4 + j + (i + 1) * 9;
+	       
+	            	x = paddingLrg + j * Const.SQ;
+	            	y = oldy + i * Const.SQ + offset;
+	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
+	            }
+	        }
+        if (prop.getStorage(Const.STORAGE_5))
+	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
+	        {
+	            for (j = 0; j < Const.COLS_VANILLA; ++j)
+	            {
+	            	slotNum = Const.V_INVO_SIZE*5 + j + (i + 1) * 9;
 	       
 	            	x = oldx + j * Const.SQ + offset;
 	            	y = oldy + i * Const.SQ + offset;

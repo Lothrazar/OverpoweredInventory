@@ -3,8 +3,8 @@ package com.lothrazar.powerinventory.inventory;
 import java.util.Arrays;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.config.ModConfig;
-import com.lothrazar.powerinventory.inventory.button.GuiButtonRotate;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockChest;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockPearl;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockStorage;
@@ -60,10 +60,10 @@ public class GuiOverpowered extends GuiContainer
 		
 		int button_id = 99;
 		String label;
-		int xstart = this.guiLeft + this.xSize - w - padding;
-		int ystart = this.guiTop + padding;
 		GuiButton b;
 		/*
+		int xstart = this.guiLeft + this.xSize - w - padding;
+		int ystart = this.guiTop + padding;
 		this.buttonList.add(new GuiButtonRotate(button_id++,
 					xstart, //top right
 					ystart,w,h, Const.STORAGE_1TOPRIGHT));
@@ -104,41 +104,70 @@ public class GuiOverpowered extends GuiContainer
 		
 		int centerHorizCol = SLOTS_WIDTH/2 - GuiButtonUnlockStorage.width/2;
 		int centerVert = topspace - SLOTS_HEIGHT/2 - GuiButtonUnlockStorage.height/2;
+
+		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
 		
-		if(container.storageEnabled[Const.STORAGE_1TOPRIGHT] == false)
+		if(prop.getStorage(Const.STORAGE_1) == false)
 		{
 			int current = (int)UtilExperience.getExpTotal(thePlayer);
 			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
 					this.guiLeft + SLOTS_WIDTH + centerHorizCol, 
-					this.guiTop+ SLOTS_HEIGHT+centerVert, label,Const.STORAGE_1TOPRIGHT);
+					this.guiTop+ SLOTS_HEIGHT+centerVert, label,Const.STORAGE_1);
 			
 			this.buttonList.add(b);
 			
 			b.enabled = (current >= ModConfig.expCostStorage);
 		}
-		if(container.storageEnabled[Const.STORAGE_2BOTLEFT] == false)
+		if(prop.getStorage(Const.STORAGE_2) == false)
 		{
 			int current = (int)UtilExperience.getExpTotal(thePlayer);
 			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
 					this.guiLeft+ centerHorizCol, 
-					this.guiTop+ 2*SLOTS_HEIGHT + centerVert, label,Const.STORAGE_2BOTLEFT);
+					this.guiTop+ 2*SLOTS_HEIGHT + centerVert, label,Const.STORAGE_2);
 			
 			this.buttonList.add(b);
 			
 			b.enabled = (current >= ModConfig.expCostStorage);
 		}
-		if(container.storageEnabled[Const.STORAGE_3BOTRIGHT] == false)
+		if(prop.getStorage(Const.STORAGE_3) == false)
 		{
 			int current = (int)UtilExperience.getExpTotal(thePlayer);
 			label = current + "/" + ModConfig.expCostStorage + " XP";
 			
 			b = new GuiButtonUnlockStorage(button_id++,
 					this.guiLeft + SLOTS_WIDTH + centerHorizCol, 
-					this.guiTop+ 2*SLOTS_HEIGHT + centerVert, label,Const.STORAGE_3BOTRIGHT);
+					this.guiTop+ 2*SLOTS_HEIGHT + centerVert, label,Const.STORAGE_3);
+			
+			this.buttonList.add(b);
+			
+			b.enabled = (current >= ModConfig.expCostStorage);
+		}
+		//4 is down and left again
+		if(prop.getStorage(Const.STORAGE_4) == false)
+		{
+			int current = (int)UtilExperience.getExpTotal(thePlayer);
+			label = current + "/" + ModConfig.expCostStorage + " XP";
+			
+			b = new GuiButtonUnlockStorage(button_id++,
+					this.guiLeft+ centerHorizCol, 
+					this.guiTop+ 3*SLOTS_HEIGHT + centerVert, label,Const.STORAGE_4);
+			
+			this.buttonList.add(b);
+			
+			b.enabled = (current >= ModConfig.expCostStorage);
+		}
+		if(prop.getStorage(Const.STORAGE_5) == false)
+		{
+			int current = (int)UtilExperience.getExpTotal(thePlayer);
+			label = current + "/" + ModConfig.expCostStorage + " XP";
+			
+			b = new GuiButtonUnlockStorage(button_id++,
+					this.guiLeft + SLOTS_WIDTH + centerHorizCol, 
+					this.guiTop+ 3*SLOTS_HEIGHT + centerVert, label,Const.STORAGE_5);
 			
 			this.buttonList.add(b);
 			
@@ -204,23 +233,24 @@ public class GuiOverpowered extends GuiContainer
 		UtilTextureRender.drawTextureSimple(bkg, this.guiLeft, this.guiTop,this.xSize,this.ySize);
 
 		int left=7,pad=4;//pad is middle padding. left is left edge padding
-		
+
+		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
 		//always render this one
 		UtilTextureRender.drawTextureSimple(bkg_3x9, 
 				this.guiLeft+left, 
 				this.guiTop+topspace, SLOTS_WIDTH, SLOTS_HEIGHT);
 		//topright is 1
-		if(container.storageEnabled[Const.STORAGE_1TOPRIGHT])
+		if(prop.getStorage(Const.STORAGE_1))
 			UtilTextureRender.drawTextureSimple(bkg_3x9, 
 					this.guiLeft+pad+left+SLOTS_WIDTH, 
 					this.guiTop+topspace, SLOTS_WIDTH, SLOTS_HEIGHT);
 		//lower left is 2
-		if(container.storageEnabled[Const.STORAGE_2BOTLEFT])
+		if(prop.getStorage(Const.STORAGE_2))
 			UtilTextureRender.drawTextureSimple(bkg_3x9, 
 					this.guiLeft+left, 
 					this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
 		//lower right is 3
-		if(container.storageEnabled[Const.STORAGE_3BOTRIGHT])
+		if(prop.getStorage(Const.STORAGE_3))
 			UtilTextureRender.drawTextureSimple(bkg_3x9, 
 					this.guiLeft+pad+left+SLOTS_WIDTH, 
 					this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
