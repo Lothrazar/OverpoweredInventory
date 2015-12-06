@@ -8,6 +8,7 @@ import com.lothrazar.powerinventory.inventory.button.GuiButtonRotate;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockChest;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlock3x3Crafting;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockPearl;
+import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockStorage;
 import com.lothrazar.powerinventory.inventory.button.IGuiTooltip;
 import com.lothrazar.powerinventory.inventory.slot.*;
 import com.lothrazar.powerinventory.util.UtilExperience;
@@ -112,6 +113,46 @@ public class GuiOverpowered extends GuiContainer
 			
 			b.enabled = (current >= ModConfig.expCostCrafting);
 		}
+		
+		if(container.storageEnabled[Const.STORAGE_1TOPRIGHT] == false)
+		{
+			int current = (int)UtilExperience.getExpTotal(thePlayer);
+			label = current + "/" + ModConfig.expStorageCrafting + " XP";
+			
+			b = new GuiButtonUnlockStorage(button_id++,
+					this.guiLeft+20+SLOTS_WIDTH, 
+					this.guiTop+100, label,Const.STORAGE_1TOPRIGHT);
+			
+			this.buttonList.add(b);
+			
+			b.enabled = (current >= ModConfig.expCostCrafting);
+		}
+		if(container.storageEnabled[Const.STORAGE_2BOTLEFT] == false)
+		{
+			int current = (int)UtilExperience.getExpTotal(thePlayer);
+			label = current + "/" + ModConfig.expStorageCrafting + " XP";
+			
+			b = new GuiButtonUnlockStorage(button_id++,
+					this.guiLeft+20, 
+					this.guiTop+100+SLOTS_HEIGHT, label,Const.STORAGE_2BOTLEFT);
+			
+			this.buttonList.add(b);
+			
+			b.enabled = (current >= ModConfig.expCostCrafting);
+		}
+		if(container.storageEnabled[Const.STORAGE_3BOTRIGHT] == false)
+		{
+			int current = (int)UtilExperience.getExpTotal(thePlayer);
+			label = current + "/" + ModConfig.expStorageCrafting + " XP";
+			
+			b = new GuiButtonUnlockStorage(button_id++,
+					this.guiLeft+20+SLOTS_WIDTH, 
+					this.guiTop+100+SLOTS_HEIGHT, label,Const.STORAGE_3BOTRIGHT);
+			
+			this.buttonList.add(b);
+			
+			b.enabled = (current >= ModConfig.expCostCrafting);
+		}
     }
 	
 	@Override
@@ -181,17 +222,20 @@ public class GuiOverpowered extends GuiContainer
 		//TODO: these will be exp unlocks also
 		int left=7,pad=4,topspace=83;
 		//topright is 1
-		UtilTextureRender.drawTextureSimple(bkg_3x9, 
-				this.guiLeft+pad+left+SLOTS_WIDTH, 
-				this.guiTop+topspace, SLOTS_WIDTH, SLOTS_HEIGHT);
+		if(container.storageEnabled[Const.STORAGE_1TOPRIGHT])
+			UtilTextureRender.drawTextureSimple(bkg_3x9, 
+					this.guiLeft+pad+left+SLOTS_WIDTH, 
+					this.guiTop+topspace, SLOTS_WIDTH, SLOTS_HEIGHT);
 		//lower left is 2
-		UtilTextureRender.drawTextureSimple(bkg_3x9, 
-				this.guiLeft+left, 
-				this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
+		if(container.storageEnabled[Const.STORAGE_2BOTLEFT])
+			UtilTextureRender.drawTextureSimple(bkg_3x9, 
+					this.guiLeft+left, 
+					this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
 		//lower right is 3
-		UtilTextureRender.drawTextureSimple(bkg_3x9, 
-				this.guiLeft+pad+left+SLOTS_WIDTH, 
-				this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
+		if(container.storageEnabled[Const.STORAGE_3BOTRIGHT])
+			UtilTextureRender.drawTextureSimple(bkg_3x9, 
+					this.guiLeft+pad+left+SLOTS_WIDTH, 
+					this.guiTop+topspace+pad+SLOTS_HEIGHT, SLOTS_WIDTH, SLOTS_HEIGHT);
 		
         if(container.echestSlotEnabled){drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);}
     	if(container.epearlSlotEnabled){drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);}

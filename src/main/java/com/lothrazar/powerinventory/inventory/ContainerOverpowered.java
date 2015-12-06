@@ -26,6 +26,8 @@ public class ContainerOverpowered extends Container
     public boolean craftingEnabled;
     public boolean epearlSlotEnabled;
     public boolean echestSlotEnabled;
+    public boolean bottleEnabled;
+    public boolean[] storageEnabled = new boolean[4];//slot zero not used
     final static int DISABLED=-1;//since they cant be null in Java
 	static int S_RESULT;
 	static int S_CRAFT_START;
@@ -51,10 +53,14 @@ public class ContainerOverpowered extends Container
 		thePlayer = player;
 		
 		PlayerPersistProperty prop = PlayerPersistProperty.get(player);
-		
+		//vars to avoid hitting the properties every time
 		craftingEnabled = prop.getInvoCrafting();
 		epearlSlotEnabled = prop.getInvoEPearl();
 		echestSlotEnabled = prop.getInvoEChest();
+		bottleEnabled = prop.getInvoBottling();
+		storageEnabled[Const.STORAGE_1TOPRIGHT] = prop.getStorage(Const.STORAGE_1TOPRIGHT);
+		storageEnabled[Const.STORAGE_2BOTLEFT]  = prop.getStorage(Const.STORAGE_2BOTLEFT);
+		storageEnabled[Const.STORAGE_3BOTRIGHT] = prop.getStorage(Const.STORAGE_3BOTRIGHT);
 		
 		int i,j,slotNum=0,x=0,y=0,yStart = 84, paddingLrg=8;
 
@@ -110,42 +116,45 @@ public class ContainerOverpowered extends Container
         int oldx = x + Const.SQ;
         int oldy = y + Const.SQ;
         // TOP RIGHT
-        for (i = 0; i < Const.ROWS_VANILLA; ++i)
-        {
-            for (j = 0; j < Const.COLS_VANILLA; ++j)
-            {
-            	slotNum = Const.V_INVO_SIZE + j + (i + 1) * 9;
-       
-            	x = oldx + j * Const.SQ + offset;
-            	y = yStart + i * Const.SQ;
-        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
-            }
-        }
+        if (storageEnabled[Const.STORAGE_1TOPRIGHT])
+	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
+	        {
+	            for (j = 0; j < Const.COLS_VANILLA; ++j)
+	            {
+	            	slotNum = Const.V_INVO_SIZE + j + (i + 1) * 9;
+	       
+	            	x = oldx + j * Const.SQ + offset;
+	            	y = yStart + i * Const.SQ;
+	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
+	            }
+	        }
         
         // BOTTOM LEFT:
-        for (i = 0; i < Const.ROWS_VANILLA; ++i)
-        {
-            for (j = 0; j < Const.COLS_VANILLA; ++j)
-            {
-            	slotNum = Const.V_INVO_SIZE*2 + j + (i + 1) * 9;
-       
-            	x = paddingLrg + j * Const.SQ;
-            	y = oldy + i * Const.SQ + offset;
-        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
-            }
-        }
+        if (storageEnabled[Const.STORAGE_2BOTLEFT])
+	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
+	        {
+	            for (j = 0; j < Const.COLS_VANILLA; ++j)
+	            {
+	            	slotNum = Const.V_INVO_SIZE*2 + j + (i + 1) * 9;
+	       
+	            	x = paddingLrg + j * Const.SQ;
+	            	y = oldy + i * Const.SQ + offset;
+	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
+	            }
+	        }
         // BOTTOM RIGHT
-        for (i = 0; i < Const.ROWS_VANILLA; ++i)
-        {
-            for (j = 0; j < Const.COLS_VANILLA; ++j)
-            {
-            	slotNum = Const.V_INVO_SIZE*3 + j + (i + 1) * 9;
-       
-            	x = oldx + j * Const.SQ + offset;
-            	y = oldy + i * Const.SQ + offset;
-        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
-            }
-        }
+        if (storageEnabled[Const.STORAGE_3BOTRIGHT])
+	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
+	        {
+	            for (j = 0; j < Const.COLS_VANILLA; ++j)
+	            {
+	            	slotNum = Const.V_INVO_SIZE*3 + j + (i + 1) * 9;
+	       
+	            	x = oldx + j * Const.SQ + offset;
+	            	y = oldy + i * Const.SQ + offset;
+	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
+	            }
+	        }
         S_MAIN_END = this.inventorySlots.size() - 1;
 
         S_BAROTHER_START = this.inventorySlots.size();

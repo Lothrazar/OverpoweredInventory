@@ -41,11 +41,11 @@ public class UnlockChestPacket implements IMessage , IMessageHandler<UnlockChest
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 		
 		if(UtilExperience.getExpTotal(p) >= ModConfig.expCostEChest){
 			
 			UtilExperience.drainExp(p, ModConfig.expCostEChest);
+			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 			
 			prop.setInvoEChest( true  );
 			
