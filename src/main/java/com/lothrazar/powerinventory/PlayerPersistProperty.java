@@ -88,7 +88,7 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 	public int getStorageCount(){
 		return player.getDataWatcher().getWatchableObjectInt(STORAGE_COUNT);
 	}
-	public boolean getStorage(int count){
+	public boolean hasStorage(int count){
 		return player.getDataWatcher().getWatchableObjectInt(STORAGE_COUNT) >= count;
 	}
 	@Override

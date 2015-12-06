@@ -65,22 +65,26 @@ public class ContainerOverpowered extends Container
         
         int xStart = paddingLrg;
         int yStart = 13+Const.SQ;
-        
-        for (i = 0; i < Const.ROWS_VANILLA; ++i)
-        {
-            for (j = 0; j < Const.COLS_VANILLA; ++j)
-            {
-            	slotNum = j + (i + 1) * 9;
-          
-            	x = xStart + j * Const.SQ;
-            	y = yStart + i * Const.SQ;
-        		this.addSlotToContainer(new Slot(inventoryPlayer, slotNum, x,y));
-            }
-        }
 
+        if (prop.hasStorage(1)){
+        	//todo: move to reuseable fn call
+        	//int slotNum,x,y;
+        	//pass in xStart, or calculate it based on the '1'
+	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
+	        {
+	            for (j = 0; j < Const.COLS_VANILLA; ++j)
+	            {
+	            	slotNum = j + (i + 1) * 9;
+	          
+	            	x = xStart + j * Const.SQ;
+	            	y = yStart + i * Const.SQ;
+	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));//not invoPlayer anymore
+	            }
+	        }
+        }
         xStart += Const.SLOTS_WIDTH + offset;
         // TOP RIGHT
-        if (prop.getStorage(Const.STORAGE_1))
+        if (prop.hasStorage(2))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)
@@ -96,7 +100,7 @@ public class ContainerOverpowered extends Container
         xStart = paddingLrg;
         yStart += Const.SLOTS_HEIGHT + offset;
         // BOTTOM LEFT:
-        if (prop.getStorage(Const.STORAGE_2))
+        if (prop.hasStorage(3))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)
@@ -111,7 +115,7 @@ public class ContainerOverpowered extends Container
 
         xStart += Const.SLOTS_WIDTH + offset;//move right
         // BOTTOM RIGHT
-        if (prop.getStorage(Const.STORAGE_3))
+        if (prop.hasStorage(4))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)
@@ -128,7 +132,7 @@ public class ContainerOverpowered extends Container
         yStart += Const.SLOTS_HEIGHT + offset;
         
         //another row down
-        if (prop.getStorage(Const.STORAGE_4))
+        if (prop.hasStorage(5))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)
@@ -143,7 +147,7 @@ public class ContainerOverpowered extends Container
 
         xStart += Const.SLOTS_WIDTH + offset;//move right
         
-        if (prop.getStorage(Const.STORAGE_5))
+        if (prop.hasStorage(6))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)

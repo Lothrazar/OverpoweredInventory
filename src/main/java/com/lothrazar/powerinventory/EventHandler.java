@@ -125,25 +125,32 @@ public class EventHandler
 			PlayerPersistProperty prop = PlayerPersistProperty.get(event.gui.mc.thePlayer);
 			
 			//int storage = prop.getStorageCount();
+			for(int i = 1; i <= ModConfig.getMaxSections(); i++)
+			{
 
-			if(prop.getStorage(Const.STORAGE_5))
-				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_5));
+				if(prop.hasStorage(i))
+					event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,i));
 
-			x -= 2*w - padding;//move left
-			if(prop.getStorage(Const.STORAGE_4))
+				x -= 2*w - padding;//move left
+				
+			}
+			/*
+			if(prop.hasStorage(Const.STORAGE_4))
 				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_4));
 
 			x -= 2*w - padding;//move left
-			if(prop.getStorage(Const.STORAGE_3))
+			if(prop.hasStorage(Const.STORAGE_3))
 				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_3));
 
 			x -= 2*w - padding;//move left
-			if(prop.getStorage(Const.STORAGE_2))
+			if(prop.hasStorage(Const.STORAGE_2))
 				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_2));
 
 			x -= 2*w - padding;//move left
-			if(prop.getStorage(Const.STORAGE_1))
-				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_1));
+			if(prop.hasStorage(Const.STORAGE_1))
+			
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_1));
+				*/
 		}
 	}
 	
