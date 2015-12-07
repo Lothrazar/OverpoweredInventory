@@ -3,7 +3,6 @@ package com.lothrazar.powerinventory.net;
 import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.util.UtilExperience;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,50 +12,45 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
- 
-public class UnlockPearlPacket implements IMessage , IMessageHandler<UnlockPearlPacket, IMessage>
-{
-	public UnlockPearlPacket() {}
-	NBTTagCompound tags = new NBTTagCompound(); 
-	
-	public UnlockPearlPacket(NBTTagCompound ptags)
-	{
+
+public class UnlockPearlPacket implements IMessage, IMessageHandler<UnlockPearlPacket, IMessage> {
+	public UnlockPearlPacket() {
+	}
+
+	NBTTagCompound tags = new NBTTagCompound();
+
+	public UnlockPearlPacket(NBTTagCompound ptags) {
 		tags = ptags;
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) 
-	{
+	public void fromBytes(ByteBuf buf) {
 		tags = ByteBufUtils.readTag(buf);
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) 
-	{
+	public void toBytes(ByteBuf buf) {
 		ByteBufUtils.writeTag(buf, this.tags);
 	}
 
 	@Override
-	public IMessage onMessage(UnlockPearlPacket message, MessageContext ctx)
-	{
+	public IMessage onMessage(UnlockPearlPacket message, MessageContext ctx) {
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		
-		if(UtilExperience.getExpTotal(p) >= ModConfig.expCostPearl){
-			
+		if (UtilExperience.getExpTotal(p) >= ModConfig.expCostPearl) {
+
 			UtilExperience.drainExp(p, ModConfig.expCostPearl);
 
 			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
-			prop.setEPearlUnlocked( true  );
-			
+			prop.setEPearlUnlocked(true);
+
 			p.closeScreen();
-			
-			p.worldObj.playSoundAtEntity(p,"mob.zombie.unfect", 1.4F, 1F);
-		}
-		else{
+
+			p.worldObj.playSoundAtEntity(p, "mob.zombie.unfect", 1.4F, 1F);
+		} else {
 			p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("gui.craftexp")));
 		}
-		
+
 		return null;
 	}
 }
