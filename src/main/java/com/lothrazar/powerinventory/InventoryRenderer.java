@@ -4,14 +4,12 @@ import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockStorage;
 
 public class InventoryRenderer
 {
-
-	public static final int topspace=12+Const.SQ;//space used by top half not including slots
+	private static final int topspace=12+Const.SQ;//space used by top half not including slots
+	private static final int left=7,pad=4;//pad is middle padding. left is left edge padding. for slot areas
+	private static final int segsLeft = 10;//segments on the left two columns
 	private static final int centerHoriz = Const.SLOTS_WIDTH/2 - GuiButtonUnlockStorage.width/2;
 	private static final int centerVert = topspace - Const.SLOTS_HEIGHT/2 - GuiButtonUnlockStorage.height/2;
 	
-	private static final int left=7,pad=4;//pad is middle padding. left is left edge padding. for slot areas
-
-	private static final int segsLeft = 10;//segments on the left two columns
 	
 	private static int rowFromSegment(int segment){
 		 
@@ -40,20 +38,6 @@ public class InventoryRenderer
 	// 9  10 15
 	//small: segments are [1,6]
 	//large: segments are [1,15]
-	/*
-	private static int numColumns(){
-		return ModConfig.isLargeScreen() ? 3 : 2;
-	}
-	private static int numRows(){
-		return ModConfig.isLargeScreen() ? 5 : 3;
-	}*/
-	
-	//TODO: loop on ModConfig.getMaxSections()
-	//tricky since small means 2 columns and 3 rows totalling 6
-	//but large means 3 columns and 5 rows-> 15
-	// so need a getRowCol setup so its like
-	//OR.. they just unlock which ever one they click on again? no we cant go back to that. can we?
-	//it is only 8 bits...
 	
 	public static int xPosBtn(int segment){
 		int col = colFromSegment(segment);
@@ -69,77 +53,28 @@ public class InventoryRenderer
 	}
 	
 	public static int xPosTexture(int segment){
-		//there are only 3 columns, no need to make constants
-		switch(colFromSegment(segment)){
-		case 1:
-			return left;//column 1, so segment 1,3,5 etc
-		case 2:
-			return left + pad + Const.SLOTS_WIDTH; 
-		case 3:
-			return left + 2*(pad + Const.SLOTS_WIDTH);//always third column
-		}
-		return 0;
+
+		int col = colFromSegment(segment);
+		//so column 1 is set only by the padding
+		return left + (col-1)*(pad + Const.SLOTS_WIDTH);
 	}
 	
 	public static int yPosTexture(int segment){
-		//TODO switch is for temp
+
 		int row = rowFromSegment(segment);
-		
-		
-		switch(segment){
-		case 1:
-			return topspace;
-		case 2:
-			return topspace;
-		case 3:
-			return topspace + pad + Const.SLOTS_HEIGHT;
-		case 4:
-			return topspace+pad+Const.SLOTS_HEIGHT;
-		case 5:
-			return topspace+2*(pad+Const.SLOTS_HEIGHT);
-		case 6:
-			return topspace+2*(pad+Const.SLOTS_HEIGHT);
-		}
-		return 0;//TODO
+		return topspace + (row-1)*(pad + Const.SLOTS_HEIGHT);
 	}
 
 	public static int xPosSlotsStart(int segment){
-		switch(segment){
-		case 1:     
-			return 2*pad;
-		case 2:    
-			return Const.SLOTS_WIDTH + 3*pad;
-		case 3:    
-			return 2*pad;
-		case 4:    
-			return Const.SLOTS_WIDTH + 3*pad;
-		case 5:    
-			return 2*pad;
-		case 6:
-			return Const.SLOTS_WIDTH + 3*pad;
-		}
-		return 0;
+		int col = colFromSegment(segment);
+		
+		return 2*pad + (col-1)*(Const.SLOTS_WIDTH + pad);
 	}
 
 	public static int yPosSlotsStart(int segment){
-		int topLimit = 13+Const.SQ;//DIFFERENT than topSpace - this is for data slot not images
-		switch(segment){
-		case 1:
-			return topLimit;
-		case 2:     
-			return topLimit; 
-		case 3:     
-			return topLimit + Const.SLOTS_HEIGHT + pad; 
-		case 4:     
-			return topLimit + Const.SLOTS_HEIGHT + pad; 
-		case 5:     
-			return topLimit + 2*(Const.SLOTS_HEIGHT + pad);
-		case 6:     
-			return topLimit + 2*(Const.SLOTS_HEIGHT + pad);
-		}
-
-		return 0;
+		int row = rowFromSegment(segment);
+		int topLimit = topspace+1;//13+Const.SQ;//DIFFERENT than topSpace - this is for data slot not images
+		
+		return topLimit + (row-1)*(Const.SLOTS_HEIGHT + pad);
 	}
-
-	
 }
