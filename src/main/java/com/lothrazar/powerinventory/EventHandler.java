@@ -97,19 +97,19 @@ public class EventHandler {
 			int button_id = 256;
 			int padding = 10, h = 10, w = 20, x, y;
 
-			x = screenWidth / 2 + Const.VWIDTH / 2 - w;// align tight to top of
-														// inventory
+			x = screenWidth / 2 + Const.VWIDTH / 2 - w;// align tight to top 
 			y = screenHeight / 2 - Const.VHEIGHT / 2 - 2 * h - 1;
+			
 			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x, y));
 
-			padding = 5;
+			padding = 4;
 			h = 10;
 			w = 10;
 
 			// position them exactly on players inventory
-			x = screenWidth / 2 + Const.VWIDTH / 2 - w * 3;
-			y = screenHeight / 2 - Const.VHEIGHT / 2 + padding;
-
+			x = screenWidth / 2 - Const.VWIDTH/2 + padding+78;//screenWidth / 2 + Const.VWIDTH / 2 - w * 3;
+			y = screenHeight / 2 - Const.VHEIGHT/2 + padding+62;//screenHeight / 2 - Const.VHEIGHT / 2 + padding;
+			//TODO: in large mode we might need two rows or something
 			PlayerPersistProperty prop = PlayerPersistProperty.get(event.gui.mc.thePlayer);
 
 			// int storage = prop.getStorageCount();
@@ -118,27 +118,8 @@ public class EventHandler {
 				if (prop.hasStorage(i))
 					event.buttonList.add(new GuiButtonRotate(button_id++, x, y, w, h, i));
 
-				x -= 2 * w - padding;// move left
-
+				x += w + padding;//-= 2 * w - padding;// 
 			}
-			/*
-			 * if(prop.hasStorage(Const.STORAGE_4)) event.buttonList.add(new
-			 * GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_4));
-			 * 
-			 * x -= 2*w - padding;//move left
-			 * if(prop.hasStorage(Const.STORAGE_3)) event.buttonList.add(new
-			 * GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_3));
-			 * 
-			 * x -= 2*w - padding;//move left
-			 * if(prop.hasStorage(Const.STORAGE_2)) event.buttonList.add(new
-			 * GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_2));
-			 * 
-			 * x -= 2*w - padding;//move left
-			 * if(prop.hasStorage(Const.STORAGE_1))
-			 * 
-			 * event.buttonList.add(new GuiButtonRotate(button_id++,x,y,
-			 * w,h,Const.STORAGE_1));
-			 */
 		}
 	}
 
