@@ -102,7 +102,7 @@ public class GuiOverpowered extends GuiContainer
 				b = new GuiButtonUnlockStorage(button_id++,
 						this.guiLeft + InventoryRenderer.xPosBtn(i),
 						this.guiTop  + InventoryRenderer.yPosBtn(i),
-						 label,1);
+						 label,i);
 				
 				this.buttonList.add(b);
 				
