@@ -106,11 +106,11 @@ public class EventHandler {
 			h = 10;
 			w = 10;
 
+			PlayerPersistProperty prop = PlayerPersistProperty.get(event.gui.mc.thePlayer);
 			// position them exactly on players inventory
 			x = screenWidth / 2 - Const.VWIDTH/2 + padding+78;//screenWidth / 2 + Const.VWIDTH / 2 - w * 3;
 			y = screenHeight / 2 - Const.VHEIGHT/2 + padding+62;//screenHeight / 2 - Const.VHEIGHT / 2 + padding;
 			//TODO: in large mode we might need two rows or something
-			PlayerPersistProperty prop = PlayerPersistProperty.get(event.gui.mc.thePlayer);
 
 			// int storage = prop.getStorageCount();
 			for (int i = 1; i <= ModConfig.getMaxSections(); i++) {

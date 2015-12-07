@@ -5,6 +5,7 @@ import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.InventoryRenderer;
 import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.config.ModConfig;
+import com.lothrazar.powerinventory.inventory.button.GuiButtonRotate;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockChest;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockPearl;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockStorage;
@@ -90,6 +91,21 @@ public class GuiOverpowered extends GuiContainer {
 				b.enabled = (current >= ModConfig.expCostStorage);
 				break;
 			}
+		}
+		
+		// position them exactly on players inventory
+		int x = this.guiLeft+ 30;//screenWidth / 2 + Const.VWIDTH / 2 - w * 3;
+		int y = this.guiTop + 7;//screenHeight / 2 - Const.VHEIGHT / 2 + padding;
+		
+		//TODO: in large mode we might need two rows or something
+
+		// int storage = prop.getStorageCount();
+		for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
+
+			if (prop.hasStorage(i))
+				this.buttonList.add(new GuiButtonRotate(button_id++, x, y, w, h, i));
+
+			x += w + padding;//-= 2 * w - padding;// 
 		}
 	}
 
