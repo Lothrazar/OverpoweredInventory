@@ -30,8 +30,6 @@ public class GuiOverpowered extends GuiContainer {
 	public static boolean SHOW_DEBUG_NUMS = false;
 	private final InventoryOverpowered inventory;
 	private ContainerOverpowered container;
-	final int h = 20;
-	final int w = 20;// default button dims
 	final int padding = 6;// on the far outer sizes
 	final EntityPlayer thePlayer;
 
@@ -51,7 +49,9 @@ public class GuiOverpowered extends GuiContainer {
 	public void initGui() {
 		super.initGui();
 		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
-
+		
+		int h = 20;
+		int w = 20;// default button dims
 		int button_id = 99;
 		String label;
 		GuiButton b;
@@ -89,23 +89,33 @@ public class GuiOverpowered extends GuiContainer {
 				this.buttonList.add(b);
 
 				b.enabled = (current >= ModConfig.expCostStorage);
+				
+				
 				break;
 			}
 		}
 		
 		// position them exactly on players inventory
-		int x = this.guiLeft+ 30;//screenWidth / 2 + Const.VWIDTH / 2 - w * 3;
-		int y = this.guiTop + 7;//screenHeight / 2 - Const.VHEIGHT / 2 + padding;
-		
-		//TODO: in large mode we might need two rows or something
-
-		// int storage = prop.getStorageCount();
+		int x = this.guiLeft + 1;//this.guiLeft+ 30; 
+		int y = this.guiTop + 30;//this.guiTop + 7; 
+		w=10;h=10;
 		for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
 
 			if (prop.hasStorage(i))
 				this.buttonList.add(new GuiButtonRotate(button_id++, x, y, w, h, i));
 
-			x += w + padding;//-= 2 * w - padding;// 
+			y += Const.SLOTS_HEIGHT+4;
+			//x += w + padding;//-= 2 * w - padding;// 
+			//if new col
+			if(ModConfig.getMaxSections() > 6 && (i == 5 || i == 10)){
+				x += Const.SLOTS_WIDTH;
+				y=this.guiTop + 30;
+			}
+
+			if(ModConfig.getMaxSections() == 6 && (i == 3)){
+				x += Const.SLOTS_WIDTH;
+				y=this.guiTop + 30;
+			}
 		}
 	}
 
