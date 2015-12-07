@@ -11,8 +11,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiButtonRotate extends GuiButton {
 	private int invoGroup;
 
-	public GuiButtonRotate(int buttonId, int x, int y, int width, int height, int ig) {
-		super(buttonId, x, y, width, height, "" + ig);// ig for test
+	public GuiButtonRotate(int buttonId, int x, int y, int width, int height, String lbl,int ig) {
+		super(buttonId, x, y, width, height, lbl);// ig for test
 		invoGroup = ig;
 	}
 

@@ -95,27 +95,14 @@ public class GuiOverpowered extends GuiContainer {
 			}
 		}
 		
-		// position them exactly on players inventory
-		int x = this.guiLeft + 1;//this.guiLeft+ 30; 
-		int y = this.guiTop + 30;//this.guiTop + 7; 
-		w=10;h=10;
+		w=8;h=8;
 		for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
 
 			if (prop.hasStorage(i))
-				this.buttonList.add(new GuiButtonRotate(button_id++, x, y, w, h, i));
-
-			y += Const.SLOTS_HEIGHT+4;
-			//x += w + padding;//-= 2 * w - padding;// 
-			//if new col
-			if(ModConfig.getMaxSections() > 6 && (i == 5 || i == 10)){
-				x += Const.SLOTS_WIDTH;
-				y=this.guiTop + 30;
-			}
-
-			if(ModConfig.getMaxSections() == 6 && (i == 3)){
-				x += Const.SLOTS_WIDTH;
-				y=this.guiTop + 30;
-			}
+				this.buttonList.add(new GuiButtonRotate(button_id++, 
+						this.guiLeft + InventoryRenderer.xPosSwap(i), 
+						this.guiTop + InventoryRenderer.xPosSwap(i), 
+						w, h, "",i));
 		}
 	}
 

@@ -116,7 +116,7 @@ public class EventHandler {
 			for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
 
 				if (prop.hasStorage(i))
-					event.buttonList.add(new GuiButtonRotate(button_id++, x, y, w, h, i));
+					event.buttonList.add(new GuiButtonRotate(button_id++, x, y, w, h,""+i, i));
 
 				x += w + padding;//-= 2 * w - padding;// 
 			}
