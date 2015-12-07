@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.config.ModConfig;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -22,8 +23,8 @@ public class InventoryOverpowered implements IInventory
     private ItemStack enderChestStack;
     
     public InventoryOverpowered(EntityPlayer player){
-    	int storageMax = 5;//todo from const?
-    	INV_SIZE = 2*Const.HOTBAR_SIZE + Const.V_INVO_SIZE + Const.V_INVO_SIZE * storageMax;
+    	//always 2 hotbars. the number of sections depends on config (ignoring locked or not per player)
+    	INV_SIZE = 2*Const.HOTBAR_SIZE + Const.V_INVO_SIZE * ModConfig.getMaxSections();
     	inventory = new ItemStack[INV_SIZE];
     }
     
