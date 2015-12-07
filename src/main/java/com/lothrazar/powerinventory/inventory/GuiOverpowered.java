@@ -179,8 +179,8 @@ public class GuiOverpowered extends GuiContainer
 		for(int i = 1; i <= ModConfig.getMaxSections(); i++){
 			if(prop.hasStorage(i))
 				drawSlotSectionAt(
-						this.guiLeft+ InventoryRenderer.xPosSlots(i), 
-						this.guiTop + InventoryRenderer.yPosSlots(i));
+						this.guiLeft+ InventoryRenderer.xPosTexture(i), 
+						this.guiTop + InventoryRenderer.yPosTexture(i));
 		}
 		
         if(container.echestSlotEnabled){drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);}

@@ -62,14 +62,14 @@ public class InventoryRenderer
 		}
 	}
 	
-	public static int xPosSlots(int segment){
+	public static int xPosTexture(int segment){
 		//TODO switch is for temp
 		
 		switch(segment){
 		case 1:
 			return left;
 		case 2:
-			return pad+left+Const.SLOTS_WIDTH;
+			return pad + left + Const.SLOTS_WIDTH;
 		case 3:
 			return left;
 		case 4:
@@ -83,7 +83,7 @@ public class InventoryRenderer
 		return 0;
 	}
 	
-	public static int yPosSlots(int segment){
+	public static int yPosTexture(int segment){
 		//TODO switch is for temp
 
 		switch(segment){
@@ -92,7 +92,7 @@ public class InventoryRenderer
 		case 2:
 			return topspace;
 		case 3:
-			return topspace+pad+Const.SLOTS_HEIGHT;
+			return topspace + pad + Const.SLOTS_HEIGHT;
 		case 4:
 			return topspace+pad+Const.SLOTS_HEIGHT;
 		case 5:
@@ -102,4 +102,44 @@ public class InventoryRenderer
 		}
 		return 0;//TODO
 	}
+
+	public static int xPosSlotsStart(int segment){
+		switch(segment){
+		case 1:     
+			return 2*pad;
+		case 2:    
+			return Const.SLOTS_WIDTH + 3*pad;
+		case 3:    
+			return 2*pad;
+		case 4:    
+			return Const.SLOTS_WIDTH + 3*pad;
+		case 5:    
+			return 2*pad;
+		case 6:
+			return Const.SLOTS_WIDTH + 3*pad;
+		}
+		return 0;
+	}
+
+	public static int yPosSlotsStart(int segment){
+		int topLimit = 13+Const.SQ;//DIFFERENT than topSpace - this is for data slot not images
+		switch(segment){
+		case 1:
+			return topLimit;
+		case 2:     
+			return topLimit; 
+		case 3:     
+			return topLimit + Const.SLOTS_HEIGHT + pad; 
+		case 4:     
+			return topLimit + Const.SLOTS_HEIGHT + pad; 
+		case 5:     
+			return topLimit + 2*(Const.SLOTS_HEIGHT + pad);
+		case 6:     
+			return topLimit + 2*(Const.SLOTS_HEIGHT + pad);
+		}
+
+		return 0;
+	}
+
+	
 }

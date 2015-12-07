@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.InventoryRenderer;
 import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.slot.*;
@@ -38,7 +39,7 @@ public class ContainerOverpowered extends Container
     static int S_BAROTHER_END;
 
     final int hotbarX = 8;
-	final int offset = 4;//size of grey space between the sections
+	final int pad = 4;//size of grey space between the sections
     final int hotbarY = ModConfig.getInvoHeight() - Const.SQ - 7;
 	
 	//static final int OFFSCREEN = 600;
@@ -63,33 +64,40 @@ public class ContainerOverpowered extends Container
         S_MAIN_START = this.inventorySlots.size();
         // TOP LEFT: the player inventory mirror
         
-        int xStart = paddingLrg;
-        int yStart = 13+Const.SQ;
-
-        if (prop.hasStorage(1)){
-        	//todo: move to reuseable fn call
-        	//int slotNum,x,y;
-        	//pass in xStart, or calculate it based on the '1'
-	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
-	        {
-	            for (j = 0; j < Const.COLS_VANILLA; ++j)
-	            {
-	            	slotNum = j + (i + 1) * 9;
-	          
-	            	x = xStart + j * Const.SQ;
-	            	y = yStart + i * Const.SQ;
-	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));//not invoPlayer anymore
-	            }
-	        }
+        int xStart;// = 2*pad;
+        int yStart;// = 13+Const.SQ;//leaving one space for the slots on top row
+        
+        for(int k = 1; k <= ModConfig.getMaxSections(); k++){
+            if (prop.hasStorage(k)){ 
+	        	xStart = InventoryRenderer.xPosSlotsStart(k);
+	            yStart = InventoryRenderer.yPosSlotsStart(k);
+    	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
+    	        {
+    	            for (j = 0; j < Const.COLS_VANILLA; ++j)
+    	            {
+    	            	slotNum = (k-1)*Const.V_INVO_SIZE + j + (i + 1) * 9;
+    	          
+    	            	x = xStart + j * Const.SQ;
+    	            	y = yStart + i * Const.SQ;
+    	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));//not invoPlayer anymore
+    	            }
+    	        }
+            } 
         }
-        xStart += Const.SLOTS_WIDTH + offset;
+
+        /*
+       // xStart = Const.SLOTS_WIDTH + 3*pad;
+       // yStart = 13+Const.SQ;
         // TOP RIGHT
-        if (prop.hasStorage(2))
+        k = 2;//will be loop var
+        xStart = InventoryRenderer.xPosSlotsStart(k);
+        yStart = InventoryRenderer.yPosSlotsStart(k);
+        if (prop.hasStorage(k))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)
 	            {
-	            	slotNum = Const.V_INVO_SIZE + j + (i + 1) * 9;
+	            	slotNum = (k-1)*Const.V_INVO_SIZE + j + (i + 1) * 9;
 	       
 	            	x = xStart + j * Const.SQ;
 	            	y = yStart + i * Const.SQ;
@@ -97,15 +105,18 @@ public class ContainerOverpowered extends Container
 	            }
 	        }
         
-        xStart = paddingLrg;
-        yStart += Const.SLOTS_HEIGHT + offset;
+       // xStart = 2*pad;
+       // yStart = 13+Const.SQ + Const.SLOTS_HEIGHT + pad;
         // BOTTOM LEFT:
-        if (prop.hasStorage(3))
+        k = 3;//will be loop var
+        xStart = InventoryRenderer.xPosSlotsStart(k);
+        yStart = InventoryRenderer.yPosSlotsStart(k);
+        if (prop.hasStorage(k))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)
 	            {
-	            	slotNum = Const.V_INVO_SIZE*2 + j + (i + 1) * 9;
+	            	slotNum = (k-1)*Const.V_INVO_SIZE + j + (i + 1) * 9;
 	       
 	            	x = xStart + j * Const.SQ;
 	            	y = yStart + i * Const.SQ;
@@ -113,14 +124,18 @@ public class ContainerOverpowered extends Container
 	            }
 	        }
 
-        xStart += Const.SLOTS_WIDTH + offset;//move right
+        //xStart = Const.SLOTS_WIDTH + 3*pad;//move right
+       // yStart = 13+Const.SQ + Const.SLOTS_HEIGHT + pad;
         // BOTTOM RIGHT
-        if (prop.hasStorage(4))
+        k = 4;//will be loop var
+        xStart = InventoryRenderer.xPosSlotsStart(k);
+        yStart = InventoryRenderer.yPosSlotsStart(k);
+        if (prop.hasStorage(k))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)
 	            {
-	            	slotNum = Const.V_INVO_SIZE*3 + j + (i + 1) * 9;
+	            	slotNum = (k-1)*Const.V_INVO_SIZE + j + (i + 1) * 9;
 	       
 	            	x = xStart + j * Const.SQ;
 	            	y = yStart + i * Const.SQ;
@@ -128,16 +143,19 @@ public class ContainerOverpowered extends Container
 	            }
 	        }
 
-        xStart = paddingLrg;
-        yStart += Const.SLOTS_HEIGHT + offset;
+       // xStart = 2*pad;
+      //  yStart= 13+Const.SQ + 2*(Const.SLOTS_HEIGHT + pad);
         
         //another row down
-        if (prop.hasStorage(5))
+        k = 5;//will be loop var
+        xStart = InventoryRenderer.xPosSlotsStart(k);
+        yStart = InventoryRenderer.yPosSlotsStart(k);
+        if (prop.hasStorage(k))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)
 	            {
-	            	slotNum = Const.V_INVO_SIZE*4 + j + (i + 1) * 9;
+	            	slotNum = (k-1)*Const.V_INVO_SIZE + j + (i + 1) * 9;
 	       
 	            	x = xStart + j * Const.SQ;
 	            	y = yStart + i * Const.SQ;
@@ -145,26 +163,31 @@ public class ContainerOverpowered extends Container
 	            }
 	        }
 
-        xStart += Const.SLOTS_WIDTH + offset;//move right
-        
-        if (prop.hasStorage(6))
+        //6 is bottom right
+       // xStart = Const.SLOTS_WIDTH + 3*pad;//move right
+       // yStart= 13+Const.SQ + 2*(Const.SLOTS_HEIGHT + pad);
+
+        k = 6;//will be loop var
+        xStart = InventoryRenderer.xPosSlotsStart(k);
+        yStart = InventoryRenderer.yPosSlotsStart(k);
+        if (prop.hasStorage(k))
 	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
 	        {
 	            for (j = 0; j < Const.COLS_VANILLA; ++j)
 	            {
-	            	slotNum = Const.V_INVO_SIZE*5 + j + (i + 1) * 9;
+	            	slotNum = (k-1)*Const.V_INVO_SIZE + j + (i + 1) * 9;
 	       
 	            	x = xStart + j * Const.SQ;
 	            	y = yStart + i * Const.SQ;
 	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
 	            }
-	        }
+	        }*/
         S_MAIN_END = this.inventorySlots.size() - 1;
 
         S_BAROTHER_START = this.inventorySlots.size();
         for (i = Const.HOTBAR_SIZE; i < 2*Const.HOTBAR_SIZE; ++i)
         { 
-        	x = hotbarX + i * Const.SQ + offset; 
+        	x = hotbarX + i * Const.SQ + pad; 
      
             slotNum++;
             this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x, hotbarY));
