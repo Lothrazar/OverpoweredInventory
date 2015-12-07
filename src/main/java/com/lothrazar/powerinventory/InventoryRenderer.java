@@ -10,7 +10,34 @@ public class InventoryRenderer
 	private static final int centerVert = topspace - Const.SLOTS_HEIGHT/2 - GuiButtonUnlockStorage.height/2;
 	
 	private static final int left=7,pad=4;//pad is middle padding. left is left edge padding. for slot areas
+
+	private static final int segsLeft = 10;//segments on the left two columns
 	
+	private static int rowFromSegment(int segment){
+		 
+		//so 1,2 are in row 1. but also 11 is in row 1 so we split it off
+		if(segment <= segsLeft)
+			return (int)Math.ceil(((double)segment)/2);//integer division -> rounds off so both 3,4 become 2;
+		else
+			return segsLeft - segment;//so 1 -> 5
+	}
+	private static int colFromSegment(int segment){
+		 
+		//first chunk alternates btw colum 1,2 back and forth
+		if(segment <= segsLeft)
+			if(segment % 2 == 0) 
+				return 2; //starting with odd row in the top right for segment 1
+			else
+				return 1;
+		else
+			return 3;
+	}
+	
+	// 1  2  11
+	// 3  4  12
+	// 5  6  13
+	// 7  8  14
+	// 9  10 15
 	//small: segments are [1,6]
 	//large: segments are [1,15]
 	/*
@@ -25,67 +52,40 @@ public class InventoryRenderer
 	//tricky since small means 2 columns and 3 rows totalling 6
 	//but large means 3 columns and 5 rows-> 15
 	// so need a getRowCol setup so its like
-	// 1 2 11
-	// 3 4 12
-	// 5 6 13
-	// 7 8 14
-	// 9 10 15
 	//OR.. they just unlock which ever one they click on again? no we cant go back to that. can we?
 	//it is only 8 bits...
 	
 	public static int xPosBtn(int segment){
-
-		if(segment <= 8){//stay in the first two columns, both small and large screens
-			if(segment % 2 == 0) //is even so 2,4,6
-				return Const.SLOTS_WIDTH + centerHoriz;
-			else  // is odd so 1,3,5
-				return centerHoriz;
-		}
-		else{
-			return 2*Const.SLOTS_WIDTH + centerHoriz;//always third column
-		}
+		int col = colFromSegment(segment);
+		
+		return (col-1)*Const.SLOTS_WIDTH + centerHoriz;
 	}
 	
 	public static int yPosBtn(int segment){
 
-		int segsLeft = 10;
-		if(segment <= segsLeft){//small or large, we move down 2 by 2 with the rows
-			
-			int row = (int)Math.ceil(((double)segment)/2);//integer division -> rounds off so both 3,4 become 2
-			
-			return row*Const.SLOTS_HEIGHT + centerVert;
-		}
-		else{
-			//so at 11 it should be the upper right
-			//iterate down the third column, one by one
-			return (segment - segsLeft) * Const.SLOTS_HEIGHT + centerVert; 
-		}
+		int row = rowFromSegment(segment);
+		
+		return row*Const.SLOTS_HEIGHT + centerVert;
 	}
 	
 	public static int xPosTexture(int segment){
-		//TODO switch is for temp
-		
-		switch(segment){
+		//there are only 3 columns, no need to make constants
+		switch(colFromSegment(segment)){
 		case 1:
-			return left;
+			return left;//column 1, so segment 1,3,5 etc
 		case 2:
-			return pad + left + Const.SLOTS_WIDTH;
+			return left + pad + Const.SLOTS_WIDTH; 
 		case 3:
-			return left;
-		case 4:
-			return pad+left+Const.SLOTS_WIDTH;
-		case 5:
-			return left;
-		case 6:
-			return pad+left+Const.SLOTS_WIDTH;
+			return left + 2*(pad + Const.SLOTS_WIDTH);//always third column
 		}
-		
 		return 0;
 	}
 	
 	public static int yPosTexture(int segment){
 		//TODO switch is for temp
-
+		int row = rowFromSegment(segment);
+		
+		
 		switch(segment){
 		case 1:
 			return topspace;
