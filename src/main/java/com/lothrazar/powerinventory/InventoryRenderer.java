@@ -17,7 +17,7 @@ public class InventoryRenderer
 		if(segment <= segsLeft)
 			return (int)Math.ceil(((double)segment)/2);//integer division -> rounds off so both 3,4 become 2;
 		else
-			return segsLeft - segment;//so 1 -> 5
+			return segment - segsLeft;//so 1 -> 5
 	}
 	private static int colFromSegment(int segment){
 		 
@@ -48,7 +48,7 @@ public class InventoryRenderer
 	public static int yPosBtn(int segment){
 
 		int row = rowFromSegment(segment);
-		
+		//one of the only ones not row-1
 		return row*Const.SLOTS_HEIGHT + centerVert;
 	}
 	
