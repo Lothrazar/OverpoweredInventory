@@ -1,42 +1,20 @@
 package com.lothrazar.powerinventory;
  
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.client.GuiIngameForge;
-import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 
-import org.apache.logging.log4j.Level;
-
-import com.lothrazar.powerinventory.inventory.GuiBigInventory;
-import com.lothrazar.powerinventory.inventory.client.GuiButtonClose; 
-import com.lothrazar.powerinventory.inventory.client.GuiButtonOpenInventory; 
-import com.lothrazar.powerinventory.inventory.client.GuiButtonSort;
+import com.lothrazar.powerinventory.config.ModConfig;
+import com.lothrazar.powerinventory.inventory.button.GuiButtonOpenInventory;
+import com.lothrazar.powerinventory.inventory.button.GuiButtonRotate;
+import com.lothrazar.powerinventory.net.EnderChestPacket;
 import com.lothrazar.powerinventory.net.EnderPearlPacket;
 import com.lothrazar.powerinventory.net.HotbarSwapPacket;
-import com.lothrazar.powerinventory.net.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
 
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
@@ -44,32 +22,24 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-/**
- * @author https://github.com/Funwayguy/InfiniteInvo
- * @author Forked and altered by https://github.com/PrinceOfAmber/InfiniteInvo
- */
+
 public class EventHandler
 {
-	public static File worldDir;
-	public static HashMap<String, Integer> unlockCache = new HashMap<String, Integer>();
-	public static HashMap<String, Container> lastOpened = new HashMap<String, Container>();
-	
 	@SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) 
     {   
-	
         if(ClientProxy.keyEnderpearl.isPressed() )
         { 	     
         	 ModInv.instance.network.sendToServer( new EnderPearlPacket());   
         }  
         if(ClientProxy.keyEnderchest.isPressed())
         { 	      
-        	 ModInv.instance.network.sendToServer( new OpenInventoryPacket());   
+        	 ModInv.instance.network.sendToServer( new EnderChestPacket());   
         }  
         if(ClientProxy.keyHotbar.isPressed())
         { 	      
         	 ModInv.instance.network.sendToServer( new HotbarSwapPacket());   
-        }  
+        }   
     }
 	
 	@SubscribeEvent
@@ -85,288 +55,104 @@ public class EventHandler
 		{
 			EntityPlayer player = (EntityPlayer)event.entity;
 			
-			if(InventoryPersistProperty.get(player) == null)
+			if(PlayerPersistProperty.get(player) == null)
 			{
-				InventoryPersistProperty.register(player);
+				PlayerPersistProperty.register(player);
 			}
 		}
 	}
 	
 	@SubscribeEvent
-	public void onEntityJoinWorld(EntityJoinWorldEvent event)
+	public void onPlayerClone(PlayerEvent.Clone event)
 	{
-		if(event.entity instanceof EntityPlayer)
+		if(event.wasDeath == false || //changing dimensions -> so always do it
+				(ModConfig.persistUnlocksOnDeath && event.wasDeath))//or it was a death => maybe do it
 		{
-			EntityPlayer player = (EntityPlayer)event.entity;
-			
-			if(InventoryPersistProperty.get(player) != null)
-			{
-				InventoryPersistProperty.get(player).onJoinWorld();
-			} 
+			PlayerPersistProperty.clonePlayerData(event.original, event.entityPlayer);
 		}
 	}
- 
+	
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent event)
 	{
-		if(event.entityLiving instanceof EntityPlayer)
+		if(event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote)
 		{
-			if(!event.entityLiving.worldObj.isRemote && event.entityLiving.worldObj.getGameRules().getGameRuleBooleanValue("keepInventory"))
-			{
-				InventoryPersistProperty.keepInvoCache.put(event.entityLiving.getUniqueID(), ((EntityPlayer)event.entityLiving).inventory.writeToNBT(new NBTTagList()));
-			}
+			EntityPlayer p = (EntityPlayer)event.entityLiving;
+
+			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+			//the vanilla inventory stuff (incl hotbar hotbar) already drops by default
+			for (int i = Const.V_INVO_SIZE+Const.HOTBAR_SIZE; i < prop.inventory.getSizeInventory(); ++i)  
+	        {
+				prop.inventory.dropStackInSlot(p, i);
+	        }
+
+			prop.inventory.dropStackInSlot(p, Const.SLOT_ECHEST);
+			prop.inventory.dropStackInSlot(p, Const.SLOT_EPEARL);
 		}
 	}
-	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void onGuiOpen(GuiOpenEvent event)
-	{
-		if(ModConfig.enableCompatMode == false)
-			if(event.gui != null && event.gui.getClass() == GuiInventory.class && !(event.gui instanceof GuiBigInventory))
-			{
-				event.gui = new GuiBigInventory(Minecraft.getMinecraft().thePlayer);
-			}
-	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onGuiPostInit(InitGuiEvent.Post event)
 	{
 		if(event.gui == null){return;}//probably doesnt ever happen
-		
-		EntityPlayer p = Minecraft.getMinecraft().thePlayer;
-		int button_id = 256;
-		//trapped, regular chests, minecart chests, and enderchest all use this class
-		//which extends  GuiContainer
-
-		int padding = 10;
-		
-		int x,y = padding,w = 20,h = w;
-
-		if(ModConfig.enableCompatMode)
-		{
-			if(event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory)
-			{
-				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
-	
-				event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,StatCollector.translateToLocal("button.compat"),Const.INV_SOLO));
-				
-			}
-
-		}
-		else if(ModConfig.showCornerButtons)
-		{
-			if(event.gui instanceof net.minecraft.client.gui.inventory.GuiChest || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiDispenser || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiBrewingStand || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiBeacon || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiCrafting || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiFurnace || 
-			   event.gui instanceof net.minecraft.client.gui.inventory.GuiScreenHorseInventory
-			   )
-			{
-				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
-				
-				event.buttonList.add(new GuiButtonClose(button_id++, x,y,w,h));
-				
-				x = x - padding - w;
-				event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y,w,h,StatCollector.translateToLocal("button.cornerinvo"),Const.INV_PLAYER));
-				
-				x = Minecraft.getMinecraft().displayWidth/2 - w - padding;//align to right side
-				
-				y += h + padding;
-				
-				event.buttonList.add(new GuiButtonSort(p,button_id++, x, y ,w,h, Const.SORT_RIGHT,">",true));
-				x = x - padding - w;
-				
-				event.buttonList.add(new GuiButtonSort(p,button_id++, x, y ,w,h, Const.SORT_LEFT,"<",true));
-			 
-			
-			}
-		}
 		 
-		if(ModConfig.showSortButtons && event.gui instanceof GuiBigInventory )
-		{  
-			GuiBigInventory gui = (GuiBigInventory)event.gui;
- 
-			int width = 18;
-			int x_spacing = width + 3;
-			x = gui.getLeft() +  GuiBigInventory.texture_width - 5*x_spacing - padding+1
-					+6;
-			y = gui.getTop() + GuiBigInventory.texture_height - h - padding
-					+3;
-			
-			
-			//if size is small, move it over a touch because of dual hotbar
-
-        	//TODO: stop using magic strings everywhere ya dufus
-			if(ModConfig.smallMedLarge.equalsIgnoreCase("small"))
-			{
-				y += 28;
-			}
-			 
-			GuiButton btn;
-			 
-			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_LEFTALL,"<<",true);
-			event.buttonList.add(btn);
-
-			x += x_spacing;
+		if(event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory)
+		{
+			//omg thanks so much to this guy
+			//http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/mods-discussion/1390983-making-guis-scale-to-screen-width-height
+			ScaledResolution res = new ScaledResolution( event.gui.mc);
+	        
+		   	int screenWidth = res.getScaledWidth();
+		   	int screenHeight = res.getScaledHeight();
+		   	 
+			int button_id = 256;
+			int padding = 10, h = 10, w = 20,x,y;
 		 
-			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_LEFT,"<",true);
-			event.buttonList.add(btn);
+			
+			x = screenWidth/2  + Const.VWIDTH/2 - w;//align tight to top of inventory
+			y = screenHeight/2 - Const.VHEIGHT/2 - 2*h - 1;
+			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x,y));
+	
+			padding = 5;
+			h = 10;
+			w = 10;
 
-			x += x_spacing;
-		 
-			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_SMART,StatCollector.translateToLocal("button.sort"),true);
-			event.buttonList.add(btn);
+		    //position them exactly on players inventory
+			x = screenWidth/2  + Const.VWIDTH/2 - w*3;
+			y = screenHeight/2 - Const.VHEIGHT/2 + padding;
 			
-			x += x_spacing;
+			PlayerPersistProperty prop = PlayerPersistProperty.get(event.gui.mc.thePlayer);
+			
+			//int storage = prop.getStorageCount();
+			for(int i = 1; i <= ModConfig.getMaxSections(); i++)
+			{
 
-			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_RIGHT,">",true);
-			event.buttonList.add(btn);
-			  
-			x += x_spacing;
-			
-			btn = new GuiButtonSort(p,button_id++, x, y ,width,h, Const.SORT_RIGHTALL,">>",true);
-			event.buttonList.add(btn);
-		}
-	}
-	
-	@SubscribeEvent
-	public void onWorldLoad(WorldEvent.Load event)
-	{
-		if(!event.world.isRemote && worldDir == null && MinecraftServer.getServer().isServerRunning())
-		{
-			MinecraftServer server = MinecraftServer.getServer();
-			
-			if(ModInv.proxy.isClient())
-			{
-				worldDir = server.getFile("saves/" + server.getFolderName());
-			} 
-			else
-			{
-				worldDir = server.getFile(server.getFolderName());
-			}
+				if(prop.hasStorage(i))
+					event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,i));
 
-			new File(worldDir, "data/").mkdirs();
-			LoadCache(new File(worldDir, "data/SlotUnlockCache"));
-		}
-	}
-	
-	@SubscribeEvent
-	public void onWorldSave(WorldEvent.Save event)
-	{
-		if(!event.world.isRemote && worldDir != null && MinecraftServer.getServer().isServerRunning())
-		{
-			new File(worldDir, "data/").mkdirs();
-			SaveCache(new File(worldDir, "data/SlotUnlockCache"));
-		}
-	}
-	
-	@SubscribeEvent
-	public void onWorldUnload(WorldEvent.Unload event)
-	{
-		if(!event.world.isRemote && worldDir != null && !MinecraftServer.getServer().isServerRunning())
-		{
-			new File(worldDir, "data/").mkdirs();
-			SaveCache(new File(worldDir, "data/SlotUnlockCache"));
-			
-			worldDir = null;
-			unlockCache.clear();
-			InventoryPersistProperty.keepInvoCache.clear();
-		}
-	}
-	
-	public static void SaveCache(File file)
-	{
-		try
-		{
-			if(!file.exists())
-			{
-				file.createNewFile();
-			}
-			
-			FileOutputStream fos = new FileOutputStream(file);
-			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			
-			oos.writeObject(unlockCache);
-			
-			oos.close();
-			fos.close();
-		} 
-		catch(Exception e)
-		{
-			ModInv.logger.log(Level.ERROR, "Failed to save slot unlock cache", e);
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static void LoadCache(File file)
-	{
-		try
-		{
-			if(!file.exists())
-			{
-				file.createNewFile();
-			}
-			
-			FileInputStream fis = new FileInputStream(file);
-			
-			if(fis.available() <= 0)
-			{
-				fis.close();
-				return;
-			}
-			
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			
-			unlockCache = (HashMap<String,Integer>)ois.readObject();
-			
-			ois.close();
-			fis.close();
-		} catch(Exception e)
-		{
-			ModInv.logger.log(Level.ERROR, "Failed to load slot unlock cache", e);
-		}
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
-	public void onRenderTextOverlay(RenderGameOverlayEvent.Text event) 	//below was imported from my PowerApples mod
-	{
-		EntityPlayerSP player = Minecraft.getMinecraft().thePlayer;  
-	
-		if(player.isSneaking() && 
-			player.worldObj.isRemote == true)//client side only -> possibly redundant because of SideOnly
-		{
-			int size = 16;
-			
-			int xLeft = 20;
-			int xRight = Minecraft.getMinecraft().displayWidth/2 - size*2;
-			int yBottom = Minecraft.getMinecraft().displayHeight/2 - size*2;
-			
-			IInventory invo = null;
-			
-			if(ModConfig.enableCompatMode)
-			{
-				InventoryPersistProperty prop = InventoryPersistProperty.get(player);
+				x -= 2*w - padding;//move left
 				
-				invo = prop.inventory;
 			}
-			else
-			{			
-				invo = player.inventory;
-			}
+			/*
+			if(prop.hasStorage(Const.STORAGE_4))
+				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_4));
+
+			x -= 2*w - padding;//move left
+			if(prop.hasStorage(Const.STORAGE_3))
+				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_3));
+
+			x -= 2*w - padding;//move left
+			if(prop.hasStorage(Const.STORAGE_2))
+				event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_2));
+
+			x -= 2*w - padding;//move left
+			if(prop.hasStorage(Const.STORAGE_1))
 			
-			if(invo != null && invo.getStackInSlot(Const.clockSlot) != null)
-				UtilTextureRender.renderItemAt(new ItemStack(Items.clock),xLeft,yBottom,size);
-			
-			if(invo != null && invo.getStackInSlot(Const.compassSlot) != null)
-				UtilTextureRender.renderItemAt(new ItemStack(Items.compass),xRight,yBottom,size);	
+			event.buttonList.add(new GuiButtonRotate(button_id++,x,y, w,h,Const.STORAGE_1));
+				*/
 		}
 	}
-	
 	
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent//(priority = EventPriority.NORMAL)
@@ -379,5 +165,4 @@ public class EventHandler
 			GuiIngameForge.renderFood = true;
 		}
     } 
-	
 }

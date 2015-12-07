@@ -1,6 +1,6 @@
-package com.lothrazar.powerinventory.inventory.client;
+package com.lothrazar.powerinventory.inventory.button;
 
-import com.lothrazar.powerinventory.net.DumpButtonPacket;
+import com.lothrazar.powerinventory.net.SwapInvoPacket;
 import com.lothrazar.powerinventory.ModInv;
 
 import net.minecraft.client.Minecraft;
@@ -11,12 +11,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class GuiButtonDump extends GuiButton 
+public class GuiButtonRotate extends GuiButton 
 {
-	//imported from https://github.com/PrinceOfAmber/SamsPowerups , author Lothrazar aka Sam Bassett
-    public GuiButtonDump(int buttonId, int x, int y, int w,int h, String t)
+	private int invoGroup;
+    public GuiButtonRotate(int buttonId, int x, int y, int width, int height,int ig)
     {
-    	super(buttonId, x, y, w,h, t);
+    	super(buttonId, x, y, width,height, ""+ig);//ig for test
+    	invoGroup = ig;
     }
 
     @SideOnly(Side.CLIENT)
@@ -26,8 +27,10 @@ public class GuiButtonDump extends GuiButton
     	boolean pressed = super.mousePressed(mc, mouseX, mouseY);
     	
     	if(pressed)
-    	{ 	
-    		ModInv.instance.network.sendToServer(new DumpButtonPacket(new NBTTagCompound()));
+    	{
+    		NBTTagCompound tags = new NBTTagCompound();
+    		tags.setInteger("i", invoGroup);
+			ModInv.instance.network.sendToServer(new SwapInvoPacket(tags));
     	}
     	
     	return pressed;

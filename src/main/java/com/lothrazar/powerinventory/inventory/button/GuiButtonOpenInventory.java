@@ -1,18 +1,22 @@
-package com.lothrazar.powerinventory.inventory.client;
+package com.lothrazar.powerinventory.inventory.button;
+
+import com.lothrazar.powerinventory.net.OpenInventoryPacket;
+import com.lothrazar.powerinventory.ModInv;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 /** 
  * @author Lothrazar at https://github.com/PrinceOfAmber
  */
-public class GuiButtonClose extends GuiButton 
+public class GuiButtonOpenInventory extends GuiButton 
 {
-    public GuiButtonClose(int buttonId, int x, int y, int w,int h)
+    public GuiButtonOpenInventory(int buttonId, int x, int y)
     {
-    	super(buttonId, x, y, w,h, StatCollector.translateToLocal("button.cornerclose"));
+    	super(buttonId, x, y, 20,20, StatCollector.translateToLocal("button.cornerinvo"));
     }
 
     @SideOnly(Side.CLIENT)
@@ -23,7 +27,8 @@ public class GuiButtonClose extends GuiButton
     	
     	if(pressed)
     	{
-    		mc.thePlayer.closeScreen();
+    		NBTTagCompound tags = new NBTTagCompound();
+			ModInv.instance.network.sendToServer(new OpenInventoryPacket(tags));
     	}
     	
     	return pressed;

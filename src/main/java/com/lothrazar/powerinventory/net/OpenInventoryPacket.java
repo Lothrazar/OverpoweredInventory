@@ -1,18 +1,11 @@
 package com.lothrazar.powerinventory.net;
 
-import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.GuiHandler;
-import com.lothrazar.powerinventory.InventoryPersistProperty;
-import com.lothrazar.powerinventory.ModConfig;
 import com.lothrazar.powerinventory.ModInv;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -44,37 +37,9 @@ public class OpenInventoryPacket implements IMessage , IMessageHandler<OpenInven
 	public IMessage onMessage(OpenInventoryPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
-		
-		
-		if(message.tags.getInteger("i") == Const.INV_SOLO)
-		{ 
-			p.openGui(ModInv.instance, GuiHandler.GUI_CUSTOM_INV, p.worldObj, (int) p.posX, (int) p.posY, (int) p.posZ);
-		}
-		else
-		{
-			//wait what? no?
-			IInventory invo;
-			
-			if(ModConfig.enableCompatMode)
-			{
-				InventoryPersistProperty prop = InventoryPersistProperty.get(p);
-				
-				invo = prop.inventory;
-			}
-			else
-			{			
-				invo = p.inventory;
-			}
-			
-			
-	 		ItemStack chest = invo.getStackInSlot(Const.enderChestSlot);
-			
-			if( chest != null)
-				p.displayGUIChest(p.getInventoryEnderChest());
-			else 
-				p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));
-		}		
-		
+
+		p.openGui(ModInv.instance, GuiHandler.GUI_CUSTOM_INV, p.worldObj, (int) p.posX, (int) p.posY, (int) p.posZ);
+	 
 		return null;
 	}
 }

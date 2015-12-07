@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.inventory.slot;
 
 import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.config.ModConfig;
 
 import net.minecraft.init.Blocks; 
 import net.minecraft.inventory.IInventory;
@@ -13,8 +14,9 @@ public class SlotEnderChest extends Slot
 {
 	private final static String _background = "textures/items/empty_enderchest.png";
 	public final static ResourceLocation background = new ResourceLocation(Const.MODID,_background);
-	public static int posX;
-	public static int posY;
+	public static final int posX = ModConfig.getInvoWidth() - 6 - Const.SQ;
+	public static final int posY = 8;
+	
 	public int slotIndex;//overrides the private internal one
 	
 	public SlotEnderChest(IInventory inventoryIn, int index) 
@@ -22,8 +24,6 @@ public class SlotEnderChest extends Slot
 		super(inventoryIn, index, posX, posY);
  
 		slotIndex = index;
-		
-		//this.setBackgroundName(background);//doesnt actually work
 	}
 	
 	@Override

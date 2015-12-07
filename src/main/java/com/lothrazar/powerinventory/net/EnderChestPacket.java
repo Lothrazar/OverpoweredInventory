@@ -1,25 +1,23 @@
 package com.lothrazar.powerinventory.net;
 
-import com.lothrazar.powerinventory.*;
-
+import com.lothrazar.powerinventory.Const;
+import com.lothrazar.powerinventory.PlayerPersistProperty;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
-/** 
- * @author Lothrazar at https://github.com/PrinceOfAmber
- */
-public class EnderPearlPacket implements IMessage , IMessageHandler<EnderPearlPacket, IMessage>
+
+public class EnderChestPacket implements IMessage , IMessageHandler<EnderChestPacket, IMessage>
 {
-	public EnderPearlPacket() {}
 	NBTTagCompound tags = new NBTTagCompound(); 
-	
-	public EnderPearlPacket(NBTTagCompound ptags)
+	public EnderChestPacket() {}
+	public EnderChestPacket(NBTTagCompound ptags)
 	{
 		tags = ptags;
 	}
@@ -35,26 +33,21 @@ public class EnderPearlPacket implements IMessage , IMessageHandler<EnderPearlPa
 	{
 		ByteBufUtils.writeTag(buf, this.tags);
 	}
- 
+
 	@Override
-	public IMessage onMessage(EnderPearlPacket message, MessageContext ctx)
+	public IMessage onMessage(EnderChestPacket message, MessageContext ctx)
 	{
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
-		
+ 
 		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 		 
-		ItemStack pearls = prop.inventory.getStackInSlot(Const.SLOT_EPEARL);
- 
- 		if(pearls != null)
- 		{
- 	 		p.worldObj.spawnEntityInWorld(new EntityEnderPearl(p.worldObj, p));
- 	 		
- 	 		p.worldObj.playSoundAtEntity(p, "random.bow", 1.0F, 1.0F);   // ref http://minecraft.gamepedia.com/Sounds.json
- 	 		
- 	 		if(p.capabilities.isCreativeMode == false)
- 	 			prop.inventory.decrStackSize(Const.SLOT_EPEARL, 1);
- 		}
- 	
+ 		ItemStack chest = prop.inventory.getStackInSlot(Const.SLOT_ECHEST);
+		
+		if( chest != null)
+			p.displayGUIChest(p.getInventoryEnderChest());
+		else 
+			p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));
+
 		return null;
 	}
 }
