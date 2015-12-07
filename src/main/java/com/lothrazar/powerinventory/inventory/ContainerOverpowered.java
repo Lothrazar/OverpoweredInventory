@@ -23,8 +23,6 @@ public class ContainerOverpowered extends Container
 	public InventoryOverpowered invo;
 	public InventoryCrafting craftMatrix;
     public IInventory craftResult = new InventoryCraftResult();
-    public boolean epearlSlotEnabled;
-    public boolean echestSlotEnabled;
    // public boolean[] storageEnabled = new boolean[4];//slot zero not used
     final static int DISABLED=-1;//since they cant be null in Java
 	static int S_RESULT;
@@ -50,7 +48,7 @@ public class ContainerOverpowered extends Container
 		
 		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
 
-		int i,j,slotNum=0,x=0,y=0, paddingLrg=8;
+		int i,j,slotNum=0,x=0,y=0;
  
         S_BAR_START = this.inventorySlots.size();
         for (i = 0; i < Const.HOTBAR_SIZE; ++i)
@@ -85,103 +83,6 @@ public class ContainerOverpowered extends Container
             } 
         }
 
-        /*
-       // xStart = Const.SLOTS_WIDTH + 3*pad;
-       // yStart = 13+Const.SQ;
-        // TOP RIGHT
-        k = 2;//will be loop var
-        xStart = InventoryRenderer.xPosSlotsStart(k);
-        yStart = InventoryRenderer.yPosSlotsStart(k);
-        if (prop.hasStorage(k))
-	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
-	        {
-	            for (j = 0; j < Const.COLS_VANILLA; ++j)
-	            {
-	            	slotNum = (k-1)*Const.V_INVO_SIZE + j + (i + 1) * 9;
-	       
-	            	x = xStart + j * Const.SQ;
-	            	y = yStart + i * Const.SQ;
-	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
-	            }
-	        }
-        
-       // xStart = 2*pad;
-       // yStart = 13+Const.SQ + Const.SLOTS_HEIGHT + pad;
-        // BOTTOM LEFT:
-        k = 3;//will be loop var
-        xStart = InventoryRenderer.xPosSlotsStart(k);
-        yStart = InventoryRenderer.yPosSlotsStart(k);
-        if (prop.hasStorage(k))
-	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
-	        {
-	            for (j = 0; j < Const.COLS_VANILLA; ++j)
-	            {
-	            	slotNum = (k-1)*Const.V_INVO_SIZE + j + (i + 1) * 9;
-	       
-	            	x = xStart + j * Const.SQ;
-	            	y = yStart + i * Const.SQ;
-	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
-	            }
-	        }
-
-        //xStart = Const.SLOTS_WIDTH + 3*pad;//move right
-       // yStart = 13+Const.SQ + Const.SLOTS_HEIGHT + pad;
-        // BOTTOM RIGHT
-        k = 4;//will be loop var
-        xStart = InventoryRenderer.xPosSlotsStart(k);
-        yStart = InventoryRenderer.yPosSlotsStart(k);
-        if (prop.hasStorage(k))
-	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
-	        {
-	            for (j = 0; j < Const.COLS_VANILLA; ++j)
-	            {
-	            	slotNum = (k-1)*Const.V_INVO_SIZE + j + (i + 1) * 9;
-	       
-	            	x = xStart + j * Const.SQ;
-	            	y = yStart + i * Const.SQ;
-	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
-	            }
-	        }
-
-       // xStart = 2*pad;
-      //  yStart= 13+Const.SQ + 2*(Const.SLOTS_HEIGHT + pad);
-        
-        //another row down
-        k = 5;//will be loop var
-        xStart = InventoryRenderer.xPosSlotsStart(k);
-        yStart = InventoryRenderer.yPosSlotsStart(k);
-        if (prop.hasStorage(k))
-	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
-	        {
-	            for (j = 0; j < Const.COLS_VANILLA; ++j)
-	            {
-	            	slotNum = (k-1)*Const.V_INVO_SIZE + j + (i + 1) * 9;
-	       
-	            	x = xStart + j * Const.SQ;
-	            	y = yStart + i * Const.SQ;
-	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
-	            }
-	        }
-
-        //6 is bottom right
-       // xStart = Const.SLOTS_WIDTH + 3*pad;//move right
-       // yStart= 13+Const.SQ + 2*(Const.SLOTS_HEIGHT + pad);
-
-        k = 6;//will be loop var
-        xStart = InventoryRenderer.xPosSlotsStart(k);
-        yStart = InventoryRenderer.yPosSlotsStart(k);
-        if (prop.hasStorage(k))
-	        for (i = 0; i < Const.ROWS_VANILLA; ++i)
-	        {
-	            for (j = 0; j < Const.COLS_VANILLA; ++j)
-	            {
-	            	slotNum = (k-1)*Const.V_INVO_SIZE + j + (i + 1) * 9;
-	       
-	            	x = xStart + j * Const.SQ;
-	            	y = yStart + i * Const.SQ;
-	        		this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x,y));
-	            }
-	        }*/
         S_MAIN_END = this.inventorySlots.size() - 1;
 
         S_BAROTHER_START = this.inventorySlots.size();
@@ -194,12 +95,12 @@ public class ContainerOverpowered extends Container
         }
         S_BAROTHER_END = this.inventorySlots.size() - 1;
         
-        if(epearlSlotEnabled){
+        if(prop.isEPearlUnlocked()){
 			S_PEARL =  this.inventorySlots.size() ;
 	        this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.SLOT_EPEARL));
         }
         
-        if(echestSlotEnabled){
+        if(prop.isEChestUnlocked()){
 	        S_ECHEST =  this.inventorySlots.size() ;
 	        this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.SLOT_ECHEST)); 
         }
@@ -221,6 +122,7 @@ public class ContainerOverpowered extends Container
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer p, int slotNumber)
 	{
+		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 		ItemStack stackCopy = null;
 		
 		Slot slot = (Slot) this.inventorySlots.get(slotNumber);
@@ -234,7 +136,7 @@ public class ContainerOverpowered extends Container
 	
 			if (slotNumber >= S_MAIN_START && slotNumber <= S_MAIN_END) // main inv grid
 			{ 
-            	if(this.epearlSlotEnabled && stackCopy.getItem() == Items.ender_pearl && 
+            	if(prop.isEPearlUnlocked() && stackCopy.getItem() == Items.ender_pearl && 
             		(	
         			invo.getStackInSlot(Const.SLOT_EPEARL) == null || 
         			invo.getStackInSlot(Const.SLOT_EPEARL).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))
@@ -245,7 +147,7 @@ public class ContainerOverpowered extends Container
                         return null;
                     }  
         		}
-            	else if(this.echestSlotEnabled && stackCopy.getItem() == Item.getItemFromBlock(Blocks.ender_chest) && 
+            	else if(prop.isEChestUnlocked() && stackCopy.getItem() == Item.getItemFromBlock(Blocks.ender_chest) && 
             		(
         			invo.getStackInSlot(Const.SLOT_ECHEST) == null || 
         			invo.getStackInSlot(Const.SLOT_ECHEST).stackSize < 1)

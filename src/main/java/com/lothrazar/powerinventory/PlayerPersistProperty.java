@@ -65,18 +65,18 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 		}
 	}
 
-	public void setInvoEPearl(boolean c){
+	public void setEPearlUnlocked(boolean c){
 		int val = c?1:0;
 		player.getDataWatcher().updateObject(EPEARL_WATCHER,val);
 	}
-	public boolean getInvoEPearl(){
+	public boolean isEPearlUnlocked(){
 		return player.getDataWatcher().getWatchableObjectInt(EPEARL_WATCHER)==1;
 	}
-	public void setInvoEChest(boolean c){
+	public void setEChestUnlocked(boolean c){
 		int val = c?1:0;
 		player.getDataWatcher().updateObject(ECHEST_WATCHER,val);
 	}
-	public boolean getInvoEChest(){
+	public boolean isEChestUnlocked(){
 		return player.getDataWatcher().getWatchableObjectInt(ECHEST_WATCHER)==1;
 	}
 	public void incrementStorage(){
@@ -111,8 +111,8 @@ public class PlayerPersistProperty implements IExtendedEntityProperties
 
 	public static void clonePlayerData(EntityPlayer original, EntityPlayer newPlayer)
 	{
-		PlayerPersistProperty.get(newPlayer).setInvoEChest(PlayerPersistProperty.get(original).getInvoEChest());
-		PlayerPersistProperty.get(newPlayer).setInvoEPearl(PlayerPersistProperty.get(original).getInvoEPearl());
+		PlayerPersistProperty.get(newPlayer).setEChestUnlocked(PlayerPersistProperty.get(original).isEChestUnlocked());
+		PlayerPersistProperty.get(newPlayer).setEPearlUnlocked(PlayerPersistProperty.get(original).isEPearlUnlocked());
 
 		PlayerPersistProperty.get(newPlayer).setStorageCount(PlayerPersistProperty.get(original).getStorageCount());
 	}

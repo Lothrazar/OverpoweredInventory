@@ -47,7 +47,7 @@ public class UnlockChestPacket implements IMessage , IMessageHandler<UnlockChest
 			UtilExperience.drainExp(p, ModConfig.expCostEChest);
 			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 			
-			prop.setInvoEChest( true  );
+			prop.setEChestUnlocked( true  );
 			
 			p.closeScreen();
 			

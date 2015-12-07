@@ -56,12 +56,13 @@ public class GuiOverpowered extends GuiContainer
 	public void initGui()
     { 
 		super.initGui();
+		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
 		
 		int button_id = 99;
 		String label;
 		GuiButton b;
 
-		if(container.epearlSlotEnabled == false){
+		if(prop.isEPearlUnlocked() == false){
 
 			int current = (int)UtilExperience.getExpTotal(thePlayer);
 			label = current + "/" + ModConfig.expCostPearl;
@@ -73,7 +74,7 @@ public class GuiOverpowered extends GuiContainer
 			
 			b.enabled = (current >= ModConfig.expCostPearl);
 		}
-		if(container.echestSlotEnabled == false){
+		if(prop.isEChestUnlocked() == false){
 
 			int current = (int)UtilExperience.getExpTotal(thePlayer);
 			label = current + "/" + ModConfig.expCostEChest;
@@ -90,7 +91,6 @@ public class GuiOverpowered extends GuiContainer
 		//int centerHorizCol = Const.SLOTS_WIDTH/2 - GuiButtonUnlockStorage.width/2;
 		//int centerVert = topspace - Const.SLOTS_HEIGHT/2 - GuiButtonUnlockStorage.height/2;
 
-		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
 		
 		int current = (int)UtilExperience.getExpTotal(thePlayer);
 		//draw only one single button then stop
@@ -143,25 +143,21 @@ public class GuiOverpowered extends GuiContainer
 			}
 		}
 	}
-	
+
+	final int s = 16;
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY)
 	{ 
-		this.checkSlotsEmpty();
-		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-	}
-	
-	private void checkSlotsEmpty()
-	{
-		final int s = 16;
+		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
 
-		if(container.epearlSlotEnabled && inventory.getStackInSlot(Const.SLOT_EPEARL) == null){
+		if(prop.isEPearlUnlocked() && inventory.getStackInSlot(Const.SLOT_EPEARL) == null){
 			UtilTextureRender.drawTextureSimple(SlotEnderPearl.background,SlotEnderPearl.posX, SlotEnderPearl.posY,s,s);
 		}
 
-		if(container.echestSlotEnabled && inventory.getStackInSlot(Const.SLOT_ECHEST) == null){  
+		if(prop.isEChestUnlocked() && inventory.getStackInSlot(Const.SLOT_ECHEST) == null){  
 			UtilTextureRender.drawTextureSimple(SlotEnderChest.background,SlotEnderChest.posX, SlotEnderChest.posY,s,s);
 		}
+		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 	}
 	
 	@Override
@@ -183,8 +179,8 @@ public class GuiOverpowered extends GuiContainer
 						this.guiTop + InventoryRenderer.yPosTexture(i));
 		}
 		
-        if(container.echestSlotEnabled){drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);}
-    	if(container.epearlSlotEnabled){drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);}
+        if(prop.isEChestUnlocked()){drawSlotAt(SlotEnderChest.posX, SlotEnderChest.posY);}
+    	if(prop.isEPearlUnlocked()){drawSlotAt(SlotEnderPearl.posX, SlotEnderPearl.posY);}
 	}
 	
 	private void drawSlotSectionAt(int x, int y){
