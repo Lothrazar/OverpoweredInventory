@@ -10,7 +10,6 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonOpenInventory;
-import com.lothrazar.powerinventory.inventory.button.GuiButtonRotate;
 import com.lothrazar.powerinventory.net.EnderChestPacket;
 import com.lothrazar.powerinventory.net.EnderPearlPacket;
 import com.lothrazar.powerinventory.net.HotbarSwapPacket;
@@ -95,14 +94,14 @@ public class EventHandler {
 			int screenHeight = res.getScaledHeight();
 
 			int button_id = 256;
-			int padding = 10, h = 10, w = 20, x, y;
+			int h = 10, w = 20, x, y;
 
 			x = screenWidth / 2 + Const.VWIDTH / 2 - w;// align tight to top 
 			y = screenHeight / 2 - Const.VHEIGHT / 2 - 2 * h - 1;
 			
 			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x, y));
-
-			padding = 4;
+			/*
+			int padding=4;
 			h = 10;
 			w = 10;
 
@@ -120,6 +119,7 @@ public class EventHandler {
 
 				x += w + padding;//-= 2 * w - padding;// 
 			}
+			*/
 		}
 	}
 

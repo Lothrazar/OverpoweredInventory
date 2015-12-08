@@ -95,13 +95,13 @@ public class GuiOverpowered extends GuiContainer {
 			}
 		}
 		
-		w=8;h=8;
+		w = 9;h = 8;
 		for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
 
 			if (prop.hasStorage(i))
 				this.buttonList.add(new GuiButtonRotate(button_id++, 
 						this.guiLeft + InventoryRenderer.xPosSwap(i), 
-						this.guiTop + InventoryRenderer.xPosSwap(i), 
+						this.guiTop  + InventoryRenderer.yPosSwap(i), 
 						w, h, "",i));
 		}
 	}

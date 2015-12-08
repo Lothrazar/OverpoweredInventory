@@ -1,6 +1,5 @@
 package com.lothrazar.powerinventory;
 
-import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockStorage;
 
 public class InventoryRenderer {
@@ -84,13 +83,13 @@ public class InventoryRenderer {
 	public static int xPosSwap(int segment){
 		int col = colFromSegment(segment);
 		
-		return (col-1)*Const.SLOTS_WIDTH + 1;
+		return 1 + (col-1)*(Const.SLOTS_WIDTH + pad);
 	}
 
 	public static int yPosSwap(int segment){
 		int row = rowFromSegment(segment);
 
 		//todo: maybe use topspace??
-		return 30 + (row-1)*Const.SLOTS_HEIGHT;
+		return 30 + (row-1)*(Const.SLOTS_HEIGHT + pad);
 	}
 }
