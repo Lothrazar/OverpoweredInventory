@@ -51,42 +51,16 @@ public class ContainerOverpowered extends Container {
 		S_BAR_START = this.inventorySlots.size();
 		for (i = 0; i < Const.HOTBAR_SIZE; ++i) {
 			x = hotbarX + i * Const.SQ;
-
-			this.addSlotToContainer(new Slot(inventoryPlayer, i, x, hotbarY));
+			slotNum = i;
+			this.addSlotToContainer(new Slot(inventoryPlayer, slotNum, x, hotbarY));
 		}
 		S_BAR_END = this.inventorySlots.size() - 1;
-
-		S_MAIN_START = this.inventorySlots.size();
-		// TOP LEFT: the player inventory mirror
-
-		int xStart;// = 2*pad;
-		int yStart;// = 13+Const.SQ;//leaving one space for the slots on top row
-
-		for (int k = 1; k <= ModConfig.getMaxSections(); k++) {
-			if (prop.hasStorage(k)) {
-				xStart = InventoryRenderer.xPosSlotsStart(k);
-				yStart = InventoryRenderer.yPosSlotsStart(k);
-				for (i = 0; i < Const.ROWS_VANILLA; ++i) {
-					for (j = 0; j < Const.COLS_VANILLA; ++j) {
-						slotNum = (k - 1) * Const.V_INVO_SIZE + j + (i + 1) * 9;
-
-						x = xStart + j * Const.SQ;
-						y = yStart + i * Const.SQ;
-						this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x, y));// not
-																							// invoPlayer
-																							// anymore
-					}
-				}
-			}
-		}
-
-		S_MAIN_END = this.inventorySlots.size() - 1;
 
 		S_BAROTHER_START = this.inventorySlots.size();
 		for (i = Const.HOTBAR_SIZE; i < 2 * Const.HOTBAR_SIZE; ++i) {
 			x = hotbarX + i * Const.SQ + pad;
 
-			slotNum++;
+			slotNum = i;
 			this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x, hotbarY));
 		}
 		S_BAROTHER_END = this.inventorySlots.size() - 1;
@@ -100,6 +74,32 @@ public class ContainerOverpowered extends Container {
 			S_ECHEST = this.inventorySlots.size();
 			this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.SLOT_ECHEST));
 		}
+		
+		S_MAIN_START = this.inventorySlots.size();
+		// TOP LEFT: the player inventory mirror
+
+		int xStart;// = 2*pad;
+		int yStart;// = 13+Const.SQ;//leaving one space for the slots on top row
+
+		for (int k = 1; k <= ModConfig.getMaxSections(); k++) {
+			if (prop.hasStorage(k)) {
+				xStart = InventoryRenderer.xPosSlotsStart(k);
+				yStart = InventoryRenderer.yPosSlotsStart(k);
+				for (i = 0; i < Const.ROWS_VANILLA; ++i) {
+					for (j = 0; j < Const.COLS_VANILLA; ++j) {
+						slotNum = (k - 1) * Const.V_INVO_SIZE + j + (i + 1+1) * (Const.HOTBAR_SIZE);
+
+						x = xStart + j * Const.SQ;
+						y = yStart + i * Const.SQ;
+						this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x, y));// not
+																							// invoPlayer
+																							// anymore
+					}
+				}
+			}
+		}
+
+		S_MAIN_END = this.inventorySlots.size() - 1;
 
 		invo = inventoryCustom;
 	}
