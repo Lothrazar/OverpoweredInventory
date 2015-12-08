@@ -13,6 +13,7 @@ import com.lothrazar.powerinventory.inventory.button.GuiButtonOpenInventory;
 import com.lothrazar.powerinventory.net.EnderChestPacket;
 import com.lothrazar.powerinventory.net.EnderPearlPacket;
 import com.lothrazar.powerinventory.net.HotbarSwapPacket;
+import com.lothrazar.powerinventory.net.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -31,6 +32,9 @@ public class EventHandler {
 		}
 		if (ClientProxy.keyHotbar.isPressed()) {
 			ModInv.instance.network.sendToServer(new HotbarSwapPacket());
+		}
+		if (ClientProxy.keyInventory.isPressed()) {
+			ModInv.instance.network.sendToServer(new OpenInventoryPacket());
 		}
 	}
 

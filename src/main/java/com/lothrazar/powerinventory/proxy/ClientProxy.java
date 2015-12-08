@@ -8,6 +8,7 @@ public class ClientProxy extends CommonProxy {
 	public static KeyBinding keyEnderpearl;
 	public static KeyBinding keyEnderchest;
 	public static KeyBinding keyHotbar;
+	public static KeyBinding keyInventory;
 
 	public static final String keyCategory = "key.categories.inventory";
 
@@ -28,5 +29,8 @@ public class ClientProxy extends CommonProxy {
 
 		keyHotbar = new KeyBinding("key.hotbar", Keyboard.KEY_H, keyCategory);
 		ClientRegistry.registerKeyBinding(ClientProxy.keyHotbar);
+		
+		keyInventory = new KeyBinding("key.opinventory", Keyboard.KEY_B, keyCategory);
+		ClientRegistry.registerKeyBinding(ClientProxy.keyInventory);
 	}
 }
