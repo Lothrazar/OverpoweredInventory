@@ -3,19 +3,19 @@ package com.lothrazar.powerinventory.inventory.button;
 import com.lothrazar.powerinventory.net.UnlockChestPacket;
 import com.lothrazar.powerinventory.ModInv;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonUnlockChest extends GuiButton implements IGuiTooltip {
+public class GuiButtonUnlockChest extends GuiButtonUnlockExp implements IGuiTooltip {
 	final static int height = 20;
-	public final static int width = 40;
+	public final static int width = 70;
 	private String tooltip;
 
-	public GuiButtonUnlockChest(int buttonId, int x, int y, String label) {
-		super(buttonId, x, y, width, height, label);
+	public GuiButtonUnlockChest(int buttonId, int x, int y, EntityPlayer player, int cost) {
+		super(buttonId, x, y, width, height,player,cost);
 		this.setTooltip(StatCollector.translateToLocal("tooltip.ender_chest"));
 	}
 

@@ -11,7 +11,6 @@ import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockPearl;
 import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockStorage;
 import com.lothrazar.powerinventory.inventory.button.IGuiTooltip;
 import com.lothrazar.powerinventory.inventory.slot.*;
-import com.lothrazar.powerinventory.util.UtilExperience;
 import com.lothrazar.powerinventory.util.UtilTextureRender;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -53,43 +52,32 @@ public class GuiOverpowered extends GuiContainer {
 		int h = 20;
 		int w = 20;// default button dims
 		int button_id = 99;
-		String label;
-		GuiButton b;
-
+		
 		if (prop.isEPearlUnlocked() == false) {
 
-			int current = (int) UtilExperience.getExpTotal(thePlayer);
-			label = current + "/" + ModConfig.expCostPearl;
-
-			b = new GuiButtonUnlockPearl(button_id++, this.guiLeft + padding, this.guiTop + padding, label);
+			GuiButtonUnlockPearl b = new GuiButtonUnlockPearl(button_id++, 
+					this.guiLeft + padding, 
+					this.guiTop + padding, thePlayer,ModConfig.expCostPearl);
 			this.buttonList.add(b);
-
-			b.enabled = (current >= ModConfig.expCostPearl);
 		}
 		if (prop.isEChestUnlocked() == false) {
 
-			int current = (int) UtilExperience.getExpTotal(thePlayer);
-			label = current + "/" + ModConfig.expCostEChest;
-
-			b = new GuiButtonUnlockChest(button_id++, this.guiLeft + ModConfig.getInvoWidth() - padding - GuiButtonUnlockChest.width, this.guiTop + padding, label);
+			GuiButtonUnlockChest b = new GuiButtonUnlockChest(button_id++, 
+					this.guiLeft + ModConfig.getInvoWidth() - padding - GuiButtonUnlockChest.width, 
+					this.guiTop + padding,
+					thePlayer,ModConfig.expCostEChest);
 			this.buttonList.add(b);
-
-			b.enabled = (current >= ModConfig.expCostEChest);
 		}
 		
-		int current = (int) UtilExperience.getExpTotal(thePlayer);
 		// draw only one single button then stop
 		for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
 			if (prop.hasStorage(i) == false) {
 
-				label = current + "/" + ModConfig.expCostStorage + " XP";
-
-				b = new GuiButtonUnlockStorage(button_id++, this.guiLeft + InventoryRenderer.xPosBtn(i), this.guiTop + InventoryRenderer.yPosBtn(i), label, i);
+				GuiButtonUnlockStorage b = new GuiButtonUnlockStorage(button_id++, 
+						this.guiLeft + InventoryRenderer.xPosBtn(i), 
+						this.guiTop + InventoryRenderer.yPosBtn(i), thePlayer,ModConfig.expCostStorage, i);
 
 				this.buttonList.add(b);
-
-				b.enabled = (current >= ModConfig.expCostStorage);
-				
 				
 				break;
 			}
