@@ -9,9 +9,12 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonOpenInventory extends GuiButton {
+public class GuiButtonOpenInventory extends GuiButton implements IGuiTooltip{
+
+	private String tooltip;
 	public GuiButtonOpenInventory(int buttonId, int x, int y) {
-		super(buttonId, x, y, 20, 20, StatCollector.translateToLocal("button.cornerinvo"));
+		super(buttonId, x, y, 20, 20, "");
+		this.setTooltip(StatCollector.translateToLocal("tooltip.open"));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -25,5 +28,15 @@ public class GuiButtonOpenInventory extends GuiButton {
 		}
 
 		return pressed;
+	}
+
+	@Override
+	public String getTooltip() {
+		return tooltip;
+	}
+
+	@Override
+	public void setTooltip(String s) {
+		tooltip = s;
 	}
 }
