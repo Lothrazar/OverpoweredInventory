@@ -73,7 +73,7 @@ public class EventHandler {
 			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 			// the vanilla inventory stuff (incl hotbar hotbar) already drops by
 			// default
-			for (int i = Const.V_INVO_SIZE + Const.HOTBAR_SIZE; i < prop.inventory.getSizeInventory(); ++i) {
+			for (int i = Const.HOTBAR_SIZE; i < prop.inventory.getSizeInventory(); ++i) {
 				prop.inventory.dropStackInSlot(p, i);
 			}
 
