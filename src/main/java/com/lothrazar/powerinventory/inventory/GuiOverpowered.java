@@ -70,17 +70,19 @@ public class GuiOverpowered extends GuiContainer {
 		}
 		
 		// draw only one single button then stop
+		int expCost = ModConfig.expCostStorage_start;
 		for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
 			if (prop.hasStorage(i) == false) {
 
 				GuiButtonUnlockStorage b = new GuiButtonUnlockStorage(button_id++, 
 						this.guiLeft + InventoryRenderer.xPosBtn(i), 
-						this.guiTop + InventoryRenderer.yPosBtn(i), thePlayer,ModConfig.expCostStorage, i);
+						this.guiTop + InventoryRenderer.yPosBtn(i), thePlayer, expCost , i);
 
 				this.buttonList.add(b);
 				
 				break;
 			}
+			expCost += ModConfig.expCostStorage_inc;
 		}
 		
 		w = 9;h = 8;

@@ -37,11 +37,15 @@ public class UnlockStoragePacket implements IMessage, IMessageHandler<UnlockStor
 	public IMessage onMessage(UnlockStoragePacket message, MessageContext ctx) {
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		if (UtilExperience.getExpTotal(p) >= ModConfig.expCostStorage) {
+		int numberPastFirst = (message.tags.getInteger("i") - 1);
+		//first one adds zero increments, and more and more
+		int expCost = ModConfig.expCostStorage_start + ModConfig.expCostStorage_inc * numberPastFirst;
+		
+		if (UtilExperience.getExpTotal(p) >= expCost) {
 
 			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 
-			UtilExperience.drainExp(p, ModConfig.expCostStorage);
+			UtilExperience.drainExp(p, expCost);
 
 			prop.incrementStorage();// (true, message.tags.getInteger("i"));
 
