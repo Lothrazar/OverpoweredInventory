@@ -92,7 +92,8 @@ public class EventHandler {
 		if (event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory) {
 			// omg thanks so much to this guy
 			// http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/mods-discussion/1390983-making-guis-scale-to-screen-width-height
-			ScaledResolution res = new ScaledResolution(event.gui.mc);
+			ScaledResolution res = new ScaledResolution(event.gui.mc,event.gui.mc.displayWidth,event.gui.mc.displayHeight);
+					//,event.gui.width,event.gui.height);//NPOE
 
 			int screenWidth = res.getScaledWidth();
 			int screenHeight = res.getScaledHeight();
