@@ -256,7 +256,7 @@ public class InventoryOverpowered implements IInventory {
 	}
 
 	@Override
-	public String getCommandSenderName() {
+	public String getName() {
 		return null;
 	}
 }
