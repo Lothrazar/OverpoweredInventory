@@ -5,7 +5,6 @@ build/
 eclipse/
 logs/
 mods/
-config/
 saves/
 .gradle/
 .settings/
