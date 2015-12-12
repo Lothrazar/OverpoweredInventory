@@ -15,11 +15,11 @@ import com.lothrazar.powerinventory.net.EnderPearlPacket;
 import com.lothrazar.powerinventory.net.HotbarSwapPacket;
 import com.lothrazar.powerinventory.net.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import cpw.mods.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class EventHandler {
 	@SubscribeEvent
@@ -92,7 +92,7 @@ public class EventHandler {
 		if (event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory) {
 			// omg thanks so much to this guy
 			// http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/mods-discussion/1390983-making-guis-scale-to-screen-width-height
-			ScaledResolution res = new ScaledResolution(event.gui.mc);
+			ScaledResolution res = new ScaledResolution(event.gui.mc,event.gui.mc.displayWidth,event.gui.mc.displayHeight);
 
 			int screenWidth = res.getScaledWidth();
 			int screenHeight = res.getScaledHeight();

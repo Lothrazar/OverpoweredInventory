@@ -23,13 +23,7 @@ public class StacksizeRegistry {
 			to64.add(Items.boat);
 		}
 		if (ModConfig.doors64) {
-			to64.add(Items.iron_door);
-			to64.add(Items.spruce_door);
-			to64.add(Items.birch_door);
-			to64.add(Items.jungle_door);
-			to64.add(Items.oak_door);
-			to64.add(Items.dark_oak_door);
-			to64.add(Items.acacia_door);
+			to64.add(Items.iron_door); 
 		}
 		if (ModConfig.snowballs64) {
 			to64.add(Items.snowball);
@@ -41,8 +35,7 @@ public class StacksizeRegistry {
 			to64.add(Items.egg);
 			to64.add(Items.cake);
 			to64.add(Items.cookie);
-			to64.add(Items.mushroom_stew);
-			to64.add(Items.rabbit_stew);
+			to64.add(Items.mushroom_stew); 
 		}
 
 		for (Item item : to64) {

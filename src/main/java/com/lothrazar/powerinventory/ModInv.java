@@ -5,15 +5,15 @@ import org.apache.logging.log4j.Logger;
 import com.lothrazar.powerinventory.proxy.CommonProxy;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.net.*;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import cpw.mods.fml.relauncher.Side;
 
 /**
  * @author https://github.com/Funwayguy/InfiniteInvo
@@ -21,7 +21,8 @@ import net.minecraftforge.fml.relauncher.Side;
  *         https://github.com/PrinceOfAmber/InfiniteInvo before later being
  *         merged into my main project
  */
-@Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/LothrazarMinecraftMods/OverpoweredInventory/master-18/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler")
+@Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false//, updateJSON = "https://raw.githubusercontent.com/LothrazarMinecraftMods/OverpoweredInventory/master-18/update.json"
+, guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler")
 public class ModInv {
 	@Instance(Const.MODID)
 	public static ModInv instance;

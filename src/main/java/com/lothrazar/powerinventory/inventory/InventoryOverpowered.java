@@ -2,6 +2,7 @@ package com.lothrazar.powerinventory.inventory;
 
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.config.ModConfig;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -219,44 +220,32 @@ public class InventoryOverpowered implements IInventory {
 		}
 	}
 
+
 	@Override
-	public boolean hasCustomName() {
+	public String getInventoryName()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean hasCustomInventoryName()
+	{
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public IChatComponent getDisplayName() {
-		return null;
+	public void openInventory()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void openInventory(EntityPlayer player) {
-	}
-
-	@Override
-	public void closeInventory(EntityPlayer player) {
-	}
-
-	@Override
-	public int getField(int id) {
-		return 0;
-	}
-
-	@Override
-	public void setField(int id, int value) {
-	}
-
-	@Override
-	public int getFieldCount() {
-		return 0;
-	}
-
-	@Override
-	public void clear() {
-	}
-
-	@Override
-	public String getCommandSenderName() {
-		return null;
+	public void closeInventory()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

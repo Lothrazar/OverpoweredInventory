@@ -102,8 +102,8 @@ public class GuiOverpowered extends GuiContainer {
 
 		GuiButton btn;
 		for (int i = 0; i < buttonList.size(); i++) {
-			btn = buttonList.get(i);
-			if (btn instanceof IGuiTooltip && btn.isMouseOver()) {
+			btn = (GuiButton)buttonList.get(i);
+			if (btn instanceof IGuiTooltip && btn.func_146115_a()) {//isMouseOver
 				String tooltip = ((IGuiTooltip) btn).getTooltip();
 				if (tooltip != null) {
 					// it takes a list, one on each line. but we use single line
@@ -114,7 +114,9 @@ public class GuiOverpowered extends GuiContainer {
 		}
 
 		if (SHOW_DEBUG_NUMS) {
-			for (Slot s : this.container.inventorySlots) {
+			Slot s;
+			for (Object o : this.container.inventorySlots) {
+				s = (Slot)o;
 				// each slot has two different numbers. the slotNumber is
 				// UNIQUE, the index is not
 				this.drawString(this.fontRendererObj, "" + s.getSlotIndex(), this.guiLeft + s.xDisplayPosition, this.guiTop + s.yDisplayPosition + 4, 16777120);// font
