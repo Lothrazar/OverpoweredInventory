@@ -47,6 +47,7 @@ public class ModInv {
 		network.registerMessage(UnlockPearlPacket.class, UnlockPearlPacket.class, packetID++, Side.SERVER);
 		network.registerMessage(UnlockChestPacket.class, UnlockChestPacket.class, packetID++, Side.SERVER);
 		network.registerMessage(UnlockStoragePacket.class, UnlockStoragePacket.class, packetID++, Side.SERVER);
+		network.registerMessage(SortPacket.class, SortPacket.class, packetID++, Side.SERVER);
 
 		proxy.registerHandlers();
 	}

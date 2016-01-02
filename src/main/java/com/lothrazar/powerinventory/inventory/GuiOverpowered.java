@@ -5,11 +5,7 @@ import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.InventoryRenderer;
 import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.config.ModConfig;
-import com.lothrazar.powerinventory.inventory.button.GuiButtonRotate;
-import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockChest;
-import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockPearl;
-import com.lothrazar.powerinventory.inventory.button.GuiButtonUnlockStorage;
-import com.lothrazar.powerinventory.inventory.button.IGuiTooltip;
+import com.lothrazar.powerinventory.inventory.button.*;
 import com.lothrazar.powerinventory.inventory.slot.*;
 import com.lothrazar.powerinventory.util.UtilTextureRender;
 import net.minecraft.client.gui.GuiButton;
@@ -60,6 +56,13 @@ public class GuiOverpowered extends GuiContainer {
 					this.guiTop + padding, thePlayer,ModConfig.expCostPearl);
 			this.buttonList.add(b);
 		}
+		
+		if(ModConfig.getMaxSections() > 1){
+			GuiButtonSort sb = new GuiButtonSort(button_id++, 
+					this.guiLeft + padding + 80, 
+					this.guiTop + padding,60,20,"button.sort");
+			this.buttonList.add(sb);
+		}
 		if (prop.isEChestUnlocked() == false) {
 
 			GuiButtonUnlockChest b = new GuiButtonUnlockChest(button_id++, 
@@ -85,7 +88,7 @@ public class GuiOverpowered extends GuiContainer {
 			expCost += ModConfig.expCostStorage_inc;
 		}
 		
-		w = 9;h = 8;
+		w = 6;h = 8;
 		for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
 
 			if (prop.hasStorage(i))
