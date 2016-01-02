@@ -16,7 +16,7 @@ public class GuiButtonUnlockStorage extends GuiButtonUnlockExp implements IGuiTo
 	private String tooltip;
 
 	public GuiButtonUnlockStorage(int buttonId, int x, int y, EntityPlayer player, int cost, int ig) {
-		super(buttonId, x, y, width, height, player,cost);
+		super(buttonId, x, y, width, height, player, cost);
 		invoGroup = ig;
 		this.setTooltip(StatCollector.translateToLocal("tooltip.storage"));
 	}

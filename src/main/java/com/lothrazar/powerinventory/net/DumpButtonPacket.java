@@ -1,7 +1,6 @@
 package com.lothrazar.powerinventory.net;
 
 import java.util.ArrayList;
-import com.lothrazar.powerinventory.*;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.util.UtilInventory;
 import io.netty.buffer.ByteBuf;

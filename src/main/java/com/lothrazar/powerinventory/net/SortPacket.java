@@ -1,6 +1,5 @@
 package com.lothrazar.powerinventory.net;
 
-import com.lothrazar.powerinventory.*;
 import com.lothrazar.powerinventory.util.UtilInventory;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -33,13 +32,13 @@ public class SortPacket implements IMessage, IMessageHandler<SortPacket, IMessag
 		ByteBufUtils.writeTag(buf, this.tags);
 	}
 
-	//public static final String NBT_SORT = "sort";
+	// public static final String NBT_SORT = "sort";
 
 	@Override
 	public IMessage onMessage(SortPacket message, MessageContext ctx) {
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		//int sortType = message.tags.getInteger(NBT_SORT);
+		// int sortType = message.tags.getInteger(NBT_SORT);
 		UtilInventory.doSort(p);
 
 		return null;

@@ -9,9 +9,10 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonOpenInventory extends GuiButton implements IGuiTooltip{
+public class GuiButtonOpenInventory extends GuiButton implements IGuiTooltip {
 
 	private String tooltip;
+
 	public GuiButtonOpenInventory(int buttonId, int x, int y) {
 		super(buttonId, x, y, 20, 20, "");
 		this.setTooltip(StatCollector.translateToLocal("tooltip.open"));

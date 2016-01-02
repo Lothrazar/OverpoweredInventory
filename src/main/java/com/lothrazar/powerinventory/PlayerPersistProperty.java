@@ -44,7 +44,8 @@ public class PlayerPersistProperty implements IExtendedEntityProperties {
 
 		if (property != null && property instanceof PlayerPersistProperty) {
 			return (PlayerPersistProperty) property;
-		} else {
+		}
+		else {
 			return null;
 		}
 	}

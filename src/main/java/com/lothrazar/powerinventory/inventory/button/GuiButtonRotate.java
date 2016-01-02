@@ -9,12 +9,12 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiButtonRotate extends GuiButton implements IGuiTooltip{
-	
+public class GuiButtonRotate extends GuiButton implements IGuiTooltip {
+
 	private int invoGroup;
 	private String tooltip;
 
-	public GuiButtonRotate(int buttonId, int x, int y, int width, int height, String lbl,int ig) {
+	public GuiButtonRotate(int buttonId, int x, int y, int width, int height, String lbl, int ig) {
 		super(buttonId, x, y, width, height, lbl);// ig for test
 		invoGroup = ig;
 		this.setTooltip(StatCollector.translateToLocal("tooltip.swap"));

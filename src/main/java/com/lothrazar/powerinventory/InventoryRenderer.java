@@ -14,7 +14,7 @@ public class InventoryRenderer {
 
 		// so 1,2 are in row 1. but also 11 is in row 1 so we split it off
 		if (segment <= segsLeft)
-			return (int) Math.ceil(((double) segment) / 2);//so 3 and 4 => 2
+			return (int) Math.ceil(((double) segment) / 2);// so 3 and 4 => 2
 		else
 			return segment - segsLeft;// so 1 -> 5
 	}
@@ -79,17 +79,17 @@ public class InventoryRenderer {
 
 		return topLimit + (row - 1) * (Const.SLOTS_HEIGHT + pad);
 	}
-	
-	public static int xPosSwap(int segment){
+
+	public static int xPosSwap(int segment) {
 		int col = colFromSegment(segment);
-		
-		return 1 + (col-1)*(Const.SLOTS_WIDTH + pad);
+
+		return 1 + (col - 1) * (Const.SLOTS_WIDTH + pad);
 	}
 
-	public static int yPosSwap(int segment){
+	public static int yPosSwap(int segment) {
 		int row = rowFromSegment(segment);
 
-		//todo: maybe use topspace??
-		return 30 + (row-1)*(Const.SLOTS_HEIGHT + pad);
+		// todo: maybe use topspace??
+		return 30 + (row - 1) * (Const.SLOTS_HEIGHT + pad);
 	}
 }

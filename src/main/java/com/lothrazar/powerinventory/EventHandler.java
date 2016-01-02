@@ -45,7 +45,9 @@ public class EventHandler {
 	}
 
 	@SubscribeEvent
-	public void onEntityConstruct(EntityConstructing event) // More reliable than on entity join
+	public void onEntityConstruct(EntityConstructing event) // More reliable
+															// than on entity
+															// join
 	{
 		if (event.entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.entity;
@@ -58,9 +60,9 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onPlayerClone(PlayerEvent.Clone event) {
-		if (event.wasDeath == false || // changing dimensions -> so always do it or it was    a death  => maybe     do it           
-				(ModConfig.persistUnlocksOnDeath && event.wasDeath))				
-		{
+		if (event.wasDeath == false || // changing dimensions -> so always do it
+										// or it was a death => maybe do it
+		(ModConfig.persistUnlocksOnDeath && event.wasDeath)) {
 			PlayerPersistProperty.clonePlayerData(event.original, event.entityPlayer);
 		}
 	}
@@ -71,8 +73,9 @@ public class EventHandler {
 			EntityPlayer p = (EntityPlayer) event.entityLiving;
 
 			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
-			// the vanilla inventory stuff (first hotbar) already drops by default
- 
+			// the vanilla inventory stuff (first hotbar) already drops by
+			// default
+
 			for (int i = Const.HOTBAR_SIZE; i < prop.inventory.getSizeInventory(); ++i) {
 				prop.inventory.dropStackInSlot(p, i);
 			}
@@ -100,30 +103,29 @@ public class EventHandler {
 			int button_id = 256;
 			int h = 10, w = 20, x, y;
 
-			x = screenWidth / 2 + Const.VWIDTH / 2 - w;// align tight to top 
+			x = screenWidth / 2 + Const.VWIDTH / 2 - w;// align tight to top
 			y = screenHeight / 2 - Const.VHEIGHT / 2 - 2 * h - 1;
-			
+
 			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x, y));
 			/*
-			int padding=4;
-			h = 10;
-			w = 10;
-
-			PlayerPersistProperty prop = PlayerPersistProperty.get(event.gui.mc.thePlayer);
-			// position them exactly on players inventory
-			x = screenWidth / 2 - Const.VWIDTH/2 + padding+78;//screenWidth / 2 + Const.VWIDTH / 2 - w * 3;
-			y = screenHeight / 2 - Const.VHEIGHT/2 + padding+62;//screenHeight / 2 - Const.VHEIGHT / 2 + padding;
-			//TODO: in large mode we might need two rows or something
-
-			// int storage = prop.getStorageCount();
-			for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
-
-				if (prop.hasStorage(i))
-					event.buttonList.add(new GuiButtonRotate(button_id++, x, y, w, h,""+i, i));
-
-				x += w + padding;//-= 2 * w - padding;// 
-			}
-			*/
+			 * int padding=4; h = 10; w = 10;
+			 * 
+			 * PlayerPersistProperty prop =
+			 * PlayerPersistProperty.get(event.gui.mc.thePlayer); // position
+			 * them exactly on players inventory x = screenWidth / 2 -
+			 * Const.VWIDTH/2 + padding+78;//screenWidth / 2 + Const.VWIDTH / 2
+			 * - w * 3; y = screenHeight / 2 - Const.VHEIGHT/2 +
+			 * padding+62;//screenHeight / 2 - Const.VHEIGHT / 2 + padding;
+			 * //TODO: in large mode we might need two rows or something
+			 * 
+			 * // int storage = prop.getStorageCount(); for (int i = 1; i <=
+			 * ModConfig.getMaxSections(); i++) {
+			 * 
+			 * if (prop.hasStorage(i)) event.buttonList.add(new
+			 * GuiButtonRotate(button_id++, x, y, w, h,""+i, i));
+			 * 
+			 * x += w + padding;//-= 2 * w - padding;// }
+			 */
 		}
 	}
 

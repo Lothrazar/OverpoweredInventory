@@ -15,7 +15,7 @@ public class GuiButtonUnlockChest extends GuiButtonUnlockExp implements IGuiTool
 	private String tooltip;
 
 	public GuiButtonUnlockChest(int buttonId, int x, int y, EntityPlayer player, int cost) {
-		super(buttonId, x, y, width, height,player,cost);
+		super(buttonId, x, y, width, height, player, cost);
 		this.setTooltip(StatCollector.translateToLocal("tooltip.ender_chest"));
 	}
 
