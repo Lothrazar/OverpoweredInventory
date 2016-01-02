@@ -60,8 +60,18 @@ public class GuiOverpowered extends GuiContainer {
 		if(ModConfig.getMaxSections() > 1){
 			GuiButtonSort sb = new GuiButtonSort(button_id++, 
 					this.guiLeft + padding + 80, 
-					this.guiTop + padding,60,20,"button.sort");
+					this.guiTop + padding,60,20);
 			this.buttonList.add(sb);
+			
+			GuiButtonFilter fb = new GuiButtonFilter(button_id++, 
+					this.guiLeft + padding + 2*80, 
+					this.guiTop + padding,60,20);
+			this.buttonList.add(fb);
+			
+			GuiButtonDump db = new GuiButtonDump(button_id++, 
+					this.guiLeft + padding + 3*80, 
+					this.guiTop + padding,60,20);
+			this.buttonList.add(db);
 		}
 		if (prop.isEChestUnlocked() == false) {
 

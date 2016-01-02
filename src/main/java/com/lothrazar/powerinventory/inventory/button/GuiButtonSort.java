@@ -14,8 +14,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class GuiButtonSort extends GuiButton {
 
-	public GuiButtonSort( int buttonId, int x, int y, int w, int h, String text) {
-		super(buttonId, x, y, w, h, text);
+	public GuiButtonSort( int buttonId, int x, int y, int w, int h) {
+		super(buttonId, x, y, w, h, "button.sort");
 	}
 
 	@SideOnly(Side.CLIENT)

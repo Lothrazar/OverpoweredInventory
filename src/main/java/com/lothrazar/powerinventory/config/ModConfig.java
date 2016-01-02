@@ -23,6 +23,7 @@ public class ModConfig {
 	private static int TEXTURE_HEIGHT = 230 + 54 + 54 + 4 + 4;// 346
 
 	private static boolean isLarge = true;
+	public static int filterRange = 32;//TODO: not linked
 
 	public static boolean isLargeScreen() {
 		return isLarge;

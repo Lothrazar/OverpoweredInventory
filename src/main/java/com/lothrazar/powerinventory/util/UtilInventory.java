@@ -10,6 +10,8 @@ import com.lothrazar.powerinventory.PlayerPersistProperty;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 
 public class UtilInventory {
 	public static void swapHotbars(EntityPlayer p) {
@@ -79,7 +81,7 @@ public class UtilInventory {
 		SortGroup temp;
 		String key = "";
 		int iSize = invo.getSizeInventory();
-		for (int i = 2*Const.HOTBAR_SIZE; i < iSize; i++) {
+		for (int i = 2 * Const.HOTBAR_SIZE; i < iSize; i++) {
 			item = invo.getStackInSlot(i);
 			if (item == null) {
 				continue;
@@ -132,12 +134,12 @@ public class UtilInventory {
 			}
 		});
 
-		int k = 2*Const.HOTBAR_SIZE;
+		int k = 2 * Const.HOTBAR_SIZE;
 		for (SortGroup sg : sorted) {
-			//System.out.println(sg.key+" _ "+k);
+			// System.out.println(sg.key+" _ "+k);
 
 			for (int i = 0; i < sg.stacks.size(); i++) {
-				
+
 				invo.setInventorySlotContents(k, null);
 				invo.setInventorySlotContents(k, sg.stacks.get(i));
 				k++;
@@ -153,4 +155,132 @@ public class UtilInventory {
 		// so we start at k again, add Const.ALL_COLS to go down one row
 
 	}
+
+	public static ArrayList<IInventory> findTileEntityInventories(EntityPlayer player, int RADIUS) {
+		// function imported
+		// https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Commands/src/main/java/com/lothrazar/samscommands/ModCommands.java#L193
+		ArrayList<IInventory> found = new ArrayList<IInventory>();
+		int xMin = (int) player.posX - RADIUS;
+		int xMax = (int) player.posX + RADIUS;
+
+		int yMin = (int) player.posY - RADIUS;
+		int yMax = (int) player.posY + RADIUS;
+
+		int zMin = (int) player.posZ - RADIUS;
+		int zMax = (int) player.posZ + RADIUS;
+
+		BlockPos posCurrent = null;
+		for (int xLoop = xMin; xLoop <= xMax; xLoop++) {
+			for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
+				for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
+					posCurrent = new BlockPos(xLoop, yLoop, zLoop);
+					if (player.worldObj.getTileEntity(posCurrent) instanceof IInventory) {
+						found.add((IInventory) player.worldObj.getTileEntity(posCurrent));
+					}
+				}
+			}
+		}
+
+		return found;
+	}
+
+	public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer player) {
+		ItemStack chestItem;
+		ItemStack invItem;
+
+		int start = 0;
+
+		PlayerPersistProperty prop = PlayerPersistProperty.get(player);
+		//
+		// inventory and chest has 9 rows by 3 columns, never changes. same as
+		// 64 max stack size
+		for (int slot = start; slot < inventory.getSizeInventory(); slot++) {
+			chestItem = inventory.getStackInSlot(slot);
+
+			if (chestItem != null) {
+				continue;
+			}// slot not empty, skip over it
+
+			for (int islotInv = 2 * Const.HOTBAR_SIZE; islotInv < prop.inventory.getSizeInventory(); islotInv++) {
+				invItem = prop.inventory.getStackInSlot(islotInv);
+
+				if (invItem == null) {
+					continue;
+				}// empty inventory slot
+
+				inventory.setInventorySlotContents(slot, invItem);
+
+				prop.inventory.setInventorySlotContents(islotInv, null);
+				break;
+			}// close loop on player inventory items
+		}// close loop on chest items
+	}
+
+	public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player) {
+		// source:
+		// https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
+
+		PlayerPersistProperty prop = PlayerPersistProperty.get(player);
+		ItemStack chestItem;
+		ItemStack invItem;
+		int room;
+		int toDeposit;
+		int chestMax;
+
+		// player inventory and the small chest have the same dimensions
+
+		int START_CHEST = 0;
+		int END_CHEST = chest.getSizeInventory();
+
+		// inventory and chest has 9 rows by 3 columns, never changes. same as
+		// 64 max stack size
+		for (int islotChest = START_CHEST; islotChest < END_CHEST; islotChest++) {
+			chestItem = chest.getStackInSlot(islotChest);
+
+			if (chestItem == null) {
+				continue;
+			}// empty chest slot
+
+			for (int islotInv = 2 * Const.HOTBAR_SIZE; islotInv < prop.inventory.getSizeInventory(); islotInv++) {
+
+				invItem = prop.inventory.getStackInSlot(islotInv);
+
+				if (invItem == null) {
+					continue;
+				}// empty inventory slot
+
+				if (invItem.getItem().equals(chestItem.getItem()) && invItem.getItemDamage() == chestItem.getItemDamage()) {
+					// same item, including damage (block state)
+
+					chestMax = chestItem.getItem().getItemStackLimit(chestItem);
+					room = chestMax - chestItem.stackSize;
+
+					if (room <= 0) {
+						continue;
+					} // no room, check the next spot
+
+					// so if i have 30 room, and 28 items, i deposit 28.
+					// or if i have 30 room and 38 items, i deposit 30
+					toDeposit = Math.min(invItem.stackSize, room);
+
+					chestItem.stackSize += toDeposit;
+					chest.setInventorySlotContents(islotChest, chestItem);
+
+					invItem.stackSize -= toDeposit;
+
+					if (invItem.stackSize <= 0) {
+						// item stacks with zero count do not destroy
+						// themselves, they show up and have unexpected behavior
+						// in game so set to empty
+						prop.inventory.setInventorySlotContents(islotInv, null);
+					}
+					else {
+						// set to new quantity
+						prop.inventory.setInventorySlotContents(islotInv, invItem);
+					}
+				}// end if items match
+			}// close loop on player inventory items
+		}// close loop on chest items
+	}
+
 }
