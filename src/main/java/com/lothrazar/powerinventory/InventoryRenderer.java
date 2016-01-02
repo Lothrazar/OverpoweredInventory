@@ -83,7 +83,7 @@ public class InventoryRenderer {
 	public static int xPosSwap(int segment) {
 		int col = colFromSegment(segment);
 
-		return 1 + (col - 1) * (Const.SLOTS_WIDTH + pad);
+		return 2 + (col - 1) * (Const.SLOTS_WIDTH + pad);
 	}
 
 	public static int yPosSwap(int segment) {
