@@ -92,7 +92,7 @@ public class EventHandler {
 			return;
 		}// probably doesnt ever happen
 
-		if (event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory) {
+		if (ModConfig.showGuiButton && event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory) {
 			// omg thanks so much to this guy
 			// http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/mods-discussion/1390983-making-guis-scale-to-screen-width-height
 			ScaledResolution res = new ScaledResolution(event.gui.mc);
@@ -101,31 +101,12 @@ public class EventHandler {
 			int screenHeight = res.getScaledHeight();
 
 			int button_id = 256;
-			int h = 10, w = 20, x, y;
+			int  x, y;
 
-			x = screenWidth / 2 + Const.VWIDTH / 2 - w;// align tight to top
-			y = screenHeight / 2 - Const.VHEIGHT / 2 - 2 * h - 1;
+			x = screenWidth / 2 + Const.VWIDTH / 2 - GuiButtonOpenInventory.width - 1;// align tight to top
+			y = screenHeight / 2 - Const.VHEIGHT / 2 - GuiButtonOpenInventory.height + 1;
 
 			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x, y));
-			/*
-			 * int padding=4; h = 10; w = 10;
-			 * 
-			 * PlayerPersistProperty prop =
-			 * PlayerPersistProperty.get(event.gui.mc.thePlayer); // position
-			 * them exactly on players inventory x = screenWidth / 2 -
-			 * Const.VWIDTH/2 + padding+78;//screenWidth / 2 + Const.VWIDTH / 2
-			 * - w * 3; y = screenHeight / 2 - Const.VHEIGHT/2 +
-			 * padding+62;//screenHeight / 2 - Const.VHEIGHT / 2 + padding;
-			 * //TODO: in large mode we might need two rows or something
-			 * 
-			 * // int storage = prop.getStorageCount(); for (int i = 1; i <=
-			 * ModConfig.getMaxSections(); i++) {
-			 * 
-			 * if (prop.hasStorage(i)) event.buttonList.add(new
-			 * GuiButtonRotate(button_id++, x, y, w, h,""+i, i));
-			 * 
-			 * x += w + padding;//-= 2 * w - padding;// }
-			 */
 		}
 	}
 
