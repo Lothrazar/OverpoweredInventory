@@ -117,16 +117,6 @@ public class InventoryOverpowered implements IInventory {
 	}
 
 	@Override
-	public ItemStack getStackInSlotOnClosing(int slot) {
-		ItemStack stack = getStackInSlot(slot);
-		if (stack != null) {
-			setInventorySlotContents(slot, null);
-		}
-
-		return stack;
-	}
-
-	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack) {
 		if (slot == Const.SLOT_EPEARL) {
 			enderPearlStack = stack;
@@ -256,7 +246,19 @@ public class InventoryOverpowered implements IInventory {
 	}
 
 	@Override
-	public String getCommandSenderName() {
+	public String getName() {
 		return null;
+	}
+
+	@Override
+	public ItemStack removeStackFromSlot(int slot) {
+		
+		// was getStackInSlotOnClosing
+		ItemStack stack = getStackInSlot(slot);
+		if (stack != null) {
+			setInventorySlotContents(slot, null);
+		}
+
+		return stack;
 	}
 }

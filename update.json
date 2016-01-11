@@ -6,7 +6,9 @@
     "1.8-latest": "1.0.13",
     "1.8-recommended": "1.0.13",
     "1.8.8-latest": "2.0.2",
-    "1.8.8-recommended": "2.0.2"
+    "1.8.8-recommended": "2.0.2",
+    "1.8.9-latest": "2.0.2",
+    "1.8.9-recommended": "2.0.2"
   },
   "1.8.8":{
   	"1.0.14":"Removed custom version checker in favor of built in forge setup",
