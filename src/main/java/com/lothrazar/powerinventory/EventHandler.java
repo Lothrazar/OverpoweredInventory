@@ -1,5 +1,6 @@
 package com.lothrazar.powerinventory;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.GuiIngameForge;
@@ -45,10 +46,7 @@ public class EventHandler {
 	}
 
 	@SubscribeEvent
-	public void onEntityConstruct(EntityConstructing event) // More reliable
-															// than on entity
-															// join
-	{
+	public void onEntityConstruct(EntityConstructing event) {
 		if (event.entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.entity;
 
@@ -101,11 +99,17 @@ public class EventHandler {
 			int screenHeight = res.getScaledHeight();
 
 			int button_id = 256;
-			int  x, y;
+			int x, y;
 
-			x = screenWidth / 2 + Const.VWIDTH / 2 - GuiButtonOpenInventory.width - 1;// align tight to top
+			//align t top right
+			x = screenWidth / 2 + Const.VWIDTH / 2 - GuiButtonOpenInventory.width - 1;
 			y = screenHeight / 2 - Const.VHEIGHT / 2 - GuiButtonOpenInventory.height + 1;
 
+			boolean hasPotions = Minecraft.getMinecraft().thePlayer.getActivePotionEffects().size() > 0;
+			if(hasPotions){
+				x += 60;
+			}
+			//this is the tab button
 			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x, y));
 		}
 	}
