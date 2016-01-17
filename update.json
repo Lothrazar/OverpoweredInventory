@@ -7,13 +7,14 @@
     "1.8-recommended": "1.0.13",
     "1.8.8-latest": "2.0.2",
     "1.8.8-recommended": "2.0.2",
-    "1.8.9-latest": "2.0.2",
-    "1.8.9-recommended": "2.0.2"
+    "1.8.9-latest": "2.0.3",
+    "1.8.9-recommended": "2.0.3"
   },
   "1.8.8":{
   	"1.0.14":"Removed custom version checker in favor of built in forge setup",
   	"2.0.0":"Complete rewrite with better compatibility with other mods",
   	"2.0.1":"Add sort, filter, and deposit buttons back in",
-  	"2.0.2":"Update button graphic, add config to hide button"
+  	"2.0.2":"Update button graphic, add config to hide button",
+  	"2.0.3":"Fix inventory tab shifting over when potions are on"
   }
 }
