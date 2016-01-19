@@ -108,9 +108,17 @@ public class PlayerPersistProperty implements IExtendedEntityProperties {
 	}
 
 	public static void clonePlayerData(EntityPlayer original, EntityPlayer newPlayer) {
-		PlayerPersistProperty.get(newPlayer).setEChestUnlocked(PlayerPersistProperty.get(original).isEChestUnlocked());
-		PlayerPersistProperty.get(newPlayer).setEPearlUnlocked(PlayerPersistProperty.get(original).isEPearlUnlocked());
-
-		PlayerPersistProperty.get(newPlayer).setStorageCount(PlayerPersistProperty.get(original).getStorageCount());
+		PlayerPersistProperty propsNew = PlayerPersistProperty.get(newPlayer);
+		PlayerPersistProperty propsOriginal = PlayerPersistProperty.get(original);
+		
+		propsNew.setEChestUnlocked(propsOriginal.isEChestUnlocked());
+		propsNew.setEPearlUnlocked(propsOriginal.isEPearlUnlocked());
+		propsNew.setStorageCount(propsOriginal.getStorageCount());
+		
+		for(int i = 0; i < propsOriginal.inventory.getSizeInventory(); i++){
+			propsNew.inventory.setInventorySlotContents(i,propsOriginal.inventory.getStackInSlot(i));
+			
+			propsOriginal.inventory.setInventorySlotContents(i,null);
+		}
 	}
 }

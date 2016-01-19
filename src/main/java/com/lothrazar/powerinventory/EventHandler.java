@@ -62,18 +62,21 @@ public class EventHandler {
 										// or it was a death => maybe do it
 		(ModConfig.persistUnlocksOnDeath && event.wasDeath)) {
 			PlayerPersistProperty.clonePlayerData(event.original, event.entityPlayer);
+			
 		}
 	}
 
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent event) {
-		if (event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote) {
+		//if config says they persist... do not drop on ground
+		
+		if (ModConfig.persistUnlocksOnDeath == false && 
+				event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote) {
 			EntityPlayer p = (EntityPlayer) event.entityLiving;
 
 			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
-			// the vanilla inventory stuff (first hotbar) already drops by
-			// default
-
+			// the vanilla inventory stuff (first hotbar) already drops  
+			
 			for (int i = Const.HOTBAR_SIZE; i < prop.inventory.getSizeInventory(); ++i) {
 				prop.inventory.dropStackInSlot(p, i);
 			}

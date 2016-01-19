@@ -61,7 +61,7 @@ public class ModConfig {
 		
 		ModConfig.showGuiButton = config.getBoolean("show_gui_button", categoryHighlander, true, "Show the tab button in the player GUI upper right.  If disabled, the button is hidden but you can still use the keybinding.");
 
-		ModConfig.persistUnlocksOnDeath = config.getBoolean("persist_unlocks_death", categoryHighlander, true, "All EXP unlocks such as crafting slots will be saved and remembered through death.  If this is false, all unlocks reset on death and become locked (modpack makers: feel free to reduce costs if you set this false)");
+		ModConfig.persistUnlocksOnDeath = config.getBoolean("persist_unlocks_death", categoryHighlander, true, "Inventory contents persist through death.  Also, all EXP unlocks such as crafting slots will be saved and remembered through death.  If this is false, all unlocks reset on death and become locked (modpack makers: feel free to reduce costs if you set this false)");
 
 		category = "stack_to_64";
 
