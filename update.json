@@ -17,5 +17,10 @@
   	"2.0.2":"Update button graphic, add config to hide button",
   	"2.0.3":"Fix inventory tab shifting over when potions are on",
   	"2.1.0":"Overpowered Inventory now persists through death, instead of dropping on ground (config controlled)."
+  },
+  "1.8.9":{
+  	"2.0.2":"Update button graphic, add config to hide button",
+  	"2.0.3":"Fix inventory tab shifting over when potions are on",
+  	"2.1.0":"Overpowered Inventory now persists through death, instead of dropping on ground (config controlled)."
   }
 }
