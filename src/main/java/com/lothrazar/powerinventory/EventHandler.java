@@ -6,6 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
+import net.minecraftforge.client.event.GuiScreenEvent.DrawScreenEvent;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -85,6 +86,15 @@ public class EventHandler {
 			prop.inventory.dropStackInSlot(p, Const.SLOT_EPEARL);
 		}
 	}
+	
+	// InitGuiEvent.Post
+	@SideOnly(Side.CLIENT)
+	@SubscribeEvent
+	public void onDrawScreenEvent(DrawScreenEvent event) {
+		if (event.gui != null && event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory) {
+			
+		}
+	}
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
@@ -93,7 +103,7 @@ public class EventHandler {
 			return;
 		}// probably doesnt ever happen
 
-		if (ModConfig.showGuiButton && event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory) {
+		if (ModConfig.showGuiButton && event.gui != null && event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory) {
 			// omg thanks so much to this guy
 			// http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/mods-discussion/1390983-making-guis-scale-to-screen-width-height
 			ScaledResolution res = new ScaledResolution(event.gui.mc);
