@@ -9,8 +9,8 @@ import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.PlayerPersistProperty;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
+import net.minecraft.item.ItemStack; 
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class UtilInventory {

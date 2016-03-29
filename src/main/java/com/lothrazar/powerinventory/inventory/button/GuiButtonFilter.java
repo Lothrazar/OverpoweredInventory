@@ -5,7 +5,7 @@ import com.lothrazar.powerinventory.net.FilterButtonPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,7 +16,7 @@ public class GuiButtonFilter extends GuiButton implements IGuiTooltip  {
 	// imported from https://github.com/PrinceOfAmber/SamsPowerups , author
 	// Lothrazar aka Sam Bassett
 	public GuiButtonFilter(int buttonId, int x, int y, int w) {
-		super(buttonId, x, y, w, 20, StatCollector.translateToLocal("button.filter"));
+		super(buttonId, x, y, w, 20, I18n.translateToLocal("button.filter"));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -33,7 +33,7 @@ public class GuiButtonFilter extends GuiButton implements IGuiTooltip  {
 
 	@Override
 	public String getTooltip() {
-		return StatCollector.translateToLocal("tooltip.filter");
+		return I18n.translateToLocal("tooltip.filter");
 	}
 
 	@Override

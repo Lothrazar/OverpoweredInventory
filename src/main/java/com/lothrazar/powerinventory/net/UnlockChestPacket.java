@@ -3,11 +3,13 @@ package com.lothrazar.powerinventory.net;
 import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.util.UtilExperience;
+import com.lothrazar.powerinventory.util.UtilSound;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -46,10 +48,10 @@ public class UnlockChestPacket implements IMessage, IMessageHandler<UnlockChestP
 
 			p.closeScreen();
 
-			p.worldObj.playSoundAtEntity(p, "mob.zombie.unfect", 1.4F, 1F);
+			UtilSound.playSound(p, SoundEvents.entity_zombie_villager_converted, SoundCategory.PLAYERS);
 		} else {
 
-			p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("gui.craftexp")));
+			p.addChatMessage(new TextComponentTranslation(net.minecraft.util.text.translation.I18n.translateToLocal("gui.craftexp")));
 		}
 
 		return null;

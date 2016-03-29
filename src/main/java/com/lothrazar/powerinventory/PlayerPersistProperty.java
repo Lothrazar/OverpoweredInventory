@@ -4,6 +4,9 @@ import com.lothrazar.powerinventory.inventory.InventoryOverpowered;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 
@@ -17,6 +20,8 @@ public class PlayerPersistProperty implements IExtendedEntityProperties {
 	public static final String ID = "OPI";
 	public static final int EPEARL_WATCHER = 20;
 	public static final int ECHEST_WATCHER = 21;
+	//this is the working way to do it, by the way
+    //private static final DataParameter<Integer> AIR = EntityDataManager.<Integer>createKey(Entity.class, DataSerializers.VARINT);
 	// dang max is 31
 	// TODO: use bitwise operations to save space
 	public static final int STORAGE_COUNT = 22;
@@ -30,16 +35,21 @@ public class PlayerPersistProperty implements IExtendedEntityProperties {
 	public PlayerPersistProperty(EntityPlayer p) {
 		this.player = p;
 		inventory = new InventoryOverpowered(this.player);
-		this.player.getDataWatcher().addObject(EPEARL_WATCHER, this.epearlOpen);
-		this.player.getDataWatcher().addObject(ECHEST_WATCHER, this.echestOpen);
-		this.player.getDataWatcher().addObject(STORAGE_COUNT, this.storageCount);
+		 
+	 /*
+		this.player.getDataManager().register(EPEARL_WATCHER, this.epearlOpen);
+		this.player.getDataManager().addObject(ECHEST_WATCHER, this.echestOpen);
+		this.player.getDataManager().addObject(STORAGE_COUNT, this.storageCount);
+		*/
 	}
 
 	public static void register(EntityPlayer player) {
+ 
 		player.registerExtendedProperties(ID, new PlayerPersistProperty(player));
 	}
 
 	public static PlayerPersistProperty get(EntityPlayer player) {
+		 
 		IExtendedEntityProperties property = player.getExtendedProperties(ID);
 
 		if (property != null && property instanceof PlayerPersistProperty) {

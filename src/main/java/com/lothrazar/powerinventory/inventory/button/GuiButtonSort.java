@@ -5,7 +5,7 @@ import com.lothrazar.powerinventory.net.SortPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiButtonSort extends GuiButton {
 
 	public GuiButtonSort(int buttonId, int x, int y, int w) {
-		super(buttonId, x, y, w, 20, StatCollector.translateToLocal("button.sort"));
+		super(buttonId, x, y, w, 20, I18n.translateToLocal("button.sort"));
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -5,7 +5,7 @@ import com.lothrazar.powerinventory.ModInv;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,7 +16,7 @@ public class GuiButtonUnlockPearl extends GuiButtonUnlockExp implements IGuiTool
 
 	public GuiButtonUnlockPearl(int buttonId, int x, int y, EntityPlayer player, int cost) {
 		super(buttonId, x, y, width, height, player, cost);
-		this.setTooltip(StatCollector.translateToLocal("tooltip.ender_pearl"));
+		this.setTooltip(I18n.translateToLocal("tooltip.ender_pearl"));
 	}
 
 	@SideOnly(Side.CLIENT)

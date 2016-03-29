@@ -5,7 +5,7 @@ import com.lothrazar.powerinventory.ModInv;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -17,7 +17,7 @@ public class GuiButtonRotate extends GuiButton implements IGuiTooltip {
 	public GuiButtonRotate(int buttonId, int x, int y, int width, int height, String lbl, int ig) {
 		super(buttonId, x, y, width, height, lbl);// ig for test
 		invoGroup = ig;
-		this.setTooltip(StatCollector.translateToLocal("tooltip.swap"));
+		this.setTooltip(I18n.translateToLocal("tooltip.swap"));
 	}
 
 	@SideOnly(Side.CLIENT)

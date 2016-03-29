@@ -5,7 +5,7 @@ import com.lothrazar.powerinventory.ModInv;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -18,7 +18,7 @@ public class GuiButtonUnlockStorage extends GuiButtonUnlockExp implements IGuiTo
 	public GuiButtonUnlockStorage(int buttonId, int x, int y, EntityPlayer player, int cost, int ig) {
 		super(buttonId, x, y, width, height, player, cost);
 		invoGroup = ig;
-		this.setTooltip(StatCollector.translateToLocal("tooltip.storage"));
+		this.setTooltip(I18n.translateToLocal("tooltip.storage"));
 	}
 
 	@SideOnly(Side.CLIENT)
