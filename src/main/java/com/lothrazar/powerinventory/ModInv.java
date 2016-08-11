@@ -1,5 +1,11 @@
 package com.lothrazar.powerinventory;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.powerinventory.proxy.CommonProxy;
@@ -58,6 +64,23 @@ public class ModInv {
 	public void init(FMLInitializationEvent event) {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 
-		StacksizeRegistry.registerChanges();
+
 	}
+
+  public static String lang(String string) {
+    return I18n.translateToLocal(string);
+  }
+  public static void addChatMessage(EntityPlayer p, String string) {
+
+    p.addChatMessage(new TextComponentTranslation(lang("gui.craftexp")));
+    
+  }
+
+  public static void playSound(EntityPlayer player, SoundEvent soundIn) {
+    playSound(player,null,soundIn);
+  }
+  public static void playSound(EntityPlayer player, BlockPos pos, SoundEvent soundIn) {
+    BlockPos here = (pos == null) ? player.getPosition() : pos;
+    player.worldObj.playSound(player, here, soundIn, SoundCategory.PLAYERS,1,1);
+  }
 }

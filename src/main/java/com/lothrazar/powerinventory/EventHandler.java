@@ -1,7 +1,9 @@
 package com.lothrazar.powerinventory;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -41,14 +43,15 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onConfigChanged(OnConfigChangedEvent event) {
-		if (event.modID.equals(Const.MODID))
+		if (event.getModID().equals(Const.MODID))
 			ModConfig.syncConfig();
 	}
 
 	@SubscribeEvent
 	public void onEntityConstruct(EntityConstructing event) {
-		if (event.entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) event.entity;
+    Entity entity = event.getEntity();
+		if (entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
 
 			if (PlayerPersistProperty.get(player) == null) {
 				PlayerPersistProperty.register(player);
@@ -58,10 +61,10 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public void onPlayerClone(PlayerEvent.Clone event) {
-		if (event.wasDeath == false || // changing dimensions -> so always do it
+		if (event.isWasDeath() == false || // changing dimensions -> so always do it
 										// or it was a death => maybe do it
-		(ModConfig.persistUnlocksOnDeath && event.wasDeath)) {
-			PlayerPersistProperty.clonePlayerData(event.original, event.entityPlayer);
+		(ModConfig.persistUnlocksOnDeath && event.isWasDeath())) {
+			PlayerPersistProperty.clonePlayerData(event.getOriginal(), event.getEntityPlayer());
 			
 		}
 	}
@@ -69,10 +72,11 @@ public class EventHandler {
 	@SubscribeEvent
 	public void onEntityDeath(LivingDeathEvent event) {
 		//if config says they persist... do not drop on ground
+	  Entity entityLiving = event.getEntity();
 		
 		if (ModConfig.persistUnlocksOnDeath == false && 
-				event.entityLiving instanceof EntityPlayer && !event.entityLiving.worldObj.isRemote) {
-			EntityPlayer p = (EntityPlayer) event.entityLiving;
+				entityLiving instanceof EntityPlayer && !entityLiving.worldObj.isRemote) {
+			EntityPlayer p = (EntityPlayer) entityLiving;
 
 			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
 			// the vanilla inventory stuff (first hotbar) already drops  
@@ -89,14 +93,15 @@ public class EventHandler {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void onGuiPostInit(InitGuiEvent.Post event) {
-		if (event.gui == null) {
+	  Gui gui = event.getGui();
+		if (gui == null) {
 			return;
 		}// probably doesnt ever happen
 
-		if (ModConfig.showGuiButton && event.gui instanceof net.minecraft.client.gui.inventory.GuiInventory) {
+		if (ModConfig.showGuiButton && gui instanceof net.minecraft.client.gui.inventory.GuiInventory) {
 			// omg thanks so much to this guy
 			// http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/mods-discussion/1390983-making-guis-scale-to-screen-width-height
-			ScaledResolution res = new ScaledResolution(event.gui.mc);
+			ScaledResolution res = new ScaledResolution(Minecraft.getMinecraft());
 
 			int screenWidth = res.getScaledWidth();
 			int screenHeight = res.getScaledHeight();
@@ -113,7 +118,7 @@ public class EventHandler {
 				x += 60;
 			}
 			//this is the tab button
-			event.buttonList.add(new GuiButtonOpenInventory(button_id++, x, y));
+			event.getButtonList().add(new GuiButtonOpenInventory(button_id++, x, y));
 		}
 	}
 

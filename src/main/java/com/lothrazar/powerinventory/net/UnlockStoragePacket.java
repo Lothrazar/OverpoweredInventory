@@ -1,5 +1,6 @@
 package com.lothrazar.powerinventory.net;
 
+import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.util.UtilExperience;
@@ -9,9 +10,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.translation.I18n;
 
 public class UnlockStoragePacket implements IMessage, IMessageHandler<UnlockStoragePacket, IMessage> {
 	NBTTagCompound tags = new NBTTagCompound();
@@ -51,10 +53,10 @@ public class UnlockStoragePacket implements IMessage, IMessageHandler<UnlockStor
 
 			p.closeScreen();
 
-			p.worldObj.playSoundAtEntity(p, "mob.zombie.unfect", 1.4F, 1F);
+      ModInv.playSound(p,  SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE);
 		} else {
 
-			p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("gui.craftexp")));
+		  ModInv.addChatMessage(p,"gui.craftexp");
 		}
 
 		return null;

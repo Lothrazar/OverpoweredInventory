@@ -7,7 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
 public class InventoryOverpowered implements IInventory {
@@ -53,7 +53,7 @@ public class InventoryOverpowered implements IInventory {
 		ItemStack itemstack = getStackInSlot(slot);
 
 		if (itemstack != null) {
-			p.dropPlayerItemWithRandomChoice(itemstack, false);
+			p.dropItem(itemstack, false);
 		}
 	}
 
@@ -212,13 +212,7 @@ public class InventoryOverpowered implements IInventory {
 	@Override
 	public boolean hasCustomName() {
 		return false;
-	}
-
-	@Override
-	public IChatComponent getDisplayName() {
-		return null;
-	}
-
+	} 
 	@Override
 	public void openInventory(EntityPlayer player) {
 	}
@@ -261,4 +255,10 @@ public class InventoryOverpowered implements IInventory {
 
 		return stack;
 	}
+
+  @Override
+  public ITextComponent getDisplayName() {
+    // TODO Auto-generated method stub
+    return null;
+  }
 }

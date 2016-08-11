@@ -131,11 +131,11 @@ public class ContainerOverpowered extends Container {
 																		// inv
 																		// grid
 			{
-				if (prop.isEPearlUnlocked() && stackCopy.getItem() == Items.ender_pearl && (invo.getStackInSlot(Const.SLOT_EPEARL) == null || invo.getStackInSlot(Const.SLOT_EPEARL).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))) {
+				if (prop.isEPearlUnlocked() && stackCopy.getItem() == Items.ENDER_PEARL && (invo.getStackInSlot(Const.SLOT_EPEARL) == null || invo.getStackInSlot(Const.SLOT_EPEARL).stackSize < Items.ENDER_PEARL.getItemStackLimit(stackCopy))) {
 					if (!this.mergeItemStack(stackOrig, S_PEARL, S_PEARL + 1, false)) {
 						return null;
 					}
-				} else if (prop.isEChestUnlocked() && stackCopy.getItem() == Item.getItemFromBlock(Blocks.ender_chest) && (invo.getStackInSlot(Const.SLOT_ECHEST) == null || invo.getStackInSlot(Const.SLOT_ECHEST).stackSize < 1)) {
+				} else if (prop.isEChestUnlocked() && stackCopy.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST) && (invo.getStackInSlot(Const.SLOT_ECHEST) == null || invo.getStackInSlot(Const.SLOT_ECHEST).stackSize < 1)) {
 					if (!this.mergeItemStack(stackOrig, S_ECHEST, S_ECHEST + 1, false)) {
 						return null;
 					}

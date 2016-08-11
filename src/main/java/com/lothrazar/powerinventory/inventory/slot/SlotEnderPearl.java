@@ -27,12 +27,12 @@ public class SlotEnderPearl extends Slot {
 
 	@Override
 	public boolean isItemValid(ItemStack stack) {
-		return (stack != null && stack.getItem() == Items.ender_pearl);
+		return (stack != null && stack.getItem() == Items.ENDER_PEARL);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public int getSlotStackLimit() {
-		return Items.ender_pearl.getItemStackLimit();
+		return Items.ENDER_PEARL.getItemStackLimit();
 	}
 }
