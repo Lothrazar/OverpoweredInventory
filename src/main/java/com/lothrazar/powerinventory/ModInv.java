@@ -64,6 +64,7 @@ public class ModInv {
 
     network.registerMessage(PacketSyncPlayerData.class, PacketSyncPlayerData.class, PacketSyncPlayerData.ID, Side.CLIENT);
 		proxy.registerHandlers();
+    CapabilityRegistry.register();
 	}
 
 	@EventHandler

@@ -3,14 +3,6 @@ package com.lothrazar.powerinventory.config;
 import net.minecraftforge.common.config.Configuration;
 
 public class ModConfig {
-	public static boolean alwaysShowHungerbar;
-	public static boolean enderPearl64;
-	public static boolean minecart64;
-	public static boolean boat64;
-	public static boolean doors64;
-	public static boolean snowballs64;
-	public static boolean food64;
-	public static boolean bucket64;
 	public static int expCostStorage_start;
 	public static int expCostStorage_inc;
 	public static int expCostPearl;
@@ -52,8 +44,6 @@ public class ModConfig {
 		// decide which ones can be altered in game - there can be only one
 		String category = categoryHighlander;
 
-		ModConfig.alwaysShowHungerbar = config.getBoolean("always_show_hunger", category, true, "Always show hunger bar - even while mounted.  Horse health will show above the hunger bar");
-
 		ModConfig.expCostPearl = config.getInt("exp_cost_pearl_slot", categoryHighlander, 900, 1, 9999, "Experience points needed to add the ender pearl");
 		ModConfig.expCostEChest = config.getInt("exp_cost_enderchest_slot", categoryHighlander, 950, 1, 9999, "Experience points needed to add the ender chest");
 		ModConfig.expCostStorage_start = config.getInt("exp_cost_storage_start", categoryHighlander, 50, 1, 9999, "Experience points needed to unlock the first storage area");
@@ -62,19 +52,6 @@ public class ModConfig {
 		ModConfig.showGuiButton = config.getBoolean("show_gui_button", categoryHighlander, true, "Show the tab button in the player GUI upper right.  If disabled, the button is hidden but you can still use the keybinding.");
 
 		ModConfig.persistUnlocksOnDeath = config.getBoolean("persist_unlocks_death", categoryHighlander, true, "Inventory contents persist through death.  Also, all EXP unlocks such as crafting slots will be saved and remembered through death.  If this is false, all unlocks reset on death and become locked (modpack makers: feel free to reduce costs if you set this false)");
-
-		category = "stack_to_64";
-
-		// these dont seem to work without restarting the game
-		ModConfig.enderPearl64 = config.get(category, "ender_pearl", true).getBoolean();
-		ModConfig.minecart64 = config.get(category, "minecarts", true).getBoolean();
-		ModConfig.boat64 = config.get(category, "boats", true).getBoolean();
-		ModConfig.doors64 = config.get(category, "doors", true).getBoolean();
-		ModConfig.snowballs64 = config.get(category, "snowballs", true).getBoolean();
-		ModConfig.food64 = config.get(category, "allfood_cake_eggs_stew", true).getBoolean();// cookie,
-																								// stews,
-																								// cakes
-		ModConfig.bucket64 = config.get(category, "empty_bucket", true).getBoolean();
 
 		category = "resolution_size_setting";
 		config.addCustomCategoryComment(category, "The small size is for use with smaller screen resolutions, or with GUI Scale Small or Auto.  For GUI Scale Normal and above, the large setting should work fine." + "  WARNING: empty your inventory before you change this from large to small");

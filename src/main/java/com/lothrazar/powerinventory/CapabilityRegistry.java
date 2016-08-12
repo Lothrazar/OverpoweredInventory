@@ -14,10 +14,10 @@ public class CapabilityRegistry {
         InstancePlayerExtendedProperties.class);
   }
   public static IPlayerExtendedProperties getPlayerProperties(EntityPlayer player) {
-    //		if(player == null){
-    //			ModMain.logger.error("Null player, cannot get properties");
-    //			return null;
-    //		}
+		if(player == null){
+			ModInv.logger.error("Null player, cannot get properties");
+			return null;
+		}
     return player.getCapability(ModInv.CAPABILITYSTORAGE, null);
   }
   public interface IPlayerExtendedProperties {
