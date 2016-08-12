@@ -2,7 +2,6 @@ package com.lothrazar.powerinventory.net;
 
 import com.lothrazar.powerinventory.CapabilityRegistry;
 import com.lothrazar.powerinventory.ModInv;
-import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.util.UtilExperience;
@@ -51,7 +50,7 @@ public class UnlockStoragePacket implements IMessage, IMessageHandler<UnlockStor
 
 			UtilExperience.drainExp(p, expCost);
 
-			prop.incrementStorage();// (true, message.tags.getInteger("i"));
+			prop.setStorageCount(prop.getStorageCount() + 1);// (true, message.tags.getInteger("i"));
 
 			p.closeScreen();
 

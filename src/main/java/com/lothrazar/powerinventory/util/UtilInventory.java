@@ -5,8 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import com.lothrazar.powerinventory.CapabilityRegistry;
 import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.PlayerPersistProperty;
+import com.lothrazar.powerinventory.ModInv;
+import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -15,24 +17,26 @@ import net.minecraft.world.World;
 
 public class UtilInventory {
 	public static void swapHotbars(EntityPlayer p) {
-		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 
 		for (int bar = 0; bar < Const.HOTBAR_SIZE; bar++) {
 			int second = bar + Const.HOTBAR_SIZE;
 
-			ItemStack barStack = p.inventory.getStackInSlot(bar);
-			ItemStack secondStack = prop.inventory.getStackInSlot(second);
-
-			// the players real hotbar
-			p.inventory.setInventorySlotContents(bar, secondStack);
-
-			// that other invo
-			prop.inventory.setInventorySlotContents(second, barStack);
+      ModInv.logger.warn("TODO: how pull items from invo?");
+//      
+//			ItemStack barStack = p.inventory.getStackInSlot(bar);
+//			ItemStack secondStack = prop.inventory.getStackInSlot(second);
+//
+//			// the players real hotbar
+//			p.inventory.setInventorySlotContents(bar, secondStack);
+//
+//			// that other invo
+//			prop.inventory.setInventorySlotContents(second, barStack);
 		}
 	}
 
 	public static void swapInventoryGroup(EntityPlayer p, int invoGroup) {
-		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 		// ALWAYS loop on players base invnetory, so 9 to 27+9
 		// then we offset by 18 becuase custom invo has 2x hotbars in front
 
@@ -40,14 +44,20 @@ public class UtilInventory {
 			int second = i + (invoGroup - 1) * Const.V_INVO_SIZE + Const.HOTBAR_SIZE;
 
 			// offset: since there is no second hotbar in player inventory
-			ItemStack barStack = p.inventory.getStackInSlot(i);
-			ItemStack secondStack = prop.inventory.getStackInSlot(second);
+			
+			
 
-			// the players real hotbar
-			p.inventory.setInventorySlotContents(i, secondStack);
-
-			// that other invo
-			prop.inventory.setInventorySlotContents(second, barStack);
+      ModInv.logger.warn("TODO: how pull items from invo?");
+      
+//      
+//			ItemStack barStack = p.inventory.getStackInSlot(i);
+//			ItemStack secondStack = prop.inventory.getStackInSlot(second);
+//
+//			// the players real hotbar
+//			p.inventory.setInventorySlotContents(i, secondStack);
+//
+//			// that other invo
+//			prop.inventory.setInventorySlotContents(second, barStack);
 		}
 	}
 
@@ -69,9 +79,10 @@ public class UtilInventory {
 	}
 
 	public static void doSort(EntityPlayer p) {
-		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+    ModInv.logger.warn("TODO: how pull items from invo?");
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 
-		IInventory invo = prop.inventory;
+		IInventory invo = null;
 
 		int sortType = getNextSort(p);
 
@@ -190,7 +201,8 @@ public class UtilInventory {
 
 		int start = 0;
 
-		PlayerPersistProperty prop = PlayerPersistProperty.get(player);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
+    IInventory extendedInventory = null;//prop.inventory;
 		//
 		// inventory and chest has 9 rows by 3 columns, never changes. same as
 		// 64 max stack size
@@ -201,8 +213,8 @@ public class UtilInventory {
 				continue;
 			}// slot not empty, skip over it
 
-			for (int islotInv = 2 * Const.HOTBAR_SIZE; islotInv < prop.inventory.getSizeInventory(); islotInv++) {
-				invItem = prop.inventory.getStackInSlot(islotInv);
+			for (int islotInv = 2 * Const.HOTBAR_SIZE; islotInv < extendedInventory.getSizeInventory(); islotInv++) {
+				invItem = extendedInventory.getStackInSlot(islotInv);
 
 				if (invItem == null) {
 					continue;
@@ -210,7 +222,7 @@ public class UtilInventory {
 
 				inventory.setInventorySlotContents(slot, invItem);
 
-				prop.inventory.setInventorySlotContents(islotInv, null);
+				extendedInventory.setInventorySlotContents(islotInv, null);
 				break;
 			}// close loop on player inventory items
 		}// close loop on chest items
@@ -220,7 +232,8 @@ public class UtilInventory {
 		// source:
 		// https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
 
-		PlayerPersistProperty prop = PlayerPersistProperty.get(player);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
+    IInventory extendedInventory = null;//prop.inventory;
 		ItemStack chestItem;
 		ItemStack invItem;
 		int room;
@@ -241,9 +254,9 @@ public class UtilInventory {
 				continue;
 			}// empty chest slot
 
-			for (int islotInv = 2 * Const.HOTBAR_SIZE; islotInv < prop.inventory.getSizeInventory(); islotInv++) {
+			for (int islotInv = 2 * Const.HOTBAR_SIZE; islotInv < extendedInventory.getSizeInventory(); islotInv++) {
 
-				invItem = prop.inventory.getStackInSlot(islotInv);
+				invItem = extendedInventory.getStackInSlot(islotInv);
 
 				if (invItem == null) {
 					continue;
@@ -272,11 +285,11 @@ public class UtilInventory {
 						// item stacks with zero count do not destroy
 						// themselves, they show up and have unexpected behavior
 						// in game so set to empty
-						prop.inventory.setInventorySlotContents(islotInv, null);
+					  extendedInventory.setInventorySlotContents(islotInv, null);
 					}
 					else {
 						// set to new quantity
-						prop.inventory.setInventorySlotContents(islotInv, invItem);
+					  extendedInventory.setInventorySlotContents(islotInv, invItem);
 					}
 				}// end if items match
 			}// close loop on player inventory items

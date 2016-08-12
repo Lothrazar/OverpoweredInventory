@@ -39,14 +39,16 @@ public class EnderPearlPacket implements IMessage, IMessageHandler<EnderPearlPac
 
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 
-		ItemStack pearls = prop.inventory.getStackInSlot(Const.SLOT_EPEARL);
+		ItemStack pearls = null;// prop.inventory.getStackInSlot(Const.SLOT_EPEARL);
+    ModInv.logger.warn("TODO: how pull items from invo?");
 
 		if (pearls != null) {
 			p.worldObj.spawnEntityInWorld(new EntityEnderPearl(p.worldObj, p));
 
 			ModInv.playSound(p, SoundEvents.ENTITY_ARROW_SHOOT);
-			if (p.capabilities.isCreativeMode == false)
-				prop.inventory.decrStackSize(Const.SLOT_EPEARL, 1);
+			if (p.capabilities.isCreativeMode == false){
+//				prop.inventory.decrStackSize(Const.SLOT_EPEARL, 1);
+			}
 		}
 
 		return null;

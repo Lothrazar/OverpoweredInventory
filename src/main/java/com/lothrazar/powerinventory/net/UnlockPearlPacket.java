@@ -2,7 +2,6 @@ package com.lothrazar.powerinventory.net;
 
 import com.lothrazar.powerinventory.CapabilityRegistry;
 import com.lothrazar.powerinventory.ModInv;
-import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.util.UtilExperience;
