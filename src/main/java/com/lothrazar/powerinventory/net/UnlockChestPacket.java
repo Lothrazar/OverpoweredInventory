@@ -1,7 +1,9 @@
 package com.lothrazar.powerinventory.net;
 
+import com.lothrazar.powerinventory.CapabilityRegistry;
 import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.PlayerPersistProperty;
+import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.util.UtilExperience;
 import io.netty.buffer.ByteBuf;
@@ -40,7 +42,7 @@ public class UnlockChestPacket implements IMessage, IMessageHandler<UnlockChestP
 		if (UtilExperience.getExpTotal(p) >= ModConfig.expCostEChest) {
 
 			UtilExperience.drainExp(p, ModConfig.expCostEChest);
-			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+	    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 
 			prop.setEChestUnlocked(true);
 

@@ -47,48 +47,48 @@ public class EventHandler {
 			ModConfig.syncConfig();
 	}
 
-	@SubscribeEvent
-	public void onEntityConstruct(EntityConstructing event) {
-    Entity entity = event.getEntity();
-		if (entity instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) entity;
+//	@SubscribeEvent
+//	public void onEntityConstruct(EntityConstructing event) {
+//    Entity entity = event.getEntity();
+//		if (entity instanceof EntityPlayer) {
+//			EntityPlayer player = (EntityPlayer) entity;
+//
+//			if (PlayerPersistProperty.get(player) == null) {
+//				PlayerPersistProperty.register(player);
+//			}
+//		}
+//	}
 
-			if (PlayerPersistProperty.get(player) == null) {
-				PlayerPersistProperty.register(player);
-			}
-		}
-	}
+//	@SubscribeEvent
+//	public void onPlayerClone(PlayerEvent.Clone event) {
+//		if (event.isWasDeath() == false || // changing dimensions -> so always do it
+//										// or it was a death => maybe do it
+//		(ModConfig.persistUnlocksOnDeath && event.isWasDeath())) {
+//			PlayerPersistProperty.clonePlayerData(event.getOriginal(), event.getEntityPlayer());
+//			
+//		}
+//	}
 
-	@SubscribeEvent
-	public void onPlayerClone(PlayerEvent.Clone event) {
-		if (event.isWasDeath() == false || // changing dimensions -> so always do it
-										// or it was a death => maybe do it
-		(ModConfig.persistUnlocksOnDeath && event.isWasDeath())) {
-			PlayerPersistProperty.clonePlayerData(event.getOriginal(), event.getEntityPlayer());
-			
-		}
-	}
-
-	@SubscribeEvent
-	public void onEntityDeath(LivingDeathEvent event) {
-		//if config says they persist... do not drop on ground
-	  Entity entityLiving = event.getEntity();
-		
-		if (ModConfig.persistUnlocksOnDeath == false && 
-				entityLiving instanceof EntityPlayer && !entityLiving.worldObj.isRemote) {
-			EntityPlayer p = (EntityPlayer) entityLiving;
-
-			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
-			// the vanilla inventory stuff (first hotbar) already drops  
-			
-			for (int i = Const.HOTBAR_SIZE; i < prop.inventory.getSizeInventory(); ++i) {
-				prop.inventory.dropStackInSlot(p, i);
-			}
-
-			prop.inventory.dropStackInSlot(p, Const.SLOT_ECHEST);
-			prop.inventory.dropStackInSlot(p, Const.SLOT_EPEARL);
-		}
-	}
+//	@SubscribeEvent
+//	public void onEntityDeath(LivingDeathEvent event) {
+//		//if config says they persist... do not drop on ground
+//	  Entity entityLiving = event.getEntity();
+//		
+//		if (ModConfig.persistUnlocksOnDeath == false && 
+//				entityLiving instanceof EntityPlayer && !entityLiving.worldObj.isRemote) {
+//			EntityPlayer p = (EntityPlayer) entityLiving;
+//
+//			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+//			// the vanilla inventory stuff (first hotbar) already drops  
+//			
+//			for (int i = Const.HOTBAR_SIZE; i < prop.inventory.getSizeInventory(); ++i) {
+//				prop.inventory.dropStackInSlot(p, i);
+//			}
+//
+//			prop.inventory.dropStackInSlot(p, Const.SLOT_ECHEST);
+//			prop.inventory.dropStackInSlot(p, Const.SLOT_EPEARL);
+//		}
+//	}
 
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent

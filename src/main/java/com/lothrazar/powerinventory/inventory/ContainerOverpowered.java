@@ -1,8 +1,9 @@
 package com.lothrazar.powerinventory.inventory;
 
+import com.lothrazar.powerinventory.CapabilityRegistry;
+import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.InventoryRenderer;
-import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.slot.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -44,7 +45,7 @@ public class ContainerOverpowered extends Container {
 	public ContainerOverpowered(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryOverpowered inventoryCustom) {
 		thePlayer = player;
 
-		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
+		IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
 
 		int i, j, slotNum = 0, x = 0, y = 0;
 
@@ -91,9 +92,7 @@ public class ContainerOverpowered extends Container {
 
 						x = xStart + j * Const.SQ;
 						y = yStart + i * Const.SQ;
-						this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x, y));// not
-																							// invoPlayer
-																							// anymore
+						this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x, y));
 					}
 				}
 			}
@@ -116,7 +115,7 @@ public class ContainerOverpowered extends Container {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer p, int slotNumber) {
-		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
 		ItemStack stackCopy = null;
 
 		Slot slot = (Slot) this.inventorySlots.get(slotNumber);

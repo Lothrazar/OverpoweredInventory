@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.net;
 
 import com.lothrazar.powerinventory.*;
+import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,7 +37,7 @@ public class EnderPearlPacket implements IMessage, IMessageHandler<EnderPearlPac
 	public IMessage onMessage(EnderPearlPacket message, MessageContext ctx) {
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 
 		ItemStack pearls = prop.inventory.getStackInSlot(Const.SLOT_EPEARL);
 

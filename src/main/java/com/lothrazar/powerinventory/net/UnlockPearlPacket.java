@@ -1,7 +1,9 @@
 package com.lothrazar.powerinventory.net;
 
+import com.lothrazar.powerinventory.CapabilityRegistry;
 import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.PlayerPersistProperty;
+import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.util.UtilExperience;
 import io.netty.buffer.ByteBuf;
@@ -41,7 +43,7 @@ public class UnlockPearlPacket implements IMessage, IMessageHandler<UnlockPearlP
 
 			UtilExperience.drainExp(p, ModConfig.expCostPearl);
 
-			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+	    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 			prop.setEPearlUnlocked(true);
 
 			p.closeScreen();

@@ -1,7 +1,9 @@
 package com.lothrazar.powerinventory.net;
 
+import com.lothrazar.powerinventory.CapabilityRegistry;
 import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.PlayerPersistProperty;
+import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.util.UtilExperience;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -45,7 +47,7 @@ public class UnlockStoragePacket implements IMessage, IMessageHandler<UnlockStor
 		
 		if (UtilExperience.getExpTotal(p) >= expCost) {
 
-			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+	    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 
 			UtilExperience.drainExp(p, expCost);
 

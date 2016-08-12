@@ -6,9 +6,12 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Logger;
 import com.lothrazar.powerinventory.proxy.CommonProxy;
+import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.net.*;
 import net.minecraftforge.fml.common.Mod;
@@ -37,6 +40,8 @@ public class ModInv {
 	public SimpleNetworkWrapper network;
 	public static Logger logger;
 
+  @CapabilityInject(IPlayerExtendedProperties.class)
+  public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
