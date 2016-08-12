@@ -62,6 +62,7 @@ public class ModInv {
 		network.registerMessage(FilterButtonPacket.class, FilterButtonPacket.class, packetID++, Side.SERVER);
 		network.registerMessage(DumpButtonPacket.class, DumpButtonPacket.class, packetID++, Side.SERVER);
 
+    network.registerMessage(PacketSyncPlayerData.class, PacketSyncPlayerData.class, PacketSyncPlayerData.ID, Side.CLIENT);
 		proxy.registerHandlers();
 	}
 
