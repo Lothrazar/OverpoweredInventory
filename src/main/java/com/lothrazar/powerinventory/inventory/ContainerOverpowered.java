@@ -44,9 +44,8 @@ public class ContainerOverpowered extends Container {
 
 	public ContainerOverpowered(EntityPlayer player, InventoryPlayer inventoryPlayer) {
 		thePlayer = player;
-    invo = new InventoryOverpowered(player);
-
-		IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
+    invo = prop.getItems();
 
 		int i, j, slotNum = 0, x = 0, y = 0;
 

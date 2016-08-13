@@ -154,8 +154,10 @@ public class EventHandler {
 	  }
 	  @SubscribeEvent
 	  public void onEntityConstruct(AttachCapabilitiesEvent evt) {
+	    
 	    evt.addCapability(new ResourceLocation(Const.MODID, "OPI"), new ICapabilitySerializable<NBTTagCompound>() {
 	      IPlayerExtendedProperties inst = ModInv.CAPABILITYSTORAGE.getDefaultInstance();
+	     
 	      @Override
 	      public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 	        return capability == ModInv.CAPABILITYSTORAGE;
@@ -179,5 +181,4 @@ public class EventHandler {
 	      }
 	    });
 	  }
-	
 }

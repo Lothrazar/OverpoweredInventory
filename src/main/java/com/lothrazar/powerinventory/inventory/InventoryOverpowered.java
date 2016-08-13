@@ -156,11 +156,13 @@ public class InventoryOverpowered implements IInventory {
 		NBTTagList nbttaglist = new NBTTagList();
 		NBTTagCompound tagcompound;
 
+    System.out.println("write  COUNT = "+nbttaglist.tagCount());
 		for (int i = 0; i < this.getSizeInventory(); ++i) {
 			if (this.getStackInSlot(i) != null) {
 				tagcompound = new NBTTagCompound();
 				tagcompound.setInteger(tagSlot, i);
 
+	       System.out.println("WRITE  i = "+i+"__"+this.getStackInSlot(i).getUnlocalizedName());//what the -47 ??
 				this.getStackInSlot(i).writeToNBT(tagcompound);
 
 				nbttaglist.appendTag(tagcompound);
@@ -186,13 +188,13 @@ public class InventoryOverpowered implements IInventory {
 	public void readFromNBT(NBTTagCompound tagcompound) {
 		NBTTagList nbttaglist = tagcompound.getTagList(tagName, Constants.NBT.TAG_COMPOUND);
 		ItemStack itemstack;
-		// System.out.println("READ  COUNT = "+nbttaglist.tagCount());
+		 System.out.println("READ  COUNT = "+nbttaglist.tagCount());
 		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
 			NBTTagCompound tags = nbttaglist.getCompoundTagAt(i);// tagAt
 
 			int b = tags.getInteger(tagSlot);
 
-			// System.out.println("READ b = "+b+" and i = "+i);//what the -47 ??
+			 System.out.println("READ b = "+b+" and i = "+i);//what the -47 ??
 			itemstack = ItemStack.loadItemStackFromNBT(tags);
 			if (b >= 0 && b < this.getSizeInventory()) {
 				this.setInventorySlotContents(b, itemstack);
