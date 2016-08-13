@@ -29,7 +29,7 @@ import net.minecraftforge.fml.relauncher.Side;
  *         https://github.com/PrinceOfAmber/InfiniteInvo before later being
  *         merged into my main project
  */
-@Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/LothrazarMinecraftMods/OverpoweredInventory/master-18/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler")
+@Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/LothrazarMinecraftMods/OverpoweredInventory/master/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler")
 public class ModInv {
   @Instance(Const.MODID)
   public static ModInv instance;
@@ -68,7 +68,7 @@ public class ModInv {
     return I18n.translateToLocal(string);
   }
   public static void addChatMessage(EntityPlayer p, String string) {
-    p.addChatMessage(new TextComponentTranslation(lang("gui.craftexp")));
+    p.addChatMessage(new TextComponentTranslation(lang(string)));
   }
   public static void playSound(EntityPlayer player, SoundEvent soundIn) {
     playSound(player, null, soundIn);

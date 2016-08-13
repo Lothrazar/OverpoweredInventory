@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -42,7 +43,10 @@ public class EnderPearlPacket implements IMessage, IMessageHandler<EnderPearlPac
 		ItemStack pearls = prop.getItems().getStackInSlot(Const.SLOT_EPEARL);
 
 		if (pearls != null) {
-			p.worldObj.spawnEntityInWorld(new EntityEnderPearl(p.worldObj, p));
+		  World world = p.worldObj;
+      EntityEnderPearl entityenderpearl = new EntityEnderPearl(world, p);
+      entityenderpearl.setHeadingFromThrower(p, p.rotationPitch, p.rotationYaw, 0.0F, 1.5F, 1.0F);
+      world.spawnEntityInWorld(entityenderpearl);
 
 			ModInv.playSound(p, SoundEvents.ENTITY_ARROW_SHOOT);
 			if (p.capabilities.isCreativeMode == false){
