@@ -1,13 +1,14 @@
 package com.lothrazar.powerinventory.net;
 
-import com.lothrazar.powerinventory.PlayerPersistProperty;
+import com.lothrazar.powerinventory.CapabilityRegistry;
+import com.lothrazar.powerinventory.ModInv;
+import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.util.UtilExperience;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.nbt.NBTTagCompound; 
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -41,14 +42,15 @@ public class UnlockPearlPacket implements IMessage, IMessageHandler<UnlockPearlP
 
 			UtilExperience.drainExp(p, ModConfig.expCostPearl);
 
-			PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+	    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 			prop.setEPearlUnlocked(true);
 
+      CapabilityRegistry.syncServerDataToClient(ctx.getServerHandler().playerEntity);
 			p.closeScreen();
 
-			p.worldObj.playSoundAtEntity(p, "mob.zombie.unfect", 1.4F, 1F);
+      ModInv.playSound(p,  SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE);
 		} else {
-			p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("gui.craftexp")));
+		  ModInv.addChatMessage(p,"gui.craftexp");
 		}
 
 		return null;

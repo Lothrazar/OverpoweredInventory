@@ -1,13 +1,13 @@
 package com.lothrazar.powerinventory.net;
 
+import com.lothrazar.powerinventory.CapabilityRegistry;
 import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.PlayerPersistProperty;
+import com.lothrazar.powerinventory.ModInv;
+import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -37,14 +37,14 @@ public class EnderChestPacket implements IMessage, IMessageHandler<EnderChestPac
 	public IMessage onMessage(EnderChestPacket message, MessageContext ctx) {
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 
-		ItemStack chest = prop.inventory.getStackInSlot(Const.SLOT_ECHEST);
+		ItemStack chest = prop.getItems().getStackInSlot(Const.SLOT_ECHEST);
 
 		if (chest != null)
 			p.displayGUIChest(p.getInventoryEnderChest());
 		else
-			p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));
+      ModInv.addChatMessage(p,"slot.enderchest");
 
 		return null;
 	}

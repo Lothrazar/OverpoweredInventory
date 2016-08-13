@@ -30,7 +30,7 @@ public class SlotEnderChest extends Slot {
 
 	@Override
 	public boolean isItemValid(ItemStack stack) {
-		return (stack != null && stack.getItem() == Item.getItemFromBlock(Blocks.ender_chest));
+		return (stack != null && stack.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST));
 	}
 
 	@Override

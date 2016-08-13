@@ -1,8 +1,9 @@
 package com.lothrazar.powerinventory.inventory;
 
+import com.lothrazar.powerinventory.CapabilityRegistry;
+import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.InventoryRenderer;
-import com.lothrazar.powerinventory.PlayerPersistProperty;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.slot.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,10 +42,10 @@ public class ContainerOverpowered extends Container {
 	// static final int OFFSCREEN = 600;
 	private final EntityPlayer thePlayer;
 
-	public ContainerOverpowered(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryOverpowered inventoryCustom) {
+	public ContainerOverpowered(EntityPlayer player, InventoryPlayer inventoryPlayer) {
 		thePlayer = player;
-
-		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
+    invo = prop.getItems();
 
 		int i, j, slotNum = 0, x = 0, y = 0;
 
@@ -61,18 +62,18 @@ public class ContainerOverpowered extends Container {
 			x = hotbarX + i * Const.SQ + pad;
 
 			slotNum = i;
-			this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x, hotbarY));
+			this.addSlotToContainer(new Slot(invo, slotNum, x, hotbarY));
 		}
 		S_BAROTHER_END = this.inventorySlots.size() - 1;
 
 		if (prop.isEPearlUnlocked()) {
 			S_PEARL = this.inventorySlots.size();
-			this.addSlotToContainer(new SlotEnderPearl(inventoryCustom, Const.SLOT_EPEARL));
+			this.addSlotToContainer(new SlotEnderPearl(invo, Const.SLOT_EPEARL));
 		}
 
 		if (prop.isEChestUnlocked()) {
 			S_ECHEST = this.inventorySlots.size();
-			this.addSlotToContainer(new SlotEnderChest(inventoryCustom, Const.SLOT_ECHEST));
+			this.addSlotToContainer(new SlotEnderChest(invo, Const.SLOT_ECHEST));
 		}
 		
 		S_MAIN_START = this.inventorySlots.size();
@@ -80,7 +81,7 @@ public class ContainerOverpowered extends Container {
 
 		int xStart;// = 2*pad;
 		int yStart;// = 13+Const.SQ;//leaving one space for the slots on top row
-
+ 
 		for (int k = 1; k <= ModConfig.getMaxSections(); k++) {
 			if (prop.hasStorage(k)) {
 				xStart = InventoryRenderer.xPosSlotsStart(k);
@@ -91,9 +92,7 @@ public class ContainerOverpowered extends Container {
 
 						x = xStart + j * Const.SQ;
 						y = yStart + i * Const.SQ;
-						this.addSlotToContainer(new Slot(inventoryCustom, slotNum, x, y));// not
-																							// invoPlayer
-																							// anymore
+						this.addSlotToContainer(new Slot(invo, slotNum, x, y));
 					}
 				}
 			}
@@ -101,7 +100,6 @@ public class ContainerOverpowered extends Container {
 
 		S_MAIN_END = this.inventorySlots.size() - 1;
 
-		invo = inventoryCustom;
 	}
 
 	@Override
@@ -116,7 +114,7 @@ public class ContainerOverpowered extends Container {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer p, int slotNumber) {
-		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
 		ItemStack stackCopy = null;
 
 		Slot slot = (Slot) this.inventorySlots.get(slotNumber);
@@ -131,11 +129,11 @@ public class ContainerOverpowered extends Container {
 																		// inv
 																		// grid
 			{
-				if (prop.isEPearlUnlocked() && stackCopy.getItem() == Items.ender_pearl && (invo.getStackInSlot(Const.SLOT_EPEARL) == null || invo.getStackInSlot(Const.SLOT_EPEARL).stackSize < Items.ender_pearl.getItemStackLimit(stackCopy))) {
+				if (prop.isEPearlUnlocked() && stackCopy.getItem() == Items.ENDER_PEARL && (invo.getStackInSlot(Const.SLOT_EPEARL) == null || invo.getStackInSlot(Const.SLOT_EPEARL).stackSize < Items.ENDER_PEARL.getItemStackLimit(stackCopy))) {
 					if (!this.mergeItemStack(stackOrig, S_PEARL, S_PEARL + 1, false)) {
 						return null;
 					}
-				} else if (prop.isEChestUnlocked() && stackCopy.getItem() == Item.getItemFromBlock(Blocks.ender_chest) && (invo.getStackInSlot(Const.SLOT_ECHEST) == null || invo.getStackInSlot(Const.SLOT_ECHEST).stackSize < 1)) {
+				} else if (prop.isEChestUnlocked() && stackCopy.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST) && (invo.getStackInSlot(Const.SLOT_ECHEST) == null || invo.getStackInSlot(Const.SLOT_ECHEST).stackSize < 1)) {
 					if (!this.mergeItemStack(stackOrig, S_ECHEST, S_ECHEST + 1, false)) {
 						return null;
 					}

@@ -1,9 +1,11 @@
 package com.lothrazar.powerinventory.net;
 
 import com.lothrazar.powerinventory.*;
+import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -35,17 +37,17 @@ public class EnderPearlPacket implements IMessage, IMessageHandler<EnderPearlPac
 	public IMessage onMessage(EnderPearlPacket message, MessageContext ctx) {
 		EntityPlayer p = ctx.getServerHandler().playerEntity;
 
-		PlayerPersistProperty prop = PlayerPersistProperty.get(p);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 
-		ItemStack pearls = prop.inventory.getStackInSlot(Const.SLOT_EPEARL);
+		ItemStack pearls = prop.getItems().getStackInSlot(Const.SLOT_EPEARL);
 
 		if (pearls != null) {
 			p.worldObj.spawnEntityInWorld(new EntityEnderPearl(p.worldObj, p));
 
-			p.worldObj.playSoundAtEntity(p, "random.bow", 1.0F, 1.0F); 
-
-			if (p.capabilities.isCreativeMode == false)
-				prop.inventory.decrStackSize(Const.SLOT_EPEARL, 1);
+			ModInv.playSound(p, SoundEvents.ENTITY_ARROW_SHOOT);
+			if (p.capabilities.isCreativeMode == false){
+				prop.getItems().decrStackSize(Const.SLOT_EPEARL, 1);
+			}
 		}
 
 		return null;

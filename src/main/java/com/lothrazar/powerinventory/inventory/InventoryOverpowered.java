@@ -7,7 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
 public class InventoryOverpowered implements IInventory {
@@ -53,7 +53,7 @@ public class InventoryOverpowered implements IInventory {
 		ItemStack itemstack = getStackInSlot(slot);
 
 		if (itemstack != null) {
-			p.dropPlayerItemWithRandomChoice(itemstack, false);
+			p.dropItem(itemstack, false);
 		}
 	}
 
@@ -156,11 +156,13 @@ public class InventoryOverpowered implements IInventory {
 		NBTTagList nbttaglist = new NBTTagList();
 		NBTTagCompound tagcompound;
 
+    System.out.println("write  COUNT = "+nbttaglist.tagCount());
 		for (int i = 0; i < this.getSizeInventory(); ++i) {
 			if (this.getStackInSlot(i) != null) {
 				tagcompound = new NBTTagCompound();
 				tagcompound.setInteger(tagSlot, i);
 
+	       System.out.println("WRITE  i = "+i+"__"+this.getStackInSlot(i).getUnlocalizedName());//what the -47 ??
 				this.getStackInSlot(i).writeToNBT(tagcompound);
 
 				nbttaglist.appendTag(tagcompound);
@@ -186,13 +188,13 @@ public class InventoryOverpowered implements IInventory {
 	public void readFromNBT(NBTTagCompound tagcompound) {
 		NBTTagList nbttaglist = tagcompound.getTagList(tagName, Constants.NBT.TAG_COMPOUND);
 		ItemStack itemstack;
-		// System.out.println("READ  COUNT = "+nbttaglist.tagCount());
+		 System.out.println("READ  COUNT = "+nbttaglist.tagCount());
 		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
 			NBTTagCompound tags = nbttaglist.getCompoundTagAt(i);// tagAt
 
 			int b = tags.getInteger(tagSlot);
 
-			// System.out.println("READ b = "+b+" and i = "+i);//what the -47 ??
+			 System.out.println("READ b = "+b+" and i = "+i);//what the -47 ??
 			itemstack = ItemStack.loadItemStackFromNBT(tags);
 			if (b >= 0 && b < this.getSizeInventory()) {
 				this.setInventorySlotContents(b, itemstack);
@@ -212,13 +214,7 @@ public class InventoryOverpowered implements IInventory {
 	@Override
 	public boolean hasCustomName() {
 		return false;
-	}
-
-	@Override
-	public IChatComponent getDisplayName() {
-		return null;
-	}
-
+	} 
 	@Override
 	public void openInventory(EntityPlayer player) {
 	}
@@ -261,4 +257,10 @@ public class InventoryOverpowered implements IInventory {
 
 		return stack;
 	}
+
+  @Override
+  public ITextComponent getDisplayName() {
+    // TODO Auto-generated method stub
+    return null;
+  }
 }

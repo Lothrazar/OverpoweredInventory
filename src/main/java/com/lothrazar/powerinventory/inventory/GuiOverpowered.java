@@ -1,9 +1,10 @@
 package com.lothrazar.powerinventory.inventory;
 
 import java.util.Arrays;
+import com.lothrazar.powerinventory.CapabilityRegistry;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.InventoryRenderer;
-import com.lothrazar.powerinventory.PlayerPersistProperty;
+import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.config.ModConfig;
 import com.lothrazar.powerinventory.inventory.button.*;
 import com.lothrazar.powerinventory.inventory.slot.*;
@@ -23,16 +24,16 @@ public class GuiOverpowered extends GuiContainer {
 	public static ResourceLocation slot = new ResourceLocation(Const.MODID, "textures/gui/inventory_slot.png");
 
 	public static boolean SHOW_DEBUG_NUMS = false;
-	private final InventoryOverpowered inventory;
+//	private final InventoryOverpowered inventory;
 	private ContainerOverpowered container;
 	final int padding = 6;// on the far outer sizes
 	final EntityPlayer thePlayer;
 
-	public GuiOverpowered(EntityPlayer player, InventoryPlayer inventoryPlayer, InventoryOverpowered inventoryCustom) {
+	public GuiOverpowered(EntityPlayer player, InventoryPlayer inventoryPlayer) {
 		// the player.inventory gets passed in here
-		super(new ContainerOverpowered(player, inventoryPlayer, inventoryCustom));
+		super(new ContainerOverpowered(player, inventoryPlayer));
 		container = (ContainerOverpowered) this.inventorySlots;
-		inventory = inventoryCustom;
+//		inventory = container.invo;
 		thePlayer = player;
 
 		// fixed numbers from the .png resource size
@@ -43,7 +44,7 @@ public class GuiOverpowered extends GuiContainer {
 	@Override
 	public void initGui() {
 		super.initGui();
-		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
 		
 		int h = 20;
 		int w = 20;// default button dims
@@ -103,6 +104,7 @@ public class GuiOverpowered extends GuiContainer {
 		}
 		
 		w = 6;h = 8;
+		
 		for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
 
 			if (prop.hasStorage(i))
@@ -144,13 +146,13 @@ public class GuiOverpowered extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
 
-		if (prop.isEPearlUnlocked() && inventory.getStackInSlot(Const.SLOT_EPEARL) == null) {
+		if (prop.isEPearlUnlocked() && container.invo.getStackInSlot(Const.SLOT_EPEARL) == null) {
 			UtilTextureRender.drawTextureSimple(SlotEnderPearl.background, SlotEnderPearl.posX, SlotEnderPearl.posY, s, s);
 		}
 
-		if (prop.isEChestUnlocked() && inventory.getStackInSlot(Const.SLOT_ECHEST) == null) {
+		if (prop.isEChestUnlocked() && container.invo.getStackInSlot(Const.SLOT_ECHEST) == null) {
 			UtilTextureRender.drawTextureSimple(SlotEnderChest.background, SlotEnderChest.posX, SlotEnderChest.posY, s, s);
 		}
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
@@ -163,7 +165,7 @@ public class GuiOverpowered extends GuiContainer {
 		else
 			UtilTextureRender.drawTextureSimple(bkg, this.guiLeft, this.guiTop, this.xSize, this.ySize);
 
-		PlayerPersistProperty prop = PlayerPersistProperty.get(thePlayer);
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
 
 		for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
 			if (prop.hasStorage(i))

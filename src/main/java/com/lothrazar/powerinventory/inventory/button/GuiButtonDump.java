@@ -5,7 +5,6 @@ import com.lothrazar.powerinventory.net.DumpButtonPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,7 +15,7 @@ public class GuiButtonDump extends GuiButton implements IGuiTooltip {
 	// imported from https://github.com/PrinceOfAmber/SamsPowerups , author
 	// Lothrazar aka Sam Bassett
 	public GuiButtonDump(int buttonId, int x, int y, int w) {
-		super(buttonId, x, y, w, 20, StatCollector.translateToLocal("button.deposit"));
+		super(buttonId, x, y, w, 20, ModInv.lang("button.deposit"));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -33,7 +32,7 @@ public class GuiButtonDump extends GuiButton implements IGuiTooltip {
 
 	@Override
 	public String getTooltip() {
-		return StatCollector.translateToLocal("tooltip.deposit");
+		return ModInv.lang("tooltip.deposit");
 	}
 
 	@Override
