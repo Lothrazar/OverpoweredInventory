@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.lothrazar.powerinventory.CapabilityRegistry;
 import com.lothrazar.powerinventory.Const;
-import com.lothrazar.powerinventory.ModInv;
+import com.lothrazar.powerinventory.inventory.InventoryOverpowered;
 import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -18,25 +18,26 @@ import net.minecraft.world.World;
 public class UtilInventory {
 	public static void swapHotbars(EntityPlayer p) {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
+    InventoryOverpowered extendedInventory = prop.getItems();
 
 		for (int bar = 0; bar < Const.HOTBAR_SIZE; bar++) {
 			int second = bar + Const.HOTBAR_SIZE;
 
-      ModInv.logger.warn("TODO: how pull items from invo?");
 //      
-//			ItemStack barStack = p.inventory.getStackInSlot(bar);
-//			ItemStack secondStack = prop.inventory.getStackInSlot(second);
+			ItemStack barStack = p.inventory.getStackInSlot(bar);
+			ItemStack secondStack = extendedInventory.getStackInSlot(second);
 //
 //			// the players real hotbar
-//			p.inventory.setInventorySlotContents(bar, secondStack);
+			p.inventory.setInventorySlotContents(bar, secondStack);
 //
 //			// that other invo
-//			prop.inventory.setInventorySlotContents(second, barStack);
+			extendedInventory.setInventorySlotContents(second, barStack);
 		}
 	}
 
 	public static void swapInventoryGroup(EntityPlayer p, int invoGroup) {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
+    InventoryOverpowered extendedInventory = prop.getItems();
 		// ALWAYS loop on players base invnetory, so 9 to 27+9
 		// then we offset by 18 becuase custom invo has 2x hotbars in front
 
@@ -47,17 +48,15 @@ public class UtilInventory {
 			
 			
 
-      ModInv.logger.warn("TODO: how pull items from invo?");
-      
 //      
-//			ItemStack barStack = p.inventory.getStackInSlot(i);
-//			ItemStack secondStack = prop.inventory.getStackInSlot(second);
+			ItemStack barStack = p.inventory.getStackInSlot(i);
+			ItemStack secondStack = extendedInventory.getStackInSlot(second);
 //
 //			// the players real hotbar
-//			p.inventory.setInventorySlotContents(i, secondStack);
+			p.inventory.setInventorySlotContents(i, secondStack);
 //
 //			// that other invo
-//			prop.inventory.setInventorySlotContents(second, barStack);
+			extendedInventory.setInventorySlotContents(second, barStack);
 		}
 	}
 
@@ -79,10 +78,9 @@ public class UtilInventory {
 	}
 
 	public static void doSort(EntityPlayer p) {
-    ModInv.logger.warn("TODO: how pull items from invo?");
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 
-		IInventory invo = null;
+    InventoryOverpowered invo = prop.getItems();
 
 		int sortType = getNextSort(p);
 
@@ -165,6 +163,7 @@ public class UtilInventory {
 		// alternately loop by rows
 		// so we start at k again, add Const.ALL_COLS to go down one row
 
+		prop.setItems(invo);
 	}
 
 	public static ArrayList<IInventory> findTileEntityInventories(EntityPlayer player, int RADIUS) {
@@ -202,8 +201,8 @@ public class UtilInventory {
 		int start = 0;
 
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
-    IInventory extendedInventory = null;//prop.inventory;
-		//
+    InventoryOverpowered extendedInventory = prop.getItems();
+
 		// inventory and chest has 9 rows by 3 columns, never changes. same as
 		// 64 max stack size
 		for (int slot = start; slot < inventory.getSizeInventory(); slot++) {
@@ -226,6 +225,7 @@ public class UtilInventory {
 				break;
 			}// close loop on player inventory items
 		}// close loop on chest items
+		prop.setItems(extendedInventory);
 	}
 
 	public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player) {
@@ -233,7 +233,7 @@ public class UtilInventory {
 		// https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
 
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
-    IInventory extendedInventory = null;//prop.inventory;
+    InventoryOverpowered extendedInventory = prop.getItems();
 		ItemStack chestItem;
 		ItemStack invItem;
 		int room;
@@ -294,6 +294,6 @@ public class UtilInventory {
 				}// end if items match
 			}// close loop on player inventory items
 		}// close loop on chest items
+		prop.setItems(extendedInventory);
 	}
-
 }

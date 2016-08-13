@@ -45,6 +45,7 @@ public class UnlockPearlPacket implements IMessage, IMessageHandler<UnlockPearlP
 	    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 			prop.setEPearlUnlocked(true);
 
+      CapabilityRegistry.syncServerDataToClient(ctx.getServerHandler().playerEntity);
 			p.closeScreen();
 
       ModInv.playSound(p,  SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE);

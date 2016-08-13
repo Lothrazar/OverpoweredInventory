@@ -50,8 +50,11 @@ public class UnlockStoragePacket implements IMessage, IMessageHandler<UnlockStor
 
 			UtilExperience.drainExp(p, expCost);
 
+			System.out.println("[unlockstoragepacket]B "+prop.getStorageCount());
 			prop.setStorageCount(prop.getStorageCount() + 1);// (true, message.tags.getInteger("i"));
+      System.out.println("[unlockstoragepacket]A "+prop.getStorageCount());
 
+      CapabilityRegistry.syncServerDataToClient(ctx.getServerHandler().playerEntity);
 			p.closeScreen();
 
       ModInv.playSound(p,  SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE);

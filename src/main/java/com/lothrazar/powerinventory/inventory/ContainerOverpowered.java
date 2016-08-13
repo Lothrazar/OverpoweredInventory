@@ -81,7 +81,7 @@ public class ContainerOverpowered extends Container {
 
 		int xStart;// = 2*pad;
 		int yStart;// = 13+Const.SQ;//leaving one space for the slots on top row
-
+System.out.println("Container has: "+prop.getStorageCount());
 		for (int k = 1; k <= ModConfig.getMaxSections(); k++) {
 			if (prop.hasStorage(k)) {
 				xStart = InventoryRenderer.xPosSlotsStart(k);

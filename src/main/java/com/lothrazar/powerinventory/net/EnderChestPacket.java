@@ -39,14 +39,12 @@ public class EnderChestPacket implements IMessage, IMessageHandler<EnderChestPac
 
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
 
-		ItemStack chest = null;  //prop.inventory.getStackInSlot(Const.SLOT_ECHEST);
-		ModInv.logger.warn("TODO: how pull items from invo?");
+		ItemStack chest = prop.getItems().getStackInSlot(Const.SLOT_ECHEST);
 
 		if (chest != null)
 			p.displayGUIChest(p.getInventoryEnderChest());
 		else
       ModInv.addChatMessage(p,"slot.enderchest");
-			//p.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("slot.enderchest")));
 
 		return null;
 	}

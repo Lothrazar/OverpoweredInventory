@@ -45,9 +45,13 @@ public class UnlockChestPacket implements IMessage, IMessageHandler<UnlockChestP
 
 			prop.setEChestUnlocked(true);
 
+      CapabilityRegistry.syncServerDataToClient(ctx.getServerHandler().playerEntity);
 			p.closeScreen();
+			
+			
 
       ModInv.playSound(p,  SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE);
+
 		} else {
 
 		  ModInv.addChatMessage(p,"gui.craftexp");

@@ -104,6 +104,7 @@ public class GuiOverpowered extends GuiContainer {
 		}
 		
 		w = 6;h = 8;
+		System.out.println("STORAGE "+prop.getStorageCount());
 		for (int i = 1; i <= ModConfig.getMaxSections(); i++) {
 
 			if (prop.hasStorage(i))
