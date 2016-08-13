@@ -1,5 +1,4 @@
 package com.lothrazar.powerinventory.net;
-
 import com.lothrazar.powerinventory.*;
 import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import io.netty.buffer.ByteBuf;
@@ -15,45 +14,35 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class EnderPearlPacket implements IMessage, IMessageHandler<EnderPearlPacket, IMessage> {
-	public EnderPearlPacket() {
-	}
-
-	NBTTagCompound tags = new NBTTagCompound();
-
-	public EnderPearlPacket(NBTTagCompound ptags) {
-		tags = ptags;
-	}
-
-	@Override
-	public void fromBytes(ByteBuf buf) {
-		tags = ByteBufUtils.readTag(buf);
-	}
-
-	@Override
-	public void toBytes(ByteBuf buf) {
-		ByteBufUtils.writeTag(buf, this.tags);
-	}
-
-	@Override
-	public IMessage onMessage(EnderPearlPacket message, MessageContext ctx) {
-		EntityPlayer p = ctx.getServerHandler().playerEntity;
-
+  public EnderPearlPacket() {
+  }
+  NBTTagCompound tags = new NBTTagCompound();
+  public EnderPearlPacket(NBTTagCompound ptags) {
+    tags = ptags;
+  }
+  @Override
+  public void fromBytes(ByteBuf buf) {
+    tags = ByteBufUtils.readTag(buf);
+  }
+  @Override
+  public void toBytes(ByteBuf buf) {
+    ByteBufUtils.writeTag(buf, this.tags);
+  }
+  @Override
+  public IMessage onMessage(EnderPearlPacket message, MessageContext ctx) {
+    EntityPlayer p = ctx.getServerHandler().playerEntity;
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
-
-		ItemStack pearls = prop.getItems().getStackInSlot(Const.SLOT_EPEARL);
-
-		if (pearls != null) {
-		  World world = p.worldObj;
+    ItemStack pearls = prop.getItems().getStackInSlot(Const.SLOT_EPEARL);
+    if (pearls != null) {
+      World world = p.worldObj;
       EntityEnderPearl entityenderpearl = new EntityEnderPearl(world, p);
       entityenderpearl.setHeadingFromThrower(p, p.rotationPitch, p.rotationYaw, 0.0F, 1.5F, 1.0F);
       world.spawnEntityInWorld(entityenderpearl);
-
-			ModInv.playSound(p, SoundEvents.ENTITY_ARROW_SHOOT);
-			if (p.capabilities.isCreativeMode == false){
-				prop.getItems().decrStackSize(Const.SLOT_EPEARL, 1);
-			}
-		}
-
-		return null;
-	}
+      ModInv.playSound(p, SoundEvents.ENTITY_ARROW_SHOOT);
+      if (p.capabilities.isCreativeMode == false) {
+        prop.getItems().decrStackSize(Const.SLOT_EPEARL, 1);
+      }
+    }
+    return null;
+  }
 }

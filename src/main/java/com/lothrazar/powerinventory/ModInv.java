@@ -31,12 +31,12 @@ import net.minecraftforge.fml.relauncher.Side;
  */
 @Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/LothrazarMinecraftMods/OverpoweredInventory/master/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler")
 public class ModInv {
+  public static Logger logger;
+  public SimpleNetworkWrapper network;
   @Instance(Const.MODID)
   public static ModInv instance;
   @SidedProxy(clientSide = "com.lothrazar.powerinventory.proxy.ClientProxy", serverSide = "com.lothrazar.powerinventory.proxy.CommonProxy")
   public static CommonProxy proxy;
-  public SimpleNetworkWrapper network;
-  public static Logger logger;
   @CapabilityInject(IPlayerExtendedProperties.class)
   public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
   @EventHandler

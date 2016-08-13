@@ -20,7 +20,7 @@ public class CapabilityRegistry {
       return null;
     }
     IPlayerExtendedProperties props = player.getCapability(ModInv.CAPABILITYSTORAGE, null);
-    if(props.getItems() == null){
+    if (props.getItems() == null) {
       props.setItems(new InventoryOverpowered(player));
     }
     return props;
@@ -67,7 +67,7 @@ public class CapabilityRegistry {
       this.setEPearlUnlocked(tags.getByte("isEPearlUnlocked") == 1);
       this.setEChestUnlocked(tags.getByte("isEChestUnlocked") == 1);
       this.setStorageCount(tags.getInteger("getStorageCount"));
-      if(invo != null){
+      if (invo != null) {
         invo.readFromNBT(tags);
       }
     }
@@ -89,8 +89,8 @@ public class CapabilityRegistry {
     }
     @Override
     public int getStorageCount() {
-      if(this.storageCount == 20){
-        this.storageCount-=20;//??HAXS. still not sure about why that happened
+      if (this.storageCount == 20) {
+        this.storageCount -= 20;//??HAXS. still not sure about why that happened
       }
       return this.storageCount;
     }
@@ -122,7 +122,7 @@ public class CapabilityRegistry {
         instance.setDataFromNBT((NBTTagCompound) nbt);
       }
       catch (Exception e) {
-        ModInv.logger.error("Invalid NBT compound " );
+        ModInv.logger.error("Invalid NBT compound ");
         e.printStackTrace();
       }
     }

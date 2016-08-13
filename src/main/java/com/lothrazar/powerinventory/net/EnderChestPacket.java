@@ -1,5 +1,4 @@
 package com.lothrazar.powerinventory.net;
-
 import com.lothrazar.powerinventory.CapabilityRegistry;
 import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
@@ -14,38 +13,29 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class EnderChestPacket implements IMessage, IMessageHandler<EnderChestPacket, IMessage> {
-	NBTTagCompound tags = new NBTTagCompound();
-
-	public EnderChestPacket() {
-	}
-
-	public EnderChestPacket(NBTTagCompound ptags) {
-		tags = ptags;
-	}
-
-	@Override
-	public void fromBytes(ByteBuf buf) {
-		tags = ByteBufUtils.readTag(buf);
-	}
-
-	@Override
-	public void toBytes(ByteBuf buf) {
-		ByteBufUtils.writeTag(buf, this.tags);
-	}
-
-	@Override
-	public IMessage onMessage(EnderChestPacket message, MessageContext ctx) {
-		EntityPlayer p = ctx.getServerHandler().playerEntity;
-
+  NBTTagCompound tags = new NBTTagCompound();
+  public EnderChestPacket() {
+  }
+  public EnderChestPacket(NBTTagCompound ptags) {
+    tags = ptags;
+  }
+  @Override
+  public void fromBytes(ByteBuf buf) {
+    tags = ByteBufUtils.readTag(buf);
+  }
+  @Override
+  public void toBytes(ByteBuf buf) {
+    ByteBufUtils.writeTag(buf, this.tags);
+  }
+  @Override
+  public IMessage onMessage(EnderChestPacket message, MessageContext ctx) {
+    EntityPlayer p = ctx.getServerHandler().playerEntity;
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
-
-		ItemStack chest = prop.getItems().getStackInSlot(Const.SLOT_ECHEST);
-
-		if (chest != null)
-			p.displayGUIChest(p.getInventoryEnderChest());
-		else
-      ModInv.addChatMessage(p,"slot.enderchest");
-
-		return null;
-	}
+    ItemStack chest = prop.getItems().getStackInSlot(Const.SLOT_ECHEST);
+    if (chest != null)
+      p.displayGUIChest(p.getInventoryEnderChest());
+    else
+      ModInv.addChatMessage(p, "slot.enderchest");
+    return null;
+  }
 }
