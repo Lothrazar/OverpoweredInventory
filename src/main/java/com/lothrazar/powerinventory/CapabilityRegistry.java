@@ -89,6 +89,9 @@ public class CapabilityRegistry {
     }
     @Override
     public int getStorageCount() {
+      if(this.storageCount == 20){
+        this.storageCount-=20;//??HAXS. still not sure about why that happened
+      }
       return this.storageCount;
     }
     @Override
@@ -97,7 +100,7 @@ public class CapabilityRegistry {
     }
     @Override
     public boolean hasStorage(int k) {
-      return this.getStorageCount() > k;
+      return this.getStorageCount() >= k;
     }
     @Override
     public InventoryOverpowered getItems() {

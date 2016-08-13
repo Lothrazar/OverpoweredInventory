@@ -1,5 +1,4 @@
 package com.lothrazar.powerinventory;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -32,62 +31,50 @@ import net.minecraftforge.fml.relauncher.Side;
  */
 @Mod(modid = Const.MODID, useMetadata = true, canBeDeactivated = false, updateJSON = "https://raw.githubusercontent.com/LothrazarMinecraftMods/OverpoweredInventory/master-18/update.json", guiFactory = "com.lothrazar." + Const.MODID + ".config.IngameConfigHandler")
 public class ModInv {
-	@Instance(Const.MODID)
-	public static ModInv instance;
-
-	@SidedProxy(clientSide = "com.lothrazar.powerinventory.proxy.ClientProxy", serverSide = "com.lothrazar.powerinventory.proxy.CommonProxy")
-	public static CommonProxy proxy;
-	public SimpleNetworkWrapper network;
-	public static Logger logger;
-
+  @Instance(Const.MODID)
+  public static ModInv instance;
+  @SidedProxy(clientSide = "com.lothrazar.powerinventory.proxy.ClientProxy", serverSide = "com.lothrazar.powerinventory.proxy.CommonProxy")
+  public static CommonProxy proxy;
+  public SimpleNetworkWrapper network;
+  public static Logger logger;
   @CapabilityInject(IPlayerExtendedProperties.class)
   public static final Capability<IPlayerExtendedProperties> CAPABILITYSTORAGE = null;
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		logger = event.getModLog();
-		network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
-
-		ModConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
-
-		int packetID = 0;
-		network.registerMessage(OpenInventoryPacket.class, OpenInventoryPacket.class, packetID++, Side.SERVER);
-		network.registerMessage(EnderPearlPacket.class, EnderPearlPacket.class, packetID++, Side.SERVER);
-		network.registerMessage(EnderChestPacket.class, EnderChestPacket.class, packetID++, Side.SERVER);
-		network.registerMessage(SwapInvoPacket.class, SwapInvoPacket.class, packetID++, Side.SERVER);
-		network.registerMessage(HotbarSwapPacket.class, HotbarSwapPacket.class, packetID++, Side.SERVER);
-		network.registerMessage(UnlockPearlPacket.class, UnlockPearlPacket.class, packetID++, Side.SERVER);
-		network.registerMessage(UnlockChestPacket.class, UnlockChestPacket.class, packetID++, Side.SERVER);
-		network.registerMessage(UnlockStoragePacket.class, UnlockStoragePacket.class, packetID++, Side.SERVER);
-		network.registerMessage(SortPacket.class, SortPacket.class, packetID++, Side.SERVER);
-		network.registerMessage(FilterButtonPacket.class, FilterButtonPacket.class, packetID++, Side.SERVER);
-		network.registerMessage(DumpButtonPacket.class, DumpButtonPacket.class, packetID++, Side.SERVER);
-
+  @EventHandler
+  public void preInit(FMLPreInitializationEvent event) {
+    logger = event.getModLog();
+    network = NetworkRegistry.INSTANCE.newSimpleChannel(Const.MODID);
+    ModConfig.loadConfig(new Configuration(event.getSuggestedConfigurationFile()));
+    int packetID = 0;
+    network.registerMessage(OpenInventoryPacket.class, OpenInventoryPacket.class, packetID++, Side.SERVER);
+    network.registerMessage(EnderPearlPacket.class, EnderPearlPacket.class, packetID++, Side.SERVER);
+    network.registerMessage(EnderChestPacket.class, EnderChestPacket.class, packetID++, Side.SERVER);
+    network.registerMessage(SwapInvoPacket.class, SwapInvoPacket.class, packetID++, Side.SERVER);
+    network.registerMessage(HotbarSwapPacket.class, HotbarSwapPacket.class, packetID++, Side.SERVER);
+    network.registerMessage(UnlockPearlPacket.class, UnlockPearlPacket.class, packetID++, Side.SERVER);
+    network.registerMessage(UnlockChestPacket.class, UnlockChestPacket.class, packetID++, Side.SERVER);
+    network.registerMessage(UnlockStoragePacket.class, UnlockStoragePacket.class, packetID++, Side.SERVER);
+    network.registerMessage(SortPacket.class, SortPacket.class, packetID++, Side.SERVER);
+    network.registerMessage(FilterButtonPacket.class, FilterButtonPacket.class, packetID++, Side.SERVER);
+    network.registerMessage(DumpButtonPacket.class, DumpButtonPacket.class, packetID++, Side.SERVER);
     network.registerMessage(PacketSyncPlayerData.class, PacketSyncPlayerData.class, PacketSyncPlayerData.ID, Side.CLIENT);
-		proxy.registerHandlers();
+    proxy.registerHandlers();
     CapabilityRegistry.register();
-	}
-
-	@EventHandler
-	public void init(FMLInitializationEvent event) {
-		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
-
-
-	}
-
+  }
+  @EventHandler
+  public void init(FMLInitializationEvent event) {
+    NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+  }
   public static String lang(String string) {
     return I18n.translateToLocal(string);
   }
   public static void addChatMessage(EntityPlayer p, String string) {
-
     p.addChatMessage(new TextComponentTranslation(lang("gui.craftexp")));
-    
   }
-
   public static void playSound(EntityPlayer player, SoundEvent soundIn) {
-    playSound(player,null,soundIn);
+    playSound(player, null, soundIn);
   }
   public static void playSound(EntityPlayer player, BlockPos pos, SoundEvent soundIn) {
     BlockPos here = (pos == null) ? player.getPosition() : pos;
-    player.worldObj.playSound(player, here, soundIn, SoundCategory.PLAYERS,1,1);
+    player.worldObj.playSound(player, here, soundIn, SoundCategory.PLAYERS, 1, 1);
   }
 }
