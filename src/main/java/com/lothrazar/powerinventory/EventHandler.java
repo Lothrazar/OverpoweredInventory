@@ -84,7 +84,7 @@ public class EventHandler {
   }
   @SubscribeEvent
   public void onEntityDeath(LivingDeathEvent event) {
-    //if config says they persist... do not drop on ground
+    //if config says they persist... do not drop on ground // not http://www.minecraftforge.net/wiki/Event_Reference#LivingDropsEvent
     Entity entityLiving = event.getEntity();
     if (ModConfig.persistUnlocksOnDeath == false &&
         entityLiving instanceof EntityPlayer && !entityLiving.worldObj.isRemote) {

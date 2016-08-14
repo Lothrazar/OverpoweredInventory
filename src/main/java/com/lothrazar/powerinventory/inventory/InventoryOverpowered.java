@@ -154,11 +154,9 @@ public class InventoryOverpowered implements IInventory {
   public void readFromNBT(NBTTagCompound tagcompound) {
     NBTTagList nbttaglist = tagcompound.getTagList(tagName, Constants.NBT.TAG_COMPOUND);
     ItemStack itemstack;
-    System.out.println("READ  COUNT = " + nbttaglist.tagCount());
     for (int i = 0; i < nbttaglist.tagCount(); ++i) {
       NBTTagCompound tags = nbttaglist.getCompoundTagAt(i);// tagAt
       int b = tags.getInteger(tagSlot);
-      System.out.println("READ b = " + b + " and i = " + i);//what the -47 ??
       itemstack = ItemStack.loadItemStackFromNBT(tags);
       if (b >= 0 && b < this.getSizeInventory()) {
         this.setInventorySlotContents(b, itemstack);
