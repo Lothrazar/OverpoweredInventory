@@ -65,35 +65,39 @@ public class EventHandler {
   //			}
   //		}
   //	}
-  	@SubscribeEvent
-  	public void onPlayerClone(PlayerEvent.Clone event) {
-  	  if(ModConfig.persistUnlocksOnDeath == true){
-
+  @SubscribeEvent
+  public void onPlayerClone(PlayerEvent.Clone event) {
+    if (event.isWasDeath() == false) {
+      //then it was an end portal transition
+      IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(event.getOriginal());
+      IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
+      dest.setDataFromNBT(src.getDataAsNBT());
+    }
+    else {
+      //it was a real death. so only copy if config says to save it (defaults true)
+      if (ModConfig.persistUnlocksOnDeath == true) {
         IPlayerExtendedProperties src = CapabilityRegistry.getPlayerProperties(event.getOriginal());
         IPlayerExtendedProperties dest = CapabilityRegistry.getPlayerProperties(event.getEntityPlayer());
         dest.setDataFromNBT(src.getDataAsNBT());
-  	  }
-  	}
-  	@SubscribeEvent
-  	public void onEntityDeath(LivingDeathEvent event) {
-  		//if config says they persist... do not drop on ground
-  	  Entity entityLiving = event.getEntity();
-  		
-  		if (ModConfig.persistUnlocksOnDeath == false && 
-  				entityLiving instanceof EntityPlayer && !entityLiving.worldObj.isRemote) {
-  			EntityPlayer p = (EntityPlayer) entityLiving;
-
-        IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
-  			// the vanilla inventory stuff (first hotbar) already drops  
-  			
-  			for (int i = Const.HOTBAR_SIZE; i < prop.getItems().getSizeInventory(); ++i) {
-  				prop.getItems().dropStackInSlot(p, i);
-  			}
-  
-  			prop.getItems().dropStackInSlot(p, Const.SLOT_ECHEST);
-  			prop.getItems().dropStackInSlot(p, Const.SLOT_EPEARL);
-  		}
-  	}
+      }
+    }
+  }
+  @SubscribeEvent
+  public void onEntityDeath(LivingDeathEvent event) {
+    //if config says they persist... do not drop on ground
+    Entity entityLiving = event.getEntity();
+    if (ModConfig.persistUnlocksOnDeath == false &&
+        entityLiving instanceof EntityPlayer && !entityLiving.worldObj.isRemote) {
+      EntityPlayer p = (EntityPlayer) entityLiving;
+      IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
+      // the vanilla inventory stuff (first hotbar) already drops  
+      for (int i = Const.HOTBAR_SIZE; i < prop.getItems().getSizeInventory(); ++i) {
+        prop.getItems().dropStackInSlot(p, i);
+      }
+      prop.getItems().dropStackInSlot(p, Const.SLOT_ECHEST);
+      prop.getItems().dropStackInSlot(p, Const.SLOT_EPEARL);
+    }
+  }
   @SideOnly(Side.CLIENT)
   @SubscribeEvent
   public void onGuiPostInit(InitGuiEvent.Post event) {
@@ -139,8 +143,7 @@ public class EventHandler {
   }
   @SubscribeEvent
   public void onEntityConstruct(AttachCapabilitiesEvent.Entity evt) {
-    if(evt.getEntity() instanceof EntityPlayer == false){
-      return;//mod compatibility: IE Tinkers construct
+    if (evt.getEntity() instanceof EntityPlayer == false) { return;//mod compatibility: IE Tinkers construct
     }
     evt.addCapability(new ResourceLocation(Const.MODID, "OPI"), new ICapabilitySerializable<NBTTagCompound>() {
       IPlayerExtendedProperties inst = ModInv.CAPABILITYSTORAGE.getDefaultInstance();
