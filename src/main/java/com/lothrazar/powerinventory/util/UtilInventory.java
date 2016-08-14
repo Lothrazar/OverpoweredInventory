@@ -20,13 +20,10 @@ public class UtilInventory {
     InventoryOverpowered extendedInventory = prop.getItems();
     for (int bar = 0; bar < Const.HOTBAR_SIZE; bar++) {
       int second = bar + Const.HOTBAR_SIZE;
-        
       ItemStack barStack = p.inventory.getStackInSlot(bar);
       ItemStack secondStack = extendedInventory.getStackInSlot(second);
-     
       //			// the players real hotbar
       p.inventory.setInventorySlotContents(bar, secondStack);
- 
       //			// that other invo
       extendedInventory.setInventorySlotContents(second, barStack);
     }
@@ -39,13 +36,10 @@ public class UtilInventory {
     for (int i = Const.HOTBAR_SIZE; i < Const.HOTBAR_SIZE + Const.V_INVO_SIZE; i++) {
       int second = i + (invoGroup - 1) * Const.V_INVO_SIZE + Const.HOTBAR_SIZE;
       // offset: since there is no second hotbar in player inventory
-          
       ItemStack barStack = p.inventory.getStackInSlot(i);
       ItemStack secondStack = extendedInventory.getStackInSlot(second);
-  
       //			// the players real hotbar
       p.inventory.setInventorySlotContents(i, secondStack);
-     
       //			// that other invo
       extendedInventory.setInventorySlotContents(second, barStack);
     }
@@ -111,7 +105,6 @@ public class UtilInventory {
     });
     int k = 2 * Const.HOTBAR_SIZE;
     for (SortGroup sg : sorted) {
-
       for (int i = 0; i < sg.stacks.size(); i++) {
         invo.setInventorySlotContents(k, null);
         invo.setInventorySlotContents(k, sg.stacks.get(i));
@@ -119,7 +112,6 @@ public class UtilInventory {
       }
     }
     for (int j = k; j < iSize; j++) {
-  
       invo.setInventorySlotContents(j, null);
     }
     // alternately loop by rows

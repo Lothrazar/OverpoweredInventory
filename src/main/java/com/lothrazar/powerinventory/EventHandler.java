@@ -8,13 +8,10 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.GuiIngameForge;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -54,17 +51,6 @@ public class EventHandler {
     if (event.getModID().equals(Const.MODID))
       ModConfig.syncConfig();
   }
-  //	@SubscribeEvent
-  //	public void onEntityConstruct(EntityConstructing event) {
-  //    Entity entity = event.getEntity();
-  //		if (entity instanceof EntityPlayer) {
-  //			EntityPlayer player = (EntityPlayer) entity;
-  //
-  //			if (PlayerPersistProperty.get(player) == null) {
-  //				PlayerPersistProperty.register(player);
-  //			}
-  //		}
-  //	}
   @SubscribeEvent
   public void onPlayerClone(PlayerEvent.Clone event) {
     if (event.isWasDeath() == false) {
