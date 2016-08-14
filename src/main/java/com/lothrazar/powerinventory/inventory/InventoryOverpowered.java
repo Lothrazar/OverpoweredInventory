@@ -128,12 +128,11 @@ public class InventoryOverpowered implements IInventory {
   public void writeToNBT(NBTTagCompound tags) {
     NBTTagList nbttaglist = new NBTTagList();
     NBTTagCompound tagcompound;
-    System.out.println("write  COUNT = " + nbttaglist.tagCount());
+
     for (int i = 0; i < this.getSizeInventory(); ++i) {
       if (this.getStackInSlot(i) != null) {
         tagcompound = new NBTTagCompound();
         tagcompound.setInteger(tagSlot, i);
-        System.out.println("WRITE  i = " + i + "__" + this.getStackInSlot(i).getUnlocalizedName());//what the -47 ??
         this.getStackInSlot(i).writeToNBT(tagcompound);
         nbttaglist.appendTag(tagcompound);
       }
