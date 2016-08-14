@@ -21,7 +21,7 @@ plugins {
 }
 */
 
-version = "1.10.2-2.2.1"
+version = "1.10.2-2.2.2"
 group= "com.lothrazar.powerinventory" 
 archivesBaseName = "OverpoweredInventory"
 minecraft {
