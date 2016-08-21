@@ -23,6 +23,7 @@ import com.lothrazar.powerinventory.net.EnderPearlPacket;
 import com.lothrazar.powerinventory.net.HotbarSwapPacket;
 import com.lothrazar.powerinventory.net.OpenInventoryPacket;
 import com.lothrazar.powerinventory.proxy.ClientProxy;
+import com.lothrazar.powerinventory.util.UtilPlayerInventoryFilestorage;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent.OnConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -77,11 +78,11 @@ public class EventHandler {
       EntityPlayer p = (EntityPlayer) entityLiving;
       IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
       // the vanilla inventory stuff (first hotbar) already drops  
-      for (int i = Const.HOTBAR_SIZE; i < prop.getItems().getSizeInventory(); ++i) {
-        prop.getItems().dropStackInSlot(p, i);
+      for (int i = Const.HOTBAR_SIZE; i < UtilPlayerInventoryFilestorage.getPlayerInventory(p).getSizeInventory(); ++i) {
+        UtilPlayerInventoryFilestorage.getPlayerInventory(p).dropStackInSlot(p, i);
       }
-      prop.getItems().dropStackInSlot(p, Const.SLOT_ECHEST);
-      prop.getItems().dropStackInSlot(p, Const.SLOT_EPEARL);
+      UtilPlayerInventoryFilestorage.getPlayerInventory(p).dropStackInSlot(p, Const.SLOT_ECHEST);
+      UtilPlayerInventoryFilestorage.getPlayerInventory(p).dropStackInSlot(p, Const.SLOT_EPEARL);
     }
   }
   @SideOnly(Side.CLIENT)
