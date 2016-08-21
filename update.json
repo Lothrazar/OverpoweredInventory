@@ -11,8 +11,8 @@
     "1.8.9-recommended": "2.1.0",
     "1.8.9-latest": "2.2.2",
     "1.8.9-recommended": "2.2.1",
-    "1.10.2-latest":  "2.2.1",
-    "1.10.2-recommended": "2.2.1"
+    "1.10.2-latest":  "2.2.3",
+    "1.10.2-recommended": "2.3.0"
   },
   "1.8.8":{
   	"1.0.14":"Removed custom version checker in favor of built in forge setup",
@@ -28,7 +28,6 @@
   	"2.1.0":"Overpowered Inventory now persists through death, instead of dropping on ground (config controlled)."
   }
   ,"1.10.2":{
-  	"2.2.0":"Updated to 1.10.  Removed some config settings/features that had nothing to with the inventory screen such as stack sizes",
-  	"2.2.1":"Mod compatibility fix"
+  	"2.3.0":"Updated to 1.10.2  Removed some config settings/features that had nothing to with the inventory screen such as stack sizes"
   }
 }
