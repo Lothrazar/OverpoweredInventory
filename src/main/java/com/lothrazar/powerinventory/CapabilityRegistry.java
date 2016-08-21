@@ -20,9 +20,7 @@ public class CapabilityRegistry {
       return null;
     }
     IPlayerExtendedProperties props = player.getCapability(ModInv.CAPABILITYSTORAGE, null);
-    if (props.getItems() == null) {
-      props.setItems(new InventoryOverpowered(player));
-    }
+   
     return props;
   }
   public interface IPlayerExtendedProperties {
@@ -32,8 +30,6 @@ public class CapabilityRegistry {
     void setEChestUnlocked(boolean value);
     int getStorageCount();
     void setStorageCount(int value);
-    InventoryOverpowered getItems();
-    void setItems(InventoryOverpowered value);
     NBTTagCompound getDataAsNBT();
     void setDataFromNBT(NBTTagCompound nbt);
     //summary
@@ -43,16 +39,13 @@ public class CapabilityRegistry {
     private boolean hasEPearl = false;
     private boolean hasEChest = false;
     private int storageCount = 20;
-    private InventoryOverpowered invo;
     @Override
     public NBTTagCompound getDataAsNBT() {
       NBTTagCompound tags = new NBTTagCompound();
       tags.setByte("isEPearlUnlocked", (byte) (this.isEPearlUnlocked() ? 1 : 0));
       tags.setByte("isEChestUnlocked", (byte) (this.isEChestUnlocked() ? 1 : 0));
       tags.setInteger("getStorageCount", this.getStorageCount());
-      if (invo != null) {
-        invo.writeToNBT(tags);
-      }
+     
       return tags;
     }
     @Override
@@ -67,9 +60,7 @@ public class CapabilityRegistry {
       this.setEPearlUnlocked(tags.getByte("isEPearlUnlocked") == 1);
       this.setEChestUnlocked(tags.getByte("isEChestUnlocked") == 1);
       this.setStorageCount(tags.getInteger("getStorageCount"));
-      if (invo != null) {
-        invo.readFromNBT(tags);
-      }
+     
     }
     @Override
     public boolean isEPearlUnlocked() {
@@ -101,14 +92,6 @@ public class CapabilityRegistry {
     @Override
     public boolean hasStorage(int k) {
       return this.getStorageCount() >= k;
-    }
-    @Override
-    public InventoryOverpowered getItems() {
-      return invo;
-    }
-    @Override
-    public void setItems(InventoryOverpowered value) {
-      invo = value;
     }
   }
   public static class Storage implements IStorage<IPlayerExtendedProperties> {

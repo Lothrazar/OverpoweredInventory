@@ -1,6 +1,7 @@
 package com.lothrazar.powerinventory.net;
 import com.lothrazar.powerinventory.*;
 import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
+import com.lothrazar.powerinventory.util.UtilPlayerInventoryFilestorage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityEnderPearl;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +33,7 @@ public class EnderPearlPacket implements IMessage, IMessageHandler<EnderPearlPac
   public IMessage onMessage(EnderPearlPacket message, MessageContext ctx) {
     EntityPlayer p = ctx.getServerHandler().playerEntity;
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
-    ItemStack pearls = prop.getItems().getStackInSlot(Const.SLOT_EPEARL);
+    ItemStack pearls = UtilPlayerInventoryFilestorage.getPlayerInventory(p).getStackInSlot(Const.SLOT_EPEARL);
     if (pearls != null) {
       World world = p.worldObj;
       EntityEnderPearl entityenderpearl = new EntityEnderPearl(world, p);
@@ -40,7 +41,7 @@ public class EnderPearlPacket implements IMessage, IMessageHandler<EnderPearlPac
       world.spawnEntityInWorld(entityenderpearl);
       ModInv.playSound(p, SoundEvents.ENTITY_ARROW_SHOOT);
       if (p.capabilities.isCreativeMode == false) {
-        prop.getItems().decrStackSize(Const.SLOT_EPEARL, 1);
+        UtilPlayerInventoryFilestorage.getPlayerInventory(p).decrStackSize(Const.SLOT_EPEARL, 1);
       }
     }
     return null;

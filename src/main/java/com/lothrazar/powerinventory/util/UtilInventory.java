@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 public class UtilInventory {
   public static void swapHotbars(EntityPlayer p) {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
-    InventoryOverpowered extendedInventory = prop.getItems();
+    InventoryOverpowered extendedInventory = UtilPlayerInventoryFilestorage.getPlayerInventory(p);
     for (int bar = 0; bar < Const.HOTBAR_SIZE; bar++) {
       int second = bar + Const.HOTBAR_SIZE;
       ItemStack barStack = p.inventory.getStackInSlot(bar);
@@ -30,7 +30,7 @@ public class UtilInventory {
   }
   public static void swapInventoryGroup(EntityPlayer p, int invoGroup) {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
-    InventoryOverpowered extendedInventory = prop.getItems();
+    InventoryOverpowered extendedInventory =UtilPlayerInventoryFilestorage.getPlayerInventory(p);
     // ALWAYS loop on players base invnetory, so 9 to 27+9
     // then we offset by 18 becuase custom invo has 2x hotbars in front
     for (int i = Const.HOTBAR_SIZE; i < Const.HOTBAR_SIZE + Const.V_INVO_SIZE; i++) {
@@ -57,7 +57,7 @@ public class UtilInventory {
   }
   public static void doSort(EntityPlayer p) {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
-    InventoryOverpowered invo = prop.getItems();
+    InventoryOverpowered invo = UtilPlayerInventoryFilestorage.getPlayerInventory(p);
     int sortType = getNextSort(p);
     Map<String, SortGroup> unames = new HashMap<String, SortGroup>();
     ItemStack item = null;
@@ -116,7 +116,8 @@ public class UtilInventory {
     }
     // alternately loop by rows
     // so we start at k again, add Const.ALL_COLS to go down one row
-    prop.setItems(invo);
+//    prop.setItems(invo);
+    UtilPlayerInventoryFilestorage.setPlayerInventory(p,invo);
   }
   public static ArrayList<IInventory> findTileEntityInventories(EntityPlayer player, int RADIUS) {
     // function imported
@@ -141,12 +142,12 @@ public class UtilInventory {
     }
     return found;
   }
-  public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer player) {
+  public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer p) {
     ItemStack chestItem;
     ItemStack invItem;
     int start = 0;
-    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
-    InventoryOverpowered extendedInventory = prop.getItems();
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
+    InventoryOverpowered extendedInventory =UtilPlayerInventoryFilestorage.getPlayerInventory(p);
     // inventory and chest has 9 rows by 3 columns, never changes. same as
     // 64 max stack size
     for (int slot = start; slot < inventory.getSizeInventory(); slot++) {
@@ -164,13 +165,14 @@ public class UtilInventory {
         break;
       } // close loop on player inventory items
     } // close loop on chest items
-    prop.setItems(extendedInventory);
+//    prop.setItems(extendedInventory);
+    UtilPlayerInventoryFilestorage.setPlayerInventory(p,extendedInventory);
   }
-  public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer player) {
+  public static void sortFromPlayerToInventory(World world, IInventory chest, EntityPlayer p) {
     // source:
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
-    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(player);
-    InventoryOverpowered extendedInventory = prop.getItems();
+    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
+    InventoryOverpowered extendedInventory = UtilPlayerInventoryFilestorage.getPlayerInventory(p);
     ItemStack chestItem;
     ItemStack invItem;
     int room;
@@ -217,6 +219,7 @@ public class UtilInventory {
         } // end if items match
       } // close loop on player inventory items
     } // close loop on chest items
-    prop.setItems(extendedInventory);
+//    prop.setItems(extendedInventory);
+    UtilPlayerInventoryFilestorage.setPlayerInventory(p,extendedInventory);
   }
 }
