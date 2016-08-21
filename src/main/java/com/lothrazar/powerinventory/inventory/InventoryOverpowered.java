@@ -19,8 +19,8 @@ public class InventoryOverpowered implements IInventory {
   // http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571597-forge-1-6-4-1-8-custom-inventories-in-items-and
   private final String tagName = "opinvtags";
   private final String tagSlot = "Slot";
-  private ItemStack enderPearlStack;
-  private ItemStack enderChestStack;
+  public ItemStack enderPearlStack;
+  public ItemStack enderChestStack;
   public WeakReference<EntityPlayer> player;
   public InventoryOverpowered(EntityPlayer player) {
     // always 2 hotbars. the number of sections depends on config (ignoring
@@ -114,13 +114,14 @@ public class InventoryOverpowered implements IInventory {
     else if (slot == Const.SLOT_ECHEST) {
       enderChestStack = stack;
     }
-    else
+    else {
       this.inventory[slot] = stack;
+    }
     if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
       stack.stackSize = this.getInventoryStackLimit();
     }
     syncSlotToClients(slot);
-//    this.onInventoryChanged();
+    //    this.onInventoryChanged();
   }
   @Override
   public int getInventoryStackLimit() {

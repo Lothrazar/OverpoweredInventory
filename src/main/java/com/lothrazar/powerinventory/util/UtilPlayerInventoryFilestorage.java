@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import com.google.common.io.Files;
+import com.lothrazar.powerinventory.Const;
 import com.lothrazar.powerinventory.ModInv;
 import com.lothrazar.powerinventory.inventory.InventoryOverpowered;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,20 +24,22 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
  * so i was able to use parts of that to make this
  * **/
 public class UtilPlayerInventoryFilestorage {
+  public static final String EXT = "opi";
+  public static final String EXTBK = "opibk";
   public static HashSet<Integer> playerEntityIds = new HashSet<Integer>();
   private static HashMap<String, InventoryOverpowered> playerItems = new HashMap<String, InventoryOverpowered>();
   public static void playerSetupOnLoad(PlayerEvent.LoadFromFile event) {
     EntityPlayer player = event.getEntityPlayer();
     clearPlayerInventory(player);
-    File playerFile = getPlayerFile(ext, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString());
+    File playerFile = getPlayerFile(EXT, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString());
     if (!playerFile.exists()) {
-      File fileNew = event.getPlayerFile(ext);
+      File fileNew = event.getPlayerFile(EXT);
       if (fileNew.exists()) {
         try {
           Files.copy(fileNew, playerFile);
           ModInv.logger.info("Using and converting UUID savefile for " + player.getDisplayNameString());
           fileNew.delete();
-          File fb = event.getPlayerFile(extback);
+          File fb = event.getPlayerFile(EXTBK);
           if (fb.exists())
             fb.delete();
         }
@@ -44,7 +47,7 @@ public class UtilPlayerInventoryFilestorage {
         }
       }
     }
-    loadPlayerInventory(event.getEntityPlayer(), playerFile, getPlayerFile(extback, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
+    loadPlayerInventory(event.getEntityPlayer(), playerFile, getPlayerFile(EXTBK, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
     playerEntityIds.add(event.getEntityPlayer().getEntityId());
   }
   public static void clearPlayerInventory(EntityPlayer player) {
@@ -62,7 +65,14 @@ public class UtilPlayerInventoryFilestorage {
   }
   public static void setPlayerInventoryStack(EntityPlayer player, int slot, ItemStack itemStack){
 //    UtilPlayerInventoryFilestorage.getPlayerInventory(player).setInventorySlotContents(slot, itemStack);
-    getPlayerInventory(player).inventory[slot] = itemStack;
+    if(slot == Const.SLOT_ECHEST){
+      getPlayerInventory(player).enderChestStack = itemStack;
+    }
+    else if(slot == Const.SLOT_EPEARL){
+      getPlayerInventory(player).enderPearlStack = itemStack;
+    }
+    else
+      getPlayerInventory(player).inventory[slot] = itemStack;
   }
   public static void setPlayerInventory(EntityPlayer player, InventoryOverpowered inventory) {
     playerItems.put(player.getDisplayNameString(), inventory);
@@ -149,8 +159,6 @@ public class UtilPlayerInventoryFilestorage {
       }
     }
   }
-  public static final String ext = "invo";
-  public static final String extback = "backup";
   public static File getPlayerFile(String suffix, File playerDirectory, String playername) {
     return new File(playerDirectory, "_" + playername + "." + suffix);
   }
@@ -161,6 +169,9 @@ public class UtilPlayerInventoryFilestorage {
     }
   }
   public static void putDataIntoInventory(InventoryOverpowered invo, EntityPlayer player) {
-    invo.inventory = getPlayerInventory(player).inventory;
+    InventoryOverpowered fromStorage = getPlayerInventory(player);
+    invo.inventory = fromStorage.inventory;
+    invo.enderPearlStack = fromStorage.enderPearlStack;
+    invo.enderChestStack = fromStorage.enderChestStack;
   }
 }
