@@ -40,20 +40,13 @@ public class ContainerOverpowered extends Container {
   public ContainerOverpowered(EntityPlayer player, InventoryPlayer inventoryPlayer) {
     thePlayer = player;
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
-    
-//    invo = prop.getItems();
-    
-
+    //    invo = prop.getItems();
     invo = new InventoryOverpowered(player);
-//    invo.setEventHandler(this);
+    //    invo.setEventHandler(this);
     if (!player.worldObj.isRemote) {
       UtilPlayerInventoryFilestorage.putDataIntoInventory(invo, player);
-//      inventory.stackList = UtilPlayerInventoryFilestorage.getPlayerInventory(player).stackList;
+      //      inventory.stackList = UtilPlayerInventoryFilestorage.getPlayerInventory(player).stackList;
     }
-  
-  
-    
-    
     int i, j, slotNum = 0, x = 0, y = 0;
     S_BAR_START = this.inventorySlots.size();
     for (i = 0; i < Const.HOTBAR_SIZE; ++i) {

@@ -1,6 +1,5 @@
 package com.lothrazar.powerinventory.net;
 import com.lothrazar.powerinventory.*;
-import com.lothrazar.powerinventory.CapabilityRegistry.IPlayerExtendedProperties;
 import com.lothrazar.powerinventory.util.UtilPlayerInventoryFilestorage;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.item.EntityEnderPearl;
@@ -32,7 +31,6 @@ public class EnderPearlPacket implements IMessage, IMessageHandler<EnderPearlPac
   @Override
   public IMessage onMessage(EnderPearlPacket message, MessageContext ctx) {
     EntityPlayer p = ctx.getServerHandler().playerEntity;
-    IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
     ItemStack pearls = UtilPlayerInventoryFilestorage.getPlayerInventory(p).getStackInSlot(Const.SLOT_EPEARL);
     if (pearls != null) {
       World world = p.worldObj;

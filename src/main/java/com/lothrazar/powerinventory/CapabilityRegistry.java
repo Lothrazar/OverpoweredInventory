@@ -1,5 +1,4 @@
 package com.lothrazar.powerinventory;
-import com.lothrazar.powerinventory.inventory.InventoryOverpowered;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
@@ -20,7 +19,6 @@ public class CapabilityRegistry {
       return null;
     }
     IPlayerExtendedProperties props = player.getCapability(ModInv.CAPABILITYSTORAGE, null);
-   
     return props;
   }
   public interface IPlayerExtendedProperties {
@@ -45,7 +43,6 @@ public class CapabilityRegistry {
       tags.setByte("isEPearlUnlocked", (byte) (this.isEPearlUnlocked() ? 1 : 0));
       tags.setByte("isEChestUnlocked", (byte) (this.isEChestUnlocked() ? 1 : 0));
       tags.setInteger("getStorageCount", this.getStorageCount());
-     
       return tags;
     }
     @Override
@@ -60,7 +57,6 @@ public class CapabilityRegistry {
       this.setEPearlUnlocked(tags.getByte("isEPearlUnlocked") == 1);
       this.setEChestUnlocked(tags.getByte("isEChestUnlocked") == 1);
       this.setStorageCount(tags.getInteger("getStorageCount"));
-     
     }
     @Override
     public boolean isEPearlUnlocked() {

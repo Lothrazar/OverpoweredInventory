@@ -76,7 +76,6 @@ public class EventHandler {
     if (ModConfig.persistUnlocksOnDeath == false &&
         entityLiving instanceof EntityPlayer && !entityLiving.worldObj.isRemote) {
       EntityPlayer p = (EntityPlayer) entityLiving;
-      IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
       // the vanilla inventory stuff (first hotbar) already drops  
       for (int i = Const.HOTBAR_SIZE; i < UtilPlayerInventoryFilestorage.getPlayerInventory(p).getSizeInventory(); ++i) {
         UtilPlayerInventoryFilestorage.getPlayerInventory(p).dropStackInSlot(p, i);

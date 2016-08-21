@@ -60,15 +60,15 @@ public class UtilPlayerInventoryFilestorage {
     }
     return playerItems.get(player.getDisplayNameString());
   }
-  public static ItemStack getPlayerInventoryStack(EntityPlayer player, int slot){
+  public static ItemStack getPlayerInventoryStack(EntityPlayer player, int slot) {
     return getPlayerInventory(player).getStackInSlot(slot);
   }
-  public static void setPlayerInventoryStack(EntityPlayer player, int slot, ItemStack itemStack){
-//    UtilPlayerInventoryFilestorage.getPlayerInventory(player).setInventorySlotContents(slot, itemStack);
-    if(slot == Const.SLOT_ECHEST){
+  public static void setPlayerInventoryStack(EntityPlayer player, int slot, ItemStack itemStack) {
+    //    UtilPlayerInventoryFilestorage.getPlayerInventory(player).setInventorySlotContents(slot, itemStack);
+    if (slot == Const.SLOT_ECHEST) {
       getPlayerInventory(player).enderChestStack = itemStack;
     }
-    else if(slot == Const.SLOT_EPEARL){
+    else if (slot == Const.SLOT_EPEARL) {
       getPlayerInventory(player).enderPearlStack = itemStack;
     }
     else
@@ -163,7 +163,7 @@ public class UtilPlayerInventoryFilestorage {
     return new File(playerDirectory, "_" + playername + "." + suffix);
   }
   public static void syncItems(EntityPlayer player) {
-   InventoryOverpowered invo = getPlayerInventory(player);
+    InventoryOverpowered invo = getPlayerInventory(player);
     for (int a = 0; a < invo.getSizeInventory(); a++) {
       getPlayerInventory(player).syncSlotToClients(a);
     }

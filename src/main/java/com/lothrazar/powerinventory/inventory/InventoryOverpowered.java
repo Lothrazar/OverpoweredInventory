@@ -99,13 +99,13 @@ public class InventoryOverpowered implements IInventory {
       }
     }
   }
-  private void onInventoryChanged() {
-    for (int i = 0; i < this.getSizeInventory(); ++i) {
-      if (this.getStackInSlot(i) != null && this.getStackInSlot(i).stackSize == 0)
-        this.setInventorySlotContents(i, null);
-    }
-    this.markDirty();
-  }
+  //  private void onInventoryChanged() {
+  //    for (int i = 0; i < this.getSizeInventory(); ++i) {
+  //      if (this.getStackInSlot(i) != null && this.getStackInSlot(i).stackSize == 0)
+  //        this.setInventorySlotContents(i, null);
+  //    }
+  //    this.markDirty();
+  //  }
   @Override
   public void setInventorySlotContents(int slot, ItemStack stack) {
     if (slot == Const.SLOT_EPEARL) {

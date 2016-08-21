@@ -1,7 +1,4 @@
 package com.lothrazar.powerinventory;
-import java.io.File;
-import java.io.IOException;
-import com.google.common.io.Files;
 import com.lothrazar.powerinventory.util.UtilPlayerInventoryFilestorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
