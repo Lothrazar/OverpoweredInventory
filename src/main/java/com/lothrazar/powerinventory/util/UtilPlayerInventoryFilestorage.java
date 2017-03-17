@@ -72,7 +72,8 @@ public class UtilPlayerInventoryFilestorage {
       getPlayerInventory(player).enderPearlStack = itemStack;
     }
     else
-      getPlayerInventory(player).inventory[slot] = itemStack;
+//      getPlayerInventory(player).inventory[slot] = itemStack;
+    getPlayerInventory(player).inventory.set(slot, itemStack);
   }
   public static void setPlayerInventory(EntityPlayer player, InventoryOverpowered inventory) {
     playerItems.put(player.getDisplayNameString(), inventory);

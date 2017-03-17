@@ -9,24 +9,26 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants;
 
 public class InventoryOverpowered implements IInventory {
   public static int INV_SIZE;
-  public ItemStack[] inventory;
+  public NonNullList<ItemStack> inventory;
   // thanks for
   // http://www.minecraftforum.net/forums/mapping-and-modding/mapping-and-modding-tutorials/1571597-forge-1-6-4-1-8-custom-inventories-in-items-and
   private final String tagName = "opinvtags";
   private final String tagSlot = "Slot";
-  public ItemStack enderPearlStack;
-  public ItemStack enderChestStack;
+  public ItemStack enderPearlStack = ItemStack.EMPTY;
+  public ItemStack enderChestStack = ItemStack.EMPTY;
   public WeakReference<EntityPlayer> player;
   public InventoryOverpowered(EntityPlayer player) {
     // always 2 hotbars. the number of sections depends on config (ignoring
     // locked or not per player)
     INV_SIZE = 2 * Const.HOTBAR_SIZE + Const.V_INVO_SIZE * ModConfig.getMaxSections();
-    inventory = new ItemStack[INV_SIZE];
+    //    inventory = new ItemStack[INV_SIZE];
+    inventory = NonNullList.withSize(INV_SIZE, ItemStack.EMPTY);
     this.player = new WeakReference<EntityPlayer>(player);
   }
   @Override
@@ -37,12 +39,12 @@ public class InventoryOverpowered implements IInventory {
   public ItemStack getStackInSlot(int slot) {
     if (slot == Const.SLOT_EPEARL) { return enderPearlStack; }
     if (slot == Const.SLOT_ECHEST) { return enderChestStack; }
-    if (slot >= inventory.length) { return null; }
-    return inventory[slot];
+    if (slot >= inventory.size()) { return ItemStack.EMPTY; }
+    return inventory.get(slot);
   }
   public void dropStackInSlot(EntityPlayer p, int slot) {
     ItemStack itemstack = getStackInSlot(slot);
-    if (itemstack != null) {
+    if (!itemstack.isEmpty()) {
       p.dropItem(itemstack, false);
     }
     syncSlotToClients(slot);
@@ -54,21 +56,21 @@ public class InventoryOverpowered implements IInventory {
     // share code? make function?
     if (index == Const.SLOT_ECHEST) {
       itemstack = this.enderChestStack;
-      this.enderChestStack = null;
+      this.enderChestStack = ItemStack.EMPTY;
       syncSlotToClients(index);
       return itemstack;
     }
     else if (index == Const.SLOT_EPEARL) {
       if (this.enderPearlStack.getCount() <= count) {
         itemstack = this.enderPearlStack;
-        this.enderPearlStack =  ItemStack.EMPTY;
+        this.enderPearlStack = ItemStack.EMPTY;
         syncSlotToClients(index);
         return itemstack;
       }
       else {
         itemstack = this.enderPearlStack.splitStack(count);
         if (this.enderPearlStack.getCount() == 0) {
-          this.enderPearlStack =  ItemStack.EMPTY;
+          this.enderPearlStack = ItemStack.EMPTY;
         }
         syncSlotToClients(index);
         return itemstack;
@@ -77,25 +79,27 @@ public class InventoryOverpowered implements IInventory {
     else {
       int indexCopy = index;
       int countCopy = count;
-      ItemStack[] aitemstack = this.inventory;
-      if (aitemstack[indexCopy] !=  ItemStack.EMPTY) {
-        if (aitemstack[indexCopy].getCount() <= countCopy) {
-          itemstack = aitemstack[indexCopy];
-          aitemstack[indexCopy] =  ItemStack.EMPTY;
+      //      ItemStack[] aitemstack = this.inventory;
+      if (!this.getStackInSlot(indexCopy).isEmpty()) {
+        if (this.getStackInSlot(indexCopy).getCount() <= countCopy) {
+          itemstack = this.getStackInSlot(indexCopy);
+          this.setInventorySlotContents(indexCopy, ItemStack.EMPTY);
+          //          this.inventory[indexCopy] =  ItemStack.EMPTY;
           syncSlotToClients(index);
           return itemstack;
         }
         else {
-          itemstack = aitemstack[indexCopy].splitStack(countCopy);
-          if (aitemstack[indexCopy].getCount() == 0) {
-            aitemstack[indexCopy] =  ItemStack.EMPTY;
+          itemstack = this.getStackInSlot(indexCopy).splitStack(countCopy);
+          if (this.getStackInSlot(indexCopy).getCount() == 0) {
+            //            this.inventory[indexCopy] =  ItemStack.EMPTY;
+            this.setInventorySlotContents(indexCopy, ItemStack.EMPTY);
           }
           syncSlotToClients(index);
           return itemstack;
         }
       }
       else {
-        return null;
+        return ItemStack.EMPTY;
       }
     }
   }
@@ -115,7 +119,7 @@ public class InventoryOverpowered implements IInventory {
       enderChestStack = stack;
     }
     else {
-      this.inventory[slot] = stack;
+      this.inventory.set(slot, stack);
     }
     if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
       stack.setCount(this.getInventoryStackLimit());
@@ -128,8 +132,7 @@ public class InventoryOverpowered implements IInventory {
     return 64;
   }
   @Override
-  public void markDirty() {
-  }
+  public void markDirty() {}
   @Override
   public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
     return true;
@@ -137,21 +140,27 @@ public class InventoryOverpowered implements IInventory {
   public void writeToNBT(NBTTagCompound tags) {
     NBTTagList nbttaglist = new NBTTagList();
     NBTTagCompound tagcompound;
+    if (this.enderChestStack == null) {
+      this.enderChestStack = ItemStack.EMPTY;
+    }
+    if (this.enderPearlStack == null) {
+      this.enderPearlStack = ItemStack.EMPTY;
+    }
     for (int i = 0; i < this.getSizeInventory(); ++i) {
-      if (this.getStackInSlot(i) != null) {
+      if (!this.getStackInSlot(i).isEmpty()) {
         tagcompound = new NBTTagCompound();
         tagcompound.setInteger(tagSlot, i);
         this.getStackInSlot(i).writeToNBT(tagcompound);
         nbttaglist.appendTag(tagcompound);
       }
     }
-    if (this.enderChestStack != null) {
+    if (!this.enderChestStack.isEmpty()) {
       tagcompound = new NBTTagCompound();
       tagcompound.setInteger(tagSlot, Const.SLOT_ECHEST);
       this.enderChestStack.writeToNBT(tagcompound);
       nbttaglist.appendTag(tagcompound);
     }
-    if (this.enderPearlStack != null) {
+    if (!this.enderPearlStack.isEmpty()) {
       tagcompound = new NBTTagCompound();
       tagcompound.setInteger(tagSlot, Const.SLOT_EPEARL);
       this.enderPearlStack.writeToNBT(tagcompound);
@@ -165,11 +174,11 @@ public class InventoryOverpowered implements IInventory {
     for (int i = 0; i < nbttaglist.tagCount(); ++i) {
       NBTTagCompound tags = nbttaglist.getCompoundTagAt(i);// tagAt
       int b = tags.getInteger(tagSlot);
-      itemstack =new ItemStack(tags);// ItemStack.loadItemStackFromNBT(tags);
+      itemstack = new ItemStack(tags);// ItemStack.loadItemStackFromNBT(tags);
       if (b >= 0 && b < this.getSizeInventory()) {
         this.setInventorySlotContents(b, itemstack);
       }
-      else if (itemstack != null) {
+      else if (!itemstack.isEmpty()) {
         if (b == Const.SLOT_EPEARL) {
           enderPearlStack = itemstack;
         }
@@ -184,25 +193,21 @@ public class InventoryOverpowered implements IInventory {
     return false;
   }
   @Override
-  public void openInventory(EntityPlayer player) {
-  }
+  public void openInventory(EntityPlayer player) {}
   @Override
-  public void closeInventory(EntityPlayer player) {
-  }
+  public void closeInventory(EntityPlayer player) {}
   @Override
   public int getField(int id) {
     return 0;
   }
   @Override
-  public void setField(int id, int value) {
-  }
+  public void setField(int id, int value) {}
   @Override
   public int getFieldCount() {
     return 0;
   }
   @Override
-  public void clear() {
-  }
+  public void clear() {}
   @Override
   public String getName() {
     return null;
