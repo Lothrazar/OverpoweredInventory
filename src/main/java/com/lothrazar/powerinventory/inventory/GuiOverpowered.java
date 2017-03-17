@@ -13,6 +13,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiOverpowered extends GuiContainer {
@@ -113,7 +114,7 @@ public class GuiOverpowered extends GuiContainer {
       for (Slot s : this.container.inventorySlots) {
         // each slot has two different numbers. the slotNumber is
         // UNIQUE, the index is not
-        this.drawString(this.fontRendererObj, "" + s.getSlotIndex(), this.guiLeft + s.xDisplayPosition, this.guiTop + s.yDisplayPosition + 4, 16777120);// font
+        this.drawString(this.fontRendererObj, "" + s.getSlotIndex(), this.guiLeft + s.xPos, this.guiTop + s.yPos + 4, 16777120);// font
         // color
       }
     }
@@ -122,10 +123,10 @@ public class GuiOverpowered extends GuiContainer {
   @Override
   protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
-    if (prop.isEPearlUnlocked() && container.invo.getStackInSlot(Const.SLOT_EPEARL) == null) {
+    if (prop.isEPearlUnlocked() && container.invo.getStackInSlot(Const.SLOT_EPEARL) ==  ItemStack.EMPTY) {
       UtilTextureRender.drawTextureSimple(SlotEnderPearl.background, SlotEnderPearl.posX, SlotEnderPearl.posY, s, s);
     }
-    if (prop.isEChestUnlocked() && container.invo.getStackInSlot(Const.SLOT_ECHEST) == null) {
+    if (prop.isEChestUnlocked() && container.invo.getStackInSlot(Const.SLOT_ECHEST) ==  ItemStack.EMPTY) {
       UtilTextureRender.drawTextureSimple(SlotEnderChest.background, SlotEnderChest.posX, SlotEnderChest.posY, s, s);
     }
     super.drawGuiContainerForegroundLayer(mouseX, mouseY);

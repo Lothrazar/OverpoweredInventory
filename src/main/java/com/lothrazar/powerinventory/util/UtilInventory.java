@@ -129,8 +129,8 @@ public class UtilInventory {
       for (int yLoop = yMin; yLoop <= yMax; yLoop++) {
         for (int zLoop = zMin; zLoop <= zMax; zLoop++) {
           posCurrent = new BlockPos(xLoop, yLoop, zLoop);
-          if (player.worldObj.getTileEntity(posCurrent) instanceof IInventory) {
-            found.add((IInventory) player.worldObj.getTileEntity(posCurrent));
+          if (player.getEntityWorld().getTileEntity(posCurrent) instanceof IInventory) {
+            found.add((IInventory) player.getEntityWorld().getTileEntity(posCurrent));
           }
         }
       }

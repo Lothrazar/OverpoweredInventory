@@ -59,36 +59,36 @@ public class InventoryOverpowered implements IInventory {
       return itemstack;
     }
     else if (index == Const.SLOT_EPEARL) {
-      if (this.enderPearlStack.stackSize <= count) {
+      if (this.enderPearlStack.getCount() <= count) {
         itemstack = this.enderPearlStack;
-        this.enderPearlStack = null;
+        this.enderPearlStack =  ItemStack.EMPTY;
         syncSlotToClients(index);
         return itemstack;
       }
       else {
         itemstack = this.enderPearlStack.splitStack(count);
-        if (this.enderPearlStack.stackSize == 0) {
-          this.enderPearlStack = null;
+        if (this.enderPearlStack.getCount() == 0) {
+          this.enderPearlStack =  ItemStack.EMPTY;
         }
         syncSlotToClients(index);
         return itemstack;
       }
     }
     else {
-      int p_70298_1_ = index;
-      int p_70298_2_ = count;
+      int indexCopy = index;
+      int countCopy = count;
       ItemStack[] aitemstack = this.inventory;
-      if (aitemstack[p_70298_1_] != null) {
-        if (aitemstack[p_70298_1_].stackSize <= p_70298_2_) {
-          itemstack = aitemstack[p_70298_1_];
-          aitemstack[p_70298_1_] = null;
+      if (aitemstack[indexCopy] !=  ItemStack.EMPTY) {
+        if (aitemstack[indexCopy].getCount() <= countCopy) {
+          itemstack = aitemstack[indexCopy];
+          aitemstack[indexCopy] =  ItemStack.EMPTY;
           syncSlotToClients(index);
           return itemstack;
         }
         else {
-          itemstack = aitemstack[p_70298_1_].splitStack(p_70298_2_);
-          if (aitemstack[p_70298_1_].stackSize == 0) {
-            aitemstack[p_70298_1_] = null;
+          itemstack = aitemstack[indexCopy].splitStack(countCopy);
+          if (aitemstack[indexCopy].getCount() == 0) {
+            aitemstack[indexCopy] =  ItemStack.EMPTY;
           }
           syncSlotToClients(index);
           return itemstack;
@@ -117,8 +117,8 @@ public class InventoryOverpowered implements IInventory {
     else {
       this.inventory[slot] = stack;
     }
-    if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
-      stack.stackSize = this.getInventoryStackLimit();
+    if (!stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit()) {
+      stack.setCount(this.getInventoryStackLimit());
     }
     syncSlotToClients(slot);
     //    this.onInventoryChanged();
@@ -129,10 +129,6 @@ public class InventoryOverpowered implements IInventory {
   }
   @Override
   public void markDirty() {
-  }
-  @Override
-  public boolean isUseableByPlayer(EntityPlayer player) {
-    return true;
   }
   @Override
   public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
@@ -169,7 +165,7 @@ public class InventoryOverpowered implements IInventory {
     for (int i = 0; i < nbttaglist.tagCount(); ++i) {
       NBTTagCompound tags = nbttaglist.getCompoundTagAt(i);// tagAt
       int b = tags.getInteger(tagSlot);
-      itemstack = ItemStack.loadItemStackFromNBT(tags);
+      itemstack =new ItemStack(tags);// ItemStack.loadItemStackFromNBT(tags);
       if (b >= 0 && b < this.getSizeInventory()) {
         this.setInventorySlotContents(b, itemstack);
       }
@@ -215,8 +211,8 @@ public class InventoryOverpowered implements IInventory {
   public ItemStack removeStackFromSlot(int slot) {
     // was getStackInSlotOnClosing
     ItemStack stack = getStackInSlot(slot);
-    if (stack != null) {
-      setInventorySlotContents(slot, null);
+    if (stack.isEmpty()) {
+      setInventorySlotContents(slot, ItemStack.EMPTY);
     }
     return stack;
   }
@@ -234,5 +230,15 @@ public class InventoryOverpowered implements IInventory {
     catch (Exception e) {
       e.printStackTrace();
     }
+  }
+  @Override
+  public boolean isEmpty() {
+    // TODO Auto-generated method stub
+    return false;
+  }
+  @Override
+  public boolean isUsableByPlayer(EntityPlayer player) {
+    // TODO Auto-generated method stub
+    return true;
   }
 }
