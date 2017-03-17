@@ -75,19 +75,21 @@ public class UtilInventory {
       if (temp.stacks.size() > 0) {
         // try to merge with top
         ItemStack top = temp.stacks.remove(temp.stacks.size() - 1);
-        int room = top.getMaxStackSize() - top.stackSize;
+        int room = top.getMaxStackSize() - top.getCount();
         if (room > 0) {
-          int moveover = Math.min(item.stackSize, room);
-          top.stackSize += moveover;
-          item.stackSize -= moveover;
-          if (item.stackSize == 0) {
-            item = null;
+          int moveover = Math.min(item.getCount(), room);
+//          top.stackSize += moveover;
+//          item.stackSize -= moveover;
+          top.grow(moveover);
+          item.shrink(moveover);
+          if (item.getCount() == 0) {
+            item = ItemStack.EMPTY;
             invo.setInventorySlotContents(i, item);
           }
         }
         temp.stacks.add(top);
       }
-      if (item != null)
+      if (!item.isEmpty())
         temp.add(item);
       unames.put(key, temp);
     }
@@ -189,21 +191,23 @@ public class UtilInventory {
         if (invItem.getItem().equals(chestItem.getItem()) && invItem.getItemDamage() == chestItem.getItemDamage()) {
           // same item, including damage (block state)
           chestMax = chestItem.getItem().getItemStackLimit(chestItem);
-          room = chestMax - chestItem.stackSize;
+          room = chestMax - chestItem.getCount();
           if (room <= 0) {
             continue;
           } // no room, check the next spot
           // so if i have 30 room, and 28 items, i deposit 28.
           // or if i have 30 room and 38 items, i deposit 30
-          toDeposit = Math.min(invItem.stackSize, room);
-          chestItem.stackSize += toDeposit;
+          toDeposit = Math.min(invItem.getCount(), room);
+//          chestItem.stackSize += toDeposit;
+          chestItem.grow(toDeposit);
           chest.setInventorySlotContents(islotChest, chestItem);
-          invItem.stackSize -= toDeposit;
-          if (invItem.stackSize <= 0) {
+//          invItem.stackSize -= toDeposit;
+          invItem.shrink(toDeposit);
+          if (invItem.getCount() <= 0) {
             // item stacks with zero count do not destroy
             // themselves, they show up and have unexpected behavior
             // in game so set to empty
-            extendedInventory.setInventorySlotContents(islotInv, null);
+            extendedInventory.setInventorySlotContents(islotInv, ItemStack.EMPTY);
           }
           else {
             // set to new quantity

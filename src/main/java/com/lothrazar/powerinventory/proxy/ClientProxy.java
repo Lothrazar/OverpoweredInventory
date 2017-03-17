@@ -26,7 +26,7 @@ public class ClientProxy extends CommonProxy {
   }
   @Override
   public World getClientWorld() {
-    return FMLClientHandler.instance().getClient().theWorld;
+    return FMLClientHandler.instance().getClient().world;
   }
   @Override
   public void registerHandlers() {
@@ -53,13 +53,13 @@ public class ClientProxy extends CommonProxy {
     // Sounds absurd, but it's true.
     //https://github.com/coolAlias/Tutorial-Demo/blob/e8fa9c94949e0b1659dc0a711674074f8752d80e/src/main/java/tutorial/ClientProxy.java
     // Solution is to double-check side before returning the player:
-    return (ctx.side.isClient() ? Minecraft.getMinecraft().thePlayer : super.getPlayerEntity(ctx));
+    return (ctx.side.isClient() ? Minecraft.getMinecraft().player : super.getPlayerEntity(ctx));
   }
   @SideOnly(Side.CLIENT)
   public void setClientPlayerData(MessageContext ctx, NBTTagCompound tags) {
     EntityPlayer p = this.getPlayerEntity(ctx); //Minecraft.getMinecraft().thePlayer;
     if (p != null) {
-      IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().thePlayer);
+      IPlayerExtendedProperties props = CapabilityRegistry.getPlayerProperties(Minecraft.getMinecraft().player);
       if (props != null) {
         props.setDataFromNBT(tags);
       }
