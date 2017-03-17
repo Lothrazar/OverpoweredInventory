@@ -55,13 +55,13 @@ public class UtilInventory {
     InventoryOverpowered invo = UtilPlayerInventoryFilestorage.getPlayerInventory(p);
     int sortType = getNextSort(p);
     Map<String, SortGroup> unames = new HashMap<String, SortGroup>();
-    ItemStack item = null;
+    ItemStack item = ItemStack.EMPTY;
     SortGroup temp;
     String key = "";
     int iSize = invo.getSizeInventory();
     for (int i = 2 * Const.HOTBAR_SIZE; i < iSize; i++) {
       item = invo.getStackInSlot(i);
-      if (item == null) {
+      if (item.isEmpty()) {
         continue;
       }
       if (sortType == SORT_ALPH)
@@ -103,13 +103,13 @@ public class UtilInventory {
     int k = 2 * Const.HOTBAR_SIZE;
     for (SortGroup sg : sorted) {
       for (int i = 0; i < sg.stacks.size(); i++) {
-        invo.setInventorySlotContents(k, null);
+        invo.setInventorySlotContents(k, ItemStack.EMPTY);
         invo.setInventorySlotContents(k, sg.stacks.get(i));
         k++;
       }
     }
     for (int j = k; j < iSize; j++) {
-      invo.setInventorySlotContents(j, null);
+      invo.setInventorySlotContents(j, ItemStack.EMPTY);
     }
     // alternately loop by rows
     // so we start at k again, add Const.ALL_COLS to go down one row
@@ -140,24 +140,24 @@ public class UtilInventory {
     return found;
   }
   public static void dumpFromPlayerToIInventory(World world, IInventory inventory, EntityPlayer p) {
-    ItemStack chestItem;
-    ItemStack invItem;
+    ItemStack chestItem = ItemStack.EMPTY;
+    ItemStack invItem = ItemStack.EMPTY;
     int start = 0;
     InventoryOverpowered extendedInventory = UtilPlayerInventoryFilestorage.getPlayerInventory(p);
     // inventory and chest has 9 rows by 3 columns, never changes. same as
     // 64 max stack size
     for (int slot = start; slot < inventory.getSizeInventory(); slot++) {
       chestItem = inventory.getStackInSlot(slot);
-      if (chestItem != null) {
+      if (!chestItem.isEmpty()) {
         continue;
       } // slot not empty, skip over it
       for (int islotInv = 2 * Const.HOTBAR_SIZE; islotInv < extendedInventory.getSizeInventory(); islotInv++) {
         invItem = extendedInventory.getStackInSlot(islotInv);
-        if (invItem == null) {
+        if (invItem .isEmpty()) {
           continue;
         } // empty inventory slot
         inventory.setInventorySlotContents(slot, invItem);
-        extendedInventory.setInventorySlotContents(islotInv, null);
+        extendedInventory.setInventorySlotContents(islotInv, ItemStack.EMPTY);
         break;
       } // close loop on player inventory items
     } // close loop on chest items
@@ -168,8 +168,8 @@ public class UtilInventory {
     // source:
     // https://github.com/PrinceOfAmber/SamsPowerups/blob/master/Spells/src/main/java/com/lothrazar/samsmagic/spell/SpellChestDeposit.java#L84
     InventoryOverpowered extendedInventory = UtilPlayerInventoryFilestorage.getPlayerInventory(p);
-    ItemStack chestItem;
-    ItemStack invItem;
+    ItemStack chestItem=ItemStack.EMPTY;
+    ItemStack invItem=ItemStack.EMPTY;
     int room;
     int toDeposit;
     int chestMax;
@@ -180,12 +180,12 @@ public class UtilInventory {
     // 64 max stack size
     for (int islotChest = START_CHEST; islotChest < END_CHEST; islotChest++) {
       chestItem = chest.getStackInSlot(islotChest);
-      if (chestItem == null) {
+      if (chestItem.isEmpty()) {
         continue;
       } // empty chest slot
       for (int islotInv = 2 * Const.HOTBAR_SIZE; islotInv < extendedInventory.getSizeInventory(); islotInv++) {
         invItem = extendedInventory.getStackInSlot(islotInv);
-        if (invItem == null) {
+        if (invItem.isEmpty()) {
           continue;
         } // empty inventory slot
         if (invItem.getItem().equals(chestItem.getItem()) && invItem.getItemDamage() == chestItem.getItemDamage()) {
