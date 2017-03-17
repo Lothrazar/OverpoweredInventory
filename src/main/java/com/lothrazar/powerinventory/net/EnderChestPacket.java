@@ -30,7 +30,7 @@ public class EnderChestPacket implements IMessage, IMessageHandler<EnderChestPac
   public IMessage onMessage(EnderChestPacket message, MessageContext ctx) {
     EntityPlayer p = ctx.getServerHandler().playerEntity;
     ItemStack chest = UtilPlayerInventoryFilestorage.getPlayerInventory(p).getStackInSlot(Const.SLOT_ECHEST);
-    if (chest != null)
+    if (!chest.isEmpty())
       p.displayGUIChest(p.getInventoryEnderChest());
     else
       ModInv.addChatMessage(p, "slot.enderchest");
