@@ -19,7 +19,7 @@ public class ClientProxy extends CommonProxy {
   public static KeyBinding keyEnderchest;
   public static KeyBinding keyHotbar;
   public static KeyBinding keyInventory;
-  public static final String keyCategory = "key.categories.inventory";
+  public static final String keyCategory = "key.categories.overpoweredinventory";
   @Override
   public boolean isClient() {
     return true;

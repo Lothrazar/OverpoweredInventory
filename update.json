@@ -35,6 +35,6 @@
   	"2.3.0":"Updated to 1.10.2  Removed some config settings/features that had nothing to with the inventory screen such as stack sizes"
   }
   ,"1.11.2":{
-  	"2.3.0":"Updated to 1.11.2  "
+  	"2.3.0":"Updated to 1.11.2.  Moved all keybindings to own category.  "
   }
 }
