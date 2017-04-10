@@ -1,0 +1,16 @@
+tooltip.ender_chest=Desbloquear casilla de §5Cofre del End
+tooltip.ender_pearl=Desbloquear casilla de Ender Pearls
+tooltip.storage=Desbloquear 27 espacios mas
+tooltip.swap=Intercambiar con inventario
+tooltip.filter=Stackear elementos con pilas de elementos existentes en contenedores cercanos
+tooltip.deposit=Dejar todo lo posible en contenedores cercanos
+key.enderpearl=Ender Pearl rápida
+key.enderchest=Inventario del Cofre del End
+key.hotbar=Intercambiar con barra de acceso rápido
+key.opinventory=Abrir OverPowered Inventory
+slot.enderchest=No hay ningun cofre del end equipado
+button.deposit=Depositar
+button.filter=Filtrar
+button.sort=Ordenar
+key.categories.overpoweredinventory=Overpowered Inventory
+# Translated by gvalls27 https://twitter.com/gvalls27
