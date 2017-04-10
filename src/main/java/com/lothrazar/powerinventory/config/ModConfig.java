@@ -12,7 +12,7 @@ public class ModConfig {
   public static final String categoryHighlander = "overpowered_inventory";
   private static int TEXTURE_WIDTH = 342 + 162 + 4;// 508
   private static int TEXTURE_HEIGHT = 230 + 54 + 54 + 4 + 4;// 346
-  private static boolean isLarge = true;
+  private static boolean isLarge = false;
   public static int filterRange = 32;//TODO: not linked
   public static boolean isLargeScreen() {
     return isLarge;
