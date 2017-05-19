@@ -69,13 +69,13 @@ public class ModInv {
     return I18n.translateToLocal(string);
   }
   public static void addChatMessage(EntityPlayer p, String string) {
-    p.addChatMessage(new TextComponentTranslation(lang(string)));
+    p.sendMessage(new TextComponentTranslation(lang(string)));
   }
   public static void playSound(EntityPlayer player, SoundEvent soundIn) {
     playSound(player, null, soundIn);
   }
   public static void playSound(EntityPlayer player, BlockPos pos, SoundEvent soundIn) {
     BlockPos here = (pos == null) ? player.getPosition() : pos;
-    player.worldObj.playSound(player, here, soundIn, SoundCategory.PLAYERS, 1, 1);
+    player.world.playSound(player, here, soundIn, SoundCategory.PLAYERS, 1, 1);
   }
 }

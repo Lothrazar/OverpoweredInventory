@@ -31,7 +31,7 @@ public class UtilPlayerInventoryFilestorage {
   public static void playerSetupOnLoad(PlayerEvent.LoadFromFile event) {
     EntityPlayer player = event.getEntityPlayer();
     clearPlayerInventory(player);
-    File playerFile = getPlayerFile(EXT, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString());
+    File playerFile = getPlayerFile(EXT, event.getPlayerDirectory(), event.getEntityPlayer());
     if (!playerFile.exists()) {
       File fileNew = event.getPlayerFile(EXT);
       if (fileNew.exists()) {
@@ -47,7 +47,7 @@ public class UtilPlayerInventoryFilestorage {
         }
       }
     }
-    loadPlayerInventory(event.getEntityPlayer(), playerFile, getPlayerFile(EXTBK, event.getPlayerDirectory(), event.getEntityPlayer().getDisplayNameString()));
+    loadPlayerInventory(event.getEntityPlayer(), playerFile, getPlayerFile(EXTBK, event.getPlayerDirectory(), event.getEntityPlayer()));
     playerEntityIds.add(event.getEntityPlayer().getEntityId());
   }
   public static void clearPlayerInventory(EntityPlayer player) {
@@ -72,13 +72,14 @@ public class UtilPlayerInventoryFilestorage {
       getPlayerInventory(player).enderPearlStack = itemStack;
     }
     else
-      getPlayerInventory(player).inventory[slot] = itemStack;
+//      getPlayerInventory(player).inventory[slot] = itemStack;
+    getPlayerInventory(player).inventory.set(slot, itemStack);
   }
   public static void setPlayerInventory(EntityPlayer player, InventoryOverpowered inventory) {
     playerItems.put(player.getDisplayNameString(), inventory);
   }
   public static void loadPlayerInventory(EntityPlayer player, File file1, File file2) {
-    if (player != null && !player.worldObj.isRemote) {
+    if (player != null && !player.getEntityWorld().isRemote) {
       try {
         NBTTagCompound data = null;
         boolean save = false;
@@ -121,7 +122,7 @@ public class UtilPlayerInventoryFilestorage {
     }
   }
   public static void savePlayerItems(EntityPlayer player, File file1, File file2) {
-    if (player != null && !player.worldObj.isRemote) {
+    if (player != null && !player.getEntityWorld().isRemote) {
       try {
         if (file1 != null && file1.exists()) {
           try {
@@ -159,8 +160,11 @@ public class UtilPlayerInventoryFilestorage {
       }
     }
   }
-  public static File getPlayerFile(String suffix, File playerDirectory, String playername) {
-    return new File(playerDirectory, "_" + playername + "." + suffix);
+  public static File getPlayerFile(String suffix, File playerDirectory, EntityPlayer player) {
+    String playername = player.getUniqueID().toString();
+    String file =  "_" + playername + "." + suffix;
+    ModInv.logger.info("Player File: "+file);
+    return new File(playerDirectory, file);
   }
   public static void syncItems(EntityPlayer player) {
     InventoryOverpowered invo = getPlayerInventory(player);

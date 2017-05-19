@@ -22,7 +22,7 @@ public class ContainerOverpowered extends Container {
   public InventoryOverpowered invo;
   public InventoryCrafting craftMatrix;
   public IInventory craftResult = new InventoryCraftResult();
-  final static int DISABLED = -1;// since they cant be null in Java
+  final static int DISABLED = -1;// since they cant be n in Java
   static int S_RESULT;
   static int S_MAIN_START;
   static int S_MAIN_END;
@@ -43,7 +43,7 @@ public class ContainerOverpowered extends Container {
     //    invo = prop.getItems();
     invo = new InventoryOverpowered(player);
     //    invo.setEventHandler(this);
-    if (!player.worldObj.isRemote) {
+    if (!player.world.isRemote) {
       UtilPlayerInventoryFilestorage.putDataIntoInventory(invo, player);
       //      inventory.stackList = UtilPlayerInventoryFilestorage.getPlayerInventory(player).stackList;
     }
@@ -93,7 +93,7 @@ public class ContainerOverpowered extends Container {
   @Override
   public void onContainerClosed(EntityPlayer playerIn) {
     super.onContainerClosed(playerIn);
-    if (!thePlayer.worldObj.isRemote) {
+    if (!thePlayer.world.isRemote) {
       UtilPlayerInventoryFilestorage.setPlayerInventory(thePlayer, invo);
     }
   }
@@ -104,7 +104,7 @@ public class ContainerOverpowered extends Container {
   @Override
   public ItemStack transferStackInSlot(EntityPlayer p, int slotNumber) {
     IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(thePlayer);
-    ItemStack stackCopy = null;
+    ItemStack stackCopy = ItemStack.EMPTY;
     Slot slot = (Slot) this.inventorySlots.get(slotNumber);
     if (slot != null && slot.getHasStack()) {
       ItemStack stackOrig = slot.getStack();
@@ -113,30 +113,30 @@ public class ContainerOverpowered extends Container {
       // inv
       // grid
       {
-        if (prop.isEPearlUnlocked() && stackCopy.getItem() == Items.ENDER_PEARL && (invo.getStackInSlot(Const.SLOT_EPEARL) == null || invo.getStackInSlot(Const.SLOT_EPEARL).stackSize < Items.ENDER_PEARL.getItemStackLimit(stackCopy))) {
-          if (!this.mergeItemStack(stackOrig, S_PEARL, S_PEARL + 1, false)) { return null; }
+        if (prop.isEPearlUnlocked() && stackCopy.getItem() == Items.ENDER_PEARL && (invo.getStackInSlot(Const.SLOT_EPEARL) == ItemStack.EMPTY || invo.getStackInSlot(Const.SLOT_EPEARL).getCount() < Items.ENDER_PEARL.getItemStackLimit(stackCopy))) {
+          if (!this.mergeItemStack(stackOrig, S_PEARL, S_PEARL + 1, false)) { return ItemStack.EMPTY; }
         }
-        else if (prop.isEChestUnlocked() && stackCopy.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST) && (invo.getStackInSlot(Const.SLOT_ECHEST) == null || invo.getStackInSlot(Const.SLOT_ECHEST).stackSize < 1)) {
-          if (!this.mergeItemStack(stackOrig, S_ECHEST, S_ECHEST + 1, false)) { return null; }
+        else if (prop.isEChestUnlocked() && stackCopy.getItem() == Item.getItemFromBlock(Blocks.ENDER_CHEST) && (invo.getStackInSlot(Const.SLOT_ECHEST) ==  ItemStack.EMPTY || invo.getStackInSlot(Const.SLOT_ECHEST).getCount() < 1)) {
+          if (!this.mergeItemStack(stackOrig, S_ECHEST, S_ECHEST + 1, false)) { return ItemStack.EMPTY; }
         }
-        else if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END + 1, false)) { return null; }
+        else if (!this.mergeItemStack(stackOrig, S_BAR_START, S_BAR_END + 1, false)) { return ItemStack.EMPTY; }
       }
       else if (slotNumber >= S_BAR_START && slotNumber <= S_BAR_END || slotNumber >= S_BAROTHER_START && slotNumber <= S_BAROTHER_END) // Hotbars
       {
-        if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false)) { return null; }
+        if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false)) { return ItemStack.EMPTY; }
       }
       else if (slotNumber == S_PEARL || slotNumber == S_ECHEST) {
-        if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false)) { return null; }
+        if (!this.mergeItemStack(stackOrig, S_MAIN_START, S_MAIN_END, false)) { return ItemStack.EMPTY; }
       }
       // now cleanup steps
-      if (stackOrig.stackSize == 0) {
-        slot.putStack((ItemStack) null);
+      if (stackOrig.getCount() == 0) {
+        slot.putStack(ItemStack.EMPTY);
       }
       else {
         slot.onSlotChanged();
       }
-      if (stackOrig.stackSize == stackCopy.stackSize) { return null; }
-      slot.onPickupFromSlot(p, stackOrig);
+      if (stackOrig.getCount() == stackCopy.getCount()) { return ItemStack.EMPTY; }
+      slot.onTake(p, stackOrig);//onPickupFromSlot
     }
     return stackCopy;
   } // end transfer function

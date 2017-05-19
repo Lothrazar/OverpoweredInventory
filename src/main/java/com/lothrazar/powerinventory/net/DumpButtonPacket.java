@@ -32,7 +32,7 @@ public class DumpButtonPacket implements IMessage, IMessageHandler<DumpButtonPac
     //
     ArrayList<IInventory> locations = UtilInventory.findTileEntityInventories(p, ModConfig.filterRange);
     for (IInventory inventory : locations) {
-      UtilInventory.dumpFromPlayerToIInventory(p.worldObj, inventory, p);
+      UtilInventory.dumpFromPlayerToIInventory(p.world, inventory, p);
     }
     return null;
   }

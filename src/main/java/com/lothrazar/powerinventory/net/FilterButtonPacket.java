@@ -31,7 +31,7 @@ public class FilterButtonPacket implements IMessage, IMessageHandler<FilterButto
     EntityPlayer p = ctx.getServerHandler().playerEntity;
     ArrayList<IInventory> locations = UtilInventory.findTileEntityInventories(p, ModConfig.filterRange);
     for (IInventory inventory : locations) {
-      UtilInventory.sortFromPlayerToInventory(p.worldObj, inventory, p);
+      UtilInventory.sortFromPlayerToInventory(p.world, inventory, p);
     }
     return null;
   }

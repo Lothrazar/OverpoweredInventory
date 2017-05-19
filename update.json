@@ -12,7 +12,11 @@
     "1.8.9-latest": "2.2.2",
     "1.8.9-recommended": "2.2.1",
     "1.10.2-latest":  "2.2.3",
-    "1.10.2-recommended": "2.3.0"
+    "1.10.2-recommended": "2.3.0",
+    "1.10.2-latest":  "2.3.0",
+    "1.10.2-recommended": "2.3.0",
+    "1.11.2-latest":  "2.3.1",
+    "1.11.2-recommended": "2.3.1"
   },
   "1.8.8":{
   	"1.0.14":"Removed custom version checker in favor of built in forge setup",
@@ -29,5 +33,9 @@
   }
   ,"1.10.2":{
   	"2.3.0":"Updated to 1.10.2  Removed some config settings/features that had nothing to with the inventory screen such as stack sizes"
+  }
+  ,"1.11.2":{
+  	"2.3.0":"Updated to 1.11.2.  Moved all keybindings to own category.  "
+  	,"2.3.1":"Added Spanish language support.  Config now defaults to small size.  "
   }
 }

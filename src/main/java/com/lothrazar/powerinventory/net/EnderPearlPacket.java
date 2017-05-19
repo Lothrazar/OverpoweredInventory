@@ -32,11 +32,11 @@ public class EnderPearlPacket implements IMessage, IMessageHandler<EnderPearlPac
   public IMessage onMessage(EnderPearlPacket message, MessageContext ctx) {
     EntityPlayer p = ctx.getServerHandler().playerEntity;
     ItemStack pearls = UtilPlayerInventoryFilestorage.getPlayerInventory(p).getStackInSlot(Const.SLOT_EPEARL);
-    if (pearls != null) {
-      World world = p.worldObj;
+    if (!pearls.isEmpty()) {
+      World world = p.world;
       EntityEnderPearl entityenderpearl = new EntityEnderPearl(world, p);
       entityenderpearl.setHeadingFromThrower(p, p.rotationPitch, p.rotationYaw, 0.0F, 1.5F, 1.0F);
-      world.spawnEntityInWorld(entityenderpearl);
+      world.spawnEntity(entityenderpearl);
       ModInv.playSound(p, SoundEvents.ENTITY_ARROW_SHOOT);
       if (p.capabilities.isCreativeMode == false) {
         UtilPlayerInventoryFilestorage.getPlayerInventory(p).decrStackSize(Const.SLOT_EPEARL, 1);

@@ -74,7 +74,7 @@ public class EventHandler {
     //if config says they persist... do not drop on ground // not http://www.minecraftforge.net/wiki/Event_Reference#LivingDropsEvent
     Entity entityLiving = event.getEntity();
     if (ModConfig.persistUnlocksOnDeath == false &&
-        entityLiving instanceof EntityPlayer && !entityLiving.worldObj.isRemote) {
+        entityLiving instanceof EntityPlayer && !entityLiving.world.isRemote) {
       EntityPlayer p = (EntityPlayer) entityLiving;
       // the vanilla inventory stuff (first hotbar) already drops  
       for (int i = Const.HOTBAR_SIZE; i < UtilPlayerInventoryFilestorage.getPlayerInventory(p).getSizeInventory(); ++i) {
@@ -100,7 +100,7 @@ public class EventHandler {
       //align t top right
       x = screenWidth / 2 + Const.VWIDTH / 2 - GuiButtonOpenInventory.width - 1;
       y = screenHeight / 2 - Const.VHEIGHT / 2 - GuiButtonOpenInventory.height + 1;
-      boolean hasPotions = Minecraft.getMinecraft().thePlayer.getActivePotionEffects().size() > 0;
+      boolean hasPotions = Minecraft.getMinecraft().player.getActivePotionEffects().size() > 0;
       if (hasPotions) {
         x += 60;
       }
@@ -111,7 +111,7 @@ public class EventHandler {
   // https://github.com/PrinceOfAmber/Cyclic/blob/61016a1714551389ff2d9344b3cf6053a425dc70/src/main/java/com/lothrazar/cyclicmagic/event/core/EventPlayerData.java
   @SubscribeEvent
   public void onSpawn(PlayerLoggedInEvent event) {
-    if (event.player instanceof EntityPlayerMP && event.player.worldObj.isRemote == false) {
+    if (event.player instanceof EntityPlayerMP && event.player.world.isRemote == false) {
       EntityPlayerMP p = (EntityPlayerMP) event.player;
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);
@@ -120,7 +120,7 @@ public class EventHandler {
   }
   @SubscribeEvent
   public void onSpawn(EntityJoinWorldEvent event) {
-    if (event.getEntity() instanceof EntityPlayerMP && event.getEntity().worldObj.isRemote == false) {
+    if (event.getEntity() instanceof EntityPlayerMP && event.getEntity().world.isRemote == false) {
       EntityPlayerMP p = (EntityPlayerMP) event.getEntity();
       if (p != null) {
         CapabilityRegistry.syncServerDataToClient(p);
