@@ -28,7 +28,7 @@ public class EnderChestPacket implements IMessage, IMessageHandler<EnderChestPac
   }
   @Override
   public IMessage onMessage(EnderChestPacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
+    EntityPlayer p = ctx.getServerHandler().player;
     ItemStack chest = UtilPlayerInventoryFilestorage.getPlayerInventory(p).getStackInSlot(Const.SLOT_ECHEST);
     if (!chest.isEmpty())
       p.displayGUIChest(p.getInventoryEnderChest());

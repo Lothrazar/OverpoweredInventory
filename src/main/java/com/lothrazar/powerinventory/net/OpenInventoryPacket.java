@@ -26,7 +26,7 @@ public class OpenInventoryPacket implements IMessage, IMessageHandler<OpenInvent
   }
   @Override
   public IMessage onMessage(OpenInventoryPacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
+    EntityPlayer p = ctx.getServerHandler().player;
     p.openGui(ModInv.instance, GuiHandler.GUI_CUSTOM_INV, p.world, (int) p.posX, (int) p.posY, (int) p.posZ);
     return null;
   }

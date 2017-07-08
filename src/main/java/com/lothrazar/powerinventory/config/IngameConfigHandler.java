@@ -8,16 +8,18 @@ public class IngameConfigHandler implements IModGuiFactory {
   @Override
   public void initialize(Minecraft mc) {
   }
-  @Override
-  public Class<? extends GuiScreen> mainConfigGuiClass() {
-    return IngameConfigGui.class;// the only line we need to add
-  }
+
   @Override
   public Set<RuntimeOptionCategoryElement> runtimeGuiCategories() {
     return null;
   }
+
   @Override
-  public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element) {
+  public boolean hasConfigGui() {
+    return false;
+  }
+  @Override
+  public GuiScreen createConfigGui(GuiScreen parentScreen) {
     return null;
   }
 }

@@ -128,9 +128,9 @@ public class EventHandler {
     }
   }
   @SubscribeEvent
-  public void onEntityConstruct(AttachCapabilitiesEvent.Entity evt) {
-    if (evt.getEntity() instanceof EntityPlayer == false) { return;//mod compatibility: IE Tinkers construct
-    }
+  public void onEntityConstruct(AttachCapabilitiesEvent evt) {
+    if (evt.getObject() instanceof EntityPlayer == false) { return; }//mod compatibility: IE Tinkers construct
+   
     evt.addCapability(new ResourceLocation(Const.MODID, "OPI"), new ICapabilitySerializable<NBTTagCompound>() {
       IPlayerExtendedProperties inst = ModInv.CAPABILITYSTORAGE.getDefaultInstance();
       @Override

@@ -29,7 +29,7 @@ public class SortPacket implements IMessage, IMessageHandler<SortPacket, IMessag
   // public static final String NBT_SORT = "sort";
   @Override
   public IMessage onMessage(SortPacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
+    EntityPlayer p = ctx.getServerHandler().player;
     // int sortType = message.tags.getInteger(NBT_SORT);
     UtilInventory.doSort(p);
     return null;

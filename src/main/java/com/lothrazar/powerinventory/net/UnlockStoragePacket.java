@@ -30,7 +30,7 @@ public class UnlockStoragePacket implements IMessage, IMessageHandler<UnlockStor
   }
   @Override
   public IMessage onMessage(UnlockStoragePacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
+    EntityPlayer p = ctx.getServerHandler().player;
     int numberPastFirst = (message.tags.getInteger("i") - 1);
     //first one adds zero increments, and more and more
     int expCost = ModConfig.expCostStorage_start + ModConfig.expCostStorage_inc * numberPastFirst;
@@ -38,7 +38,7 @@ public class UnlockStoragePacket implements IMessage, IMessageHandler<UnlockStor
       IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
       UtilExperience.drainExp(p, expCost);
       prop.setStorageCount(prop.getStorageCount() + 1);// (true, message.tags.getInteger("i"));
-      CapabilityRegistry.syncServerDataToClient(ctx.getServerHandler().playerEntity);
+      CapabilityRegistry.syncServerDataToClient(ctx.getServerHandler().player);
       p.closeScreen();
       ModInv.playSound(p, SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE);
     }

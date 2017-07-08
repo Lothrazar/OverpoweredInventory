@@ -25,7 +25,7 @@ public class SwapInvoPacket implements IMessage, IMessageHandler<SwapInvoPacket,
   }
   @Override
   public IMessage onMessage(SwapInvoPacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
+    EntityPlayer p = ctx.getServerHandler().player;
     int invoGroup = message.tags.getInteger("i");
     UtilInventory.swapInventoryGroup(p, invoGroup);
     return null;

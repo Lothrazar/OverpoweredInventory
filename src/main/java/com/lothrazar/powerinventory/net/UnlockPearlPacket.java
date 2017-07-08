@@ -30,12 +30,12 @@ public class UnlockPearlPacket implements IMessage, IMessageHandler<UnlockPearlP
   }
   @Override
   public IMessage onMessage(UnlockPearlPacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
+    EntityPlayer p = ctx.getServerHandler().player;
     if (UtilExperience.getExpTotal(p) >= ModConfig.expCostPearl) {
       UtilExperience.drainExp(p, ModConfig.expCostPearl);
       IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
       prop.setEPearlUnlocked(true);
-      CapabilityRegistry.syncServerDataToClient(ctx.getServerHandler().playerEntity);
+      CapabilityRegistry.syncServerDataToClient(ctx.getServerHandler().player);
       p.closeScreen();
       ModInv.playSound(p, SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE);
     }

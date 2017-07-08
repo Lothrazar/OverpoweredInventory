@@ -106,7 +106,7 @@ public class GuiOverpowered extends GuiContainer {
         if (tooltip != null) {
           // it takes a list, one on each line. but we use single line
           // tooltips
-          drawHoveringText(Arrays.asList(new String[] { tooltip }), x, y, fontRendererObj);
+          drawHoveringText(Arrays.asList(new String[] { tooltip }), x, y, fontRenderer);
         }
       }
     }
@@ -114,7 +114,7 @@ public class GuiOverpowered extends GuiContainer {
       for (Slot s : this.container.inventorySlots) {
         // each slot has two different numbers. the slotNumber is
         // UNIQUE, the index is not
-        this.drawString(this.fontRendererObj, "" + s.getSlotIndex(), this.guiLeft + s.xPos, this.guiTop + s.yPos + 4, 16777120);// font
+        this.drawString(this.fontRenderer, "" + s.getSlotIndex(), this.guiLeft + s.xPos, this.guiTop + s.yPos + 4, 16777120);// font
         // color
       }
     }

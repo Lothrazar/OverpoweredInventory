@@ -31,22 +31,22 @@ public class GuiButtonOpenInventory extends GuiButton {
   ResourceLocation button_dark = new ResourceLocation(Const.MODID, "textures/gui/tab_button_dark.png");
   @SideOnly(Side.CLIENT)
   @Override
-  public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+  public void drawButton(Minecraft mc, int mouseX, int mouseY, float pt) {
     // override this and draw the texture here, so the vanilla grey square
     // doesnt show up
     if (this.visible) {
       // http://www.minecraftforge.net/forum/index.php?topic=19594.0
       GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-      this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + GuiButtonOpenInventory.width && mouseY < this.yPosition + GuiButtonOpenInventory.height;
+      this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + GuiButtonOpenInventory.width && mouseY < this.y + GuiButtonOpenInventory.height;
       GlStateManager.enableBlend();
       GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
       GlStateManager.blendFunc(770, 771);
       if (this.isMouseOver()) {
-        UtilTextureRender.drawTextureSimple(button, this.xPosition, this.yPosition, GuiButtonOpenInventory.width, GuiButtonOpenInventory.height);
+        UtilTextureRender.drawTextureSimple(button, this.x, this.y, GuiButtonOpenInventory.width, GuiButtonOpenInventory.height);
         //drawHoveringText(Arrays.asList(new String[] { tooltip }),  mouseX, mouseY, Minecraft.getMinecraft().fontRendererObj);
       }
       else {
-        UtilTextureRender.drawTextureSimple(button_dark, this.xPosition, this.yPosition, GuiButtonOpenInventory.width, GuiButtonOpenInventory.height);
+        UtilTextureRender.drawTextureSimple(button_dark, this.x, this.y, GuiButtonOpenInventory.width, GuiButtonOpenInventory.height);
       }
       this.mouseDragged(mc, mouseX, mouseY);
     }

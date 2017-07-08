@@ -25,7 +25,7 @@ public class HotbarSwapPacket implements IMessage, IMessageHandler<HotbarSwapPac
   }
   @Override
   public IMessage onMessage(HotbarSwapPacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
+    EntityPlayer p = ctx.getServerHandler().player;
     UtilInventory.swapHotbars(p);
     return null;
   }

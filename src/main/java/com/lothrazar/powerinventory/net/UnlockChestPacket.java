@@ -30,12 +30,12 @@ public class UnlockChestPacket implements IMessage, IMessageHandler<UnlockChestP
   }
   @Override
   public IMessage onMessage(UnlockChestPacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
+    EntityPlayer p = ctx.getServerHandler().player;
     if (UtilExperience.getExpTotal(p) >= ModConfig.expCostEChest) {
       UtilExperience.drainExp(p, ModConfig.expCostEChest);
       IPlayerExtendedProperties prop = CapabilityRegistry.getPlayerProperties(p);
       prop.setEChestUnlocked(true);
-      CapabilityRegistry.syncServerDataToClient(ctx.getServerHandler().playerEntity);
+      CapabilityRegistry.syncServerDataToClient(ctx.getServerHandler().player);
       p.closeScreen();
       ModInv.playSound(p, SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE);
     }

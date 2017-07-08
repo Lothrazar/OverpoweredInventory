@@ -28,7 +28,7 @@ public class FilterButtonPacket implements IMessage, IMessageHandler<FilterButto
   }
   @Override
   public IMessage onMessage(FilterButtonPacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
+    EntityPlayer p = ctx.getServerHandler().player;
     ArrayList<IInventory> locations = UtilInventory.findTileEntityInventories(p, ModConfig.filterRange);
     for (IInventory inventory : locations) {
       UtilInventory.sortFromPlayerToInventory(p.world, inventory, p);

@@ -28,7 +28,7 @@ public class DumpButtonPacket implements IMessage, IMessageHandler<DumpButtonPac
   }
   @Override
   public IMessage onMessage(DumpButtonPacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
+    EntityPlayer p = ctx.getServerHandler().player;
     //
     ArrayList<IInventory> locations = UtilInventory.findTileEntityInventories(p, ModConfig.filterRange);
     for (IInventory inventory : locations) {

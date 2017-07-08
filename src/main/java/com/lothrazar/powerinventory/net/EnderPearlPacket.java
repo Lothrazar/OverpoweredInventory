@@ -30,7 +30,7 @@ public class EnderPearlPacket implements IMessage, IMessageHandler<EnderPearlPac
   }
   @Override
   public IMessage onMessage(EnderPearlPacket message, MessageContext ctx) {
-    EntityPlayer p = ctx.getServerHandler().playerEntity;
+    EntityPlayer p = ctx.getServerHandler().player;
     ItemStack pearls = UtilPlayerInventoryFilestorage.getPlayerInventory(p).getStackInSlot(Const.SLOT_EPEARL);
     if (!pearls.isEmpty()) {
       World world = p.world;
